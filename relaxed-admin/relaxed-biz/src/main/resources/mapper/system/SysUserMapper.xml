@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.biz.system.mapper.SysUserMapper">
+
+	<resultMap id="sysUserMap" type="com.relaxed.boot.common.system.model.entity.SysUser">
+  		<id property="userId" column="user_id"/>
+    		<result property="username" column="username"/>
+    		<result property="nickname" column="nickname"/>
+    		<result property="password" column="password"/>
+    		<result property="salt" column="salt"/>
+    		<result property="avatar" column="avatar"/>
+    		<result property="sex" column="sex"/>
+    		<result property="email" column="email"/>
+    		<result property="phone" column="phone"/>
+    		<result property="status" column="status"/>
+    		<result property="type" column="type"/>
+    		<result property="organizationId" column="organization_id"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createBy" column="create_by"/>
+    		<result property="updateBy" column="update_by"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		user_id,        
+		username,        
+		nickname,        
+		password,        
+		salt,        
+		avatar,        
+		sex,        
+		email,        
+		phone,        
+		status,        
+		type,        
+		organization_id,        
+		deleted,        
+		create_by,        
+		update_by,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		su.user_id,        
+		su.username,        
+		su.nickname,        
+		su.password,        
+		su.salt,        
+		su.avatar,        
+		su.sex,        
+		su.email,        
+		su.phone,        
+		su.status,        
+		su.type,        
+		su.organization_id,        
+		su.deleted,        
+		su.create_by,        
+		su.update_by,        
+		su.created_time,        
+		su.updated_time        
+	</sql>
+    <select id="queryRelatedSysUserPage"
+            resultType="com.relaxed.boot.common.system.model.vo.SysUserRolePageDetailVO">
+		SELECT u.*,ur.* FROM `sys_user_role` ur
+								 LEFT JOIN `sys_user` u ON ur.user_id=u.user_id
+			${ew.customSqlSegment}
+	</select>
+</mapper>

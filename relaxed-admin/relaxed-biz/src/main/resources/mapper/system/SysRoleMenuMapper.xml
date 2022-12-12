@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.biz.system.mapper.SysRoleMenuMapper">
+
+	<resultMap id="sysRoleMenuMap" type="com.relaxed.boot.common.system.model.entity.SysRoleMenu">
+  		<id property="id" column="id"/>
+    		<result property="roleCode" column="role_code"/>
+    		<result property="menuId" column="menu_id"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		id,        
+		role_code,        
+		menu_id        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		srm.id,        
+		srm.role_code,        
+		srm.menu_id        
+	</sql>
+</mapper>

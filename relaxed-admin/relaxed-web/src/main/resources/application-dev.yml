@@ -1,0 +1,64 @@
+spring:
+  datasource:
+    url: jdbc:mysql://relaxed-admin:3306/relaxed?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: root
+    password:
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password:
+    lettuce:
+      pool:
+        max-idle: 30 #最大空闲连接数
+        min-idle: 0 #最小空闲连接数
+        max-active: 30 #最大连接数
+        max-wait: -1 #最大等待时间
+  mail:
+    host: smtp.163.com
+    port: 25
+    username: xxx@163.com
+    password:
+    default-encoding: UTF-8
+    properties:
+      from: xxx@163.com
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.smtp.starttls.required: true
+      mail.smtp.socketFactory.port: 465
+      mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+      mail.smtp.socketFactory.fallback: false
+sys:
+  profile: /local
+relaxed:
+  exception:
+    type: NONE
+    receiveEmails: xxx@qq.com
+    max: 1
+  openapi:
+    info:
+      title: 后台管理
+      description: 后台管理
+      version: ${project.version}
+
+springdoc:
+  swagger-ui:
+    urls:
+      - { name: 'relaxed-admin', url: '/v3/api-docs' }
+security:
+  oauth2:
+    #    client:
+    #      client-id: admin
+    #      client-secret: admin123456
+    #      access-token-uri: http://${auth-server-address}/oauth/token
+    #      user-authorization-uri: http://${auth-server-address}/oauth/authorize
+    #    resource:
+    #      token-info-uri: http://${auth-server-address}/oauth/check_token
+    extension:
+      ignoreUrls:
+        - /swagger-ui/**
+        - /v3/api-docs/**
+        - /favicon.ico
+        - /doc.html
+        - /webjars/**
+        - /profile/**

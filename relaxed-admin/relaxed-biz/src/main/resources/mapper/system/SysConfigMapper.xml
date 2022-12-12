@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.biz.system.mapper.SysConfigMapper">
+
+	<resultMap id="sysConfigMap" type="com.relaxed.boot.common.system.model.entity.SysConfig">
+  		<id property="id" column="id"/>
+    		<result property="name" column="name"/>
+    		<result property="confKey" column="conf_key"/>
+    		<result property="confValue" column="conf_value"/>
+    		<result property="category" column="category"/>
+    		<result property="remarks" column="remarks"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createBy" column="create_by"/>
+    		<result property="updateBy" column="update_by"/>
+    		<result property="createTime" column="create_time"/>
+    		<result property="updateTime" column="update_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		id,        
+		name,        
+		conf_key,        
+		conf_value,        
+		category,        
+		remarks,        
+		deleted,        
+		create_by,        
+		update_by,        
+		create_time,        
+		update_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		sc.id,        
+		sc.name,        
+		sc.conf_key,        
+		sc.conf_value,        
+		sc.category,        
+		sc.remarks,        
+		sc.deleted,        
+		sc.create_by,        
+		sc.update_by,        
+		sc.create_time,        
+		sc.update_time        
+	</sql>
+</mapper>

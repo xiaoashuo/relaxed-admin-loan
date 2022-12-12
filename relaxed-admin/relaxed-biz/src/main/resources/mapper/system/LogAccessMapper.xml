@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.biz.system.mapper.LogAccessMapper">
+
+	<resultMap id="logAccessMap" type="com.relaxed.boot.common.system.model.entity.LogAccess">
+  		<id property="id" column="id"/>
+    		<result property="traceId" column="trace_id"/>
+    		<result property="userId" column="user_id"/>
+    		<result property="username" column="username"/>
+    		<result property="ip" column="ip"/>
+    		<result property="userAgent" column="user_agent"/>
+    		<result property="uri" column="uri"/>
+    		<result property="matchingPattern" column="matching_pattern"/>
+    		<result property="method" column="method"/>
+    		<result property="reqParams" column="req_params"/>
+    		<result property="reqBody" column="req_body"/>
+    		<result property="httpStatus" column="http_status"/>
+    		<result property="result" column="result"/>
+    		<result property="errorMsg" column="error_msg"/>
+    		<result property="time" column="time"/>
+    		<result property="createdTime" column="created_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		id,        
+		trace_id,        
+		user_id,        
+		username,        
+		ip,        
+		user_agent,        
+		uri,        
+		matching_pattern,        
+		method,        
+		req_params,        
+		req_body,        
+		http_status,        
+		result,        
+		error_msg,        
+		time,        
+		created_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		la.id,        
+		la.trace_id,        
+		la.user_id,        
+		la.username,        
+		la.ip,        
+		la.user_agent,        
+		la.uri,        
+		la.matching_pattern,        
+		la.method,        
+		la.req_params,        
+		la.req_body,        
+		la.http_status,        
+		la.result,        
+		la.error_msg,        
+		la.time,        
+		la.created_time        
+	</sql>
+</mapper>

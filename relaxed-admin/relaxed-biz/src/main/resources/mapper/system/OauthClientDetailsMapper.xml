@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.biz.system.mapper.OauthClientDetailsMapper">
+
+	<resultMap id="oauthClientDetailsMap" type="com.relaxed.boot.common.system.model.entity.OauthClientDetails">
+  		<id property="clientId" column="client_id"/>
+    		<result property="resourceIds" column="resource_ids"/>
+    		<result property="clientSecret" column="client_secret"/>
+    		<result property="scope" column="scope"/>
+    		<result property="authorizedGrantTypes" column="authorized_grant_types"/>
+    		<result property="webServerRedirectUri" column="web_server_redirect_uri"/>
+    		<result property="authorities" column="authorities"/>
+    		<result property="accessTokenValidity" column="access_token_validity"/>
+    		<result property="refreshTokenValidity" column="refresh_token_validity"/>
+    		<result property="additionalInformation" column="additional_information"/>
+    		<result property="autoapprove" column="autoapprove"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		client_id,        
+		resource_ids,        
+		client_secret,        
+		scope,        
+		authorized_grant_types,        
+		web_server_redirect_uri,        
+		authorities,        
+		access_token_validity,        
+		refresh_token_validity,        
+		additional_information,        
+		autoapprove        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		ocd.client_id,        
+		ocd.resource_ids,        
+		ocd.client_secret,        
+		ocd.scope,        
+		ocd.authorized_grant_types,        
+		ocd.web_server_redirect_uri,        
+		ocd.authorities,        
+		ocd.access_token_validity,        
+		ocd.refresh_token_validity,        
+		ocd.additional_information,        
+		ocd.autoapprove        
+	</sql>
+</mapper>

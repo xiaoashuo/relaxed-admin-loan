@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.biz.system.mapper.SysUserRoleMapper">
+
+	<resultMap id="sysUserRoleMap" type="com.relaxed.boot.common.system.model.entity.SysUserRole">
+  		<id property="id" column="id"/>
+    		<result property="userId" column="user_id"/>
+    		<result property="roleCode" column="role_code"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		id,        
+		user_id,        
+		role_code        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		sur.id,        
+		sur.user_id,        
+		sur.role_code        
+	</sql>
+    <select id="listRoleByUserId" resultType="com.relaxed.boot.common.system.model.entity.SysRole">
+		SELECT
+			r.id, r.name, r.code, r.type, r.scope_type, r.scope_resources
+		FROM
+			sys_user_role ur
+				left join
+			sys_role r
+			on r.code = ur.role_code
+		WHERE ur.user_id = #{userId}
+		  and r.deleted = 0
+	</select>
+</mapper>

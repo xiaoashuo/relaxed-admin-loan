@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.biz.system.mapper.SysOrganizationMapper">
+
+	<resultMap id="sysOrganizationMap" type="com.relaxed.boot.common.system.model.entity.SysOrganization">
+  		<id property="id" column="id"/>
+    		<result property="name" column="name"/>
+    		<result property="parentId" column="parent_id"/>
+    		<result property="hierarchy" column="hierarchy"/>
+    		<result property="depth" column="depth"/>
+    		<result property="sort" column="sort"/>
+    		<result property="remarks" column="remarks"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createBy" column="create_by"/>
+    		<result property="updateBy" column="update_by"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		id,        
+		name,        
+		parent_id,        
+		hierarchy,        
+		depth,        
+		sort,        
+		remarks,        
+		deleted,        
+		create_by,        
+		update_by,        
+		created_time,
+		updated_time
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		so.id,        
+		so.name,        
+		so.parent_id,        
+		so.hierarchy,        
+		so.depth,        
+		so.sort,        
+		so.remarks,        
+		so.deleted,        
+		so.create_by,        
+		so.update_by,        
+		so.created_time,
+		so.updated_time
+	</sql>
+	<!--	这里为了兼容 shardingsphare 4.x 暂时使用 ${} 传参-->
+	<update id="followMoveChildNode">
+		UPDATE
+			sys_organization
+		SET
+			hierarchy = CONCAT(#{param.targetParentHierarchy},
+							   SUBSTR(hierarchy, ${param.originParentHierarchyLengthPlusOne})),
+			depth = depth - #{param.depthDiff}
+		WHERE
+			deleted = 0
+		  AND  (
+				parent_id = #{param.parentId}  -- 儿子节点
+				OR
+				hierarchy like #{param.grandsonConditionalStatement} -- 孙子节点
+			)
+	</update>
+
+</mapper>

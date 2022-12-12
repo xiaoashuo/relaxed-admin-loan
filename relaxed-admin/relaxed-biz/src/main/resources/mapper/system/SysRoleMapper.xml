@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.biz.system.mapper.SysRoleMapper">
+
+	<resultMap id="sysRoleMap" type="com.relaxed.boot.common.system.model.entity.SysRole">
+  		<id property="id" column="id"/>
+    		<result property="name" column="name"/>
+    		<result property="code" column="code"/>
+    		<result property="type" column="type"/>
+    		<result property="scopeType" column="scope_type"/>
+    		<result property="scopeResources" column="scope_resources"/>
+    		<result property="remarks" column="remarks"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createBy" column="create_by"/>
+    		<result property="updateBy" column="update_by"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		id,        
+		name,        
+		code,        
+		type,        
+		scope_type,        
+		scope_resources,        
+		remarks,        
+		deleted,        
+		create_by,        
+		update_by,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		sr.id,        
+		sr.name,        
+		sr.code,        
+		sr.type,        
+		sr.scope_type,        
+		sr.scope_resources,        
+		sr.remarks,        
+		sr.deleted,        
+		sr.create_by,        
+		sr.update_by,        
+		sr.created_time,        
+		sr.updated_time        
+	</sql>
+    <select id="listRoleByUserId" resultType="com.relaxed.boot.common.system.model.entity.SysRole">
+		SELECT
+			r.id, r.name, r.code, r.type, r.scope_type, r.scope_resources
+		FROM
+			sys_user_role ur
+				left join
+			sys_role r
+			on r.code = ur.role_code
+		WHERE ur.user_id = #{userId}
+		  and r.deleted = 0
+	</select>
+	<select id="listSelectData" resultType="com.relaxed.common.model.domain.SelectData">
+		select
+			name as label , code as value
+		from
+			sys_role
+		where
+			deleted = 0
+	</select>
+</mapper>

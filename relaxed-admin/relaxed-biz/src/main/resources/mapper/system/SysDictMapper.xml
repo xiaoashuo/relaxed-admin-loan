@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.biz.system.mapper.SysDictMapper">
+
+	<resultMap id="sysDictMap" type="com.relaxed.boot.common.system.model.entity.SysDict">
+  		<id property="id" column="id"/>
+    		<result property="code" column="code"/>
+    		<result property="title" column="title"/>
+    		<result property="valueType" column="value_type"/>
+    		<result property="hashCode" column="hash_code"/>
+    		<result property="remarks" column="remarks"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createBy" column="create_by"/>
+    		<result property="updateBy" column="update_by"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		id,        
+		code,        
+		title,        
+		value_type,        
+		hash_code,        
+		remarks,        
+		deleted,        
+		create_by,        
+		update_by,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		sd.id,        
+		sd.code,        
+		sd.title,        
+		sd.value_type,        
+		sd.hash_code,        
+		sd.remarks,        
+		sd.deleted,        
+		sd.create_by,        
+		sd.update_by,        
+		sd.created_time,        
+		sd.updated_time        
+	</sql>
+</mapper>
