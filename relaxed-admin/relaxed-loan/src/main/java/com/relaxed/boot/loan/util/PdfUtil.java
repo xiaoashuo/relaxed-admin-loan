@@ -14,6 +14,7 @@ import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfCanvasProcessor;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.IPdfTextLocation;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.RegexBasedLocationExtractionStrategy;
+import com.itextpdf.kernel.pdf.extgstate.PdfExtGState;
 import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
 import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.element.Image;
@@ -231,13 +232,21 @@ public class PdfUtil {
         float height = n0.getBBox().toRectangle().getHeight();
 
         PdfCanvas canvas = new PdfCanvas(n0, signer.getDocument());
-        canvas.setFillColor(ColorConstants.LIGHT_GRAY);
 
-        canvas.rectangle(x, y, width, height);
-        canvas.fill();
+
         ImageData img = ImageDataFactory.create(signInfo.getImagePath());
-        Image image = new Image(img);
-        new Canvas(n0,signer.getDocument()).add(image);
+//        Image image = new Image(img);
+
+//        new Canvas(n0,signer.getDocument()).add(image);
+//        canvas.saveState();
+//        PdfExtGState state = new PdfExtGState();
+//        state.setFillOpacity(0f);
+//        canvas.setExtGState(state);
+//        canvas.addImageAt(img, 103, 614, false);
+//        canvas.restoreState();
+
+
+
 
         // Set the signature information on layer 2
         PdfFormXObject n2 = appearance.getLayer2();
