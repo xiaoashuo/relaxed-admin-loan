@@ -4,14 +4,21 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.IoUtil;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.StampingProperties;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfCanvasProcessor;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.IPdfTextLocation;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.RegexBasedLocationExtractionStrategy;
+import com.itextpdf.kernel.pdf.xobject.PdfFormXObject;
+import com.itextpdf.layout.Canvas;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.BackgroundImage;
 import com.itextpdf.signatures.BouncyCastleDigest;
 import com.itextpdf.signatures.IExternalDigest;
 import com.itextpdf.signatures.IExternalSignature;
@@ -26,7 +33,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.Security;
@@ -189,6 +198,57 @@ public class PdfUtil {
             signer.signDetached(digest,pks, chain, null, null, null, 0, PdfSigner.CryptoStandard.CMS);
         }
 
+    }
+
+    /**
+     * 底层图层绘制背景
+     * @param src
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
+    public static void signLayer(String src, String dest,SignInfo signInfo)
+            throws GeneralSecurityException, IOException {
+        //  No such provider: BC : 问题解决，加BC库支持 算法提供者
+        BouncyCastleProvider provider = new BouncyCastleProvider();
+        Security.addProvider(provider);
+        //私钥
+        PdfReader reader = new PdfReader(src);
+        PdfSigner signer = new PdfSigner(reader, new FileOutputStream(dest), new StampingProperties());
+
+        // Create the signature appearance
+        PdfSignatureAppearance appearance = signer.getSignatureAppearance()
+                .setReason(signInfo.getReason())
+                .setLocation(signInfo.getLocation());
+
+        // This name corresponds to the name of the field that already exists in the document.
+        signer.setFieldName(signInfo.getFieldName());
+        appearance.setPageRect(new Rectangle(150,250,300,300));
+        // Get the background layer and draw a gray rectangle as a background.
+        PdfFormXObject n0 = appearance.getLayer0();
+        float x = n0.getBBox().toRectangle().getLeft();
+        float y = n0.getBBox().toRectangle().getBottom();
+        float width = n0.getBBox().toRectangle().getWidth();
+        float height = n0.getBBox().toRectangle().getHeight();
+
+        PdfCanvas canvas = new PdfCanvas(n0, signer.getDocument());
+        canvas.setFillColor(ColorConstants.LIGHT_GRAY);
+
+        canvas.rectangle(x, y, width, height);
+        canvas.fill();
+        ImageData img = ImageDataFactory.create(signInfo.getImagePath());
+        Image image = new Image(img);
+        new Canvas(n0,signer.getDocument()).add(image);
+
+        // Set the signature information on layer 2
+        PdfFormXObject n2 = appearance.getLayer2();
+        Paragraph p = new Paragraph("This document was signed by Bruno Specimen.");
+        new Canvas(n2, signer.getDocument()).add(p);
+
+        IExternalSignature pks = new PrivateKeySignature(signInfo.getPk(), signInfo.getDigestAlgorithm(), provider.getName());
+        IExternalDigest digest = new BouncyCastleDigest();
+
+        // Sign the document using the detached mode, CMS or CAdES equivalent.
+        signer.signDetached(digest, pks, signInfo.getChain(), null, null, null, 0, PdfSigner.CryptoStandard.CMS);
     }
 
     /**
