@@ -1,0 +1,92 @@
+package com.relaxed.boot.loan.util;
+
+import com.itextpdf.signatures.DigestAlgorithms;
+import com.itextpdf.signatures.PdfSignatureAppearance;
+import com.itextpdf.signatures.PdfSigner;
+import lombok.Data;
+
+import java.security.PrivateKey;
+import java.security.cert.Certificate;
+
+/**
+ * @author Yakir
+ * @Topic SignInfo
+ * @Description 签名信息
+ * @date 2022/12/12 18:11
+ * @Version 1.0
+ */
+@Data
+public class SignInfo {
+
+    /**
+     * 签名的原因，显示在pdf签名属性中
+     */
+    private String reason;
+    /**
+     * 签名的地点，显示在pdf签名属性中
+     */
+    private String location;
+    /**
+     * The contact name of the signer.
+     */
+    private String contact = "";
+    /**
+     * 摘要算法名称，例如SHA-1
+     */
+    private String digestAlgorithm= DigestAlgorithms.SHA256;
+
+    /**
+     * 文件是否存在签名域
+     */
+    private boolean existSignArea=false;
+    /**
+     * 签名描述文本 渲染模式包含 RenderingMode.DESCRIPTION 显示
+     */
+    private String description;
+    /**
+     * 图章路径 渲染模式包含 RenderingMode.GRAPHIC 显示
+     */
+    private String imagePath;
+
+    /**
+     * 图片缩放比列 默认为0
+     */
+    private Integer imageScale=0;
+    /**
+     * 表单域名称 不能重复
+     */
+    private String fieldName;
+    /**
+     * 签名页码
+     */
+    private Integer pageNumber;
+    /**
+     * 证书链
+     */
+    private Certificate[] chain;
+    /**
+     * 签名私钥
+     */
+    private PrivateKey pk;
+    /**
+     * 批准签章
+     */
+    private int certificationLevel = PdfSigner.NOT_CERTIFIED;
+    /**
+     * 表现形式：仅描述，仅图片，图片和描述，签章者和描述
+     */
+    private PdfSignatureAppearance.RenderingMode renderingMode=PdfSignatureAppearance.RenderingMode.DESCRIPTION;
+
+    /**
+     * 签名区域 位置属性
+     * x  左下角x
+     * y  左下角y
+     * width  宽
+     * height 高
+     */
+    private float x;
+    private float y;
+    private float width;
+    private float height;
+
+}

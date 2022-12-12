@@ -31,6 +31,7 @@
         <module>relaxed-web</module>
         <module>relaxed-framework</module>
         <module>relaxed-authorization</module>
+        <module>relaxed-loan</module>
     </modules>
     <dependencyManagement>
         <dependencies>
