@@ -45,6 +45,7 @@ public class SignInfo {
     private String description;
     /**
      * 图章路径 渲染模式包含 RenderingMode.GRAPHIC 显示
+     * 章图片最好用无背景图层的  否则会遮盖内容
      */
     private String imagePath;
 

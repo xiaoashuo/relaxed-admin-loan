@@ -66,24 +66,7 @@ public class PdfTest {
         PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
         //获取证书链
         Certificate[] chain = ks.getCertificateChain(alias);
-//        for (KeywordLocation keywordLocation : wordsLocation1) {
-//            SignInfo signInfo=new SignInfo();
-//            signInfo.setReason("测试");
-//            signInfo.setLocation("北京市");
-//            signInfo.setContact("xxx@qq.com");
-//            signInfo.setImagePath("D:\\other\\100000\\test24.png");
-//            signInfo.setFieldName("ts");
-//            signInfo.setPageNumber(1);
-//            signInfo.setChain(chain);
-//            signInfo.setRenderingMode(RenderingMode.GRAPHIC);
-//            signInfo.setPk(pk);
-//            signInfo.setX(100);
-//            signInfo.setY(200);
-//            signInfo.setWidth(400);
-//            signInfo.setHeight(100);
-//
-//            PdfUtil.sign(sourceFile,targetFile,signInfo);
-//        }
+
 //        SignInfo signInfo=new SignInfo();
 //        signInfo.setReason("测试");
 //        signInfo.setLocation("北京市");
@@ -106,19 +89,20 @@ public class PdfTest {
         signInfo.setReason("测试");
         signInfo.setLocation("北京市");
         signInfo.setContact("xxx@qq.com");
-        signInfo.setImagePath("D:\\other\\100000\\test24.png");
+        //章图片最好用无背景图层的  否则会遮盖内容
+        signInfo.setImagePath("D:\\other\\100000\\itext\\image\\test.png");
         signInfo.setFieldName("ts");
         signInfo.setPageNumber(1);
         signInfo.setChain(chain);
         signInfo.setRenderingMode(RenderingMode.GRAPHIC);
         signInfo.setPk(pk);
         signInfo.setX(100);
-        signInfo.setY(200);
+        signInfo.setY(700);
         signInfo.setWidth(400);
         signInfo.setHeight(100);
 
-        PdfUtil.signLayer(sourceFile,targetFile,signInfo);
-        //PdfUtil.sign(sourceFile,targetFile,signInfo);
+//        PdfUtil.signLayer(sourceFile,targetFile,signInfo);
+        PdfUtil.sign(sourceFile,targetFile,signInfo);
 //        SignInfo signInfo1=new SignInfo();
 //        signInfo1.setReason("测试");
 //        signInfo1.setLocation("北京市");
