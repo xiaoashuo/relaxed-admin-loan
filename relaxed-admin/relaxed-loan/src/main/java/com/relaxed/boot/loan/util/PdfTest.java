@@ -61,7 +61,7 @@ public class PdfTest {
         Security.addProvider(provider);
         //读取keystore ，获得私钥和证书链 jks
         KeyStore ks = KeyStore.getInstance("JKS");
-        ks.load(new FileInputStream("D:\\mnt\\itext7\\keystore\\mytestkey.jks"), PASSWORD);
+        ks.load(new FileInputStream("D:\\mnt\\itext7\\keystore\\homejks.jks"), PASSWORD);
         String alias = ks.aliases().nextElement();
         PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
         //获取证书链
