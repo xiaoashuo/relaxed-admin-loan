@@ -249,7 +249,7 @@ public class PdfUtil {
 
         // This name corresponds to the name of the field that already exists in the document.
         signer.setFieldName(signInfo.getFieldName());
-        appearance.setPageRect(new Rectangle(150, 450, 300, 300));
+        appearance.setPageRect(new Rectangle(150,250,300,300));
         // Get the background layer and draw a gray rectangle as a background.
         PdfFormXObject n0 = appearance.getLayer0();
         float x = n0.getBBox().toRectangle().getLeft();
@@ -261,26 +261,6 @@ public class PdfUtil {
 
 
         ImageData img = ImageDataFactory.create(signInfo.getImagePath());
-        Image image = new Image(img);
-
-
-        Canvas canvas1 = new Canvas(n0, signer.getDocument());
-        PdfCanvas pdfCanvas = canvas1.getPdfCanvas();
-        //saveState()方法来保存当前的图像状态
-        // 2）然后改变图像状态，画线或者其他任意形状
-        // 3）最后我们使用restoreState()方法来还原原始的图像状态，
-        // 所有在saveState()之后的改变图像状态的操作都会撤销
-        pdfCanvas.saveState();
-        //设置透明度
-        PdfExtGState state = new PdfExtGState();
-        state.setFillOpacity(0.8f);
-        pdfCanvas.setExtGState(state);
-
-        //    canvas1.setOpacity(0.6f);
-        canvas1.add(image);
-        ;
-        pdfCanvas.restoreState();
-
 //        Image image = new Image(img);
 
 //        new Canvas(n0,signer.getDocument()).add(image);

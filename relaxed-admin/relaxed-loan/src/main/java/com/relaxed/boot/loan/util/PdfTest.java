@@ -51,8 +51,8 @@ public class PdfTest {
     public static final char[] PASSWORD = "123456".toCharArray();// keystore密码
     public static final String IMG = "D:\\other\\100000\\itext\\keystore\\seal.png";//印章图片路径
     public static void main(String[] args) throws Exception  {
-        String sourceFile = "D:\\other\\100000\\itext\\test.pdf";
-        String targetFile = "D:\\other\\100000\\itext\\" + IdUtil.getSnowflakeNextId() + ".pdf";
+        String sourceFile = "D:\\mnt\\itext7\\400701_6985565.pdf";
+        String targetFile = "D:\\mnt\\itext7\\" + IdUtil.getSnowflakeNextId() + ".pdf";
         //通过指定pdf文件名，指定关键字，和指定的pdf文件的待处理页数做参数
         //   getKeyWordsLocation(sourceFile, targetFile,"国民信托有限公司", 14);
         //generateSealImage("D:\\other\\100000\\seal.png");
@@ -61,12 +61,19 @@ public class PdfTest {
         Security.addProvider(provider);
         //读取keystore ，获得私钥和证书链 jks
         KeyStore ks = KeyStore.getInstance("JKS");
-        ks.load(new FileInputStream(KEYSTORE), PASSWORD);
+        ks.load(new FileInputStream("D:\\mnt\\itext7\\keystore\\mytestkey.jks"), PASSWORD);
         String alias = ks.aliases().nextElement();
         PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
         //获取证书链
         Certificate[] chain = ks.getCertificateChain(alias);
-
+        //读取keystore ，获得私钥和证书链 PKCS12
+//        String KEYSTORE="D:\\mnt\\itext7\\keystore\\keystore.p12";
+//        KeyStore ks = KeyStore.getInstance("PKCS12");
+//        ks.load(new FileInputStream(KEYSTORE), PASSWORD);
+//        String alias = ks.aliases().nextElement();
+//        PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
+//        //获取证书链
+//        Certificate[] chain = ks.getCertificateChain(alias);
 //        SignInfo signInfo=new SignInfo();
 //        signInfo.setReason("测试");
 //        signInfo.setLocation("北京市");
@@ -91,11 +98,11 @@ public class PdfTest {
         signInfo.setContact("xxx@qq.com");
         //章图片最好用无背景图层的  否则会遮盖内容
         signInfo.setDescription("测试。还会*@rts$");
-        signInfo.setImagePath("D:\\other\\100000\\testsign.png");
+        signInfo.setImagePath("D:\\mnt\\itext7\\images\\testsign.png");
         signInfo.setFieldName("ts");
         signInfo.setPageNumber(1);
         signInfo.setChain(chain);
-        signInfo.setRenderingMode(RenderingMode.DESCRIPTION);
+        signInfo.setRenderingMode(RenderingMode.GRAPHIC_AND_DESCRIPTION);
         signInfo.setPk(pk);
         signInfo.setX(100);
         signInfo.setY(700);
