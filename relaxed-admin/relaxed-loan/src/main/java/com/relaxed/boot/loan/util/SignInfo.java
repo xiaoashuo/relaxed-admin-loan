@@ -1,5 +1,9 @@
 package com.relaxed.boot.loan.util;
 
+import com.itextpdf.kernel.colors.Color;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.signatures.DigestAlgorithms;
 import com.itextpdf.signatures.PdfSignatureAppearance;
 import com.itextpdf.signatures.PdfSigner;
@@ -40,9 +44,20 @@ public class SignInfo {
      */
     private boolean existSignArea=false;
     /**
+     * layer2 层
      * 签名描述文本 渲染模式包含 RenderingMode.DESCRIPTION 显示
      */
     private String description;
+    /**
+     * pdf 字体
+     * PdfFontFactory.createFont(StandardFonts.TIMES_ROMAN)
+     * //PdfFontFactory.createFont("STSong-Light", "UniGB-UCS2-H",PdfFontFactory.EmbeddingStrategy.PREFER_EMBEDDED) 中文字体
+     */
+    private PdfFont pdfFont ;
+    /**
+     * 描述文本颜色 默认为红色
+     */
+    private Color color= ColorConstants.RED;
     /**
      * 图章路径 渲染模式包含 RenderingMode.GRAPHIC 显示
      * 章图片最好用无背景图层的  否则会遮盖内容

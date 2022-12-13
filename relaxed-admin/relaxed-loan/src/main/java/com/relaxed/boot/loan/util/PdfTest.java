@@ -90,18 +90,19 @@ public class PdfTest {
         signInfo.setLocation("北京市");
         signInfo.setContact("xxx@qq.com");
         //章图片最好用无背景图层的  否则会遮盖内容
+        signInfo.setDescription("测试。还会*@rts$");
         signInfo.setImagePath("D:\\other\\100000\\testsign.png");
         signInfo.setFieldName("ts");
         signInfo.setPageNumber(1);
         signInfo.setChain(chain);
-        signInfo.setRenderingMode(RenderingMode.GRAPHIC);
+        signInfo.setRenderingMode(RenderingMode.DESCRIPTION);
         signInfo.setPk(pk);
         signInfo.setX(100);
         signInfo.setY(700);
         signInfo.setWidth(400);
         signInfo.setHeight(100);
 
-        PdfUtil.signLayer(sourceFile,targetFile,signInfo);
+        PdfUtil.sign(sourceFile,targetFile,signInfo);
     //    PdfUtil.sign(sourceFile,targetFile,signInfo);
 //        SignInfo signInfo1=new SignInfo();
 //        signInfo1.setReason("测试");
