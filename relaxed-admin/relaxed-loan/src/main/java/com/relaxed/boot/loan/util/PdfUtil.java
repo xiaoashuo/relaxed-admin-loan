@@ -242,6 +242,10 @@ public class PdfUtil {
 
         Canvas canvas1 = new Canvas(n0, signer.getDocument());
         PdfCanvas pdfCanvas = canvas1.getPdfCanvas();
+        //saveState()方法来保存当前的图像状态
+        // 2）然后改变图像状态，画线或者其他任意形状
+        // 3）最后我们使用restoreState()方法来还原原始的图像状态，
+        // 所有在saveState()之后的改变图像状态的操作都会撤销
         pdfCanvas.saveState();
         //设置透明度
         PdfExtGState state = new PdfExtGState();
