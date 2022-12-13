@@ -49,6 +49,8 @@ import java.util.List;
  * @author Yakir
  * @Topic PdfUtil
  * @Description
+ * 骑缝章 参考  当前不实现
+ * https://blog.csdn.net/weixin_41576903/article/details/108833567
  * @date 2022/12/12 16:14
  * @Version 1.0
  */
@@ -223,7 +225,7 @@ public class PdfUtil {
 
         // This name corresponds to the name of the field that already exists in the document.
         signer.setFieldName(signInfo.getFieldName());
-        appearance.setPageRect(new Rectangle(150,250,300,300));
+        appearance.setPageRect(new Rectangle(150,450,300,300));
         // Get the background layer and draw a gray rectangle as a background.
         PdfFormXObject n0 = appearance.getLayer0();
         float x = n0.getBBox().toRectangle().getLeft();
@@ -235,6 +237,21 @@ public class PdfUtil {
 
 
         ImageData img = ImageDataFactory.create(signInfo.getImagePath());
+        Image image = new Image(img);
+
+
+        Canvas canvas1 = new Canvas(n0, signer.getDocument());
+        PdfCanvas pdfCanvas = canvas1.getPdfCanvas();
+        pdfCanvas.saveState();
+        //设置透明度
+        PdfExtGState state = new PdfExtGState();
+        state.setFillOpacity(0.8f);
+        pdfCanvas.setExtGState(state);
+
+//        canvas1.setOpacity(0.6f);
+        canvas1.add(image);;
+        pdfCanvas.restoreState();
+
 //        Image image = new Image(img);
 
 //        new Canvas(n0,signer.getDocument()).add(image);
@@ -249,9 +266,9 @@ public class PdfUtil {
 
 
         // Set the signature information on layer 2
-        PdfFormXObject n2 = appearance.getLayer2();
-        Paragraph p = new Paragraph("This document was signed by Bruno Specimen.");
-        new Canvas(n2, signer.getDocument()).add(p);
+//        PdfFormXObject n2 = appearance.getLayer2();
+//        Paragraph p = new Paragraph("This document was signed by Bruno Specimen.");
+//        new Canvas(n2, signer.getDocument()).add(p);
 
         IExternalSignature pks = new PrivateKeySignature(signInfo.getPk(), signInfo.getDigestAlgorithm(), provider.getName());
         IExternalDigest digest = new BouncyCastleDigest();
