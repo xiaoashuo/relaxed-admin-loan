@@ -7,12 +7,13 @@
 <!--           :show-header="true"-->
 <!--           v-model="formData"></pro-form>-->
 
-    <pro-form-modal :width="'60%'" ref="proForm" :modal-config="modalConfig" v-model="formData" ></pro-form-modal>
-    <el-button @click="showForm">显示</el-button>
-    <el-button @click="openTimeout1">打开定时</el-button>
-    <el-button @click="closeTimeout1">关闭定时</el-button>
-    <el-button @click="openLock">开启锁屏</el-button>
-    <lock ref="lockRef"></lock>
+
+<!--    <pro-form-modal :width="'60%'" ref="proForm" :modal-config="modalConfig" v-model="formData" ></pro-form-modal>-->
+<!--    <el-button @click="showForm">显示</el-button>-->
+<!--    <el-button @click="openTimeout1">打开定时</el-button>-->
+<!--    <el-button @click="closeTimeout1">关闭定时</el-button>-->
+<!--    <el-button @click="openLock">开启锁屏</el-button>-->
+<!--    <lock ref="lockRef"></lock>-->
 <!--    <div>-->
 <!--      枚举名称-->
 <!--      <el-input placeholder="请输入枚举名称" v-model="enumName"></el-input>-->
@@ -45,10 +46,11 @@ import ProFormModal from '@/components/form/src/ProFormModal'
 import {openTimeOut,closeTimeout} from '@/utils/astrict'
 import Lock from '@/components/LockSetting'
 import GenderEnum from '@/constants/enums/system/GenderEnum'
+
 export default {
   name: 'NestedChildren',
   components: {
-    IconSelector,ProFormModal,Lock
+    IconSelector,ProFormModal,Lock,
   },
   data() {
     return {
