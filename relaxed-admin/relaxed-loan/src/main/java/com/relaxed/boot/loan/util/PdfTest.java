@@ -79,6 +79,7 @@ public class PdfTest {
         //填充区域
 //        Canvas canvas = new Canvas(pdfCanvas,rectangle);
 //        canvas.add(image);
+//        canvas.close();
         pdfCanvas.restoreState();
         pdfDoc.close();
 //        List<KeywordLocation> wordsLocation1 = getKeyWordsLocation1(sourceFile, "国民信托有限公司");
