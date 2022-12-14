@@ -1,6 +1,7 @@
 package com.relaxed.boot.loan.util;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.exceptions.ExceptionUtil;
 import cn.hutool.core.io.IoUtil;
 import com.itextpdf.io.font.PdfEncodings;
 import com.itextpdf.io.font.constants.StandardFonts;
@@ -10,10 +11,13 @@ import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfReader;
+import com.itextpdf.kernel.pdf.PdfStream;
+import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.StampingProperties;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfCanvasProcessor;
@@ -39,6 +43,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -60,7 +65,73 @@ import java.util.List;
  * @Version 1.0
  */
 public class PdfUtil {
+    public static final  void addImage(String source,String dest,PreviewSignInfo previewSignInfo){
+        try (PdfReader pdfReader = new PdfReader(new FileInputStream(source));
+             PdfDocument pdfDoc = new PdfDocument(pdfReader,new PdfWriter(dest));
+        ){
+            ImageData img = ImageDataFactory.create(previewSignInfo.getImgPath());
+            Image image = new Image(img);
+            List<KeywordLocation> keywordLocationList = previewSignInfo.getKeywordLocationList();
+            for (KeywordLocation keywordLocation : keywordLocationList) {
+                Integer pageNum = keywordLocation.getPageNum();
+                List<IPdfTextLocation> ipdfTextLocations = keywordLocation.getIpdfTextLocations();
+                PdfPage page = pdfDoc.getPage(pageNum);
+                //低级别
+                PdfCanvas pdfCanvas = new PdfCanvas(page);
+                //我们想在已经存在的内容下添加内容，因此我们使用newContentStreamBefore()方法。
+                // 如果你想要在已经存在的内容上添加内容，你应该使用newContentStreamAfter()方法
+                //这些方法会创建一个新的内容流，并且把它添加到页面中
+                PdfStream pdfStream = previewSignInfo.isContentBefore() ? page.newContentStreamBefore() : page.newContentStreamAfter();
+                pdfCanvas.attachContentStream(pdfStream);
+                for (IPdfTextLocation ipdfTextLocation : ipdfTextLocations) {
+                    Rectangle rectangle = ipdfTextLocation.getRectangle();
+                    rectangle.setY(rectangle.getY()+30);
+                    Canvas canvas = new Canvas(pdfCanvas,rectangle);
+                    canvas.add(image);
+                    canvas.close();
+                }
+            }
+        } catch (Exception e) {
+            throw ExceptionUtil.wrapRuntime(e);
+        }
 
+    }
+
+    private   void addImageTest(String source,String dest,Integer pageNum,String imgPath ){
+       try (PdfReader pdfReader = new PdfReader(new FileInputStream(source));
+            PdfDocument pdfDoc = new PdfDocument(pdfReader,new PdfWriter(dest));
+       ){
+           PdfPage page = pdfDoc.getPage(pageNum);
+           //低级别
+           PdfCanvas pdfCanvas = new PdfCanvas(page);
+           //我们想在已经存在的内容下添加内容，因此我们使用newContentStreamBefore()方法。
+           // 如果你想要在已经存在的内容上添加内容，你应该使用newContentStreamAfter()方法
+           //这些方法会创建一个新的内容流，并且把它添加到页面中
+           pdfCanvas.attachContentStream(page.newContentStreamAfter());
+           ImageData img = ImageDataFactory.create(imgPath);
+           Image image = new Image(img);
+           Rectangle rectangle = new Rectangle(0,image.getImageHeight()+80, image.getImageWidth()+100, image.getImageHeight()+10);
+           //pdf canvas 填充CanvasRenderer 可以知道是否填充满 当前区域 区域
+           // https://blog.csdn.net/u012397189/article/details/91346951
+           //  pdfCanvas.rectangle(rectangle);
+        //   pdfCanvas.saveState();
+           //设置透明
+//        PdfExtGState pdfExtGState = new PdfExtGState();
+//        pdfExtGState.setFillOpacity(0.8f);
+//        pdfCanvas.setExtGState(pdfExtGState);
+           //pdfCanvas.addImageAt(img,0,300,false);
+           //恢复存储前状态
+          // pdfCanvas.restoreState();
+           //填充区域 高级别api
+           Canvas canvas = new Canvas(pdfCanvas,rectangle);
+           canvas.add(image);
+           canvas.close();
+
+       } catch (Exception e) {
+           throw ExceptionUtil.wrapRuntime(e);
+       }
+
+    }
 
     public void t(String keystore, String password) throws Exception {
         //读取keystore ，获得私钥和证书链 jks
