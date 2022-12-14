@@ -2,7 +2,7 @@
   <div class="upload-file">
     <el-upload
       ref="fileUpload"
-      style="width: 50%"
+      :style="uploadStyle"
       class="upload-file-uploader"
       drag
       :limit="limit"
@@ -11,10 +11,13 @@
       :multiple="multiple"
       :headers="headers"
       :name="fieldName"
+      :on-preview="handlePreview"
       :before-upload="handleBeforeUpload"
       :on-exceed="handleExceed"
       :on-error="handleUploadError"
       :on-success="handleUploadSuccess"
+      :before-remove="handleBeforeRemove"
+
     >
       <!-- 上传按钮 -->
       <i class="el-icon-upload"></i>
@@ -48,15 +51,26 @@
     return strs != '' ? strs.substr(0, strs.length - 1) : ''
   }
 
+  import  openWindow from '@/utils/open-window'
   export default {
     name: 'yi-upload',
     props: {
       // 值
       value: [String, Object, Array],
+      disabled:{
+        type: Boolean,
+        default: false
+      },
       //上传地址
       uploadUrl: {
         type: String,
         required: true
+      },
+      uploadStyle:{
+        type:Object,
+        default: ()=>({
+          width: "365px"
+        })
       },
       fieldName: {
         type: String,
@@ -91,10 +105,21 @@
         default: (fileList) => {
           return listToString(fileList)
         }
+      },
+      deleteRequest:{
+        type: Function,
+
+        // default: (file) =>{
+        //   return  Promise.resolve()
+        // }
       }
+    },
+    created() {
+
     },
     data() {
       return {
+        tempIndex: 1,
         number: 0,
         uploadList: [],
         fileList: [],
@@ -103,32 +128,42 @@
         }
       }
     },
-    watch: {
-      // value: {
-      //   handler(val) {
-      //     if (val) {
-      //       let temp = 1;
-      //       // 首先将值转为数组
-      //       const list = Array.isArray(val) ? val : this.value.split(',');
-      //       // 然后将数组转为对象数组
-      //       this.fileList = list.map(item => {
-      //         if (typeof item === "string") {
-      //           item = { name: item, url: item };
-      //         }
-      //         item.uid = item.uid || new Date().getTime() + temp++;
-      //         return item;
-      //       });
-      //     } else {
-      //       this.fileList = [];
-      //       return [];
-      //     }
-      //   },
-      //   deep: true,
-      //   immediate: true
-      // }
+
+    mounted() {
+
+      let list;
+      if (Array.isArray(this.value)){
+        list=this.value
+      }else{
+        let temp=1
+        list= this.value.split(',')
+        list= list.map(item => {
+          if (typeof item === "string") {
+            item = { name: item, url: item };
+          }
+          item.uid = item.uid || new Date().getTime() + temp++;
+          return item;
+        });
+      }
+
+      // 然后将数组转为对象数组
+      this.fileList = this.fileList.concat(list)
+      this.number=this.fileList.size
     },
     methods: {
 
+      handlePreview(file){
+        // // 创建a标签
+        // const link = document.createElement('a');
+        // // download属性
+        // link.setAttribute('download', file.name);
+        // // href链接
+        // link.setAttribute('href', file.operationManual);
+        // // 自执行点击事件
+        // link.click();
+
+        openWindow(file.url,"文件预览",1000,800)
+      },
       // 上传前校检格式和大小
       handleBeforeUpload(file) {
         // 校检文件类型
@@ -149,7 +184,6 @@
             return false
           }
         }
-        //this.$message.loading("正在上传文件，请稍候...");
         this.number++
         return true
       },
@@ -160,18 +194,15 @@
       // 上传失败
       handleUploadError(err) {
         this.$message.error('上传文件失败，请重试')
-        // this.$modal.closeLoading()
       },
       // 上传成功回调
       handleUploadSuccess(res, file) {
-        console.log(res)
         if (res.code === 200) {
           const data = res.data
-          this.uploadList.push({ name: data.filename, url: data.url, fileId: data.fileId })
+          this.uploadList.push({ name: data.oldFilename, url: data.url, fileId: data.fileId })
           this.uploadedSuccessfully()
         } else {
           this.number--
-          // this.$modal.closeLoading();
           this.$message.error(res.msg)
           this.$refs.fileUpload.handleRemove(file)
           this.uploadedSuccessfully()
@@ -184,22 +215,39 @@
           this.uploadList = []
           this.number = 0
           this.$emit('input', this.renderValueHandle(this.fileList))
-          // this.$modal.closeLoading();
         }
       },
-      // 删除文件
-      handleDelete(index) {
-        this.fileList.splice(index, 1)
+      handleBeforeRemove(file,fileList){
+        const fileName = file.name.split('.')
+        const fileExt = fileName[fileName.length - 1]
+        const isTypeOk = this.fileType.indexOf(fileExt) >= 0
+        if (!isTypeOk) {
+          return true
+        }
+        if (!this.deleteRequest){
+          this.deleteLocalFile(file,fileList)
+          this.$message.success("删除文件成功")
+          return true
+        }
+        const payload = { fileId:file.fileId??file.response.data.fileId,url: file.url??file.response.data.url }
+        this.deleteRequest(payload).then(res=>{
+            if (res&&res.code!==200){
+              this.$message.error("删除文件失败"+res.message)
+              return false
+            }
+          this.deleteLocalFile(file,fileList)
+          this.$message.success("删除文件成功")
+          return true
+        }).catch(err=>{
+          this.$message.error("删除文件失败"+err)
+          return false
+        })
+      },
+      deleteLocalFile(file,fileList){
+        this.fileList=fileList.filter(item=>item.uid!==file.uid)
         this.$emit('input', this.renderValueHandle(this.fileList))
-      },
-      // 获取文件名称
-      getFileName(name) {
-        if (name.lastIndexOf('/') > -1) {
-          return name.slice(name.lastIndexOf('/') + 1)
-        } else {
-          return ''
-        }
       }
+
     }
   }
 </script>
