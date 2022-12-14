@@ -65,21 +65,27 @@ public class PdfTest {
         PdfReader pdfReader = new PdfReader(new FileInputStream(sourceFile));
         PdfDocument pdfDoc = new PdfDocument(pdfReader,new PdfWriter(targetFile));
         PdfPage page = pdfDoc.getPage(1);
+        //低级别
         PdfCanvas pdfCanvas = new PdfCanvas(page);
+        //我们想在已经存在的内容下添加内容，因此我们使用newContentStreamBefore()方法。
+        // 如果你想要在已经存在的内容上添加内容，你应该使用newContentStreamAfter()方法
+        //这些方法会创建一个新的内容流，并且把它添加到页面中
+        pdfCanvas.attachContentStream(page.newContentStreamAfter());
         ImageData img = ImageDataFactory.create("D:\\other\\100000\\itext\\image\\test.png");
         Image image = new Image(img);
         Rectangle rectangle = new Rectangle(0 + 20, PageSize.A4.getWidth(), image.getImageWidth(), image.getImageHeight());
         //pdf canvas 填充CanvasRenderer 可以知道是否填充满 当前区域 区域https://blog.csdn.net/u012397189/article/details/91346951
-        pdfCanvas.rectangle(rectangle);
+      //  pdfCanvas.rectangle(rectangle);
         pdfCanvas.saveState();
-        PdfExtGState pdfExtGState = new PdfExtGState();
-        pdfExtGState.setFillOpacity(0.8f);
-        pdfCanvas.setExtGState(pdfExtGState);
-        pdfCanvas.addImageAt(img,0,300,false);
-        //填充区域
-//        Canvas canvas = new Canvas(pdfCanvas,rectangle);
-//        canvas.add(image);
-//        canvas.close();
+        //设置透明
+//        PdfExtGState pdfExtGState = new PdfExtGState();
+//        pdfExtGState.setFillOpacity(0.8f);
+//        pdfCanvas.setExtGState(pdfExtGState);
+        //pdfCanvas.addImageAt(img,0,300,false);
+        //填充区域 高级别api
+        Canvas canvas = new Canvas(pdfCanvas,rectangle);
+        canvas.add(image);
+        canvas.close();
         pdfCanvas.restoreState();
         pdfDoc.close();
 //        List<KeywordLocation> wordsLocation1 = getKeyWordsLocation1(sourceFile, "国民信托有限公司");
