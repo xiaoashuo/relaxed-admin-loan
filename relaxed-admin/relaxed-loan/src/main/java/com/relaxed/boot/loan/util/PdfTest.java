@@ -3,14 +3,19 @@ package com.relaxed.boot.loan.util;
 import cn.hutool.core.util.IdUtil;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.geom.PageSize;
 import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.StampingProperties;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.canvas.parser.PdfDocumentContentParser;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.IPdfTextLocation;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.RegexBasedLocationExtractionStrategy;
+import com.itextpdf.kernel.pdf.extgstate.PdfExtGState;
+import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.signatures.BouncyCastleDigest;
@@ -51,21 +56,41 @@ public class PdfTest {
     public static final char[] PASSWORD = "123456".toCharArray();// keystore密码
     public static final String IMG = "D:\\other\\100000\\itext\\keystore\\seal.png";//印章图片路径
     public static void main(String[] args) throws Exception  {
-        String sourceFile = "D:\\mnt\\itext7\\400701_6985565.pdf";
-        String targetFile = "D:\\mnt\\itext7\\" + IdUtil.getSnowflakeNextId() + ".pdf";
+        String sourceFile = "D:\\other\\100000\\itext\\test.pdf";
+        String targetFile = "D:\\other\\100000\\itext\\" + IdUtil.getSnowflakeNextId() + ".pdf";
         //通过指定pdf文件名，指定关键字，和指定的pdf文件的待处理页数做参数
         //   getKeyWordsLocation(sourceFile, targetFile,"国民信托有限公司", 14);
         //generateSealImage("D:\\other\\100000\\seal.png");
-        List<KeywordLocation> wordsLocation1 = getKeyWordsLocation1(sourceFile, "国民信托有限公司");
-        BouncyCastleProvider provider = new BouncyCastleProvider();
-        Security.addProvider(provider);
-        //读取keystore ，获得私钥和证书链 jks
-        KeyStore ks = KeyStore.getInstance("JKS");
-        ks.load(new FileInputStream("D:\\mnt\\itext7\\keystore\\homejks.jks"), PASSWORD);
-        String alias = ks.aliases().nextElement();
-        PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
-        //获取证书链
-        Certificate[] chain = ks.getCertificateChain(alias);
+        //画图
+        PdfReader pdfReader = new PdfReader(new FileInputStream(sourceFile));
+        PdfDocument pdfDoc = new PdfDocument(pdfReader,new PdfWriter(targetFile));
+        PdfPage page = pdfDoc.getPage(1);
+        PdfCanvas pdfCanvas = new PdfCanvas(page);
+        ImageData img = ImageDataFactory.create("D:\\other\\100000\\itext\\image\\test.png");
+        Image image = new Image(img);
+        Rectangle rectangle = new Rectangle(0 + 20, PageSize.A4.getWidth(), image.getImageWidth(), image.getImageHeight());
+        //pdf canvas 填充 区域
+        pdfCanvas.rectangle(rectangle);
+        pdfCanvas.saveState();
+        PdfExtGState pdfExtGState = new PdfExtGState();
+        pdfExtGState.setFillOpacity(0.8f);
+        pdfCanvas.setExtGState(pdfExtGState);
+        pdfCanvas.addImageAt(img,0,300,false);
+        //填充区域
+//        Canvas canvas = new Canvas(pdfCanvas,rectangle);
+//        canvas.add(image);
+        pdfCanvas.restoreState();
+        pdfDoc.close();
+//        List<KeywordLocation> wordsLocation1 = getKeyWordsLocation1(sourceFile, "国民信托有限公司");
+//        BouncyCastleProvider provider = new BouncyCastleProvider();
+//        Security.addProvider(provider);
+//        //读取keystore ，获得私钥和证书链 jks
+//        KeyStore ks = KeyStore.getInstance("JKS");
+//        ks.load(new FileInputStream("D:\\mnt\\itext7\\keystore\\homejks.jks"), PASSWORD);
+//        String alias = ks.aliases().nextElement();
+//        PrivateKey pk = (PrivateKey) ks.getKey(alias, PASSWORD);
+//        //获取证书链
+//        Certificate[] chain = ks.getCertificateChain(alias);
         //读取keystore ，获得私钥和证书链 PKCS12
 //        String KEYSTORE="D:\\mnt\\itext7\\keystore\\keystore.p12";
 //        KeyStore ks = KeyStore.getInstance("PKCS12");
@@ -92,24 +117,24 @@ public class PdfTest {
 //        signInfo.setHeight(100);
 //        PdfUtil.multiSign(sourceFile,targetFile,wordsLocation1,signInfo);
 //        System.out.println("生成后文件名"+targetFile);
-        SignInfo signInfo=new SignInfo();
-        signInfo.setReason("测试");
-        signInfo.setLocation("北京市");
-        signInfo.setContact("xxx@qq.com");
-        //章图片最好用无背景图层的  否则会遮盖内容
-        signInfo.setDescription("测试。还会*@rts$");
-        signInfo.setImagePath("D:\\mnt\\itext7\\images\\testsign.png");
-        signInfo.setFieldName("ts");
-        signInfo.setPageNumber(1);
-        signInfo.setChain(chain);
-        signInfo.setRenderingMode(RenderingMode.GRAPHIC_AND_DESCRIPTION);
-        signInfo.setPk(pk);
-        signInfo.setX(100);
-        signInfo.setY(700);
-        signInfo.setWidth(400);
-        signInfo.setHeight(100);
-
-        PdfUtil.sign(sourceFile,targetFile,signInfo);
+//        SignInfo signInfo=new SignInfo();
+//        signInfo.setReason("测试");
+//        signInfo.setLocation("北京市");
+//        signInfo.setContact("xxx@qq.com");
+//        //章图片最好用无背景图层的  否则会遮盖内容
+//        signInfo.setDescription("测试。还会*@rts$");
+//        signInfo.setImagePath("D:\\mnt\\itext7\\images\\testsign.png");
+//        signInfo.setFieldName("ts");
+//        signInfo.setPageNumber(1);
+//        signInfo.setChain(chain);
+//        signInfo.setRenderingMode(RenderingMode.GRAPHIC_AND_DESCRIPTION);
+//        signInfo.setPk(pk);
+//        signInfo.setX(100);
+//        signInfo.setY(700);
+//        signInfo.setWidth(400);
+//        signInfo.setHeight(100);
+//
+//        PdfUtil.sign(sourceFile,targetFile,signInfo);
     //    PdfUtil.sign(sourceFile,targetFile,signInfo);
 //        SignInfo signInfo1=new SignInfo();
 //        signInfo1.setReason("测试");
