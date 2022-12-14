@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.ProductMapper">
+
+	<resultMap id="productMap" type="com.relaxed.boot.loan.model.entity.Product">
+  		<id property="productId" column="product_id"/>
+    		<result property="productName" column="product_name"/>
+    		<result property="productCode" column="product_code"/>
+    		<result property="productDesc" column="product_desc"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		product_id,        
+		product_name,
+product_code,
+		product_desc,        
+		deleted,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		p.product_id,        
+		p.product_name,
+        p.product_code,
+		p.product_desc,        
+		p.deleted,        
+		p.created_time,        
+		p.updated_time        
+	</sql>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.TemplateMapper">
+
+	<resultMap id="templateMap" type="com.relaxed.boot.loan.model.entity.Template">
+  		<id property="templateId" column="template_id"/>
+    		<result property="templateCode" column="template_code"/>
+    		<result property="templateName" column="template_name"/>
+    		<result property="templatePath" column="template_path"/>
+    		<result property="datafilePath" column="dataFile_path"/>
+    		<result property="fileType" column="file_type"/>
+    		<result property="remark" column="remark"/>
+    		<result property="createBy" column="create_by"/>
+    		<result property="updateBy" column="update_by"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		template_id,        
+		template_code,        
+		template_name,        
+		template_path,        
+		dataFile_path,        
+		file_type,        
+		remark,        
+		create_by,        
+		update_by,        
+		deleted,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		t.template_id,        
+		t.template_code,        
+		t.template_name,        
+		t.template_path,        
+		t.dataFile_path,        
+		t.file_type,        
+		t.remark,        
+		t.create_by,        
+		t.update_by,        
+		t.deleted,        
+		t.created_time,        
+		t.updated_time        
+	</sql>
+</mapper>

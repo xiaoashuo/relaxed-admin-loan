@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.CertificateMapper">
+
+	<resultMap id="certificateMap" type="com.relaxed.boot.loan.model.entity.Certificate">
+  		<id property="certificateId" column="certificate_id"/>
+    		<result property="certificateAlias" column="certificate_alias"/>
+    		<result property="subjectType" column="subject_type"/>
+    		<result property="certificateSubject" column="certificate_subject"/>
+    		<result property="certificateNo" column="certificate_no"/>
+    		<result property="certificatePwd" column="certificate_pwd"/>
+    		<result property="certificateRemark" column="certificate_remark"/>
+    		<result property="createBy" column="create_by"/>
+    		<result property="updateBy" column="update_by"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		certificate_id,        
+		certificate_alias,        
+		subject_type,        
+		certificate_subject,        
+		certificate_no,        
+		certificate_pwd,        
+		certificate_remark,        
+		create_by,        
+		update_by,        
+		deleted,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		c.certificate_id,        
+		c.certificate_alias,        
+		c.subject_type,        
+		c.certificate_subject,        
+		c.certificate_no,        
+		c.certificate_pwd,        
+		c.certificate_remark,        
+		c.create_by,        
+		c.update_by,        
+		c.deleted,        
+		c.created_time,        
+		c.updated_time        
+	</sql>
+</mapper>

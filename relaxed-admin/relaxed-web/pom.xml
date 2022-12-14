@@ -59,6 +59,11 @@
             <groupId>com.lovecyy</groupId>
             <artifactId>relaxed-admin-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.lovecyy</groupId>
+            <artifactId>relaxed-loan</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.lovecyy</groupId>
@@ -69,11 +74,11 @@
             <artifactId>springdoc-openapi-ui</artifactId>
         </dependency>
         <!-- swagger 增强版 ui -->
-<!--        <dependency>-->
-<!--            <groupId>com.github.xiaoymin</groupId>-->
-<!--            <artifactId>knife4j-springdoc-ui</artifactId>-->
-<!--            <version>3.0.3</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-springdoc-ui</artifactId>
+            <version>3.0.3</version>
+        </dependency>
         <dependency>
             <groupId>com.lovecyy</groupId>
             <artifactId>relaxed-spring-boot-starter-log</artifactId>

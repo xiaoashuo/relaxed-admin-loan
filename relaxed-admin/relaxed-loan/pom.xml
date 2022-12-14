@@ -19,7 +19,24 @@
 
         <dependency>
             <groupId>com.lovecyy</groupId>
-            <artifactId>relaxed-common-core</artifactId>
+            <artifactId>relaxed-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lovecyy</groupId>
+            <artifactId>relaxed-common-log-access</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lovecyy</groupId>
+            <artifactId>relaxed-common-log-operation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lovecyy</groupId>
+            <artifactId>relaxed-common-log-mdc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lovecyy</groupId>
+            <artifactId>relaxed-auth</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!-- add all iText 7 modules -->
         <dependency>

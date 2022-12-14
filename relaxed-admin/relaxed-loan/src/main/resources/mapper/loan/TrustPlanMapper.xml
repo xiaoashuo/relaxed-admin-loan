@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.TrustPlanMapper">
+
+	<resultMap id="trustPlanMap" type="com.relaxed.boot.loan.model.entity.TrustPlan">
+  		<id property="trustPlanId" column="trust_plan_id"/>
+    		<result property="trustPlanName" column="trust_plan_name"/>
+    		<result property="trustPlanNo" column="trust_plan_no"/>
+    		<result property="establishedTime" column="established_time"/>
+    		<result property="expireTime" column="expire_time"/>
+    		<result property="repayTime" column="repay_time"/>
+    		<result property="earningRate" column="earning_rate"/>
+    		<result property="fundPool" column="fund_pool"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		trust_plan_id,        
+		trust_plan_name,        
+		trust_plan_no,        
+		established_time,        
+		expire_time,        
+		repay_time,        
+		earning_rate,        
+		fund_pool,        
+		deleted,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		tp.trust_plan_id,        
+		tp.trust_plan_name,        
+		tp.trust_plan_no,        
+		tp.established_time,        
+		tp.expire_time,        
+		tp.repay_time,        
+		tp.earning_rate,        
+		tp.fund_pool,        
+		tp.deleted,        
+		tp.created_time,        
+		tp.updated_time        
+	</sql>
+</mapper>

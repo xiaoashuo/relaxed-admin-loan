@@ -16,19 +16,8 @@
 
         <dependency>
             <groupId>com.lovecyy</groupId>
-            <artifactId>relaxed-biz</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lovecyy</groupId>
-            <artifactId>relaxed-common-log-access</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lovecyy</groupId>
-            <artifactId>relaxed-common-log-operation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lovecyy</groupId>
-            <artifactId>relaxed-common-log-mdc</artifactId>
+            <artifactId>relaxed-framework</artifactId>
+            <scope>provided</scope>
         </dependency>
 
 
