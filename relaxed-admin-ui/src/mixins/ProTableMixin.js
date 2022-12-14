@@ -46,10 +46,10 @@ export default {
     },
     hasPermission(btnType){
       //未指定权限 则不进行权限判断
-      if (!this.contentTableConfig.permissions){
+      if (!this.contentTableConfig?.permissions){
         return true
       }
-      const permission= this.contentTableConfig.permissions[btnType]
+      const permission= this.contentTableConfig?.permissions[btnType]
       //未指定单位 按钮类型权限 则不进行权限判断
       if (!permission){
         return  true
@@ -60,7 +60,7 @@ export default {
      /** 展开/折叠操作 */
     toggleExpandAll(){
       this.destroyTable=true
-      this.contentTableConfig.tableProps['default-expand-all']=! this.contentTableConfig.tableProps['default-expand-all']
+       this.contentTableConfig.tableProps['default-expand-all']=! this.contentTableConfig?.tableProps['default-expand-all']
       this.$nextTick(() => {
         this.destroyTable = false;
       });

@@ -26,7 +26,9 @@ import ResizeMixin from './mixin/ResizeHandler'
 import WaterMark from '@/utils/watermark'
   import MenuEnum from "@/constants/enums/MenuEnum";
 import { mapState } from 'vuex'
-export default {
+  import {openTimeOut,closeTimeout} from '@/utils/astrict'
+
+  export default {
   name: 'Layout',
   components: {
     RightPanel,
@@ -78,9 +80,14 @@ export default {
     if (this.$store.getters.settings.watermark){
       WaterMark.set('main-content',this.$store.getters.name)
     }
-  },
+   // openTimeOut()
 
-  methods: {
+  },
+    beforeMount() {
+    //  closeTimeout()
+    },
+
+    methods: {
     handleClickOutside() {
       this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }

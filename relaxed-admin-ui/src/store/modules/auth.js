@@ -63,7 +63,7 @@ const actions = {
 
 
   // user logout
-  logout({dispatch, commit, state }) {
+  logout({dispatch, commit, state },reload=true) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         resolve()
@@ -72,17 +72,20 @@ const actions = {
       }).finally(()=>{
         // //延迟刷新一次 重置store中路由为空,以便下次路由获取更新
         dispatch('resetToken').then(()=>{
-          // //延迟刷新一次 重置store中路由为空,以便下次路由获取更新
-          setTimeout(() => {
-            window.location.reload()
-          }, 10)
+          console.log("是否",reload)
+          if (reload){
+            // //延迟刷新一次 重置store中路由为空,以便下次路由获取更新
+            setTimeout(() => {
+              window.location.reload()
+            }, 10)
+          }
         })
       })
     })
   },
 
   // remove token
-  resetToken({ commit }) {
+  resetToken({ dispatch,commit }) {
     return new Promise(resolve => {
       // //重置store中路由为空,以便下次路由获取
       //清空授权vuex

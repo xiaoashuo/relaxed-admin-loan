@@ -75,10 +75,10 @@ export default [
 <template>
   <div class="app-container">
     <!--搜索组件-->
-    <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
+    <page-search ref="pageSearchRef" :searchConfig="searchConfig"
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
-    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+    <pro-table ref="pageContentRef" :content-table-config="contentConfig" :request="tableRequest"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
     ></pro-table>
@@ -95,8 +95,8 @@ export default [
 <script>
 
   //页面配置参数
-  import {contentTableConfig} from "./config/content.config";
-  import {searchFormConfig} from "./config/search.config";
+  import {contentConfig} from "./config/content.config";
+  import {searchConfig} from "./config/search.config";
   import {modalConfig} from "./config/modal.config";
   //页面相关请求方法
   import {getPage, addObj, putObj, delObj} from "@/api/config";
@@ -106,8 +106,8 @@ export default [
     data() {
       return {
         //页面相关配置
-        contentTableConfig: contentTableConfig,
-        searchFormConfig: searchFormConfig,
+        contentConfig: contentConfig,
+        searchConfig: searchConfig,
         modalConfig: modalConfig,
         //表格请求
         tableRequest: getPage,
@@ -156,10 +156,10 @@ export default [
 
 ```
 
-#### contentTableConfig.js
+#### content.config.js
 
 ```js
-export const contentTableConfig={
+export const contentConfig={
   title: '配置列表',
   showSelectColumn:false,
   tableProps:{
@@ -228,10 +228,10 @@ export const contentTableConfig={
 
 
 
-#### searchFormConfig.js
+#### searchConfig.js
 
 ```js
-export const searchFormConfig={
+export const searchConfig={
   formItems:[
     {
       type:'text',
@@ -253,7 +253,7 @@ export const searchFormConfig={
 
 
 
-#### modalConfig.js
+#### modal.config.js
 
 ```js
 export const modalConfig= {

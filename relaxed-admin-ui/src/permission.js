@@ -20,7 +20,10 @@ router.beforeEach(async(to, from, next) => {
   // determine whether the user has logged in
   const hasToken = CACHE.getCache(TOKEN_KEY)
 
+  console.log(hasToken)
+
   if (hasToken) {
+    console.log("进去到")
     if (to.path === '/user/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
@@ -52,10 +55,12 @@ router.beforeEach(async(to, from, next) => {
   } else {
     /* has no token*/
 
+    console.log("当前白名单",whiteList,to.path)
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()
     } else {
+      console.log("--",whiteList,to.path)
       // other pages that do not have permission to access are redirected to the login page.
       next(`/user/login?redirect=${to.path}`)
       NProgress.done()

@@ -21,6 +21,13 @@ export const constantRoutes = [
     ]
   },
 
+  // 锁屏
+  {
+    path: '/lock',
+    hidden: true,
+    name: '锁屏页',
+    component: () => import('@/views/lock')
+  },
   // {
   //   path: '/login',
   //   component: () => import('@/views/login/index'),

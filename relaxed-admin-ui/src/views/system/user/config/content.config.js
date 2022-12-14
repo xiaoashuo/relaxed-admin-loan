@@ -10,10 +10,7 @@ export const contentTableConfig = {
     'cell-style': {
       padding: '2px 0'
     },
-    'default-sort': {
-      prop: 'phone',
-      order: 'descending'
-    }
+
   },
   permissions: {
     create: 'system:user:add',
@@ -52,7 +49,7 @@ export const contentTableConfig = {
       prop: 'phone',
       label: '手机号',
       minWidth: 150,
-      sortable: 'custom'
+
     },
     {
       prop: 'createdTime',

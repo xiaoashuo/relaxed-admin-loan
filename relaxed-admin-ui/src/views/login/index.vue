@@ -112,6 +112,7 @@ export default {
           this.$store.dispatch('auth/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.$store.dispatch('dict/checkDictStatus')
+            this.$storage.session.setCache("lastTime", new Date().getTime())
             this.loading = false
           }).catch(() => {
             this.loading = false

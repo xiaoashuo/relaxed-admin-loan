@@ -15,7 +15,7 @@ export const contentTableConfig={
     {
       prop: 'name',
       label:'组织名称',
-      minWidth: 100,
+      minWidth: 50,
     },
     {
       prop: 'sort',
@@ -30,13 +30,13 @@ export const contentTableConfig={
     {
       prop: 'createdTime',
       label:'创建时间',
-      minWidth:100,
+      minWidth:50,
       slotName: 'createdTime'
     },
     {
 
       label:'操作',
-      minWidth:50,
+      width:160,
       slotName:'handler'
     }
   ]
