@@ -1,18 +1,18 @@
 export const modalConfig= {
-
+  colLayout:{
+    span: 24
+  },
   formItems:[
-              
+
          {
       type:'text',
       label: '主键',
       field:'trustPlanId',
       placeholder:'请输入主键',
-      rules:[
-        { required: true, message: '请输入主键', trigger: 'blur' },
-      ]
+      isHidden: true
       },
-    
-              
+
+
          {
       type:'text',
       label: '信托计划名称',
@@ -22,8 +22,8 @@ export const modalConfig= {
         { required: true, message: '请输入信托计划名称', trigger: 'blur' },
       ]
       },
-    
-              
+
+
          {
       type:'text',
       label: '信托计划编号',
@@ -33,8 +33,8 @@ export const modalConfig= {
         { required: true, message: '请输入信托计划编号', trigger: 'blur' },
       ]
       },
-    
-              
+
+
          {
       type:'text',
       label: '信托计划成立日期',
@@ -44,8 +44,8 @@ export const modalConfig= {
         { required: true, message: '请输入信托计划成立日期', trigger: 'blur' },
       ]
       },
-    
-              
+
+
          {
       type:'text',
       label: '信托计划到期日期',
@@ -55,8 +55,8 @@ export const modalConfig= {
         { required: true, message: '请输入信托计划到期日期', trigger: 'blur' },
       ]
       },
-    
-              
+
+
          {
       type:'text',
       label: '信托计划摊还期开始日期',
@@ -66,7 +66,7 @@ export const modalConfig= {
         { required: true, message: '请输入信托计划摊还期开始日期', trigger: 'blur' },
       ]
       },
-    
-                      
+
+
   ],
 }

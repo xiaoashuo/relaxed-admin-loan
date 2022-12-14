@@ -10,11 +10,11 @@ export const contentTableConfig={
     },
 
   },
-  permissions: {
-    create: 'loan:trust-plan:add',
-    update: 'loan:trust-plan:edit',
-    delete: 'loan:trust-plan:delete'
-  },
+  // permissions: {
+  //   create: 'loan:trust-plan:add',
+  //   update: 'loan:trust-plan:edit',
+  //   delete: 'loan:trust-plan:delete'
+  // },
   propList:[
            {
       prop: 'trustPlanId',

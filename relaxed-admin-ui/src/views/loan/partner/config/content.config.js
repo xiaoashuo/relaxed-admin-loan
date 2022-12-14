@@ -10,11 +10,11 @@ export const contentTableConfig={
     },
 
   },
-  permissions: {
-    create: 'loan:partner:add',
-    update: 'loan:partner:edit',
-    delete: 'loan:partner:delete'
-  },
+  // permissions: {
+  //   create: 'loan:partner:add',
+  //   update: 'loan:partner:edit',
+  //   delete: 'loan:partner:delete'
+  // },
   propList:[
            {
       prop: 'partnerId',
@@ -28,12 +28,7 @@ export const contentTableConfig={
       minWidth:180,
       slotName: 'partnerAlias'
     },
-              {
-      prop: 'deleted',
-      label:'是否有效(0:未删除 1 或时间戳为已删除)',
-      minWidth:180,
-      slotName: 'deleted'
-    },
+
               {
       prop: 'createdTime',
       label:'创建时间',
