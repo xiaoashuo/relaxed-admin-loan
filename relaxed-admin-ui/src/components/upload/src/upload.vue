@@ -153,6 +153,7 @@
     methods: {
 
       handlePreview(file){
+        console.log(file)
         // // 创建a标签
         // const link = document.createElement('a');
         // // download属性
@@ -162,7 +163,7 @@
         // // 自执行点击事件
         // link.click();
 
-        openWindow(file.url,"文件预览",1000,800)
+        openWindow(file.url??file.response.data.url,"文件预览",1000,800)
       },
       // 上传前校检格式和大小
       handleBeforeUpload(file) {
