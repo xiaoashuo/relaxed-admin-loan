@@ -69,7 +69,7 @@ public class PdfTest {
         ImageData img = ImageDataFactory.create("D:\\other\\100000\\itext\\image\\test.png");
         Image image = new Image(img);
         Rectangle rectangle = new Rectangle(0 + 20, PageSize.A4.getWidth(), image.getImageWidth(), image.getImageHeight());
-        //pdf canvas 填充 区域https://blog.csdn.net/u012397189/article/details/91346951
+        //pdf canvas 填充CanvasRenderer 可以知道是否填充满 当前区域 区域https://blog.csdn.net/u012397189/article/details/91346951
         pdfCanvas.rectangle(rectangle);
         pdfCanvas.saveState();
         PdfExtGState pdfExtGState = new PdfExtGState();
