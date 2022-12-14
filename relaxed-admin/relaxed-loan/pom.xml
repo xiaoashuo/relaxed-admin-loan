@@ -19,20 +19,10 @@
 
         <dependency>
             <groupId>com.lovecyy</groupId>
-            <artifactId>relaxed-common</artifactId>
+            <artifactId>relaxed-framework</artifactId>
+            <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.lovecyy</groupId>
-            <artifactId>relaxed-common-log-access</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lovecyy</groupId>
-            <artifactId>relaxed-common-log-operation</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lovecyy</groupId>
-            <artifactId>relaxed-common-log-mdc</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>com.lovecyy</groupId>
             <artifactId>relaxed-auth</artifactId>
