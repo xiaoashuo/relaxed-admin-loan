@@ -1,5 +1,8 @@
 package com.relaxed.boot.web.system.controller;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
@@ -39,9 +42,21 @@ public class CommonController {
         String fullFilePath = fileMeta.getRelativeFilePath();
         Map<String,String> data=new HashMap<>();
        String fullUrl= RelaxedConfig.getUrl()+fullFilePath;
+
         data.put("url",fullUrl);
+        data.put("fileId",fileMeta.getFileId());
         data.put("filename",fileMeta.getFilename());
         return R.ok(data);
+
+    }
+
+
+    @PostMapping("/file/delete")
+    public R<?> deleteFile(String url) {
+        // 本地文件路径
+        String localFilePath = RelaxedConfig.getProfile()+StrUtil.removePrefixIgnoreCase(url,RelaxedConfig.getUrl());
+        FileUtil.del(localFilePath);
+        return R.ok();
 
     }
 }

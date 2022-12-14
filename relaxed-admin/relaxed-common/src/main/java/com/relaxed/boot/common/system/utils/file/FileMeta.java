@@ -20,6 +20,10 @@ public class FileMeta {
     private String filename;
 
     /**
+     * 文件唯一标识 code
+     */
+    private String fileId;
+    /**
      * 基础文件路径
      */
     private String basePath;

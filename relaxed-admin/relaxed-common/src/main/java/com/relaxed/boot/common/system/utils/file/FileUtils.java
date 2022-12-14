@@ -81,7 +81,9 @@ public class FileUtils {
         String absolutePath=basePath+"/"+relativeFilePath;
         File desc = getAbsoluteFile(absolutePath, fileName);
         file.transferTo(desc);
+        String fileId = IdUtil.getSnowflakeNextId()+"";
         FileMeta fileMeta = new FileMeta().setFilename(fileName)
+                .setFileId(fileId)
                 .setBasePath(basePath)
                 .setFilepath(relativeFilePath);
         return fileMeta;
