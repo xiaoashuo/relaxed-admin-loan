@@ -92,12 +92,25 @@
       }
     },
     methods: {
+      // 获取文件名称
+      getFileName(name) {
+        if (name.lastIndexOf("/") > -1) {
+          return name.slice(name.lastIndexOf("/") + 1);
+        } else {
+          return "";
+        }
+      },
       //表格相关
       showNewModal() {
         this.$refs.formModal.add({title: '新增',item:{authorizeType:1}})
       },
       showEditModal(item) {
         console.log(item)
+        let uploadData = item.certificateAddress
+        const filename= this.getFileName(uploadData)
+        const uid= new Date().getTime()
+
+        this.uploadData= uploadData+'#'+uid+'#'+filename+'3'+uid
         this.$refs.formModal.update({title: '编辑', item})
       },
       //删除数据
@@ -109,7 +122,7 @@
       handleBeforeRequest(payload){
        const authorizeType= payload.authorizeType
        if (authorizeType==2){
-          payload.certificateAddress=this.uploadData
+          payload.certificateAddress=this.uploadData?.split('#')[0]
         }
         return payload
       },

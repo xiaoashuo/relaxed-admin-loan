@@ -177,9 +177,18 @@
 
       }
     },
+    mounted() {
+      console.log("初始",this.value)
+      if (this.onReview){
+        this.fileList=this.onReview(this.value)
+      }else{
+        this.initValue(this.value)
+      }
+
+    },
     methods: {
       initValue(val){
-
+      console.log("初始值",val)
         if (!val){
           this.fileList=[]
           return
