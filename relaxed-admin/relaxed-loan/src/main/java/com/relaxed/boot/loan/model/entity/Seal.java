@@ -10,65 +10,48 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 /**
- * 签章证书表
+ * 签章图片表
  *
- * @author yakir 2022-12-14 11:36:23
+ * @author yakir 2022-12-15 10:25:25
  */
 @Data
-@TableName("t_certificate")
-@Schema(title = "签章证书表")  
-public class Certificate {
+@TableName("t_seal")
+@Schema(title = "签章图片表")  
+public class Seal {
 
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * 签章证书主键id
+	 * 签章图片主键id
 	 */
 	@TableId
-    @Schema(title = "签章证书主键id", description = "签章证书主键id")
-	private Integer certificateId;
+    @Schema(title = "签章图片主键id", description = "签章图片主键id")
+	private Integer sealId;
     
 	/**
-	 * 证书别名
+	 * 图片编号
 	 */
-    @Schema(title = "证书别名", description = "证书别名")
-	private String certificateAlias;
-    
-	/**
-	 * 主体类型 1个人 2公司
-	 */
-    @Schema(title = "主体类型 1个人 2公司", description = "主体类型 1个人 2公司")
-	private Integer subjectType;
+    @Schema(title = "图片编号", description = "图片编号")
+	private String sealCode;
     
 	/**
 	 * 个人及个人名称,公司及名称
 	 */
     @Schema(title = "个人及个人名称,公司及名称", description = "个人及个人名称,公司及名称")
-	private String certificateSubject;
+	private String sealSubject;
     
 	/**
-	 * 主体证件号 个人 身份证号 公司 则营业执照编码
+	 * 图片描述
 	 */
-    @Schema(title = "主体证件号 个人 身份证号 公司 则营业执照编码", description = "主体证件号 个人 身份证号 公司 则营业执照编码")
-	private String certificateNo;
+    @Schema(title = "图片描述", description = "图片描述")
+	private String sealRemark;
     
 	/**
-	 * 证书密码
+	 * 图片地址
 	 */
-    @Schema(title = "证书密码", description = "证书密码")
-	private String certificatePwd;
+    @Schema(title = "图片地址", description = "图片地址")
+	private String sealAddress;
     
-	/**
-	 * 证书描述
-	 */
-    @Schema(title = "证书描述", description = "证书描述")
-	private String certificateRemark;
-	/**
-	 * 证书地址
-	 */
-	@Schema(title = "证书地址", description = "证书地址")
-	private String certificateAddress;
-
 	/**
 	 * 创建人
 	 */

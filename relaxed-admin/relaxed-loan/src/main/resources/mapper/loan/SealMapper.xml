@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.SealMapper">
+
+	<resultMap id="sealMap" type="com.relaxed.boot.loan.model.entity.Seal">
+  		<id property="sealId" column="seal_id"/>
+    		<result property="sealCode" column="seal_code"/>
+    		<result property="sealSubject" column="seal_subject"/>
+    		<result property="sealRemark" column="seal_remark"/>
+    		<result property="sealAddress" column="seal_address"/>
+    		<result property="createBy" column="create_by"/>
+    		<result property="updateBy" column="update_by"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		seal_id,        
+		seal_code,        
+		seal_subject,        
+		seal_remark,        
+		seal_address,        
+		create_by,        
+		update_by,        
+		deleted,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		s.seal_id,        
+		s.seal_code,        
+		s.seal_subject,        
+		s.seal_remark,        
+		s.seal_address,        
+		s.create_by,        
+		s.update_by,        
+		s.deleted,        
+		s.created_time,        
+		s.updated_time        
+	</sql>
+</mapper>

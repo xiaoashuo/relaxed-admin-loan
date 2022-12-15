@@ -9,6 +9,7 @@
     		<result property="certificateSubject" column="certificate_subject"/>
     		<result property="certificateNo" column="certificate_no"/>
     		<result property="certificatePwd" column="certificate_pwd"/>
+    		<result property="certificateAddress" column="certificate_address"/>
     		<result property="certificateRemark" column="certificate_remark"/>
     		<result property="createBy" column="create_by"/>
     		<result property="updateBy" column="update_by"/>
@@ -24,7 +25,8 @@
 		certificate_subject,        
 		certificate_no,        
 		certificate_pwd,        
-		certificate_remark,        
+		certificate_remark,
+certificate_address,
 		create_by,        
 		update_by,        
 		deleted,        
@@ -39,7 +41,8 @@
 		c.certificate_subject,        
 		c.certificate_no,        
 		c.certificate_pwd,        
-		c.certificate_remark,        
+		c.certificate_remark,
+c.certificate_address,
 		c.create_by,        
 		c.update_by,        
 		c.deleted,        
