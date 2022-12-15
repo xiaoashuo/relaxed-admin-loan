@@ -4,14 +4,36 @@
       <yi-upload :upload-url="uploadUrl"
                  :render-value-handle="renderValueHandler"
                  :delete-request="deleteFileRequest"
+                 drag
                  v-model="uploadData"></yi-upload>
       <div>一级菜单</div>
+      <yi-upload :upload-url="uploadUrl"
+                 :render-value-handle="renderValueHandler"
+                 :delete-request="deleteFileRequest"
+
+                 list-type="picture-card"
+                 :on-preview="handlePictureCardPreview"
+                 :fileType="fileType"
+                 v-model="imageData"></yi-upload>
+      <el-dialog :visible.sync="dialogVisible">
+        <img width="100%" :src="dialogImageUrl" alt="">
+      </el-dialog>
+
+      <el-upload
+
+        :action="uploadUrl"
+        list-type="picture-card"
+
+      >
+        <i class="el-icon-plus"></i>
+      </el-upload>
       <router-view/>
     </div>
 </template>
 
 <script>
   import {YiUpload} from '@/components/upload'
+
   import {deleteFile} from '@/api/common'
 
   export default {
@@ -21,6 +43,10 @@
         },
       data(){
           return{
+            dialogImageUrl: '',
+            dialogVisible: false,
+            fileType:['png', 'jpg', 'jpeg'],
+            imageData:"",
             uploadUrl:  process.env.VUE_APP_BASE_API + "/common/file/upload",
             uploadData:[
               // {
@@ -35,7 +61,11 @@
           }
       },
       methods:{
-
+        handlePictureCardPreview(file) {
+          this.dialogImageUrl = file.url
+          console.log("t图片地址",file.url)
+          this.dialogVisible = true;
+        },
           renderValueHandler(fileList){
 
             let map = fileList.map(item=>{

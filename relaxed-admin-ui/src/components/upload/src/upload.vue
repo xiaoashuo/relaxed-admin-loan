@@ -2,15 +2,18 @@
   <div class="upload-file">
     <el-upload
       ref="fileUpload"
-      :style="uploadStyle"
+
+
       class="upload-file-uploader"
-      drag
+      :drag="drag"
       :limit="limit"
+      :list-type="listType"
       :file-list="fileList"
       :action="uploadUrl"
       :multiple="multiple"
       :headers="headers"
       :name="fieldName"
+      :show-file-list="showFileList"
       :on-preview="handlePreview"
       :before-upload="handleBeforeUpload"
       :on-exceed="handleExceed"
@@ -19,20 +22,23 @@
       :before-remove="handleBeforeRemove"
 
     >
-      <!-- 上传按钮 -->
-      <i class="el-icon-upload"></i>
-      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-      <!-- 上传提示 -->
+      <template v-if="listType==='picture-card'">
+        <i class="el-icon-plus" ></i>
+      </template>
 
-<!--       <div class="el-upload__tip text-center">-->
-<!--         -->
-<!--       </div>-->
-              <div class="el-upload__tip" slot="tip" >
-                请上传
-                <template v-if="fileSize"> 大小不超过{{ fileSize }}MB </template>
-                <template v-if="fileType"> 格式为 {{ fileType.join("/") }} </template>
-                的文件
-              </div>
+      <template  v-if="listType==='text'">
+        <!-- 上传按钮 -->
+        <i class="el-icon-upload"></i>
+        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+
+      </template>
+      <!-- 上传提示 -->
+      <div class="el-upload__tip" slot="tip"  v-if="showTip">
+        请上传
+        <template v-if="fileSize"> 大小不超过{{ fileSize }}MB </template>
+        <template v-if="fileType"> 格式为 {{ fileType.join("/") }} </template>
+        的文件
+      </div>
 
 
     </el-upload>
@@ -66,11 +72,10 @@
         type: String,
         required: true
       },
-      uploadStyle:{
-        type:Object,
-        default: ()=>({
-          width: "365px"
-        })
+
+      showFileList:{
+        type:Boolean,
+        default: true
       },
       fieldName: {
         type: String,
@@ -89,6 +94,10 @@
         type: Number,
         default: 5
       },
+      listType:{
+        type:String,
+        default:'text'
+      },
       // 文件类型, 例如['png', 'jpg', 'jpeg']
       fileType: {
         type: Array,
@@ -100,6 +109,7 @@
         default: 5
       },
 
+      onPreview: Function,
       renderValueHandle: {
         type: Function,
         default: (fileList) => {
@@ -112,11 +122,18 @@
         // default: (file) =>{
         //   return  Promise.resolve()
         // }
-      }
+      },
+      // 是否显示提示
+      isShowTip: {
+        type: Boolean,
+        default: true
+      },
+
     },
     created() {
 
     },
+
     data() {
       return {
         tempIndex: 1,
@@ -128,30 +145,41 @@
         }
       }
     },
-
+    computed: {
+      // 是否显示提示
+      showTip() {
+        return this.isShowTip && (this.fileType || this.fileSize);
+      },
+    },
     mounted() {
 
-      let list;
-      if (Array.isArray(this.value)){
-        list=this.value
-      }else{
-        let temp=1
-        list= this.value.split(',')
-        list= list.map(item => {
-          if (typeof item === "string") {
-            item = { name: item, url: item };
-          }
-          item.uid = item.uid || new Date().getTime() + temp++;
-          return item;
-        });
-      }
+      this.initValue();
 
-      // 然后将数组转为对象数组
-      this.fileList = this.fileList.concat(list)
-      this.number=this.fileList.size
     },
     methods: {
+      initValue(){
+        if (!this.value){
+          this.fileList=[]
+          return
+        }
+        let list;
+        if (Array.isArray(this.value)){
+          list=this.value
+        }else{
+          let temp=1
+          list= this.value.split(',')
+          list= list.map(item => {
+            if (typeof item === "string") {
+              item = { name: item, url: item };
+            }
+            item.uid = item.uid || new Date().getTime() + temp++;
+            return item;
+          });
+        }
 
+        // 然后将数组转为对象数组
+        this.fileList = this.fileList.concat(list)
+      },
       handlePreview(file){
         console.log(file)
         // // 创建a标签
@@ -162,8 +190,14 @@
         // link.setAttribute('href', file.operationManual);
         // // 自执行点击事件
         // link.click();
+        if (this.onPreview){
+          this.onPreview(file)
+        }else{
+          openWindow(file.url??file.response.data.url,"文件预览",1000,800)
+        }
 
-        openWindow(file.url??file.response.data.url,"文件预览",1000,800)
+
+
       },
       // 上传前校检格式和大小
       handleBeforeUpload(file) {
@@ -200,7 +234,7 @@
       handleUploadSuccess(res, file) {
         if (res.code === 200) {
           const data = res.data
-          this.uploadList.push({ name: data.oldFilename, url: data.url, fileId: data.fileId })
+          this.uploadList.push({ uid:file.uid,name: data.oldFilename, url: data.url, fileId: data.fileId })
           this.uploadedSuccessfully()
         } else {
           this.number--
@@ -255,6 +289,20 @@
 
 
 <style scoped lang="scss">
+  /*去除动画  如果filelist不复制uid 就会导致动画错位左右摇摆,因为默认是以uid做key。此处解决赋值uid,不去除动画效果*/
+  /*// .el-upload--picture-card 控制加号部分*/
+  /*::v-deep.hide .el-upload--picture-card {*/
+  /*  display: none;*/
+  /*}*/
+  /*// 去掉动画效果*/
+  /*::v-deep .el-list-enter-active,*/
+  /*::v-deep .el-list-leave-active {*/
+  /*  transition: all 0s;*/
+  /*}*/
 
+  /*::v-deep .el-list-enter, .el-list-leave-active {*/
+  /*  opacity: 0;*/
+  /*  transform: translateY(0);*/
+  /*}*/
 </style>
 
