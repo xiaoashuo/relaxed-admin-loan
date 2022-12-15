@@ -45,6 +45,11 @@
         this.selectData=this.options
       }
     },
+    watch:{
+      value(val){
+        this.selectValue=val
+      }
+    },
     methods:{
       getRequestData(){
         this.request().then(res=>{
