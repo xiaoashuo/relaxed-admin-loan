@@ -1,5 +1,5 @@
 export const contentTableConfig={
-  title: '签章证书表',
+  title: '签章图片表',
   showSelectColumn:false,
   tableProps:{
     'row-style': {
@@ -9,54 +9,43 @@ export const contentTableConfig={
       padding: '2px 0'
     },
 
+
   },
   // permissions: {
-  //   create: 'loan:certificate:add',
-  //   update: 'loan:certificate:edit',
-  //   delete: 'loan:certificate:delete'
+  //   create: 'loan:seal:add',
+  //   update: 'loan:seal:edit',
+  //   delete: 'loan:seal:delete'
   // },
   propList:[
            {
-      prop: 'certificateId',
-      label:'签章证书主键id',
+      prop: 'sealId',
+      label:'签章图片主键id',
       minWidth:180,
-      slotName: 'certificateId'
+      slotName: 'sealId'
     },
               {
-      prop: 'certificateAlias',
-      label:'证书别名',
+      prop: 'sealCode',
+      label:'图片编号',
       minWidth:180,
-      slotName: 'certificateAlias'
+      slotName: 'sealCode'
     },
               {
-      prop: 'subjectType',
-      label:'主体类型 1个人 2公司',
-      minWidth:180,
-      slotName: 'subjectType'
-    },
-              {
-      prop: 'certificateSubject',
+      prop: 'sealSubject',
       label:'个人及个人名称,公司及名称',
       minWidth:180,
-      slotName: 'certificateSubject'
+      slotName: 'sealSubject'
     },
               {
-      prop: 'certificateNo',
-      label:'主体证件号 个人 身份证号 公司 则营业执照编码',
+      prop: 'sealRemark',
+      label:'图片描述',
       minWidth:180,
-      slotName: 'certificateNo'
+      slotName: 'sealRemark'
     },
               {
-      prop: 'certificatePwd',
-      label:'证书密码',
+      prop: 'sealAddress',
+      label:'图片地址',
       minWidth:180,
-      slotName: 'certificatePwd'
-    },
-              {
-      prop: 'certificateRemark',
-      label:'证书描述',
-      minWidth:180,
-      slotName: 'certificateRemark'
+      slotName: 'sealAddress'
     },
               {
       prop: 'createBy',

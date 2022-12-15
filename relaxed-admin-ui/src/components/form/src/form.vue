@@ -136,6 +136,8 @@ export default {
         "label-width":'100px'
       })
     },
+    //表单动作
+    formAction:String,
     colLayout: {
       type: Object,
       default: () => ({
