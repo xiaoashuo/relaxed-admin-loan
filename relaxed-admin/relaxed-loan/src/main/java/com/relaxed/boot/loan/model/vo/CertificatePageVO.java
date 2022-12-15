@@ -66,6 +66,11 @@ public class CertificatePageVO {
     @Schema(title = "证书授权类型", description = "证书授权类型")
     private Integer authorizeType;
     /**
+     * 证书地址
+     */
+    @Schema(title = "证书地址", description = "证书地址")
+    private String certificateAddress;
+    /**
      * 创建人
      */
     @Schema(title = "创建人", description = "创建人")
