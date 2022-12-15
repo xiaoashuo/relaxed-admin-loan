@@ -14,19 +14,13 @@
                  list-type="picture-card"
                  :on-preview="handlePictureCardPreview"
                  :fileType="fileType"
+                  :limit="1"
                  v-model="imageData"></yi-upload>
       <el-dialog :visible.sync="dialogVisible">
         <img width="100%" :src="dialogImageUrl" alt="">
       </el-dialog>
 
-      <el-upload
 
-        :action="uploadUrl"
-        list-type="picture-card"
-
-      >
-        <i class="el-icon-plus"></i>
-      </el-upload>
       <router-view/>
     </div>
 </template>
