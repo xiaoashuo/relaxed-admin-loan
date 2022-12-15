@@ -19,6 +19,11 @@ public class Base64MultipartFile implements MultipartFile {
 
 	private final String header;
 
+	/**
+	 *
+	 * @param imgContent
+	 * @param header 格式类似于: data:image/png;base64
+	 */
 	public Base64MultipartFile(byte[] imgContent, String header) {
 		this.imgContent = imgContent;
 		this.header = header.split(";")[0];

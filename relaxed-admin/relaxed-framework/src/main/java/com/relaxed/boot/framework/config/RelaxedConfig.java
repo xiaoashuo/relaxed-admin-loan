@@ -1,4 +1,4 @@
-package com.relaxed.boot.web.config;
+package com.relaxed.boot.framework.config;
 
 import com.relaxed.common.core.util.WebUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;

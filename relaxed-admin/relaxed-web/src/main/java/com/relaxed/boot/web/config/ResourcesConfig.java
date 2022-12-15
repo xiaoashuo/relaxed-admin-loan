@@ -1,5 +1,6 @@
 package com.relaxed.boot.web.config;
 
+import com.relaxed.boot.framework.config.RelaxedConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

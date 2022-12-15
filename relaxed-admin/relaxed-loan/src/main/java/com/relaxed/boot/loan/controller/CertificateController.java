@@ -60,7 +60,7 @@ public class CertificateController {
     @CreateLog(msg = "新增签章证书表" )
     @PostMapping
     public R<Void> save(@RequestBody Certificate certificate) {
-        return certificateService.save(certificate) ?
+        return certificateService.saveCertificate(certificate) ?
                 R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增签章证书表失败");
     }
 

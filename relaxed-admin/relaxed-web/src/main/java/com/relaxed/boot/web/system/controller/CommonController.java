@@ -1,14 +1,12 @@
 package com.relaxed.boot.web.system.controller;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
-import com.relaxed.boot.web.config.RelaxedConfig;
+import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.boot.web.system.domain.FileDeleteReq;
-import com.relaxed.common.core.util.WebUtils;
 import com.relaxed.common.model.result.R;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

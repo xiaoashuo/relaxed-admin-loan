@@ -55,7 +55,16 @@ public class CertificatePageVO {
      */
     @Schema(title = "证书描述", description = "证书描述")
     private String certificateRemark;
-    
+    /**
+     * 证书存储库类型 1jks 2pkcs12
+     */
+    @Schema(title = "证书存储库类型", description = "证书存储库类型")
+    private Integer keystoreType;
+    /**
+     * 证书授权类型
+     */
+    @Schema(title = "证书授权类型", description = "证书授权类型")
+    private Integer authorizeType;
     /**
      * 创建人
      */

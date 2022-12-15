@@ -20,7 +20,7 @@ import com.relaxed.boot.common.system.utils.file.Base64MultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
-import com.relaxed.boot.web.config.RelaxedConfig;
+import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.common.core.exception.BusinessException;
 import com.relaxed.common.model.result.BaseResultCode;
 import lombok.RequiredArgsConstructor;

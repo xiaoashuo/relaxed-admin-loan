@@ -22,4 +22,11 @@ public interface CertificateService extends ExtendService<Certificate> {
     */
     PageResult<CertificatePageVO> queryPage(PageParam pageParam, CertificateQO qo);
 
+    /**
+     * 存储证书
+     * @param certificate
+     * @return
+     */
+    boolean saveCertificate(Certificate certificate);
+
 }

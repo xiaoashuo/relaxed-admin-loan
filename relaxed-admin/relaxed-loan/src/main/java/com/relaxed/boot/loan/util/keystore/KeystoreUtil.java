@@ -1,22 +1,35 @@
 package com.relaxed.boot.loan.util.keystore;
 
+import cn.hutool.core.io.FileUtil;
+import com.relaxed.boot.loan.util.keystore.pkcs12.KeystoreExtension;
 import com.relaxed.boot.loan.util.keystore.pkcs12.Pkcs;
+import lombok.SneakyThrows;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.ASN1Primitive;
+import org.bouncycastle.asn1.x509.BasicConstraints;
+import org.bouncycastle.asn1.x509.CRLDistPoint;
+import org.bouncycastle.asn1.x509.KeyUsage;
+import org.bouncycastle.cert.X509CertificateHolder;
+import org.bouncycastle.cert.X509v3CertificateBuilder;
+import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 import sun.security.tools.keytool.CertAndKeyGen;
-import sun.security.x509.X500Name;
+import sun.security.x509.*;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.security.*;
+import java.security.cert.*;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.CertificateFactory;
-import java.security.cert.X509Certificate;
 import java.security.interfaces.RSAPrivateCrtKey;
 import java.security.spec.RSAPublicKeySpec;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.Date;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author Yakir
@@ -67,6 +80,7 @@ public class KeystoreUtil {
         outputStream.close();
         System.out.println("keyStore file created ...");
     }
+
     public static void createKeyStoreFile1() throws Exception {
         String filePath = "D:\\mnt\\itext7\\keystore\\homejks.jks";
         final int keySize = 2048;
@@ -179,21 +193,217 @@ public class KeystoreUtil {
         PublicKey publicKey = KeyFactory.getInstance("RSA").generatePublic(spec);
         return new KeyPair(publicKey, key);
     }
+    public static X509Certificate getSelfCertificate(X500Name subject,
+                                              X500Name issuer,
+                                              Date startDate, long validity,
+                                              String signAlg,
+                                              PrivateKey privateKey,
+                                              PublicKey publicKey,
+                                              CertificateExtensions var5) throws CertificateException, InvalidKeyException, SignatureException, NoSuchAlgorithmException, NoSuchProviderException {
+        try {
+            Date endDate = new Date();
+            endDate.setTime(startDate.getTime() + validity * 1000L);
+            CertificateValidity var8 = new CertificateValidity(startDate, endDate);
+            X509CertInfo certInfo = new X509CertInfo();
+            certInfo.set("version", new CertificateVersion(2));
+            certInfo.set("serialNumber", new CertificateSerialNumber((new Random()).nextInt() & 2147483647));
+            AlgorithmId var10 = AlgorithmId.get(signAlg);
+            certInfo.set("algorithmID", new CertificateAlgorithmId(var10));
+            certInfo.set("subject", subject);
+            certInfo.set("key", new CertificateX509Key(publicKey));
+            certInfo.set("validity", var8);
+            certInfo.set("issuer", issuer);
+            if (var5 != null) {
+                certInfo.set("extensions", var5);
+            }
+
+            X509CertImpl var6 = new X509CertImpl(certInfo);
+            var6.sign(privateKey, signAlg);
+            return var6;
+        } catch (IOException var11) {
+            throw new CertificateEncodingException("getSelfCert: " + var11.getMessage());
+        }
+    }
+    @SneakyThrows
+    public static ByteArrayOutputStream generateKeyStore(KeystoreMeta keystoreMeta){
+
+        //密钥长度
+        final int keySize = 2048;
+        final long validity = keystoreMeta.getValidity(); // 10 years
+        final String alias = keystoreMeta.getAlias();
+        final char[] keyPassword = keystoreMeta.getPassword();
+        // keytool工具
+        //签名算法
+        String signAlg = "SHA1WithRSA";
+        CertAndKeyGen keyGen = new CertAndKeyGen("RSA", signAlg);
 
 
+        // 根据密钥长度生成公钥和私钥
+        keyGen.generate(keySize);
+
+        PrivateKey privateKey = keyGen.getPrivateKey();
+        PublicKey publicKey = keyGen.getPublicKeyAnyway();
+
+        // 证书
+        // 通用信息
+        X500Name issuerX500Name = new X500Name(keystoreMeta.getIssuer());
+        X500Name subjectX500Name = new X500Name(keystoreMeta.getSubject());
+        //不可以带E此种方法构建
+        X509Certificate certificate = getSelfCertificate(subjectX500Name, issuerX500Name,
+                new Date(), validity, signAlg, privateKey, publicKey, null);
+//        X500Name x500Name = new X500Name(commonName, organizationalUnit, organization, city, state, country);
+//        X509Certificate certificate = keyGen.getSelfCertificate(x500Name, new Date(), (long) validity * 24 * 60 * 60);
+
+
+        KeyStore keyStore = KeyStore.getInstance(keystoreMeta.getKeystoreType());
+        keyStore.load(null,null);
+        keyStore.setKeyEntry(alias,privateKey,keyPassword,new Certificate[]{certificate});
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        keyStore.store(outputStream,keyPassword);
+        outputStream.close();
+        System.out.println("keyStore file created ...");
+        return outputStream;
+    }
+    private static KeyPair getKey() throws NoSuchAlgorithmException {
+        // 密钥对 生成器，RSA算法 生成的  提供者是 BouncyCastle
+        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA",  new BouncyCastleProvider());
+        generator.initialize(1024);  // 密钥长度 1024
+        // 证书中的密钥 公钥和私钥
+        KeyPair keyPair = generator.generateKeyPair();
+        return keyPair;
+    }
+
+    @SneakyThrows
+    public static ByteArrayOutputStream generateKeyStoreV3(KeystoreMeta keystoreMeta){
+
+        //密钥长度
+        final int keySize = 2048;
+        final long validity = keystoreMeta.getValidity(); // 10 years
+        final String alias = keystoreMeta.getAlias();
+        final char[] keyPassword = keystoreMeta.getPassword();
+        // keytool工具
+        //签名算法
+        String signAlg = "SHA1WithRSA";
+
+//        // 密钥对 生成器，RSA算法 生成的  提供者是 BouncyCastle
+//        KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA",  new BouncyCastleProvider());
+//        generator.initialize(1024);  // 密钥长度 1024
+//        // 证书中的密钥 公钥和私钥
+//        KeyPair keyPair = generator.generateKeyPair();
+        CertAndKeyGen keyGen = new CertAndKeyGen("RSA", signAlg);
+        // 根据密钥长度生成公钥和私钥
+        keyGen.generate(keySize);
+        PrivateKey privateKey = keyGen.getPrivateKey();
+        PublicKey publicKey = keyGen.getPublicKeyAnyway();
+        // 证书
+        // 通用信息
+        //V3证书支持E
+        Certificate certificate = generateCertificateV3(keystoreMeta, new Date(),privateKey, publicKey, null);
+//        X500Name issuerX500Name = new X500Name(keystoreMeta.getIssuer());
+//        X500Name subjectX500Name = new X500Name(keystoreMeta.getSubject());
+        //此处证书不支持E
+//        X509Certificate certificate = getSelfCertificate(subjectX500Name, issuerX500Name,
+//                new Date(), validity, signAlg, privateKey, publicKey, null);
+//        X500Name x500Name = new X500Name(commonName, organizationalUnit, organization, city, state, country);
+//        X509Certificate certificate = keyGen.getSelfCertificate(x500Name, new Date(), (long) validity * 24 * 60 * 60);
+
+
+        KeyStore keyStore = KeyStore.getInstance(keystoreMeta.getKeystoreType());
+        keyStore.load(null,null);
+        keyStore.setKeyEntry(alias,privateKey,keyPassword,new Certificate[]{certificate});
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        keyStore.store(outputStream,keyPassword);
+        outputStream.close();
+        System.out.println("keyStore file created ...");
+        return outputStream;
+    }
+    public static Certificate generateCertificateV3(KeystoreMeta keystoreMeta,
+                                                    Date startDate,
+                                                    PrivateKey privateKey,PublicKey publicKey,
+                                                     List<KeystoreExtension> extensions) {
+
+        ByteArrayInputStream bout = null;
+        X509Certificate cert = null;
+        try {
+
+            Date endDate = new Date();
+            endDate.setTime(startDate.getTime() + keystoreMeta.getValidity() * 1000L);
+            // 证书序列号
+            BigInteger serial = BigInteger.probablePrime(256, new Random());
+            X509v3CertificateBuilder builder = new JcaX509v3CertificateBuilder(
+                    new org.bouncycastle.asn1.x500.X500Name(keystoreMeta.getIssuer()), serial, startDate, endDate,new org.bouncycastle.asn1.x500.X500Name(keystoreMeta.getSubject()), publicKey);
+            JcaContentSignerBuilder jBuilder = new JcaContentSignerBuilder( "SHA1withRSA");
+            SecureRandom secureRandom = new SecureRandom();
+            jBuilder.setSecureRandom(secureRandom);
+            ContentSigner singer = jBuilder.setProvider(  new BouncyCastleProvider()).build(privateKey);
+            // 分发点
+            ASN1ObjectIdentifier cRLDistributionPoints = new ASN1ObjectIdentifier( "2.5.29.31");
+            org.bouncycastle.asn1.x509.GeneralName generalName = new org.bouncycastle.asn1.x509.GeneralName( org.bouncycastle.asn1.x509.GeneralName.uniformResourceIdentifier, keystoreMeta.getCertificateCRL());
+            org.bouncycastle.asn1.x509.GeneralNames seneralNames = new org.bouncycastle.asn1.x509.GeneralNames(generalName);
+            org.bouncycastle.asn1.x509.DistributionPointName distributionPoint = new org.bouncycastle.asn1.x509.DistributionPointName( seneralNames);
+            org.bouncycastle.asn1.x509.DistributionPoint[] points = new org.bouncycastle.asn1.x509.DistributionPoint[1];
+            points[0] = new org.bouncycastle.asn1.x509.DistributionPoint(distributionPoint, null, null);
+            CRLDistPoint cRLDistPoint = new CRLDistPoint(points);
+            builder.addExtension(cRLDistributionPoints, true, cRLDistPoint);
+            // 用途
+            ASN1ObjectIdentifier keyUsage = new ASN1ObjectIdentifier( "2.5.29.15");
+            // | KeyUsage.nonRepudiation | KeyUsage.keyCertSign
+            builder.addExtension(keyUsage, true, new KeyUsage( KeyUsage.digitalSignature | KeyUsage.keyEncipherment));
+            // 基本限制 X509Extension.java
+            ASN1ObjectIdentifier basicConstraints = new ASN1ObjectIdentifier("2.5.29.19");
+            builder.addExtension(basicConstraints, true, new BasicConstraints(true));
+            // privKey:使用自己的私钥进行签名，CA证书
+            if (extensions != null){
+                for (KeystoreExtension ext : extensions) {
+                    builder.addExtension(
+                            new ASN1ObjectIdentifier(ext.getOid()),
+                            ext.isCritical(),
+                            ASN1Primitive.fromByteArray(ext.getValue()));
+                }
+            }
+            X509CertificateHolder holder = builder.build(singer);
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            bout = new ByteArrayInputStream(holder.toASN1Structure() .getEncoded());
+            cert = (X509Certificate) cf.generateCertificate(bout);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (bout != null) {
+                try {
+                    bout.close();
+                } catch (IOException e) {
+                }
+            }
+        }
+        return cert;
+    }
     public static void main(String[] args) throws Exception {
-        createKeyStoreFile1();;
-//        KeystoreMeta keystoreMeta = new KeystoreMeta()
-//                .password("123456")
-//                .certificateCRL("https://relaxed.cn")
-//                .alias("xiaoxi")
-//                .info().CN("Yakir")
-//                .OU("relaxed研发部")
-//                .O("relaxed有限公司")
-//                .L("上海")
-//                .E("relaxed@qq.com")
-//                .ST("上海")
-//                .C("CN").end();
+        createKeyStoreFile1();
+        KeystoreMeta keystoreMeta = new KeystoreMeta()
+                .validity(3650)
+                .password("123456")
+                .certificateCRL("https://relaxed.cn")
+                .alias("xiaoxi")
+                .issuer().CN("Yakir")
+                .OU("relaxed研发部")
+                .O("relaxed有限公司")
+                .L("上海")
+                .E("relaxed@qq.com")
+                .ST("上海")
+                .C("CN").end()
+                .subject().CN("Yakir")
+                .OU("relaxed研发部")
+                .O("relaxed有限公司")
+                .L("上海")
+                .E("relaxed@qq.com")
+                .ST("上海")
+                .C("CN").end();
+        ByteArrayOutputStream byteArrayOutputStream = generateKeyStoreV3(keystoreMeta);
+        String dir="D:\\other\\oss\\";
+        FileUtil.writeBytes(byteArrayOutputStream.toByteArray(),new File(dir,"test.p12"));
 //        Pkcs pkcs = new Pkcs();
 //        Map<String, byte[]> result = pkcs.createCert(keystoreMeta);
 //

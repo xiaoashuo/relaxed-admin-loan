@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.util.keystore;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.map.MapUtil;
 import lombok.Data;
 import lombok.Getter;
@@ -32,6 +33,14 @@ public class KeystoreMeta {
      */
     private String subject;
     /**
+     * 有效期 以小时为单位
+     */
+    private long validity;
+    /**
+     * KEYSTORE 密钥库类型 默认PKCS12
+     */
+    private String keystoreType="PKCS12";
+    /**
      * crl分发点 颁发地址
      */
     private String certificateCRL;
@@ -40,6 +49,14 @@ public class KeystoreMeta {
      * 证书别名
      */
     private String alias;
+    public KeystoreMeta keystoreType(String  keystoreType){
+        this.keystoreType=keystoreType;
+        return this;
+    }
+    public KeystoreMeta validity(long validity){
+        this.validity=validity;
+        return this;
+    }
     public KeystoreMeta alias(String alias){
         this.alias=alias;
         return this;
@@ -65,8 +82,11 @@ public class KeystoreMeta {
         this.password=password.toCharArray();
         return this;
     }
-    public Info info(){
-        return new Info(this);
+    public Info issuer(){
+        return new Info(this,"issuer");
+    }
+    public Info subject(){
+        return new Info(this,"subject");
     }
 
     public static void main(String[] args) {
@@ -74,11 +94,18 @@ public class KeystoreMeta {
                 .password("123456")
                 .certificateCRL("https://relaxed.cn")
                 .alias("xiaoxi")
-                .info().CN("Yakir")
+                .subject().CN("Yakir")
                 .OU("relaxed研发部")
                 .O("relaxed有限公司")
                 .L("上海")
                 .E("relaxed@qq.com")
+                .ST("上海")
+                .C("CN").end()
+                .issuer().
+                 CN("Yakir")
+                .OU("relaxed研发部")
+                .O("relaxed有限公司")
+                .L("上海")
                 .ST("上海")
                 .C("CN").end();
         System.out.println(keystoreMeta);
@@ -87,6 +114,7 @@ public class KeystoreMeta {
 
     public class Info{
         private KeystoreMeta _that;
+        private String field;
         /**
          * 名字与姓氏
          */
@@ -117,8 +145,9 @@ public class KeystoreMeta {
         private String C;
 
         private LinkedHashMap<String,String> innerParam=new LinkedHashMap<>();
-        public Info(KeystoreMeta that){
+        public Info(KeystoreMeta that,String field){
            this. _that=that;
+           this.field=field;
         }
 
         public Info CN(String val){
@@ -161,8 +190,7 @@ public class KeystoreMeta {
 
         public KeystoreMeta end(){
             String fullText = MapUtil.join(innerParam, ",", "=", true);
-            _that.issuer(fullText);
-            _that.subject(fullText);
+            BeanUtil.setFieldValue(_that,field,fullText);
             return _that;
         }
 

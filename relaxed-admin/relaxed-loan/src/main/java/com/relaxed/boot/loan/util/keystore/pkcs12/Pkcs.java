@@ -187,22 +187,41 @@ public class Pkcs {
 
 
     public static void main(String[] args) throws Exception{
-//        // CN: 名字与姓氏    OU : 组织单位名称
-//        // O ：组织名称  L : 城市或区域名称  E : 电子邮件
-//        // ST: 州或省份名称  C: 单位的两字母国家代码
-//        String issuerStr = "CN=Yakir,OU=relaxed研发部,O=relaxed有限公司,C=CN,E=relaxed@qq.com,L=上海,ST=上海";
-//        String subjectStr = "CN=Yakir,OU=relaxed研发部,O=relaxed有限公司,C=CN,E=relaxed@qq.com,L=上海,ST=上海";
-//        //crl分发点
-//        String certificateCRL  = "https://relaxed.cn";
-//        Map<String, byte[]> result = createCert("123456", issuerStr, subjectStr, certificateCRL);
-//
-//        String targetPath="D:\\mnt\\itext7\\keystore\\";
-//        FileOutputStream outPutStream = new FileOutputStream(targetPath+"keystore.p12"); // ca.jks
-//        outPutStream.write(result.get("keyStoreData"));
-//        outPutStream.close();
-//        FileOutputStream fos = new FileOutputStream(new File(targetPath+"keystore.cer"));
-//        fos.write(result.get("certificateData"));
-//        fos.flush();
-//        fos.close();
+        // CN: 名字与姓氏    OU : 组织单位名称
+        // O ：组织名称  L : 城市或区域名称  E : 电子邮件
+        // ST: 州或省份名称  C: 单位的两字母国家代码
+        String issuerStr = "CN=Yakir,OU=relaxed研发部,O=relaxed有限公司,C=CN,E=relaxed@qq.com,L=上海,ST=上海";
+        String subjectStr = "CN=Yakir,OU=relaxed研发部,O=relaxed有限公司,C=CN,E=relaxed@qq.com,L=上海,ST=上海";
+        //crl分发点
+        String certificateCRL  = "https://relaxed.cn";
+        KeystoreMeta keystoreMeta = new KeystoreMeta()
+                .validity(3650)
+                .password("123456")
+                .certificateCRL("https://relaxed.cn")
+                .alias("xiaoxi")
+                .issuer().CN("Yakir")
+                .OU("relaxed研发部")
+                .O("relaxed有限公司")
+                .L("上海")
+                 .E("relaxed@qq.com")
+                .ST("上海")
+                .C("CN").end()
+                .subject().CN("Yakir")
+                .OU("relaxed研发部")
+                .O("relaxed有限公司")
+                .L("上海")
+                .E("relaxed@qq.com")
+                .ST("上海")
+                .C("CN").end();
+        Map<String, byte[]> result = createCert(keystoreMeta);
+
+        String targetPath="D:\\mnt\\itext7\\keystore\\";
+        FileOutputStream outPutStream = new FileOutputStream(targetPath+"keystore.p12"); // ca.jks
+        outPutStream.write(result.get("keyStoreData"));
+        outPutStream.close();
+        FileOutputStream fos = new FileOutputStream(new File(targetPath+"keystore.cer"));
+        fos.write(result.get("certificateData"));
+        fos.flush();
+        fos.close();
     }
 }

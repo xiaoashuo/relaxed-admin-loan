@@ -51,7 +51,17 @@ public class Certificate {
 	 */
     @Schema(title = "主体证件号 个人 身份证号 公司 则营业执照编码", description = "主体证件号 个人 身份证号 公司 则营业执照编码")
 	private String certificateNo;
-    
+	/**
+	 * 证书存储库类型 1jks 2pkcs12
+	 */
+	@Schema(title = "证书存储库类型", description = "证书存储库类型")
+	private Integer keystoreType;
+	/**
+	 * 证书授权类型
+	 */
+	@Schema(title = "证书授权类型", description = "证书授权类型")
+	private Integer authorizeType;
+
 	/**
 	 * 证书密码
 	 */
