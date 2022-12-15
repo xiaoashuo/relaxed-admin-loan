@@ -52,17 +52,25 @@
     let strs = ''
     separator = separator || ','
     for (let i in list) {
-      strs += list[i].url + separator
+      let listElement = list[i]
+      console.log(listElement)
+      strs += listElement.url+'#'+listElement.uid+'#'+listElement.name+'#'+listElement.fileId + separator
     }
     return strs != '' ? strs.substr(0, strs.length - 1) : ''
   }
 
+  const strKeyMap={
+    0:'url',
+    1:'uid',
+    2:'name',
+    3:'fileId'
+  }
   import  openWindow from '@/utils/open-window'
   export default {
     name: 'yi-upload',
     props: {
       // 值
-      value: [String, Object, Array],
+      value: [String, Array],
       disabled:{
         type: Boolean,
         default: false
@@ -110,12 +118,15 @@
       },
 
       onPreview: Function,
-      renderValueHandle: {
+     //提交事件参数处理
+      onRender: {
         type: Function,
         default: (fileList) => {
           return listToString(fileList)
         }
       },
+      //回显数据处理
+      onReview:Function,
       deleteRequest:{
         type: Function,
 
@@ -128,6 +139,7 @@
         type: Boolean,
         default: true
       },
+
 
     },
     created() {
@@ -151,34 +163,47 @@
         return this.isShowTip && (this.fileType || this.fileSize);
       },
     },
-    mounted() {
+    watch:{
+      value:{
+        handler:function(val){
+          if (this.onReview){
+            this.fileList=this.onReview(val)
+          }else{
+            this.initValue(val)
+          }
 
-      this.initValue();
 
+        },
+
+      }
     },
     methods: {
-      initValue(){
-        if (!this.value){
+      initValue(val){
+
+        if (!val){
           this.fileList=[]
           return
         }
         let list;
-        if (Array.isArray(this.value)){
-          list=this.value
+        if (Array.isArray(val)){
+          list=val
         }else{
-          let temp=1
-          list= this.value.split(',')
+          list= val.split(',')
           list= list.map(item => {
+            let currentItem={}
             if (typeof item === "string") {
-              item = { name: item, url: item };
+              var paramArray = item.split('#')
+              for (let i=0;i<paramArray.length;i++){
+                currentItem[strKeyMap[i]]=paramArray[i]
+              }
+
             }
-            item.uid = item.uid || new Date().getTime() + temp++;
-            return item;
+            return currentItem;
           });
         }
 
         // 然后将数组转为对象数组
-        this.fileList = this.fileList.concat(list)
+        this.fileList = list
       },
       handlePreview(file){
         console.log(file)
@@ -249,7 +274,10 @@
           this.fileList = this.fileList.concat(this.uploadList)
           this.uploadList = []
           this.number = 0
-          this.$emit('input', this.renderValueHandle(this.fileList))
+          console.log("准备发射事件",this.fileList)
+          let args = this.onRender(this.fileList)
+          console.log("发射出事件",args)
+          this.$emit('input', args)
         }
       },
       handleBeforeRemove(file,fileList){
@@ -280,7 +308,7 @@
       },
       deleteLocalFile(file,fileList){
         this.fileList=fileList.filter(item=>item.uid!==file.uid)
-        this.$emit('input', this.renderValueHandle(this.fileList))
+        this.$emit('input', this.onRender(this.fileList))
       }
 
     }

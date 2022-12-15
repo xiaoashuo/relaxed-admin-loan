@@ -18,7 +18,7 @@ export const contentTableConfig={
   propList:[
            {
       prop: 'certificateId',
-      label:'签章证书主键id',
+      label:'id',
       minWidth:180,
       slotName: 'certificateId'
     },
@@ -30,19 +30,19 @@ export const contentTableConfig={
     },
               {
       prop: 'subjectType',
-      label:'主体类型 1个人 2公司',
+      label:'主体类型',
       minWidth:180,
       slotName: 'subjectType'
     },
               {
       prop: 'certificateSubject',
-      label:'个人及个人名称,公司及名称',
+      label:'主体名称',
       minWidth:180,
       slotName: 'certificateSubject'
     },
               {
       prop: 'certificateNo',
-      label:'主体证件号 个人 身份证号 公司 则营业执照编码',
+      label:'主体证件号',
       minWidth:180,
       slotName: 'certificateNo'
     },
@@ -64,18 +64,8 @@ export const contentTableConfig={
       minWidth:180,
       slotName: 'createBy'
     },
-              {
-      prop: 'updateBy',
-      label:'修改人',
-      minWidth:180,
-      slotName: 'updateBy'
-    },
-              {
-      prop: 'deleted',
-      label:'逻辑删除标识，未删除为 0，已删除为删除时间',
-      minWidth:180,
-      slotName: 'deleted'
-    },
+
+
               {
       prop: 'createdTime',
       label:'创建时间',

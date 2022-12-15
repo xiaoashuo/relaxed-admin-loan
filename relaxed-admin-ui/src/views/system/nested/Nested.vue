@@ -2,13 +2,13 @@
     <div style="width: 100%;height: 100%">
 
       <yi-upload class="upload-file" :upload-url="uploadUrl"
-                 :render-value-handle="renderValueHandler"
+
                  :delete-request="deleteFileRequest"
                  drag
                  v-model="uploadData"></yi-upload>
       <div>一级菜单</div>
       <yi-upload  class="image-file" :upload-url="uploadUrl"
-                 :render-value-handle="renderValueHandler"
+                 :onRender="renderValueHandler"
                  :delete-request="deleteFileRequest"
 
                  list-type="picture-card"
@@ -42,6 +42,7 @@
             fileType:['png', 'jpg', 'jpeg'],
             imageData:"",
             uploadUrl:  process.env.VUE_APP_BASE_API + "/common/file/upload",
+            // uploadData:"",
             uploadData:[
               // {
               //   "name": "1602655167008256000.pdf",
@@ -57,7 +58,6 @@
       methods:{
         handlePictureCardPreview(file) {
           this.dialogImageUrl = file.url
-          console.log("t图片地址",file.url)
           this.dialogVisible = true;
         },
           renderValueHandler(fileList){
@@ -66,7 +66,8 @@
               return  {
                 name: item.name,
                 url:item.url,
-                fileId: item.fileId
+                fileId: item.fileId,
+                uid:item.uid
               }
             })
             console.log("当前map",map)

@@ -30,6 +30,7 @@
               <yi-upload class="upload-file" :upload-url="uploadConfig.uploadUrl"
                          :delete-request="uploadConfig.deleteFileRequest"
                          :limit="uploadConfig.limit"
+                         :fileType="uploadConfig.fileType"
                          drag
                          v-model="uploadData"></yi-upload>
             </el-form-item>
@@ -84,7 +85,8 @@
         uploadConfig:{
           uploadUrl: FILE_UPLOAD_URL,
           deleteFileRequest:deleteFile,
-          limit: 1
+          limit: 1,
+          fileType:['jks','p12']
 
         }
       }
@@ -107,14 +109,14 @@
       handleBeforeRequest(payload){
        const authorizeType= payload.authorizeType
        if (authorizeType==2){
-          payload.keystoreUrl=this.uploadData
+          payload.certificateAddress=this.uploadData
         }
         return payload
       },
       handleBeforeSubmit(payload){
         const authorizeType= payload.authorizeType
 
-        if (authorizeType===2&&!payload.keystoreUrl){
+        if (authorizeType===2&&!payload.certificateAddress){
           this.$message.error("文件不能为空");
           return false
         }
