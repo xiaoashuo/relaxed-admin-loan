@@ -51,15 +51,7 @@ export const modalFormConfig= {
       },
 
 
-         {
-      type:'text',
-      label: '创建人',
-      field:'createBy',
-      placeholder:'请输入创建人',
-      rules:[
-        { required: true, message: '请输入创建人', trigger: 'blur' },
-      ]
-      },
+
 
 
   ],

@@ -19,7 +19,7 @@ export const contentTableConfig={
   propList:[
            {
       prop: 'sealId',
-      label:'签章图片主键id',
+      label:'主键id',
       minWidth:180,
       slotName: 'sealId'
     },
@@ -31,19 +31,19 @@ export const contentTableConfig={
     },
               {
       prop: 'sealSubject',
-      label:'个人及个人名称,公司及名称',
+      label:'主体名称',
       minWidth:180,
       slotName: 'sealSubject'
     },
               {
       prop: 'sealRemark',
-      label:'图片描述',
+      label:'描述',
       minWidth:180,
       slotName: 'sealRemark'
     },
               {
       prop: 'sealAddress',
-      label:'图片地址',
+      label:'地址',
       minWidth:180,
       slotName: 'sealAddress'
     },
@@ -59,12 +59,7 @@ export const contentTableConfig={
       minWidth:180,
       slotName: 'updateBy'
     },
-              {
-      prop: 'deleted',
-      label:'逻辑删除标识，未删除为 0，已删除为删除时间',
-      minWidth:180,
-      slotName: 'deleted'
-    },
+
               {
       prop: 'createdTime',
       label:'创建时间',

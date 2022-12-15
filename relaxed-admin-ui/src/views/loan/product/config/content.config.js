@@ -30,16 +30,11 @@ export const contentConfig={
     },
               {
       prop: 'productDesc',
-      label:'信托产品注释',
+      label:'描述',
       minWidth:180,
       slotName: 'productDesc'
     },
-              {
-      prop: 'deleted',
-      label:'是否有效(0:未删除 1 或时间戳为已删除)',
-      minWidth:180,
-      slotName: 'deleted'
-    },
+
               {
       prop: 'createdTime',
       label:'创建时间',

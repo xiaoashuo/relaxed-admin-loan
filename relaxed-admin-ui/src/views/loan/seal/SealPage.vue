@@ -28,7 +28,7 @@
   import {getPage, addObj, putObj, delObj} from "@/api/loan/seal";
 
   export default {
-    name: "签章图片表",
+    name: "seal",
     data() {
       return {
         //页面相关配置

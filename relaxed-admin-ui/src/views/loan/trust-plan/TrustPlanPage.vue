@@ -28,7 +28,7 @@
   import {getPage, addObj, putObj, delObj} from "@/api/loan/trust-plan";
 
   export default {
-    name: "信托计划配置表",
+    name: "trustPlan",
     data() {
       return {
         //页面相关配置

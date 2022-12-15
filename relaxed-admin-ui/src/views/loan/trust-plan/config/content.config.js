@@ -36,40 +36,35 @@ export const contentTableConfig={
     },
               {
       prop: 'establishedTime',
-      label:'信托计划成立日期',
+      label:'成立日期',
       minWidth:180,
       slotName: 'establishedTime'
     },
               {
       prop: 'expireTime',
-      label:'信托计划到期日期',
+      label:'到期日期',
       minWidth:180,
       slotName: 'expireTime'
     },
               {
       prop: 'repayTime',
-      label:'信托计划摊还期开始日期',
+      label:'摊还期开始日期',
       minWidth:180,
       slotName: 'repayTime'
     },
               {
       prop: 'earningRate',
-      label:'信托计划预期收益率',
+      label:'预期收益率',
       minWidth:180,
       slotName: 'earningRate'
     },
               {
       prop: 'fundPool',
-      label:'信托计划初始规模',
+      label:'初始规模',
       minWidth:180,
       slotName: 'fundPool'
     },
-              {
-      prop: 'deleted',
-      label:'是否有效(0:未删除 1 或时间戳为已删除)',
-      minWidth:180,
-      slotName: 'deleted'
-    },
+
               {
       prop: 'createdTime',
       label:'创建时间',

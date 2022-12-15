@@ -15,7 +15,7 @@ export const modalConfig= {
 
          {
       type:'text',
-      label: '信托计划名称',
+      label: '名称',
       field:'trustPlanName',
       placeholder:'请输入信托计划名称',
       rules:[
@@ -26,7 +26,7 @@ export const modalConfig= {
 
          {
       type:'text',
-      label: '信托计划编号',
+      label: '编号',
       field:'trustPlanNo',
       placeholder:'请输入信托计划编号',
       rules:[
@@ -37,7 +37,7 @@ export const modalConfig= {
 
          {
       type:'text',
-      label: '信托计划成立日期',
+      label: '成立日期',
       field:'establishedTime',
       placeholder:'请输入信托计划成立日期',
       rules:[
@@ -48,7 +48,7 @@ export const modalConfig= {
 
          {
       type:'text',
-      label: '信托计划到期日期',
+      label: '到期日期',
       field:'expireTime',
       placeholder:'请输入信托计划到期日期',
       rules:[
@@ -59,7 +59,7 @@ export const modalConfig= {
 
          {
       type:'text',
-      label: '信托计划摊还期开始日期',
+      label: '摊还期开始日期',
       field:'repayTime',
       placeholder:'请输入信托计划摊还期开始日期',
       rules:[
