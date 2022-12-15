@@ -11,7 +11,7 @@
     >
       <el-row>
         <template v-for="item in formItems">
-          <el-col v-bind="colLayout">
+          <el-col v-bind="getColLayout(item)">
             <template v-if="!item.isHidden && item.type === 'slot'">
               <slot
                 :name="item.slotName"
@@ -87,6 +87,11 @@
                   @input="handleValueChange($event, item.field)"
                 />
               </template>
+              <template v-else-if="item.type === 'upload'">
+                <yi-upload  v-bind="item.config"  :value="modelValue[`${item.field}`]"
+                              @input="handleValueChange($event, item.field)"></yi-upload>
+
+              </template>
             </el-form-item>
           </el-col>
         </template>
@@ -101,13 +106,15 @@
 <script>
 import {YiRadioGroup} from '@/components/radio'
 import { YiSelect, YiTreeSelect } from '@/components/select'
+import {YiUpload} from '@/components/upload'
 
 export default {
   name: 'YiForm',
   components: {
     YiRadioGroup,
     YiSelect,
-    YiTreeSelect
+    YiTreeSelect,
+    YiUpload
   },
   model: {
     prop: 'modelValue',
@@ -147,7 +154,11 @@ export default {
   data() {
     return {}
   },
+
   methods: {
+    getColLayout(item){
+      return item.colLayout??this.colLayout
+    },
     handleValueChange(value, field) {
       this.$emit('update:input', { ...this.modelValue, [field]: value })
     },
