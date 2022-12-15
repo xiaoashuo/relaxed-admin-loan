@@ -289,6 +289,7 @@
 
 
 <style scoped lang="scss">
+
   /*去除动画  如果filelist不复制uid 就会导致动画错位左右摇摆,因为默认是以uid做key。此处解决赋值uid,不去除动画效果*/
   /*// .el-upload--picture-card 控制加号部分*/
   /*::v-deep.hide .el-upload--picture-card {*/

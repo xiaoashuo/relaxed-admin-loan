@@ -1,13 +1,13 @@
 <template>
     <div style="width: 100%;height: 100%">
 
-      <yi-upload :upload-url="uploadUrl"
+      <yi-upload class="upload-file" :upload-url="uploadUrl"
                  :render-value-handle="renderValueHandler"
                  :delete-request="deleteFileRequest"
                  drag
                  v-model="uploadData"></yi-upload>
       <div>一级菜单</div>
-      <yi-upload :upload-url="uploadUrl"
+      <yi-upload  class="image-file" :upload-url="uploadUrl"
                  :render-value-handle="renderValueHandler"
                  :delete-request="deleteFileRequest"
 
@@ -83,5 +83,15 @@
 </script>
 
 <style lang="scss" scoped>
+  .upload-file{
+    ::v-deep  .upload-file-uploader{
+      width: 360px;
+    }
+  }
 
+  .image-file{
+    ::v-deep .upload-file-uploader{
+      width: 100%;
+    }
+  }
 </style>
