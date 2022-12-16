@@ -11,6 +11,7 @@
     		<result property="certificatePwd" column="certificate_pwd"/>
     		<result property="certificateAddress" column="certificate_address"/>
     		<result property="certificateRemark" column="certificate_remark"/>
+    		<result property="certificateFilename" column="certificate_filename"/>
     		<result property="keystoreType" column="keystore_type"/>
     		<result property="authorizeType" column="authorize_type"/>
     		<result property="createBy" column="create_by"/>
@@ -31,6 +32,7 @@
 certificate_address,
 keystore_type,
 authorize_type,
+certificate_filename,
 		create_by,        
 		update_by,        
 		deleted,        
@@ -49,6 +51,7 @@ authorize_type,
 c.certificate_address,
 c.keystore_type,
 c.authorize_type,
+c.certificate_filename,
 		c.create_by,        
 		c.update_by,        
 		c.deleted,        
