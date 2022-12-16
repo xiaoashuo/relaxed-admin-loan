@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.TemplateAreaMapper">
+
+	<resultMap id="templateAreaMap" type="com.relaxed.boot.loan.model.entity.TemplateArea">
+  		<id property="areaId" column="area_id"/>
+    		<result property="templateId" column="template_id"/>
+    		<result property="textArea" column="text_area"/>
+    		<result property="tagName" column="tag_name"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		area_id,        
+		template_id,        
+		text_area,        
+		tag_name,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		ta.area_id,        
+		ta.template_id,        
+		ta.text_area,        
+		ta.tag_name,        
+		ta.created_time,        
+		ta.updated_time        
+	</sql>
+</mapper>
