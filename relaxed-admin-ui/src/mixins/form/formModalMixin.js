@@ -21,6 +21,7 @@ export default {
       this.show(payload)
     },
     close(){
+      this.$emit('beforeClose')
       this.beforeClose()
       this.visible=false
       this.afterClose()

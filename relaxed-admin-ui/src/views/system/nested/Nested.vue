@@ -40,7 +40,7 @@
             dialogImageUrl: '',
             dialogVisible: false,
             fileType:['png', 'jpg', 'jpeg'],
-            imageData:"",
+            imageData:[],
             uploadUrl:  process.env.VUE_APP_BASE_API + "/common/file/upload",
             // uploadData:"",
             uploadData:[

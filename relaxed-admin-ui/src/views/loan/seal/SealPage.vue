@@ -79,7 +79,7 @@
           update: putObj
         },
         //上传配置
-        uploadData:"",
+        uploadData:[],
         uploadConfig:{
           uploadUrl: FILE_UPLOAD_URL,
           deleteFileRequest:deleteFile,
@@ -92,17 +92,24 @@
     methods: {
       //表格相关
       showNewModal() {
-        this.uploadData=""
+        this.uploadData=[]
         this.$refs.formModal.add({title: '新增',item:{sealSource:1}})
       },
       showEditModal(item) {
+
         console.log(item)
         if(item.sealSource==2){
           let uploadData = item.sealAddress
           const filename=item.sealFilename
           const uid= new Date().getTime()
 
-          this.uploadData= uploadData+'#'+uid+'#'+filename+'#'+uid
+          this.uploadData=[]
+          this.uploadData.push({
+            url: uploadData,
+            name: filename,
+            uid:uid,
+            fileId:uid
+          })
         }
 
         this.$refs.formModal.update({title: '编辑', item})
@@ -110,9 +117,9 @@
       handleBeforeRequest(payload){
         const sealSource= payload.sealSource
         if (sealSource==2){
-          let paramArray = this.uploadData?.split('#')
-          payload.sealAddress=paramArray?.[0]
-          payload.sealFilename=paramArray?.[2]
+          let paramArray = this.uploadData[0]
+          payload.sealAddress=paramArray.url
+          payload.sealFilename=paramArray.name
         }
         return payload
       },

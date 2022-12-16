@@ -81,7 +81,7 @@
         },
 
         //上传配置
-        uploadData:"",
+        uploadData:[],
         uploadConfig:{
           uploadUrl: FILE_UPLOAD_URL,
           deleteFileRequest:deleteFile,
@@ -100,8 +100,12 @@
           return "";
         }
       },
+      clearUploadData(){
+        this.uploadData=[]
+      },
       //表格相关
       showNewModal() {
+        this.clearUploadData()
         this.$refs.formModal.add({title: '新增',item:{authorizeType:1}})
       },
       showEditModal(item) {
@@ -109,22 +113,27 @@
         let uploadData = item.certificateAddress
         const filename=item.certificateFilename
         const uid= new Date().getTime()
-
-        this.uploadData= uploadData+'#'+uid+'#'+filename+'#'+uid
+        this.uploadData=[]
+        this.uploadData.push({
+          url: uploadData,
+          name: filename,
+          uid:uid,
+          fileId:uid
+        })
         this.$refs.formModal.update({title: '编辑', item})
       },
       //删除数据
       handleDelClick(item) {
-        delObj(item.id).then(res => {
+        delObj(item.certificateId).then(res => {
           this.$refs.pageContentRef.refreshTable(false)
         })
       },
       handleBeforeRequest(payload){
        const authorizeType= payload.authorizeType
        if (authorizeType==2){
-         let paramArray = this.uploadData?.split('#')
-         payload.certificateAddress=paramArray?.[0]
-         payload.certificateFilename=paramArray?.[2]
+         let paramArray = this.uploadData[0]
+         payload.certificateAddress=paramArray.url
+         payload.certificateFilename=paramArray.name
         }
         return payload
       },
@@ -139,6 +148,7 @@
       },
       //模态框相关 提交成功后刷新表格
       handleSubmit(res) {
+        this.uploadData=[]
         this.$refs.pageContentRef.refreshTable(false)
       },
       //搜索框相关 搜索数据

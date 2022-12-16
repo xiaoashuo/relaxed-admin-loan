@@ -74,6 +74,7 @@ export default {
     beforeClose() {
       this.formData = {}
       this.$refs.formRef.getCurrentForm().resetFields()
+
     },
     createdFormCallback(payload) {
       this.formData = payload.item ? payload.item : {}
