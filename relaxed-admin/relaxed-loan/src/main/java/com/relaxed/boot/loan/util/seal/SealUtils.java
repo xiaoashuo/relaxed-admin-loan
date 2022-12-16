@@ -12,7 +12,7 @@ public class SealUtils {
         if (!file.exists()) {
             file.getParentFile().mkdirs();
         }
-        Seal.builder().size(200).borderCircle(SealCircle.builder().line(4).width(95).height(95).build())
+        SealGenerate.builder().size(200).borderCircle(SealCircle.builder().line(4).width(95).height(95).build())
                 .mainFont(SealFont.builder().text(orgName).size(22).space(22.0).margin(4).build())
                 .centerFont(SealFont.builder().text("★").size(60).build())
                 .titleFont(SealFont.builder().text("学时证明").size(16).space(8.0).margin(54).build()).build().draw(path);
@@ -20,6 +20,7 @@ public class SealUtils {
 
     public static void main(String[] args) {
         try {
+
             OfficialSeal_1("D:\\other\\100000\\itext\\image\\testaa.png", "中国好公民");
         } catch (Exception e) {
             e.printStackTrace();
@@ -27,7 +28,7 @@ public class SealUtils {
     }
 
     public static void OfficialSeal_2() throws Exception {
-        Seal.builder().size(300).borderCircle(SealCircle.builder().line(5).width(140).height(140).build())
+        SealGenerate.builder().size(300).borderCircle(SealCircle.builder().line(5).width(140).height(140).build())
                 .mainFont(SealFont.builder().text("中国四大天王股份有限公司").size(35).space(35.0).margin(10).build())
                 .centerFont(SealFont.builder().text("★").size(100).build())
                 .titleFont(SealFont.builder().text("电子签章").size(22).space(10.0).margin(68).build()).build()
@@ -35,7 +36,7 @@ public class SealUtils {
     }
 
     public static void OfficialSeal_3() throws Exception {
-        Seal.builder()
+        SealGenerate.builder()
                 .size(300)
                 .borderCircle(SealCircle.builder().line(3).width(144).height(100).build())
                 .borderInnerCircle(SealCircle.builder().line(1).width(140).height(96).build())
@@ -47,7 +48,7 @@ public class SealUtils {
     }
 
     public static void PrivateSeal_1() throws Exception {
-        Seal.builder()
+        SealGenerate.builder()
                 .size(300)
                 .borderSquare(16)
                 .mainFont(SealFont.builder().text("刘德华").size(120).build())
@@ -57,7 +58,7 @@ public class SealUtils {
 
 
     public static void PrivateSeal_2() throws Exception {
-        Seal.builder()
+        SealGenerate.builder()
                 .size(300)
                 .borderSquare(16)
                 .mainFont(SealFont.builder().text("刘德华印").size(120).build())

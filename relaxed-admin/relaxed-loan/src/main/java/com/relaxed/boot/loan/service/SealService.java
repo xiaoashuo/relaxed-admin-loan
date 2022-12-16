@@ -22,4 +22,5 @@ public interface SealService extends ExtendService<Seal> {
     */
     PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo);
 
+    boolean saveSeal(Seal seal);
 }

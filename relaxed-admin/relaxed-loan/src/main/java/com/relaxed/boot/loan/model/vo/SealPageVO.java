@@ -31,7 +31,21 @@ public class SealPageVO {
      */
     @Schema(title = "个人及个人名称,公司及名称", description = "个人及个人名称,公司及名称")
     private String sealSubject;
-    
+    /**
+     *  签章来源
+     */
+    @Schema(title = "签章来源", description = "签章来源")
+    private Integer sealSource;
+    /**
+     * 图片文件名称
+     */
+    @Schema(title = "图片文件名称", description = "图片文件名称")
+    private String sealFilename;
+    /**
+     *  签章图片类型
+     */
+    @Schema(title = "签章图片类型", description = "签章图片类型")
+    private Integer sealPictureType;
     /**
      * 图片描述
      */

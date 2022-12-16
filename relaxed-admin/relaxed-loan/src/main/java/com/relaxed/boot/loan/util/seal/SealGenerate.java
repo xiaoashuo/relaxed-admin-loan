@@ -13,10 +13,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.OutputStream;
 
 @Builder
 @Data
-public class Seal {
+public class SealGenerate {
     // 起始位置
     private static final int INIT_BEGIN = 5;
 
@@ -42,7 +43,87 @@ public class Seal {
     private Integer borderSquare;
     // 加字
     private String stamp;
+    /**
+     * 画公章
+     */
+    public boolean drawToOutStream(OutputStream os) throws Exception {
+        if (borderSquare != null) {
+            return draw2ToOutStream(os); // 画私章
+        }
 
+        //1.画布
+        BufferedImage bi = new BufferedImage(size, size, BufferedImage.TYPE_4BYTE_ABGR);
+
+        //2.画笔
+        Graphics2D g2d = bi.createGraphics();
+
+        //2.1抗锯齿设置
+        //文本不抗锯齿，否则圆中心的文字会被拉长
+        RenderingHints hints = new RenderingHints(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+        //其他图形抗锯齿
+        hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHints(hints);
+
+        //2.2设置背景透明度
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 0));
+
+        //2.3填充矩形
+        g2d.fillRect(0, 0, size, size);
+
+        //2.4重设透明度，开始画图
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC, 1));
+
+        //2.5设置画笔颜色
+        g2d.setPaint(color == null ? Color.RED : color);
+
+        //3.画边线圆
+        if (borderCircle != null) {
+            drawCircle(g2d, borderCircle, INIT_BEGIN, INIT_BEGIN);
+        } else {
+            throw new Exception("BorderCircle can not null！");
+        }
+
+        int borderCircleWidth = borderCircle.getWidth();
+        int borderCircleHeight = borderCircle.getHeight();
+
+        //4.画内边线圆
+        if (borderInnerCircle != null) {
+            int x = INIT_BEGIN + borderCircleWidth - borderInnerCircle.getWidth();
+            int y = INIT_BEGIN + borderCircleHeight - borderInnerCircle.getHeight();
+            drawCircle(g2d, borderInnerCircle, x, y);
+        }
+
+        //5.画内环线圆
+        if (innerCircle != null) {
+            int x = INIT_BEGIN + borderCircleWidth - innerCircle.getWidth();
+            int y = INIT_BEGIN + borderCircleHeight - innerCircle.getHeight();
+            drawCircle(g2d, innerCircle, x, y);
+        }
+
+        //6.画弧形主文字
+        if (borderCircleHeight != borderCircleWidth) {
+            drawArcFont4Oval(g2d, borderCircle, mainFont, true);
+        } else {
+            drawArcFont4Circle(g2d, borderCircleHeight, mainFont, true);
+        }
+
+        //7.画弧形副文字
+        if (borderCircleHeight != borderCircleWidth) {
+            drawArcFont4Oval(g2d, borderCircle, viceFont, false);
+        } else {
+            drawArcFont4Circle(g2d, borderCircleHeight, viceFont, false);
+        }
+
+        //8.画中心字
+        drawFont(g2d, (borderCircleWidth + INIT_BEGIN) * 2, (borderCircleHeight + INIT_BEGIN) * 2, centerFont);
+
+        //9.画抬头文字
+        drawFont(g2d, (borderCircleWidth + INIT_BEGIN) * 2, (borderCircleHeight + INIT_BEGIN) * 2, titleFont);
+
+        g2d.dispose();
+
+        return ImageIO.write(bi, "PNG", os);
+    }
     /**
      * 画公章
      */
@@ -374,7 +455,74 @@ public class Seal {
         g2d.setStroke(new BasicStroke(lineSize));
         g2d.drawOval(x, y, circle.getWidth() * 2, circle.getHeight() * 2);
     }
+    /**
+     * 画私章
+     */
+    public boolean draw2ToOutStream(OutputStream os) throws Exception {
+        if (mainFont == null || mainFont.getText().length() < 2 || mainFont.getText().length() > 4) {
+            throw new IllegalArgumentException("请输入2-4个字");
+        }
 
+        int fixH = 18;
+        int fixW = 2;
+
+        //1.画布
+        BufferedImage bi = new BufferedImage(size, size / 2, BufferedImage.TYPE_4BYTE_ABGR);
+
+        //2.画笔
+        Graphics2D g2d = bi.createGraphics();
+
+        //2.1设置画笔颜色
+        g2d.setPaint(Color.RED);
+
+        //2.2抗锯齿设置
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        //3.写签名
+        int marginW = fixW + borderSquare;
+        float marginH;
+        FontRenderContext context = g2d.getFontRenderContext();
+        Rectangle2D rectangle;
+        Font f;
+
+        if (mainFont.getText().length() == 2) {
+            if (stamp != null && stamp.trim().length() > 0) {
+                bi = drawThreeFont(bi, g2d, mainFont.append(stamp), borderSquare, size, fixH, fixW, true);
+            } else {
+                f = new Font(mainFont.getFamily(), Font.BOLD, mainFont.getSize());
+                g2d.setFont(f);
+                rectangle = f.getStringBounds(mainFont.getText().substring(0, 1), context);
+                marginH = (float) (Math.abs(rectangle.getCenterY()) * 2 + marginW) + fixH - 4;
+                g2d.drawString(mainFont.getText().substring(0, 1), marginW, marginH);
+                marginW += Math.abs(rectangle.getCenterX()) * 2 + (mainFont.getSpace() == null ? INIT_BEGIN : mainFont.getSpace());
+                g2d.drawString(mainFont.getText().substring(1), marginW, marginH);
+
+                //拉伸
+                BufferedImage nbi = new BufferedImage(size, size, bi.getType());
+                Graphics2D ng2d = nbi.createGraphics();
+                ng2d.setPaint(Color.RED);
+                ng2d.drawImage(bi, 0, 0, size, size, null);
+
+                //画正方形
+                ng2d.setStroke(new BasicStroke(borderSquare));
+                ng2d.drawRect(0, 0, size, size);
+                ng2d.dispose();
+                bi = nbi;
+            }
+        } else if (mainFont.getText().length() == 3) {
+            if (stamp != null && stamp.trim().length() > 0) {
+                bi = drawFourFont(bi, mainFont.append(stamp), borderSquare, size, fixH, fixW);
+            } else {
+                bi = drawThreeFont(bi, g2d, mainFont, borderSquare, size, fixH, fixW, false);
+            }
+        } else {
+            bi = drawFourFont(bi, mainFont, borderSquare, size, fixH, fixW);
+        }
+
+        g2d.dispose();
+
+        return ImageIO.write(bi, "PNG", os);
+    }
     /**
      * 画私章
      */

@@ -65,12 +65,14 @@ public class CertificateServiceImpl extends ExtendServiceImpl<CertificateMapper,
                     .E("relaxed@qq.com")
                     .ST("上海")
                     .C("CN").end();
-            String filename = IdUtil.simpleUUID() + "."+keystoreTypeEnum.getSuffix();
+            String filename = "sys-"+IdUtil.simpleUUID() + "."+keystoreTypeEnum.getSuffix();
+
             ByteArrayOutputStream byteArrayOutputStream = KeystoreUtil.generateKeyStoreV3(keystoreMeta);
             ByteArrayMultipartFile file = new ByteArrayMultipartFile(byteArrayOutputStream.toByteArray(), filename);
-            FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(),"keystore", file,
+            FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(),"profile/keystore", file,
                     FileConfig.create().splitDate(false));
             String address = RelaxedConfig.getUrl() + fileMeta.getRelativeFilePath();
+            certificate.setCertificateFilename(filename);
             certificate.setCertificateAddress(address);
         }
         boolean result = save(certificate);

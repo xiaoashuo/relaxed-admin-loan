@@ -8,6 +8,9 @@
     		<result property="sealSubject" column="seal_subject"/>
     		<result property="sealRemark" column="seal_remark"/>
     		<result property="sealAddress" column="seal_address"/>
+    		<result property="sealSource" column="seal_source"/>
+    		<result property="sealPictureType" column="seal_picture_type"/>
+    		<result property="sealFilename" column="seal_filename"/>
     		<result property="createBy" column="create_by"/>
     		<result property="updateBy" column="update_by"/>
     		<result property="deleted" column="deleted"/>
@@ -20,7 +23,10 @@
 		seal_code,        
 		seal_subject,        
 		seal_remark,        
-		seal_address,        
+		seal_address,
+seal_source,
+seal_filename,
+seal_picture_type,
 		create_by,        
 		update_by,        
 		deleted,        
@@ -33,7 +39,10 @@
 		s.seal_code,        
 		s.seal_subject,        
 		s.seal_remark,        
-		s.seal_address,        
+		s.seal_address,
+s.seal_filename,
+s.seal_source,
+s.seal_picture_type,
 		s.create_by,        
 		s.update_by,        
 		s.deleted,        

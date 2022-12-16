@@ -60,7 +60,7 @@ public class SealController {
     @CreateLog(msg = "新增签章图片表" )
     @PostMapping
     public R<Void> save(@RequestBody Seal seal) {
-        return sealService.save(seal) ?
+        return sealService.saveSeal(seal) ?
                 R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增签章图片表失败");
     }
 
