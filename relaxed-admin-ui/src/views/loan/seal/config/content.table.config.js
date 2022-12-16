@@ -47,18 +47,7 @@ export const contentTableConfig={
       minWidth:180,
       slotName: 'sealAddress'
     },
-              {
-      prop: 'createBy',
-      label:'创建人',
-      minWidth:180,
-      slotName: 'createBy'
-    },
-              {
-      prop: 'updateBy',
-      label:'修改人',
-      minWidth:180,
-      slotName: 'updateBy'
-    },
+
 
               {
       prop: 'createdTime',

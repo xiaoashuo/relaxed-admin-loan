@@ -58,12 +58,6 @@ export const contentTableConfig={
       minWidth:180,
       slotName: 'certificateRemark'
     },
-              {
-      prop: 'createBy',
-      label:'创建人',
-      minWidth:180,
-      slotName: 'createBy'
-    },
 
 
               {

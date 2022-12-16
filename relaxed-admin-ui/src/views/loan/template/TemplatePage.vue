@@ -28,7 +28,7 @@
   import {getPage, addObj, putObj, delObj} from "@/api/loan/template";
 
   export default {
-    name: "模板文件配置表",
+    name: "template",
     data() {
       return {
         //页面相关配置

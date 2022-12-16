@@ -12,7 +12,34 @@
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :req-function="reqFunction"
                 @submitSuccess="handleSubmit"
-    ></form-modal>
+                :before-request="handleBeforeRequest"
+                :before-submit="handleBeforeSubmit"
+    >
+      <template #sealSource="scope">
+        <el-col>
+          <el-form-item :label="scope.row.item.label">
+
+            <yi-radio-group  v-bind="scope.row.item.config"  v-model="scope.row.data[`${scope.row.item.field}`]"  >
+            </yi-radio-group>
+
+          </el-form-item>
+
+          <template v-if="scope.row.data[`${scope.row.item.field}`]===2">
+            <el-form-item label="证书文件">
+              <yi-upload class="upload-file" :upload-url="uploadConfig.uploadUrl"
+                         :delete-request="uploadConfig.deleteFileRequest"
+                         :limit="uploadConfig.limit"
+                         :fileType="uploadConfig.fileType"
+                         drag
+                         v-model="uploadData"></yi-upload>
+            </el-form-item>
+          </template>
+        </el-col>
+
+
+
+      </template>
+    </form-modal>
 
 
   </div>
@@ -26,9 +53,17 @@
   import {modalFormConfig} from "./config/modal.form.config";
   //页面相关请求方法
   import {getPage, addObj, putObj, delObj} from "@/api/loan/seal";
+  import { FILE_UPLOAD_URL } from '@/constants/SysConstants'
+  import { deleteFile } from '@/api/common'
 
+  import {YiRadioGroup} from '@/components/radio'
+  import {YiUpload} from '@/components/upload'
   export default {
     name: "seal",
+    components:{
+      YiRadioGroup,
+      YiUpload
+    },
     data() {
       return {
         //页面相关配置
@@ -42,15 +77,52 @@
           create: addObj,
           update: putObj
         },
+        //上传配置
+        uploadData:"",
+        uploadConfig:{
+          uploadUrl: FILE_UPLOAD_URL,
+          deleteFileRequest:deleteFile,
+          limit: 1,
+          fileType:['png','jpg','jpeg']
+
+        }
       }
     },
     methods: {
       //表格相关
       showNewModal() {
-        this.$refs.formModal.add({title: '新增'})
+        this.uploadData=""
+        this.$refs.formModal.add({title: '新增',item:{sealSource:1}})
       },
       showEditModal(item) {
+        console.log(item)
+        if(item.sealSource==2){
+          let uploadData = item.sealAddress
+          const filename=item.sealFilename
+          const uid= new Date().getTime()
+
+          this.uploadData= uploadData+'#'+uid+'#'+filename+'#'+uid
+        }
+
         this.$refs.formModal.update({title: '编辑', item})
+      },
+      handleBeforeRequest(payload){
+        const sealSource= payload.sealSource
+        if (sealSource==2){
+          let paramArray = this.uploadData?.split('#')
+          payload.sealAddress=paramArray?.[0]
+          payload.sealFilename=paramArray?.[2]
+        }
+        return payload
+      },
+      handleBeforeSubmit(payload){
+        const sealSource= payload.sealSource
+
+        if (sealSource===2&&!payload.sealAddress){
+          this.$message.error("文件不能为空");
+          return false
+        }
+        return true
       },
       //删除数据
       handleDelClick(item) {

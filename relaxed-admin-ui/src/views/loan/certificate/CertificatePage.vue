@@ -107,10 +107,10 @@
       showEditModal(item) {
         console.log(item)
         let uploadData = item.certificateAddress
-        const filename= this.getFileName(uploadData)
+        const filename=item.certificateFilename
         const uid= new Date().getTime()
 
-        this.uploadData= uploadData+'#'+uid+'#'+filename+'3'+uid
+        this.uploadData= uploadData+'#'+uid+'#'+filename+'#'+uid
         this.$refs.formModal.update({title: '编辑', item})
       },
       //删除数据
@@ -122,7 +122,9 @@
       handleBeforeRequest(payload){
        const authorizeType= payload.authorizeType
        if (authorizeType==2){
-          payload.certificateAddress=this.uploadData?.split('#')[0]
+         let paramArray = this.uploadData?.split('#')
+         payload.certificateAddress=paramArray?.[0]
+         payload.certificateFilename=paramArray?.[2]
         }
         return payload
       },
