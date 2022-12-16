@@ -45,7 +45,17 @@ public class Project {
 	 */
     @Schema(title = "信托计划主键（t_config_trust_plan）", description = "信托计划主键（t_config_trust_plan）")
 	private Integer trustPlanId;
-    
+	/**
+	 * 签章图片id
+	 */
+	@Schema(title = "签章图片id", description = "签章图片id")
+	private Integer sealId;
+	/**
+	 * 密钥id
+	 */
+	@Schema(title = "密钥id", description = "密钥id")
+	private Integer keystoreId;
+
 	/**
 	 * 合作项目代号
 	 */

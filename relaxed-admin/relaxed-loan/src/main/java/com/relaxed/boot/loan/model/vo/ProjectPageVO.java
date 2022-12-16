@@ -49,7 +49,17 @@ public class ProjectPageVO {
      */
     @Schema(title = "合作项目名称", description = "合作项目名称")
     private String projectName;
-    
+
+    /**
+     * 签章图片id
+     */
+    @Schema(title = "签章图片id", description = "签章图片id")
+    private Integer sealId;
+    /**
+     * 密钥id
+     */
+    @Schema(title = "密钥id", description = "密钥id")
+    private Integer keystoreId;
 
     
     /**

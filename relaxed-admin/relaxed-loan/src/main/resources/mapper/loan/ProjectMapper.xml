@@ -9,7 +9,8 @@
     		<result property="trustPlanId" column="trust_plan_id"/>
     		<result property="projectCode" column="project_code"/>
     		<result property="projectName" column="project_name"/>
-    		<result property="productCode" column="product_code"/>
+    		<result property="sealId" column="seal_id"/>
+    		<result property="keystoreId" column="keystore_id"/>
     		<result property="deleted" column="deleted"/>
     		<result property="createdTime" column="created_time"/>
     		<result property="updatedTime" column="updated_time"/>
@@ -22,7 +23,9 @@
 		trust_plan_id,        
 		project_code,        
 		project_name,        
-		product_code,        
+
+seal_id,
+keystore_id,
 		deleted,        
 		created_time,        
 		updated_time        
@@ -35,7 +38,8 @@
 		p.trust_plan_id,        
 		p.project_code,        
 		p.project_name,        
-		p.product_code,        
+		 p.seal_id,
+p.keystore_id,
 		p.deleted,        
 		p.created_time,        
 		p.updated_time        
