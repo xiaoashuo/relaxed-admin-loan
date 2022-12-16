@@ -33,7 +33,17 @@ public class Template {
 	 */
     @Schema(title = "模板代号", description = "模板代号")
 	private String templateCode;
-    
+	/**
+	 * 模板原始文件名称
+	 */
+	@Schema(title = "模板原始文件名称", description = "模板原始文件名称")
+	private String templateFilename;
+	/**
+	 * 模板访问地址
+	 */
+	@Schema(title = "模板访问地址", description = "模板访问地址")
+	private String templateUrl;
+
 	/**
 	 * 模板名称
 	 */

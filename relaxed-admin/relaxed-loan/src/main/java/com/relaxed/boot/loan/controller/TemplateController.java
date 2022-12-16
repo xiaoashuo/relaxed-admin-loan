@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.controller;
 
+import com.relaxed.boot.loan.manage.TemplateManage;
 import com.relaxed.boot.loan.model.entity.Template;
 import com.relaxed.boot.loan.model.qo.TemplateQO;
 import com.relaxed.boot.loan.model.vo.TemplatePageVO;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 
 /**
@@ -37,6 +39,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TemplateController {
 
     private final  TemplateService templateService;
+    private final TemplateManage templateManage;
 
     /**
      * 分页查询
@@ -59,8 +62,8 @@ public class TemplateController {
     @Operation(summary = "新增模板文件配置表")
     @CreateLog(msg = "新增模板文件配置表" )
     @PostMapping
-    public R<Void> save(@RequestBody Template template) {
-        return templateService.save(template) ?
+    public R<Void> save(Template template, MultipartFile file) {
+        return templateManage.saveTemplate(template,file) ?
                 R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增模板文件配置表失败");
     }
 

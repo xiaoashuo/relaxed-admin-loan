@@ -6,6 +6,7 @@ import com.relaxed.boot.loan.model.qo.TemplateQO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 模板文件配置表
@@ -22,4 +23,7 @@ public interface TemplateService extends ExtendService<Template> {
     */
     PageResult<TemplatePageVO> queryPage(PageParam pageParam, TemplateQO qo);
 
+
+
+    String getByTemplateCode(String templateCode);
 }

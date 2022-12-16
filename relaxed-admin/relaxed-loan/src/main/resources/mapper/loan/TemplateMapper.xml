@@ -8,6 +8,8 @@
     		<result property="templateName" column="template_name"/>
     		<result property="templatePath" column="template_path"/>
     		<result property="datafilePath" column="dataFile_path"/>
+    		<result property="templateFilename" column="template_filename"/>
+    		<result property="templateUrl" column="template_url"/>
     		<result property="fileType" column="file_type"/>
     		<result property="remark" column="remark"/>
     		<result property="createBy" column="create_by"/>
@@ -22,7 +24,9 @@
 		template_code,        
 		template_name,        
 		template_path,        
-		dataFile_path,        
+		dataFile_path,
+template_filename,
+template_url,
 		file_type,        
 		remark,        
 		create_by,        
@@ -38,7 +42,9 @@
 		t.template_name,        
 		t.template_path,        
 		t.dataFile_path,        
-		t.file_type,        
+		t.file_type,
+t.template_filename,
+t.template_url,
 		t.remark,        
 		t.create_by,        
 		t.update_by,        

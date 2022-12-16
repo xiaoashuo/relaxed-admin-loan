@@ -41,5 +41,13 @@ public class FileMeta {
         return StrUtil.addPrefixIfNot(relativePath,"/");
     }
 
+    /**
+     * 获取本地文件全路径
+     * @return
+     */
+    public String getLocalFullFilePath(){
+        String fullPath = basePath  + getRelativeFilePath();
+        return fullPath;
+    }
 
 }
