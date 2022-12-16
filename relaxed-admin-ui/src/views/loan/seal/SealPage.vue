@@ -30,7 +30,8 @@
                          :delete-request="uploadConfig.deleteFileRequest"
                          :limit="uploadConfig.limit"
                          :fileType="uploadConfig.fileType"
-                         drag
+                         list-type="picture-card"
+
                          v-model="uploadData"></yi-upload>
             </el-form-item>
           </template>

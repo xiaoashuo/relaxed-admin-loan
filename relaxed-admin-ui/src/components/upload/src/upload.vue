@@ -14,11 +14,13 @@
       :headers="headers"
       :name="fieldName"
       :show-file-list="showFileList"
+      :auto-upload="autoUpload"
       :on-preview="handlePreview"
       :before-upload="handleBeforeUpload"
       :on-exceed="handleExceed"
       :on-error="handleUploadError"
       :on-success="handleUploadSuccess"
+      :on-change="handleChange"
       :before-remove="handleBeforeRemove"
 
     >
@@ -139,6 +141,10 @@
         type: Boolean,
         default: true
       },
+      autoUpload:{
+        type: Boolean,
+        default: true
+      }
 
 
     },
@@ -289,13 +295,7 @@
           this.$emit('input', args)
         }
       },
-      handleBeforeRemove(file,fileList){
-        const fileName = file.name.split('.')
-        const fileExt = fileName[fileName.length - 1]
-        const isTypeOk = this.fileType.indexOf(fileExt) >= 0
-        if (!isTypeOk) {
-          return true
-        }
+      handleBeforeRemoveAuto(file,fileList){
         if (!this.deleteRequest){
           this.deleteLocalFile(file,fileList)
           this.$message.success("删除文件成功")
@@ -303,10 +303,10 @@
         }
         const payload = { fileId:file.fileId??file.response.data.fileId,url: file.url??file.response.data.url }
         this.deleteRequest(payload).then(res=>{
-            if (res&&res.code!==200){
-              this.$message.error("删除文件失败"+res.message)
-              return false
-            }
+          if (res&&res.code!==200){
+            this.$message.error("删除文件失败"+res.message)
+            return false
+          }
           this.deleteLocalFile(file,fileList)
           this.$message.success("删除文件成功")
           return true
@@ -315,10 +315,38 @@
           return false
         })
       },
+      handleBeforeRemoveNotAuto(file,fileList){
+        this.deleteLocalFile(file,fileList)
+        this.$message.success("删除文件成功")
+        return true
+      },
+      handleBeforeRemove(file,fileList){
+        const fileName = file.name.split('.')
+        const fileExt = fileName[fileName.length - 1]
+        const isTypeOk = this.fileType.indexOf(fileExt) >= 0
+        if (!isTypeOk) {
+          return true
+        }
+        if (this.autoUpload){
+          //自动上传
+          this.handleBeforeRemoveAuto(file,fileList)
+        }else{
+          //非自动上传
+          this.handleBeforeRemoveNotAuto(file,fileList)
+        }
+
+      },
       deleteLocalFile(file,fileList){
         this.fileList=fileList.filter(item=>item.uid!==file.uid)
         this.$emit('input', this.onRender(this.fileList))
-      }
+      },
+      handleChange(file,fileList){
+        if (!this.autoUpload){
+          //不开启自动上传 此处只将数据原样抛出 不做处理
+          this.fileList=fileList
+          this.$emit('input', this.fileList)
+        }
+      },
 
     }
   }

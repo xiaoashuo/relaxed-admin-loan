@@ -15,7 +15,23 @@
         <form-modal ref="formModal" :modal-config="modalConfig"
                     :req-function="reqFunction"
                     @submitSuccess="handleSubmit"
-        ></form-modal>
+                    :before-request="beforeDataHandle"
+                    :before-submit="beforeSubmitHandle"
+        >
+          <template #fileUpload="scope">
+            <el-form-item label="模板文件">
+              <yi-upload class="upload-file" :upload-url="uploadConfig.uploadUrl"
+
+                         :limit="uploadConfig.limit"
+                         :auto-upload="false"
+                         :fileType="uploadConfig.fileType"
+
+                         drag
+                         v-model="uploadData"></yi-upload>
+            </el-form-item>
+
+          </template>
+        </form-modal>
       </el-col>
       <el-col :span="10">
         <!--搜索组件-->
@@ -47,8 +63,13 @@
   import {getPage, addObj, putObj, delObj} from "@/api/loan/template";
   import {getPage as getItemPage} from '@/api/loan/template-area'
 
+  import {YiUpload} from '@/components/upload'
+
   export default {
     name: "templatePage",
+    components:{
+      YiUpload
+    },
     data() {
       return {
         //页面相关配置
@@ -66,7 +87,13 @@
           create: addObj,
           update: putObj
         },
-        currentTemplateId:undefined
+        currentTemplateId:undefined,
+        uploadData:"",
+        uploadConfig:{
+          limit: 1,
+          fileType:['docx']
+
+        }
       }
     },
     methods: {
@@ -118,7 +145,23 @@
         const formData={templateId:this.currentTemplateId}
         this.$refs.pageItemContentRef.searchTable(formData)
       },
-
+      beforeDataHandle(payload){
+        console.log("当前参数",payload)
+        let formData=new FormData()
+        for (const key in payload){
+          formData.append(key,payload[key])
+        }
+        formData.append("file",this.uploadData[0]?.raw)
+        return formData
+      },
+      beforeSubmitHandle(payload){
+        const file=payload.get("file")
+        if (!file){
+          this.$message.error("模板文件不能为空")
+          return false
+        }
+        return true
+      }
     }
 
   }

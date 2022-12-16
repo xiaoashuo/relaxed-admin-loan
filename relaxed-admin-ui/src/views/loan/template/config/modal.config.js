@@ -34,6 +34,19 @@ export const modalConfig= {
       ]
     },
 
+    {
+      type:'slot',
+      label: '文件上传',
+      field:'file',
+      slotName:'fileUpload',
+      config:{
+        dictCode: 'file_type',
+        clearable: true
+      },
+      rules:[
+        { required: true, message: '请选择文件类型', trigger: 'blur' },
+      ]
+    },
 
 
   ],
