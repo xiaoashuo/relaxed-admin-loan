@@ -7,6 +7,11 @@ export function getPage(query) {
   })
 }
 
+export function getSelectData() {
+  return yiRequest.get({
+    url: '/loan/certificate/select',
+  })
+}
 export function addObj(obj) {
   return yiRequest.post({
     url: '/loan/certificate',

@@ -10,11 +10,11 @@ export const contentTableConfig={
     },
 
   },
-  permissions: {
-    create: 'loan:project:add',
-    update: 'loan:project:edit',
-    delete: 'loan:project:delete'
-  },
+  // permissions: {
+  //   create: 'loan:project:add',
+  //   update: 'loan:project:edit',
+  //   delete: 'loan:project:delete'
+  // },
   propList:[
            {
       prop: 'projectId',
@@ -24,46 +24,36 @@ export const contentTableConfig={
     },
               {
       prop: 'partnerId',
-      label:'信托项目主键（t_config_partner）',
+      label:'项目主键',
       minWidth:180,
       slotName: 'partnerId'
     },
               {
       prop: 'productId',
-      label:'信托产品主键（t_config_product）',
+      label:'信托产品',
       minWidth:180,
       slotName: 'productId'
     },
               {
       prop: 'trustPlanId',
-      label:'信托计划主键（t_config_trust_plan）',
+      label:'信托计划',
       minWidth:180,
       slotName: 'trustPlanId'
     },
               {
       prop: 'projectCode',
-      label:'合作项目代号',
+      label:'项目代号',
       minWidth:180,
       slotName: 'projectCode'
     },
               {
       prop: 'projectName',
-      label:'合作项目名称',
+      label:'项目名称',
       minWidth:180,
       slotName: 'projectName'
     },
-              {
-      prop: 'productCode',
-      label:'云融产品编号',
-      minWidth:180,
-      slotName: 'productCode'
-    },
-              {
-      prop: 'deleted',
-      label:'是否有效(0:未删除 1 或时间戳为已删除)',
-      minWidth:180,
-      slotName: 'deleted'
-    },
+
+
               {
       prop: 'createdTime',
       label:'创建时间',
