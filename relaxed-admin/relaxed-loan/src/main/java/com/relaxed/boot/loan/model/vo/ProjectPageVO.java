@@ -50,11 +50,7 @@ public class ProjectPageVO {
     @Schema(title = "合作项目名称", description = "合作项目名称")
     private String projectName;
     
-    /**
-     * 云融产品编号
-     */
-    @Schema(title = "云融产品编号", description = "云融产品编号")
-    private String productCode;
+
     
     /**
      * 是否有效(0:未删除 1 或时间戳为已删除)

@@ -9,6 +9,7 @@ import com.relaxed.common.log.operation.annotation.DeleteLog;
 import com.relaxed.common.log.operation.annotation.UpdateLog;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 
 /**
@@ -50,7 +53,15 @@ public class SealController {
             PageParam pageParam, SealQO sealQO) {
         return R.ok(sealService.queryPage(pageParam, sealQO));
     }
-
+    /**
+     * 签章图片下拉列表
+     * @return R 通用返回体
+     */
+    @Operation(summary = "签章图片下拉列表")
+    @GetMapping("/select" )
+    public R<List<SelectData>> getSealList() {
+        return R.ok(sealService.querySealList());
+    }
     /**
      * 新增签章图片表
      * @param seal 签章图片表
@@ -63,6 +74,7 @@ public class SealController {
         return sealService.saveSeal(seal) ?
                 R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增签章图片表失败");
     }
+
 
     /**
      * 修改签章图片表

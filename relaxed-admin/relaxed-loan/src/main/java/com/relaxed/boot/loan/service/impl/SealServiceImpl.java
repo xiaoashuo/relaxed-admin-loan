@@ -17,11 +17,16 @@ import com.relaxed.boot.loan.util.seal.SealFont;
 import com.relaxed.boot.loan.util.seal.SealGenerate;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 签章图片表
@@ -40,6 +45,20 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
     @Override
     public PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo) {
         return baseMapper.queryPage(pageParam, qo);
+    }
+
+    @Override
+    public List<SelectData> querySealList() {
+        return list().stream().map(item -> {
+            Map<String,Object> additionalInfo = new HashMap<>();
+            additionalInfo.put("url",item.getSealAddress());
+            additionalInfo.put("name",item.getSealFilename());
+            SelectData<Map<String, Object>> selectItem = new SelectData<>();
+            selectItem.setLabel(item.getSealSubject());
+            selectItem.setValue(item.getSealId());
+            selectItem.setExtendObj(additionalInfo);
+            return selectItem;
+        }).collect(Collectors.toList());
     }
 
     @SneakyThrows

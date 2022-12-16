@@ -13,10 +13,15 @@ import com.relaxed.boot.loan.util.keystore.KeystoreMeta;
 import com.relaxed.boot.loan.util.keystore.KeystoreUtil;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 签章证书表
@@ -35,6 +40,20 @@ public class CertificateServiceImpl extends ExtendServiceImpl<CertificateMapper,
     @Override
     public PageResult<CertificatePageVO> queryPage(PageParam pageParam, CertificateQO qo) {
         return baseMapper.queryPage(pageParam, qo);
+    }
+
+    @Override
+    public List<SelectData> queryCertificateList() {
+        return list().stream().map(item -> {
+            Map<String,Object> additionalInfo = new HashMap<>();
+            additionalInfo.put("url",item.getCertificateAddress());
+            additionalInfo.put("name",item.getCertificateFilename());
+            SelectData<Map<String, Object>> selectItem = new SelectData<>();
+            selectItem.setLabel(item.getCertificateSubject());
+            selectItem.setValue(item.getCertificateId());
+            selectItem.setExtendObj(additionalInfo);
+            return selectItem;
+        }).collect(Collectors.toList());
     }
 
     @Override

@@ -7,8 +7,14 @@ import com.relaxed.boot.loan.mapper.PartnerMapper;
 import com.relaxed.boot.loan.service.PartnerService;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 合作方
@@ -29,4 +35,13 @@ public class PartnerServiceImpl extends ExtendServiceImpl<PartnerMapper, Partner
         return baseMapper.queryPage(pageParam, qo);
     }
 
+    @Override
+    public List<SelectData> queryPartnerList() {
+        return list().stream().map(item -> {
+            SelectData<Void> selectItem = new SelectData<>();
+            selectItem.setLabel(item.getPartnerAlias());
+            selectItem.setValue(item.getPartnerId());
+            return selectItem;
+        }).collect(Collectors.toList());
+    }
 }

@@ -5,7 +5,10 @@ import com.relaxed.boot.loan.model.vo.PartnerPageVO;
 import com.relaxed.boot.loan.model.qo.PartnerQO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
+
+import java.util.List;
 
 /**
  * 合作方
@@ -21,5 +24,7 @@ public interface PartnerService extends ExtendService<Partner> {
     * @return PageResult&lt;PartnerPageVO&gt; 分页数据
     */
     PageResult<PartnerPageVO> queryPage(PageParam pageParam, PartnerQO qo);
+
+    List<SelectData> queryPartnerList();
 
 }

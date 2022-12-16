@@ -5,7 +5,10 @@ import com.relaxed.boot.loan.model.vo.SealPageVO;
 import com.relaxed.boot.loan.model.qo.SealQO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
+
+import java.util.List;
 
 /**
  * 签章图片表
@@ -23,4 +26,7 @@ public interface SealService extends ExtendService<Seal> {
     PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo);
 
     boolean saveSeal(Seal seal);
+
+    List<SelectData> querySealList();
+
 }

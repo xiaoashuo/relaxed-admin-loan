@@ -5,7 +5,10 @@ import com.relaxed.boot.loan.model.vo.CertificatePageVO;
 import com.relaxed.boot.loan.model.qo.CertificateQO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
+
+import java.util.List;
 
 /**
  * 签章证书表
@@ -28,5 +31,7 @@ public interface CertificateService extends ExtendService<Certificate> {
      * @return
      */
     boolean saveCertificate(Certificate certificate);
+
+    List<SelectData> queryCertificateList();
 
 }
