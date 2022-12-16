@@ -17,10 +17,11 @@
                     @submitSuccess="handleSubmit"
                     :before-request="beforeDataHandle"
                     :before-submit="beforeSubmitHandle"
+                    @beforeClose="beforeCloseHandle"
         >
           <template #fileUpload="scope">
             <el-form-item label="模板文件">
-              <yi-upload class="upload-file" :upload-url="uploadConfig.uploadUrl"
+              <yi-upload class="upload-file"
 
                          :limit="uploadConfig.limit"
                          :auto-upload="false"
@@ -99,9 +100,21 @@
     methods: {
       //表格相关
       showNewModal() {
+        this.uploadData=[]
         this.$refs.formModal.add({title: '新增'})
       },
       showEditModal(item) {
+        console.log(item)
+        let uploadData = item.templateUrl
+        const filename=item.templateFilename
+        const uid= new Date().getTime()
+        this.uploadData=[]
+        this.uploadData.push({
+          url: uploadData,
+          name: filename,
+          uid:uid,
+          fileId:uid
+        })
         this.$refs.formModal.update({title: '编辑', item})
       },
       //删除数据
@@ -154,6 +167,9 @@
         formData.append("file",this.uploadData[0]?.raw)
         return formData
       },
+      beforeCloseHandle(){
+        this.uploadData=[]
+      },
       beforeSubmitHandle(payload){
         const file=payload.get("file")
         if (!file){
@@ -169,4 +185,19 @@
 
 <style lang="scss" scoped>
 
+  /*去除动画  如果filelist不复制uid 就会导致动画错位左右摇摆,因为默认是以uid做key。此处解决赋值uid,不去除动画效果*/
+  // .el-upload--picture-card 控制加号部分
+  /*::v-deep.hide .el-upload--picture-card {*/
+  /*  display: none;*/
+  /*}*/
+  /*// 去掉动画效果*/
+  /*::v-deep .el-list-enter-active,*/
+  /*::v-deep .el-list-leave-active {*/
+  /*  transition: all 0s;*/
+  /*}*/
+
+  /*::v-deep .el-list-enter, .el-list-leave-active {*/
+  /*  opacity: 0;*/
+  /*  transform: translateY(0);*/
+  /*}*/
 </style>

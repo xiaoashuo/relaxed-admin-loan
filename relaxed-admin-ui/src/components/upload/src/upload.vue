@@ -49,30 +49,13 @@
 </template>
 
 <script>
-  // 对象转成指定字符串分隔
-  function listToString(list, separator) {
-    let strs = ''
-    separator = separator || ','
-    for (let i in list) {
-      let listElement = list[i]
-      console.log(listElement)
-      strs += listElement.url+'#'+listElement.uid+'#'+listElement.name+'#'+listElement.fileId + separator
-    }
-    return strs != '' ? strs.substr(0, strs.length - 1) : ''
-  }
 
-  const strKeyMap={
-    0:'url',
-    1:'uid',
-    2:'name',
-    3:'fileId'
-  }
   import  openWindow from '@/utils/open-window'
   export default {
     name: 'yi-upload',
     props: {
       // 值
-      value: [String, Array],
+      value: [ Array],
       disabled:{
         type: Boolean,
         default: false
@@ -80,7 +63,7 @@
       //上传地址
       uploadUrl: {
         type: String,
-        required: true
+        default:'#'
       },
 
       showFileList:{
@@ -118,17 +101,7 @@
         type: Number,
         default: 5
       },
-
       onPreview: Function,
-     //提交事件参数处理
-      onRender: {
-        type: Function,
-        default: (fileList) => {
-          return listToString(fileList)
-        }
-      },
-      //回显数据处理
-      onReview:Function,
       deleteRequest:{
         type: Function,
 
@@ -172,53 +145,16 @@
     watch:{
       value:{
         handler:function(val){
-          if (this.onReview){
-            this.fileList=this.onReview(val)
-          }else{
-            this.initValue(val)
-          }
-
-
+          this.initValue(val)
         },
+        immediate:true
 
       }
     },
-    mounted() {
-      console.log("初始",this.value)
-      if (this.onReview){
-        this.fileList=this.onReview(this.value)
-      }else{
-        this.initValue(this.value)
-      }
 
-    },
     methods: {
       initValue(val){
-      console.log("初始值",val)
-        if (!val){
-          this.fileList=[]
-          return
-        }
-        let list;
-        if (Array.isArray(val)){
-          list=val
-        }else{
-          list= val.split(',')
-          list= list.map(item => {
-            let currentItem={}
-            if (typeof item === "string") {
-              var paramArray = item.split('#')
-              for (let i=0;i<paramArray.length;i++){
-                currentItem[strKeyMap[i]]=paramArray[i]
-              }
-
-            }
-            return currentItem;
-          });
-        }
-
-        // 然后将数组转为对象数组
-        this.fileList = list
+        this.fileList=val?val:[]
       },
       handlePreview(file){
         console.log(file)
@@ -239,8 +175,7 @@
 
 
       },
-      // 上传前校检格式和大小
-      handleBeforeUpload(file) {
+      paramValid(file){
         // 校检文件类型
         if (this.fileType) {
           const fileName = file.name.split('.')
@@ -258,6 +193,13 @@
             this.$message.error(`上传文件大小不能超过 ${this.fileSize} MB!`)
             return false
           }
+        }
+        return true
+      },
+      // 上传前校检格式和大小
+      handleBeforeUpload(file) {
+        if (!this.paramValid(file)){
+          return  false
         }
         this.number++
         return true
@@ -289,10 +231,7 @@
           this.fileList = this.fileList.concat(this.uploadList)
           this.uploadList = []
           this.number = 0
-          console.log("准备发射事件",this.fileList)
-          let args = this.onRender(this.fileList)
-          console.log("发射出事件",args)
-          this.$emit('input', args)
+          this.$emit('input', this.fileList)
         }
       },
       handleBeforeRemoveAuto(file,fileList){
@@ -338,10 +277,14 @@
       },
       deleteLocalFile(file,fileList){
         this.fileList=fileList.filter(item=>item.uid!==file.uid)
-        this.$emit('input', this.onRender(this.fileList))
+        this.$emit('input', this.fileList)
       },
       handleChange(file,fileList){
         if (!this.autoUpload){
+          if (!this.paramValid(file)){
+            this.deleteLocalFile(file,fileList)
+            return
+          }
           //不开启自动上传 此处只将数据原样抛出 不做处理
           this.fileList=fileList
           this.$emit('input', this.fileList)

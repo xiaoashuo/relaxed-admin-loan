@@ -29,11 +29,7 @@ export const contentItemTableConfig={
       minWidth:180,
       slotName: 'tagName'
     },
-    {
-      prop: 'createdTime',
-      label:'创建时间',
-      minWidth: 180,
-    },
+
 
   ]
 }
