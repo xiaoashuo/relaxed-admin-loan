@@ -67,7 +67,12 @@ public class Certificate {
 	 */
     @Schema(title = "证书密码", description = "证书密码")
 	private String certificatePwd;
-    
+	/**
+	 * 证书文件名称
+	 */
+	@Schema(title = "证书文件名称", description = "证书文件名称")
+	private String certificateFilename;
+
 	/**
 	 * 证书描述
 	 */
