@@ -25,7 +25,9 @@
       border
 
       style="width: 100%" v-bind="tableProps"
-      @selection-change="handleSelectionChange" @row-dblclick="handleRowDbClick"
+      @selection-change="handleSelectionChange"
+              @row-click="handleRowClick"
+              @row-dblclick="handleRowDbClick"
       @sort-change="handleSortChange"
       @header-click="handleHeaderClick"
      >
@@ -143,6 +145,9 @@
         },
         handleRowDbClick(row, column, event){
          this.$emit('row-dblclick',row,column,event)
+        },
+        handleRowClick(row, column, event){
+          this.$emit('row-click',row,column,event)
         },
         handleSizeChange(size){
           this.$emit('update:page',{...this.page,size})

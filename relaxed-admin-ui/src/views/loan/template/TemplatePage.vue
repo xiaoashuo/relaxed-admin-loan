@@ -1,18 +1,35 @@
 <template>
   <div class="app-container">
-    <!--搜索组件-->
-    <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
-                 @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
-    <!--表格组件-->
-    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
-               @newBtnClick="showNewModal" @editBtnClick="showEditModal"
-               @delBtnClick="handleDelClick"
-    ></pro-table>
-    <!--模态表单组件-->
-    <form-modal ref="formModal" :modal-config="modalConfig"
-                :req-function="reqFunction"
-                @submitSuccess="handleSubmit"
-    ></form-modal>
+    <el-row :gutter="10">
+      <el-col :span="14">
+        <!--搜索组件-->
+        <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
+                     @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
+        <!--表格组件-->
+        <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+                   @newBtnClick="showNewModal" @editBtnClick="showEditModal"
+                   @delBtnClick="handleDelClick"
+                   @row-click="handleRowClick"
+        ></pro-table>
+        <!--模态表单组件-->
+        <form-modal ref="formModal" :modal-config="modalConfig"
+                    :req-function="reqFunction"
+                    @submitSuccess="handleSubmit"
+        ></form-modal>
+      </el-col>
+      <el-col :span="10">
+        <!--搜索组件-->
+        <page-search ref="pageItemSearchRef" :searchFormConfig="searchItemFormConfig"
+                     @resetBtnClick="handleItemResetClick" @queryBtnClick="handleItemSearchClick"></page-search>
+        <!--表格组件-->
+        <pro-table ref="pageItemContentRef" :content-table-config="contentItemTableConfig"
+                   :lazy-load="true"
+                   :request="itemRequest"
+        ></pro-table>
+
+      </el-col>
+    </el-row>
+
 
 
   </div>
@@ -24,24 +41,32 @@
   import {contentTableConfig} from "./config/content.config";
   import {searchFormConfig} from "./config/search.config";
   import {modalConfig} from "./config/modal.config";
+  import {contentItemTableConfig} from './config/content.item.config'
+  import {searchItemFormConfig} from './config/search.item.config'
   //页面相关请求方法
   import {getPage, addObj, putObj, delObj} from "@/api/loan/template";
+  import {getPage as getItemPage} from '@/api/loan/template-area'
 
   export default {
-    name: "template",
+    name: "templatePage",
     data() {
       return {
         //页面相关配置
         contentTableConfig: contentTableConfig,
+
         searchFormConfig: searchFormConfig,
         modalConfig: modalConfig,
+        contentItemTableConfig: contentItemTableConfig,
+        searchItemFormConfig: searchItemFormConfig,
         //表格请求
         tableRequest: getPage,
+        itemRequest: getItemPage,
         //表单请求
         reqFunction: {
           create: addObj,
           update: putObj
         },
+        currentTemplateId:undefined
       }
     },
     methods: {
@@ -58,6 +83,11 @@
           this.$refs.pageContentRef.refreshTable(false)
         })
       },
+      handleRowClick(row,column,event){
+        this.currentTemplateId=row.templateId
+        const formData={templateId:this.currentTemplateId}
+        this.$refs.pageItemContentRef.searchTable(formData)
+      },
       //模态框相关 提交成功后刷新表格
       handleSubmit(res) {
         this.$refs.pageContentRef.refreshTable(false)
@@ -69,6 +99,24 @@
       //重置搜索
       handleResetClick() {
         this.$refs.pageContentRef.resetTable()
+      },
+      //搜索框相关 搜索数据
+      handleItemSearchClick(formData) {
+        if (!this.currentTemplateId){
+           this.$message.error("请先点击模板数据,在进行筛选")
+          return false;
+        }
+        formData.templateId=this.currentTemplateId
+        this.$refs.pageItemContentRef.searchTable(formData)
+      },
+      //重置搜索
+      handleItemResetClick() {
+        if (!this.currentTemplateId){
+          this.$message.error("请先点击模板数据")
+          return
+        }
+        const formData={templateId:this.currentTemplateId}
+        this.$refs.pageItemContentRef.searchTable(formData)
       },
 
     }

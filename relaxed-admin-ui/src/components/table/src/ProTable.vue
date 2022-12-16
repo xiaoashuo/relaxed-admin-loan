@@ -6,6 +6,7 @@
             :list-count="listCount"
             v-bind="contentTableConfig" :page="pageInfo" @update:page="changePage"
             @selection-change="handleSelectionChange"
+            @row-click="handleRowClick"
            @sort-change="handleSortChange"
 
 

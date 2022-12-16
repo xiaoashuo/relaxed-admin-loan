@@ -1,5 +1,5 @@
 export const contentTableConfig={
-  title: '模板文件配置表',
+  title: '模板文件',
   showSelectColumn:false,
   tableProps:{
     'row-style': {
@@ -10,15 +10,15 @@ export const contentTableConfig={
     },
 
   },
-  permissions: {
-    create: 'loan:template:add',
-    update: 'loan:template:edit',
-    delete: 'loan:template:delete'
-  },
+  // permissions: {
+  //   create: 'loan:template:add',
+  //   update: 'loan:template:edit',
+  //   delete: 'loan:template:delete'
+  // },
   propList:[
            {
       prop: 'templateId',
-      label:'模板主键id',
+      label:'主键id',
       minWidth:180,
       slotName: 'templateId'
     },
@@ -34,48 +34,21 @@ export const contentTableConfig={
       minWidth:180,
       slotName: 'templateName'
     },
-              {
-      prop: 'templatePath',
-      label:'模板文件(填充模板)存放路径',
-      minWidth:180,
-      slotName: 'templatePath'
-    },
-              {
-      prop: 'datafilePath',
-      label:'数据文件(导入模板)存放路径(如有)',
-      minWidth:180,
-      slotName: 'datafilePath'
-    },
-              {
+
+
+     {
       prop: 'fileType',
-      label:'文件类型1.服务信托2.财富端确认书',
+      label:'文件类型',
       minWidth:180,
       slotName: 'fileType'
     },
-              {
+     {
       prop: 'remark',
       label:'模板描述',
       minWidth:180,
       slotName: 'remark'
     },
-              {
-      prop: 'createBy',
-      label:'创建人',
-      minWidth:180,
-      slotName: 'createBy'
-    },
-              {
-      prop: 'updateBy',
-      label:'修改人',
-      minWidth:180,
-      slotName: 'updateBy'
-    },
-              {
-      prop: 'deleted',
-      label:'逻辑删除标识，未删除为 0，已删除为删除时间',
-      minWidth:180,
-      slotName: 'deleted'
-    },
+
               {
       prop: 'createdTime',
       label:'创建时间',
