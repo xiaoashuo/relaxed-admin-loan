@@ -211,12 +211,13 @@
        */
       fabricOnMouseDown(opt){
 
+
 // 右键，且在元素上右键
         // button: 1-左键；2-中键；3-右键
         // 在画布上右键，target 为 null
         if (opt.button === 3 && opt.target) {
           // 获取当前元素
-          console.log(this.canvasEle.getObjects())
+          console.log(opt.target.left)
           this.canvasEle.setActiveObject(opt.target)
           // 显示菜单
           this.showRightMenu = true
@@ -226,8 +227,10 @@
             const menuWidth = this.$refs.menu.offsetWidth
             const menuHeight = this.$refs.menu.offsetHeight
 
+            const canvasContainer=document.querySelector('.canvas-container')
             // 当前鼠标位置
-            let pointX = opt.pointer.x
+           // let pointX = opt.pointer.x+200
+            let pointX = opt.target.left+canvasContainer.offsetLeft
             let pointY = opt.pointer.y
 
             console.log("菜单组件宽高",menuWidth,menuHeight,"当前鼠标位置",pointX,pointY,
@@ -251,6 +254,7 @@
       fabricCanvasEvents() {
         // 按下鼠标
         this.canvasEle.on('mouse:down', this.fabricOnMouseDown)
+
         // 拖拽边界 不能将图片拖拽到绘图区域外
         this.canvasEle.on("object:moving", function (e) {
           var obj = e.target;
@@ -275,7 +279,7 @@
        * 添加公章
        * @param sealInfo 签章信息
        */
-      addSeal(sealInfo) {
+      addSeal(sealInfo,callback) {
         console.log("-----",sealInfo)
         //引入图片
         fabric.Image.fromURL(
@@ -292,6 +296,9 @@
             });
             // oImg.scale(0.5); //图片缩小一
             this.canvasEle.add(oImg);
+            if (callback){
+              callback()
+            }
           }
         );
       },
@@ -318,27 +325,23 @@
 
       // 删除签章
       removeSelectedSignature() {
-        setTimeout(()=>{
-          let activeObject = this.canvasEle.getActiveObject()
-          console.log("当前选中",activeObject)
-          this.canvasEle.remove(activeObject)
-          const caches=this.$storage.local.getCache(SIGN_CACHE_KEY,{})
-          const pageNum=  this.pdfContext.getPageNum()
-          const pageSeals=caches[pageNum]
-          const sealIdIndex=activeObject['sealId']
-          delete pageSeals[sealIdIndex]
-          console.log("页面章数量",pageSeals)
-          if(Object.keys(pageSeals)<=0){
-            //页面章小于等于0
-            delete caches[pageNum]
-          }else{
-            caches[pageNum]=pageSeals
-          }
+        let activeObject = this.canvasEle.getActiveObject()
+        console.log("当前选中",activeObject)
+        this.canvasEle.remove(activeObject)
+        const caches=this.$storage.local.getCache(SIGN_CACHE_KEY,{})
+        const pageNum=  this.pdfContext.getPageNum()
+        const pageSeals=caches[pageNum]
+        const sealIdIndex=activeObject['sealId']
+        delete pageSeals[sealIdIndex]
+        console.log("页面章数量",pageSeals)
+        if(Object.keys(pageSeals)<=0){
+          //页面章小于等于0
+          delete caches[pageNum]
+        }else{
+          caches[pageNum]=pageSeals
+        }
 
-          this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
-        },10)
-
-
+        this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
       },
       /**
        * 展示盖章信息
@@ -361,49 +364,44 @@
        * 存储当前页所有签名 到缓存
        */
       saveSignature() {
-
-
-        setTimeout(()=>{
-          this.canvasEle.renderAll()
-          console.log(this.canvasEle.getObjects())
-          let data = this.canvasEle.getObjects(); //获取当前页面内的所有签章信息
-          let caches=  this.$storage.local.getCache(SIGN_CACHE_KEY,{})
-          const pageNum=this.pdfContext.getPageNum()
-          console.log("当前页面的所有签章信息",this.canvasEle,pageNum,data)
-          let signDatas = {}; //存储当前页的所有签章信息
-          let i = 0;
-          // let sealUrl = '';
-          for(var val of data) {
-            signDatas[i] =  {
-              width: val.width,
-              height: val.height,
-              top: val.top,
-              left: val.left,
-              angle: val.angle,
-              translateX: val.translateX,
-              translateY: val.translateY,
-              scaleX: val.scaleX,
-              scaleY: val.scaleY,
-              pageNum: pageNum,
-              cacheKey: val.cacheKey,
-              sealUrl: this.sealImageList[val.index],
-              index:val.index,
-              sealId: i
-            }
-            i++;
+        console.log(this.canvasEle.getObjects())
+        let data = this.canvasEle.getObjects(); //获取当前页面内的所有签章信息
+        let caches=  this.$storage.local.getCache(SIGN_CACHE_KEY,{})
+        const pageNum=this.pdfContext.getPageNum()
+        console.log("当前页面的所有签章信息",this.canvasEle,pageNum,data)
+        let signDatas = {}; //存储当前页的所有签章信息
+        let i = 0;
+        // let sealUrl = '';
+        for(var val of data) {
+          signDatas[i] =  {
+            width: val.width,
+            height: val.height,
+            top: val.top,
+            left: val.left,
+            angle: val.angle,
+            translateX: val.translateX,
+            translateY: val.translateY,
+            scaleX: val.scaleX,
+            scaleY: val.scaleY,
+            pageNum: pageNum,
+            cacheKey: val.cacheKey,
+            sealUrl: this.sealImageList[val.index],
+            index:val.index,
+            sealId: i
           }
+          i++;
+        }
 
-          if (signDatas&&Object.keys(signDatas).length>0){
-            caches[pageNum] = signDatas;
-            this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
-          }
-        },10)
-
+        if (signDatas&&Object.keys(signDatas).length>0){
+          caches[pageNum] = signDatas;
+          this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
+        }
 
 
       },
       //提交数据
       submitSignature() {
+        //保存当前页面签章事件,防止当前移动坐标不更新
         this.saveSignature();
         let caches = localStorage.getItem(SIGN_CACHE_KEY);
         console.log(JSON.parse(caches));
@@ -423,7 +421,7 @@
          top: e.originalEvent.layerY,
          index: e.newDraggableIndex }
 
-        this.addSeal(sealInfo)
+         this.addSeal(sealInfo,this.saveSignature)
 
       },
 
