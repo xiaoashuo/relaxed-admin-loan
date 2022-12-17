@@ -3,9 +3,9 @@
     <el-row :gutter="10">
       <el-col :span="4" style="margin-top:1%;">
         <div class="left-title">我的印章</div>
-        <draggable v-model="mainImagelist" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
+        <draggable v-model="sealImageList" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
           <transition-group type="transition">
-            <li v-for="item in mainImagelist" :key="item" class="item" style="text-align:center;">
+            <li v-for="item in sealImageList" :key="item" class="item" style="text-align:center;">
               <img :src="item" width="100%;" height="100%" class="imgstyle" />
             </li>
           </transition-group>
@@ -45,23 +45,37 @@
               <div class="detail-item-desc">{{ taskInfo.operator }}</div>
             </div>
             <div class="right-item">
-              <div class="right-item-title">截止时间</div>
+              <div class="right-item-title">文件名称</div>
               <div class="detail-item-desc">{{ taskInfo.filename }}</div>
             </div>
           </div>
         </div>
       </el-col>
     </el-row>
+    <div
+
+      id="menu"
+      class="menu-x"
+      v-show="menuVisable"
+      :style="menuPosition"
+      @contextmenu.prevent=""
+      ref="menu"
+    >
+      <div>什么都不做</div>
+
+      <div @click="rightDeleteElement">删除</div>
+    </div>
   </div>
 </template>
 
 <script>
-  import {fabric} from 'fabric';
+  import {fabric} from './fabric';
   let pdfjsLib =require("pdfjs-dist/legacy/build/pdf.js");
   import workerSrc from "pdfjs-dist/legacy/build/pdf.worker.entry";
   pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
   import draggable from "vuedraggable";
   export default {
+    name:'pdf',
     components: {draggable},
     props:{
       taskInfo:{
@@ -71,10 +85,18 @@
           operator:'默认操作者',
           filename:'文件名称'
         })
+      },
+      //签章图片列表 img 标签src使用 base64 或地址
+      sealImageList:{
+        type: Array,
+        default:()=>([require('./sign.png'),require('./seal.png')])
       }
+
     },
     data() {
       return {
+        menuVisable:false,
+        menuPosition:'',
         //pdf预览
         pdfUrl: '',
         pdfDoc: null,
@@ -89,7 +111,7 @@
         ctx: null,
         canvasEle: null,
         whDatas: null,
-        mainImagelist: [],
+
 
       }
     },
@@ -99,12 +121,10 @@
       },
     },
     created(){
-      var that = this;
-      that.mainImagelist = [require('./sign.png'),require('./seal.png')];
-
+   //   window.addEventListener("resize",this.setPdfArea)
       this.setPdfArea()
-
     },
+
 
     methods: {
       //pdf预览
@@ -131,6 +151,7 @@
       //   }
       // },
       renderPage(num) {
+        this.clearRightMenuInfo()
         let _this = this;
         this.pageRendering = true;
         return this.pdfDoc.getPage(num).then((page) => {
@@ -207,6 +228,7 @@
           this.pdfDoc = pdfDoc_;
           this.numPages = this.pdfDoc.numPages;
 
+
           this.renderPage(this.pageNum).then(() => {
             this.renderPdf({
               width: this.canvas.width,
@@ -225,6 +247,59 @@
         this.whDatas = data;
         // document.querySelector("#elesign").style.width = data.width + "px";
       },
+
+      /**
+       * 监听鼠标事件
+       * @param opt
+       */
+       fabricOnMouseDown(opt){
+        console.log("将听到",opt)
+// 右键，且在元素上右键
+        // button: 1-左键；2-中键；3-右键
+        // 在画布上右键，target 为 null
+        if (opt.button === 3 && opt.target) {
+          // 获取当前元素
+          console.log(this.canvasEle.getObjects())
+          this.canvasEle.setActiveObject(opt.target)
+          // 显示菜单
+          this.menuVisable = true
+          this.$nextTick(()=>{
+            // 设置右键菜单位置
+            // 1. 获取菜单组件的宽高
+            const menuWidth = this.$refs.menu.offsetWidth
+            const menuHeight = this.$refs.menu.offsetHeight
+
+            // 当前鼠标位置
+            let pointX = opt.pointer.x
+            let pointY = opt.pointer.y
+
+            console.log("菜单组件宽高",menuWidth,menuHeight,"当前鼠标位置",pointX,pointY,
+            "当前画布宽高",this.canvasEle.width,this.canvasEle.height)
+            if (this.canvasEle.width - pointX <= menuWidth) {
+              pointX -= menuWidth
+            }
+            if (this.canvasEle.height - pointY <= menuHeight) {
+              pointY -= menuHeight
+            }
+
+            this.menuPosition = ` left: ${pointX}px; top: ${pointY}px;`
+
+          })
+
+        } else {
+          this.rightDeleteElement(false)
+        }
+      },
+      rightDeleteElement(removeElement=true) {
+        if (removeElement){
+          this.removeSignature()
+        }
+        this.menuVisable = false
+     },
+      clearRightMenuInfo(){
+        this.menuPosition= ''
+        this.menuVisable=false
+      },
       // 生成绘图区域
       renderFabric() {
         let canvaEle = document.querySelector("#fabricCanvas");
@@ -235,9 +310,14 @@
         // canvaEle.height = (this.whDatas.height)*(this.scale);
         canvaEle.height = this.whDatas.height;
 
-        this.canvasEle = new fabric.Canvas('fabricCanvas');
+        this.canvasEle = new fabric.Canvas('fabricCanvas',{
+          fireRightClick: true, // 左键button1 滚轮2 启用右键，button的数字为3
+          stopContextMenu: true, // 禁止默认右键菜单
+        });
 
 
+// 按下鼠标
+        this.canvasEle.on('mouse:down', this.fabricOnMouseDown)
 
         let container = document.querySelector(".canvas-container");
         container.style.position = "absolute";
@@ -286,6 +366,7 @@
       },
       // 删除签章
       removeSignature() {
+        console.log(this.canvasEle.getActiveObject())
         this.canvasEle.remove(this.canvasEle.getActiveObject())
       },
       //翻页展示盖章信息
@@ -321,7 +402,7 @@
             scaleX: val.scaleX,
             scaleY: val.scaleY,
             pageNum: this.pageNum,
-            sealUrl: this.mainImagelist[val.index],
+            sealUrl: this.sealImageList[val.index],
             index:val.index
           }
           i++;
@@ -347,7 +428,7 @@
         localStorage.removeItem('signs'); //清除缓存
       },
       end(e){
-        this.addSeal(this.mainImagelist[e.newDraggableIndex], e.originalEvent.layerX, e.originalEvent.layerY, e.newDraggableIndex)
+        this.addSeal(this.sealImageList[e.newDraggableIndex], e.originalEvent.layerX, e.originalEvent.layerY, e.newDraggableIndex)
       },
       //设置PDF预览区域高度
       setPdfArea(){
@@ -370,8 +451,11 @@
 
           if (this.whDatas) {
             loading.close();
+            let eleCanvas=document.querySelector("#fabricCanvas");
+            eleCanvas.style="border:1px solid #5ea6ef"
             this.renderFabric();
             this.canvasEvents();
+
           }
         },
       },
@@ -394,7 +478,7 @@
   }
 
   #fabricCanvas{
-    border:1px solid #5ea6ef;
+    /*border:1px solid #5ea6ef;*/
     overflow: hidden;
   }
   html:fullscreen {
@@ -500,5 +584,36 @@
     color: #fff;
     background-color: #3e4b5b;
     border-color: #3e4b5b;
+  }
+
+
+  .menu-x {
+    width: 80px;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+
+    div {
+      box-sizing: border-box;
+      padding: 4px 8px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+
+      &:hover {
+        background-color: antiquewhite;
+      }
+
+      &:first-child {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+
+      &:last-child {
+        border-bottom: none;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+      }
+    }
   }
 </style>
