@@ -1,7 +1,7 @@
 <template>
   <div id="elesign" class="elesign">
     <el-row :gutter="10">
-      <el-col id="leftCol"  style="margin-top:1%;width: 200px">
+      <el-col :span="4" style="margin-top:1%;">
         <div class="left-title">我的印章</div>
         <draggable v-model="sealImageList" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
           <transition-group type="transition">
@@ -18,21 +18,21 @@
           <el-button class="btn-outline-dark" @click="zoomOut">+</el-button> -->
           <el-button class="btn-outline-dark" @click="prevPage">上一页</el-button>
           <el-button class="btn-outline-dark" @click="nextPage">下一页</el-button>
-          <el-button class="btn-outline-dark">{{ currentPage }}/{{ totalPage }}页</el-button>
-          <el-input-number style="margin:0 5px;border-radius:5px;" class="btn-outline-dark"  v-model="justPageNum" :min="1" :max="totalPage" label="输入页码"></el-input-number>
-          <el-button class="btn-outline-dark" @click="just()">跳转</el-button>
+          <el-button class="btn-outline-dark">{{ pageNum }}/{{ numPages }}页</el-button>
+          <el-input-number style="margin:0 5px;border-radius:5px;" class="btn-outline-dark"  v-model="pageNum" :min="1" :max="numPages" label="输入页码"></el-input-number>
+          <el-button class="btn-outline-dark" @click="cutover">跳转</el-button>
         </div>
         <canvas id="pdfCanvas" />
         <!-- 盖章部分 -->
         <canvas id="fabricCanvas"></canvas>
 
         <div class="ele-control" style="margin-bottom:2%;">
-          <el-button class="btn-outline-dark" @click="removeSelectedSignature"> 删除签章</el-button>
-          <el-button class="btn-outline-dark" @click="clearAllSignature"> 清除所有签章</el-button>
+          <el-button class="btn-outline-dark" @click="removeSignature"> 删除签章</el-button>
+          <el-button class="btn-outline-dark" @click="clearSignature"> 清除所有签章</el-button>
           <el-button class="btn-outline-dark" @click="submitSignature">提交所有签章信息</el-button>
         </div>
       </el-col>
-      <el-col   style="margin-top:1%;width: 200px">
+      <el-col :span="4" style="margin-top:1%;">
         <div class="left-title">任务信息</div>
         <div style="text-align:center;">
           <div>
@@ -56,22 +56,23 @@
 
       id="menu"
       class="menu-x"
-      v-show="showRightMenu"
+      v-show="menuVisable"
       :style="menuPosition"
       @contextmenu.prevent=""
       ref="menu"
     >
       <div>什么都不做</div>
 
-      <div @click="rightDeleteClick">删除</div>
+      <div @click="rightDeleteElement">删除</div>
     </div>
   </div>
 </template>
 
 <script>
-  import {_debounce} from '@/utils'
   import {fabric} from './fabric';
-  import PDF from './pdf'
+  let pdfjsLib =require("pdfjs-dist/legacy/build/pdf.js");
+  import workerSrc from "pdfjs-dist/legacy/build/pdf.worker.entry";
+  pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
   import draggable from "vuedraggable";
   const SIGN_CACHE_KEY="signs";
   export default {
@@ -95,16 +96,22 @@
     },
     data() {
       return {
-        showRightMenu:false,
+        menuVisable:false,
         menuPosition:'',
         //pdf预览
         pdfUrl: '',
-        justPageNum: 1,
+        pdfDoc: null,
+        numPages: 1,
+        pageNum: 1,
+        scale: 1,
+        pageRendering: false,
+        pageNumPending: null,
         sealUrl: '',
         signUrl: '',
+        canvas: null,
+        ctx: null,
         canvasEle: null,
         whDatas: null,
-        pdfContext:null
 
 
       }
@@ -113,104 +120,135 @@
       hasSigna() {
         return this.canvasEle && this.canvasEle.getObjects()[0] ? true : false;
       },
-      currentPage(){
-       return  this.pdfContext.getPageNum()
-      },
-      totalPage(){
-        return  this.pdfContext.getTotalPage()
-      }
     },
     created(){
-
-
-      this.pdfContext=this.getPdfContext()
-      window.addEventListener("resize",_debounce(()=>{
-        if (this.canvasEle){
-          this.canvasEle.dispose()
-        }
-        if (this.pdfContext){
-          this.pdfContext=this.getPdfContext()
-        }
-        this.setPdfArea()
-      },300))
+      //   window.addEventListener("resize",this.setPdfArea)
       this.setPdfArea()
     },
 
 
     methods: {
+      showpdf(pdfUrl) {
+        //1.渲染pdf画布
+        this.canvas = document.getElementById("pdfCanvas");
+        this.ctx = this.canvas.getContext("2d");
+        //2.加载pdf文档
+        pdfjsLib.getDocument({url:pdfUrl, rangeChunkSize:65536, disableAutoFetch:false}).promise.then((pdfDoc_) => {
+          this.pdfDoc = pdfDoc_;
+          this.numPages = this.pdfDoc.numPages;
+          this.renderPage(this.pageNum).then(() => {
+            //将渲染出来的pdf 宽高 发射给fabric 由fabric渲染画布
+            this.renderPdf({
+              width: this.canvas.width,
+              height: this.canvas.height,
+            });
+          });
+          //3.回显签章信息
+          this.showSign(this.pageNum, true);
+        });
+      },
+      //pdf预览
+      renderPage(num) {
+        this.clearRightMenuInfo()
+        let _this = this;
+        this.pageRendering = true;
+        return this.pdfDoc.getPage(num).then((page) => {
+          console.log("当前页",page)
+          let viewport = page.getViewport({ scale: _this.scale });//设置视口大小
+          // 宽高单位为磅pt，渲染时直接写像素px会更清晰一点
+          // 例如A4纸：595 x 841pt，但渲染时写的是595 x 841px，
+          // 要是做拖拽签章功能时，注意图片单位要和PDF单位保持一致
+          console.log("当前视口",viewport)
+          _this.canvas.height = viewport.height;
+          _this.canvas.width = viewport.width;
+          // 要是做拖拽签章功能时，注意图片单位要和PDF单位保持一致
 
-       getPdfContext() {
-        return new PDF('pdfCanvas', {
-          beforeRenderPage: () => {
-            this.clearRightMenuInfo()
-          },
-          afterRenderPage: (pageNum, width, height) => {
-            this.fabricRectangle({ width, height })
-            //3.回显签章信息
-            this.showSign(pageNum, true)
-          },
-          beforePageChange: (currentPage) => {
-            this.saveSignature()
+          // Render PDF page into canvas context
+          let renderContext = {
+            canvasContext: _this.ctx,
+            viewport: viewport,
+          };
+          let renderTask = page.render(renderContext);
 
-          },
-          afterPageChange: (currentPage, toPage) => {
-            //此处等同于清楚本页签章显示
-            this.showSign(toPage)
+          // Wait for rendering to finish
+          renderTask.promise.then(() => {
+            _this.pageRendering = false;
+            if (_this.pageNumPending !== null) {
+              // New page rendering is pending
+              this.renderPage(_this.pageNumPending);
+
+              _this.pageNumPending = null;
+            }
+          });
+        });
+      },
+      /**
+       * 将待渲染页面放入队列
+       */
+      addPageToRenderQueue(pageNum) {
+        if (this.pageRendering) {
+          this.pageNumPending = pageNum;
+        } else {
+          this.renderPage(pageNum);
+        }
+      },
+      prevPage() {
+        this.saveSignature();
+        if (this.pageNum <= 1) {
+          return;
+        }
+        this.pageNum--;
+      },
+      nextPage() {
+        this.saveSignature();
+        if (this.pageNum >= this.numPages) {
+          return;
+        }
+        this.pageNum++;
+      },
+
+      cutover() {
+        this.saveSignature();
+      },
+
+
+      /**
+       * 添加公章
+       * @param sealInfo 签章信息
+       */
+      addSeal(sealInfo) {
+        //引入图片
+        fabric.Image.fromURL(
+          sealInfo.sealUrl,
+          (oImg) => {
+            oImg.set({
+              left: sealInfo.left,
+              top: sealInfo.top,
+              // angle: 10,
+              scaleX: 1,
+              scaleY: 1,
+              index:sealInfo.index,
+            });
+            // oImg.scale(0.5); //图片缩小一
+            this.canvasEle?.add(oImg);
           }
-
-        })
+        );
       },
-      //pdf相关
-      //设置PDF预览区域高度
-      setPdfArea(){
-        this.pdfUrl = 'http://localhost:9401/profile/upload/20221215/d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf';
-        //  this.pdfurl=res.data.data.pdfurl;
-        this.$nextTick(() => {
-          this.pdfContext.showPdf(this.pdfUrl)
-        });
-      },
-      prevPage(){
-        this.pdfContext.prevPage()
-        this.justPageNum=this.pdfContext.getPageNum()
-      },
-      nextPage(){
-        this.pdfContext.nextPage()
-        this.justPageNum=this.pdfContext.getPageNum()
+      /**
+       *  盖章部分开始
+       */
+      // 设置绘图区域宽高
+      renderPdf(data) {
+        this.whDatas = data;
+        // document.querySelector("#elesign").style.width = data.width + "px";
       },
 
-      just() {
-        this.pdfContext.justPage(this.justPageNum)
-        this.justPageNum=this.pdfContext.getPageNum()
-      },
-
-      //fabric 相关
-      // 生成绘图区域
-      renderFabric() {
-
-        let canvaEle = document.querySelector("#fabricCanvas");
-        //let pCenter=document.querySelector(".pCenter");
-        let pdfCenter=document.querySelector("#pdfCanvas");
-     //   console.log(pdfCenter.offsetLeft,pdfCenter.offsetLeft,pCenter.clientWidth)
-        //canvaEle.width = pCenter.clientWidth;
-        canvaEle.width = this.whDatas.width;
-        // canvaEle.height = (this.whDatas.height)*(this.scale);
-        canvaEle.height = this.whDatas.height;
-        this.canvasEle = new fabric.Canvas('fabricCanvas',{
-          fireRightClick: true, // 左键button1 滚轮2 启用右键，button的数字为3
-          stopContextMenu: true, // 禁止默认右键菜单
-        });
-        //canvas 容器
-        let container = document.querySelector(".canvas-container");
-        container.style.position = "absolute";
-        container.style.top = "50px";
-        container.style.left = pdfCenter.offsetLeft+'px';
-      },
       /**
        * 监听鼠标事件
        * @param opt
        */
       fabricOnMouseDown(opt){
-
+        console.log("将听到",opt)
 // 右键，且在元素上右键
         // button: 1-左键；2-中键；3-右键
         // 在画布上右键，target 为 null
@@ -219,7 +257,7 @@
           console.log(this.canvasEle.getObjects())
           this.canvasEle.setActiveObject(opt.target)
           // 显示菜单
-          this.showRightMenu = true
+          this.menuVisable = true
           this.$nextTick(()=>{
             // 设置右键菜单位置
             // 1. 获取菜单组件的宽高
@@ -231,7 +269,7 @@
             let pointY = opt.pointer.y
 
             console.log("菜单组件宽高",menuWidth,menuHeight,"当前鼠标位置",pointX,pointY,
-              "当前画布宽高",this.canvasEle.width,this.canvasEle.height,opt.target)
+              "当前画布宽高",this.canvasEle.width,this.canvasEle.height)
             if (this.canvasEle.width - pointX <= menuWidth) {
               pointX -= menuWidth
             }
@@ -244,13 +282,45 @@
           })
 
         } else {
-          this.hiddenRightMenu()
+          this.rightDeleteElement(false)
         }
       },
-      // 相关事件操作哟
-      fabricCanvasEvents() {
-        // 按下鼠标
+      rightDeleteElement(removeElement=true) {
+        if (removeElement){
+          this.removeSignature()
+        }
+        this.menuVisable = false
+      },
+      clearRightMenuInfo(){
+        this.menuPosition= ''
+        this.menuVisable=false
+      },
+      // 生成绘图区域
+      renderFabric() {
+        let canvaEle = document.querySelector("#fabricCanvas");
+
+        let pCenter=document.querySelector(".pCenter");
+        canvaEle.width = pCenter.clientWidth;
+        //canvaEle.width = this.whDatas.width;
+        // canvaEle.height = (this.whDatas.height)*(this.scale);
+        canvaEle.height = this.whDatas.height;
+
+        this.canvasEle = new fabric.Canvas('fabricCanvas',{
+          fireRightClick: true, // 左键button1 滚轮2 启用右键，button的数字为3
+          stopContextMenu: true, // 禁止默认右键菜单
+        });
+
+
+// 按下鼠标
         this.canvasEle.on('mouse:down', this.fabricOnMouseDown)
+
+        let container = document.querySelector(".canvas-container");
+        container.style.position = "absolute";
+        container.style.top = "50px";
+        // container.style.left = "30%";
+      },
+      // 相关事件操作哟
+      canvasEvents() {
         // 拖拽边界 不能将图片拖拽到绘图区域外
         this.canvasEle.on("object:moving", function (e) {
           var obj = e.target;
@@ -271,74 +341,12 @@
           }
         });
       },
-      /**
-       * 添加公章
-       * @param sealInfo 签章信息
-       */
-      addSeal(sealInfo) {
-        console.log("-----",sealInfo)
-        //引入图片
-        fabric.Image.fromURL(
-          sealInfo.sealUrl,
-          (oImg) => {
-            oImg.set({
-              left: sealInfo.left,
-              top: sealInfo.top,
-              // angle: 10,
-              scaleX: 1,
-              scaleY: 1,
-              index:sealInfo.index,
-              sealId:sealInfo.sealId
-            });
-            // oImg.scale(0.5); //图片缩小一
-            this.canvasEle.add(oImg);
-          }
-        );
-      },
-      /**
-       *  盖章部分开始
-       */
-      // 设置绘图区域宽高
-      fabricRectangle(data) {
-        this.whDatas = data;
-      },
 
-      hiddenRightMenu() {
-        this.showRightMenu = false
-     },
-      clearRightMenuInfo(){
-        this.menuPosition= ''
-        this.showRightMenu=false
-      },
-
-      rightDeleteClick(){
-        this.hiddenRightMenu()
-        this.removeSelectedSignature()
-      },
 
       // 删除签章
-      removeSelectedSignature() {
-        setTimeout(()=>{
-          let activeObject = this.canvasEle.getActiveObject()
-          console.log("当前选中",activeObject)
-          this.canvasEle.remove(activeObject)
-          const caches=this.$storage.local.getCache(SIGN_CACHE_KEY,{})
-          const pageNum=  this.pdfContext.getPageNum()
-          const pageSeals=caches[pageNum]
-          const sealIdIndex=activeObject['sealId']
-          delete pageSeals[sealIdIndex]
-          console.log("页面章数量",pageSeals)
-          if(Object.keys(pageSeals)<=0){
-            //页面章小于等于0
-            delete caches[pageNum]
-          }else{
-            caches[pageNum]=pageSeals
-          }
-
-          this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
-        },10)
-
-
+      removeSignature() {
+        console.log(this.canvasEle.getActiveObject())
+        this.canvasEle.remove(this.canvasEle.getActiveObject())
       },
       /**
        * 展示盖章信息
@@ -348,10 +356,12 @@
        */
       showSign(pageNum, isFirst = false) {
         if(isFirst == false) this.canvasEle.remove(this.canvasEle.clear()); //清空页面所有签章
-        let caches = this.$storage.local.getCache(SIGN_CACHE_KEY,{})
-        let pageSealData = caches[pageNum];
+
+        let caches = this.$storage.local.getCache(SIGN_CACHE_KEY)
+        console.log(caches);
+        if(caches == null) return false;
+        let pageSealData = caches[this.pageNum];
         if(pageSealData) {
-          console.log("显示",pageSealData)
           for (let index in pageSealData) {
             this.addSeal(pageSealData[index]);
           }
@@ -361,45 +371,33 @@
        * 存储当前页所有签名 到缓存
        */
       saveSignature() {
-
-
-        setTimeout(()=>{
-          this.canvasEle.renderAll()
-          console.log(this.canvasEle.getObjects())
-          let data = this.canvasEle.getObjects(); //获取当前页面内的所有签章信息
-          let caches=  this.$storage.local.getCache(SIGN_CACHE_KEY,{})
-          const pageNum=this.pdfContext.getPageNum()
-          console.log("当前页面的所有签章信息",this.canvasEle,pageNum,data)
-          let signDatas = {}; //存储当前页的所有签章信息
-          let i = 0;
-          // let sealUrl = '';
-          for(var val of data) {
-            signDatas[i] =  {
-              width: val.width,
-              height: val.height,
-              top: val.top,
-              left: val.left,
-              angle: val.angle,
-              translateX: val.translateX,
-              translateY: val.translateY,
-              scaleX: val.scaleX,
-              scaleY: val.scaleY,
-              pageNum: pageNum,
-              cacheKey: val.cacheKey,
-              sealUrl: this.sealImageList[val.index],
-              index:val.index,
-              sealId: i
-            }
-            i++;
+        let data = this.canvasEle.getObjects(); //获取当前页面内的所有签章信息
+        let caches=  this.$storage.local.getCache(SIGN_CACHE_KEY,{})
+        console.log("当前页面的所有签章信息",data)
+        let signDatas = {}; //存储当前页的所有签章信息
+        let i = 0;
+        // let sealUrl = '';
+        for(var val of data) {
+          signDatas[i] =  {
+            width: val.width,
+            height: val.height,
+            top: val.top,
+            left: val.left,
+            angle: val.angle,
+            translateX: val.translateX,
+            translateY: val.translateY,
+            scaleX: val.scaleX,
+            scaleY: val.scaleY,
+            pageNum: this.pageNum,
+            sealUrl: this.sealImageList[val.index],
+            index:val.index
           }
-
-          if (signDatas&&Object.keys(signDatas).length>0){
-            caches[pageNum] = signDatas;
-            this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
-          }
-        },10)
-
-
+          i++;
+        }
+        if (i>0){
+          caches[this.pageNum] = signDatas;
+          this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
+        }
 
       },
       //提交数据
@@ -410,23 +408,27 @@
         return false
       },
       //清空数据
-      clearAllSignature() {
+      clearSignature() {
         //清空页面所有签章
         this.canvasEle.remove(this.canvasEle.clear());
         //清除缓存
         this.$storage.local.deleteCache(SIGN_CACHE_KEY)
       },
-      //拖拽结束事件
       end(e){
-         const sealInfo={sealUrl: this.sealImageList[e.newDraggableIndex],
-         left: e.originalEvent.layerX,
-         top: e.originalEvent.layerY,
-         index: e.newDraggableIndex }
-
+        const sealInfo={sealUrl: this.sealImageList[e.newDraggableIndex],
+          left: e.originalEvent.layerX,
+          top: e.originalEvent.layerY,
+          index: e.newDraggableIndex }
         this.addSeal(sealInfo)
-
       },
-
+      //设置PDF预览区域高度
+      setPdfArea(){
+        this.pdfUrl = 'http://localhost:9401/profile/upload/20221215/d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf';
+        //  this.pdfurl=res.data.data.pdfurl;
+        this.$nextTick(() => {
+          this.showpdf(this.pdfUrl);//接口返回的应该还有盖章信息，不只是pdf
+        });
+      },
     },
     watch: {
       whDatas: {
@@ -443,12 +445,15 @@
             let eleCanvas=document.querySelector("#fabricCanvas");
             eleCanvas.style="border:1px solid #5ea6ef"
             this.renderFabric();
-            this.fabricCanvasEvents();
+            this.canvasEvents();
 
           }
         },
       },
-
+      pageNum: function() {
+        this.showSign(this.pageNum);
+        this.addPageToRenderQueue(this.pageNum);
+      }
     }
   }
 </script>

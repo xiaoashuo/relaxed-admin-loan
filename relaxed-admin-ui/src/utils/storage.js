@@ -9,6 +9,13 @@ class LocalStorage {
       return JSON.parse(value)
     }
   }
+  getCache(key,defaultValue) {
+    let value = window.localStorage.getItem(key)
+    if (value) {
+      return JSON.parse(value)
+    }
+    return defaultValue
+  }
 
   deleteCache(key) {
     window.localStorage.removeItem(key)
