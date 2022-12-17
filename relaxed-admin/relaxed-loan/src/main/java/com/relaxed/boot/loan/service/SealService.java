@@ -29,4 +29,5 @@ public interface SealService extends ExtendService<Seal> {
 
     List<SelectData> querySealList();
 
+    List<SealPageVO> queryList();
 }

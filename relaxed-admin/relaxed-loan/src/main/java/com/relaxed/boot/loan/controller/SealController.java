@@ -54,12 +54,21 @@ public class SealController {
         return R.ok(sealService.queryPage(pageParam, sealQO));
     }
     /**
+     * 签章图片列表
+     * @return R 通用返回体
+     */
+    @Operation(summary = "签章图片列表")
+    @GetMapping("/list" )
+    public R<List<SealPageVO>> getSealList() {
+        return R.ok(sealService.queryList());
+    }
+    /**
      * 签章图片下拉列表
      * @return R 通用返回体
      */
     @Operation(summary = "签章图片下拉列表")
     @GetMapping("/select" )
-    public R<List<SelectData>> getSealList() {
+    public R<List<SelectData>> getSealSelectedList() {
         return R.ok(sealService.querySealList());
     }
     /**

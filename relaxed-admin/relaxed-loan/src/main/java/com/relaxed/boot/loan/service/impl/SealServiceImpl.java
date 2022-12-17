@@ -6,6 +6,7 @@ import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
 import com.relaxed.boot.framework.config.RelaxedConfig;
+import com.relaxed.boot.loan.converter.SealConverter;
 import com.relaxed.boot.loan.enums.SealEnum;
 import com.relaxed.boot.loan.model.entity.Seal;
 import com.relaxed.boot.loan.model.vo.SealPageVO;
@@ -45,6 +46,12 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
     @Override
     public PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo) {
         return baseMapper.queryPage(pageParam, qo);
+    }
+
+    @Override
+    public List<SealPageVO> queryList() {
+        List<Seal> list = list();
+        return SealConverter.INSTANCE.poToPageVos(list);
     }
 
     @Override

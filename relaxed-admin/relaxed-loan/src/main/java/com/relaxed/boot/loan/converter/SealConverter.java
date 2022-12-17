@@ -5,6 +5,8 @@ import com.relaxed.boot.loan.model.vo.SealPageVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * 签章图片表模型转换器
  *
@@ -21,5 +23,12 @@ public interface SealConverter {
 	 * @return SealPageVO 签章图片表PageVO
 	 */
 	SealPageVO poToPageVo(Seal seal);
+
+	/**
+	 * po->vos
+	 * @param seals
+	 * @return
+	 */
+	List<SealPageVO> poToPageVos(List<Seal> seals);
 
 }

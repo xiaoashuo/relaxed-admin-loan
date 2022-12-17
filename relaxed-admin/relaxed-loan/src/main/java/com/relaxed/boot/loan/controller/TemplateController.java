@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.controller;
 
+import cn.hutool.extra.servlet.ServletUtil;
 import com.relaxed.boot.loan.manage.TemplateManage;
 import com.relaxed.boot.loan.model.entity.Template;
 import com.relaxed.boot.loan.model.qo.TemplateQO;
@@ -26,6 +27,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+
 
 /**
  * 模板文件配置表
@@ -41,6 +45,11 @@ public class TemplateController {
     private final  TemplateService templateService;
     private final TemplateManage templateManage;
 
+    @GetMapping("test")
+    public void test(HttpServletResponse response){
+        File file = new File("D:\\other\\oss\\profile\\upload\\20221215\\d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf");
+        ServletUtil.write(response,file);
+    }
     /**
      * 分页查询
      * @param pageParam 分页参数
