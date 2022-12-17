@@ -1,6 +1,7 @@
 <template>
     <div style="width: 100%;height: 100%">
 
+      <canvas id="ele-canvas" style="border: 1px solid red"></canvas>
       <yi-upload class="upload-file" :upload-url="uploadUrl"
 
                  :delete-request="deleteFileRequest"
@@ -29,7 +30,7 @@
   import {YiUpload} from '@/components/upload'
 
   import {deleteFile} from '@/api/common'
-
+  import {fabric} from 'fabric';
   export default {
         name: "Nested",
         components:{
@@ -55,7 +56,19 @@
             deleteFileRequest:deleteFile
           }
       },
-      methods:{
+    mounted() {
+      const testEle=    document.querySelector('#ele-canvas')
+      // ele.width=100
+      // ele.height=200
+      // this.canvasEle = new fabric.Canvas(ele);
+      // let testEle = document.querySelector("#test");
+      testEle.width = 300;
+      testEle.height = 100;
+      testEle.border='1px solid red'
+      this.testEle=new fabric.Canvas('ele-canvas')
+      console.log("当前ele-CANVAS",document.querySelector("#ele-canvas"))
+    },
+    methods:{
         handlePictureCardPreview(file) {
           this.dialogImageUrl = file.url
           this.dialogVisible = true;
