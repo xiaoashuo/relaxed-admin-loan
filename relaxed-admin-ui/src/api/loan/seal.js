@@ -6,6 +6,11 @@ export function getPage(query) {
     params: query
   })
 }
+export function getListData() {
+  return yiRequest.get({
+    url: '/loan/seal/list',
+  })
+}
 export function getSelectData() {
   return yiRequest.get({
     url: '/loan/seal/select',
