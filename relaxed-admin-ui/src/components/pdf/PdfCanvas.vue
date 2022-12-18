@@ -8,7 +8,7 @@
         <el-button class="btn-outline-dark" @click="nextPage">下一页</el-button>
         <el-button class="btn-outline-dark">{{ currentPage }}/{{ totalPage }}页</el-button>
         <el-input-number style="margin:0 5px;border-radius:5px;" class="btn-outline-dark"
-                         @change="handleChange"
+
                          v-model="justPageNum" :min="1" :max="totalPage" label="输入页码"></el-input-number>
         <el-button class="btn-outline-dark" @click="just()">跳转</el-button>
       </div>
@@ -44,9 +44,7 @@
       }
     },
     methods:{
-      handleChange(currentValue, oldValue){
-       console.log("当前",currentValue,oldValue)
-      },
+
       getPdfContext() {
         return new YiPdf('pdfCanvas', this.options)
       },

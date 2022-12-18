@@ -54,7 +54,14 @@
       watch:{
           value(){
             this.selectValue=this.value
-          }
+          },
+        options:{
+            handler:function(val){
+              if (!this.remoteLoad){
+                this.selectData=val
+              }
+            }
+        }
       },
       methods:{
         getTreeData(){

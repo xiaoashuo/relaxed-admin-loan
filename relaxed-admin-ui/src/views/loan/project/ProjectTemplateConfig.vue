@@ -2,6 +2,12 @@
     <div class="templateConfig">
 
         <div  class="leftCol">
+          <div class="sealWay">
+            <div>签章方式</div>
+            <dict-select v-model="sealWay" v-bind="sealWayConfig"></dict-select>
+          </div>
+
+
 
           <div class="fileType">
             <div>文件类型</div>
@@ -11,24 +17,46 @@
             <span>证书列表</span>
             <yi-select  v-model="keystoreId" v-bind="keyStoreConfig"></yi-select>
           </div>
-          <div class="left-title">我的印章</div>
-          <div class="seal">
+          <template v-if="sealWay===1">
+            <div class="left-title">我的印章</div>
+            <div class="seal">
 
-            <draggable v-model="sealList" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
-              <transition-group type="transition">
-                <li v-for="item in sealList" :key="item.sealId" class="item" style="text-align:center;">
-                  <img :src="item.sealAddress" width="100%;" height="100%" class="imgstyle" />
-                </li>
-              </transition-group>
-            </draggable>
-          </div>
+              <draggable v-model="sealList" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
+                <transition-group type="transition">
+                  <li v-for="item in sealList" :key="item.sealId" class="item" style="text-align:center;">
+                    <img :src="item.sealAddress" width="100%;" height="100%" class="imgstyle" />
+                  </li>
+                </transition-group>
+              </draggable>
+            </div>
+
+
+          </template>
+          <template v-if="sealWay===2">
+            <div class="keyword">
+              <div>关键字</div>
+              <el-input v-model="keywordText" ></el-input>
+            </div>
+            <div class="sealSelect">
+              <div>印章列表</div>
+              <yi-select :options="keywordSealList" v-model="sealId" @change="handleValChange" ref="sealListRef"></yi-select>
+
+              <div>
+                <img :src="sealPreviewUrl" style="margin-top: 10px" width="100%;" height="100%" class="imgstyle"/>
+              </div>
+              <div>
+                <el-button  class="previewBtn" @click="handlePreviewPdf">预览</el-button>
+              </div>
+            </div>
+
+          </template>
+
 
         </div>
         <div   class="contentCol">
 
           <pdf-canvas ref="yiPdfRef" :options="pdfOptions"></pdf-canvas>
           <!-- 盖章部分 -->
-<!--          <canvas id="fabricCanvas"></canvas>-->
 
           <fabric-canvas ref="fabricCanvasRef"
                          :source-style="getSourceStyle"
@@ -41,7 +69,9 @@
             <el-button class="btn-outline-dark" @click="clearAllSignature"> 清除所有签章</el-button>
             <el-button class="btn-outline-dark" @click="submitSignature">提交所有签章信息</el-button>
           </div>
+
         </div>
+
         <div  class="rightCol">
           <div class="right-item" >
             <div class="item">
@@ -58,6 +88,8 @@
             </div>
 
           </div>
+
+
         </div>
 
 
@@ -77,7 +109,7 @@
 <script>
   import { YiSelect } from '@/components/select'
   import draggable from "vuedraggable";
-  import {getListData as getSealListData} from '@/api/loan/seal'
+  import {getListData as getSealListData,getSelectData as getSealSelectData} from '@/api/loan/seal'
   import { getSelectData as getCertificateSelectData } from '@/api/loan/certificate'
   import PdfCanvas from '@/components/pdf/PdfCanvas'
   import FabricCanvas from '@/components/pdf/FabricCanvas'
@@ -96,7 +128,21 @@
         //fabric
         fabricPosition: null,
 
+        sealId:null,
+        sealPreviewUrl:null,
         sealList:[],
+
+
+        keywordText:'',
+        sealWay:2,
+        sealWayConfig:{
+          dictCode: 'seal_way',
+
+          otherProps:{
+            clearable: true
+          }
+        },
+
         fileType: null,
         fileTypeConfig:{
           dictCode: 'file_type',
@@ -106,6 +152,7 @@
           }
         },
         keystoreId:null,
+
         keyStoreConfig:{
           remoteLoad: true,
           request: getCertificateSelectData,
@@ -117,29 +164,56 @@
         }
       }
     },
+
+    computed:{
+      keywordSealList(){
+       return this.sealList.map(item=>{
+          const innerItem={}
+          innerItem.label=item.sealSubject;
+          innerItem.value=item.sealId
+          return innerItem
+        })
+      }
+    },
     created() {
       getSealListData().then(res=>{
         this.sealList=res.data
       })
+
     },
     mounted() {
-      this.setPdfArea()
-      window.addEventListener("resize", _debounce(()=>{
-        try {
-          console.log("界面变动")
-          //热加载此处会出现异常
-          this.saveSignature()
-          this.$refs.fabricCanvasRef.renderAll()
-          this.showSign(this.$refs.yiPdfRef.getPageNum(),true)
-        }catch (e) {
-          console.log("重绘界面异常",e)
-        }
-
-        },300)
-      )
+      this.pdfUrl = 'http://localhost:9401/profile/upload/20221215/d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf';
+      this.$refs.yiPdfRef.show(this.pdfUrl)
+      window.addEventListener("resize", this.resizeChange)
     },
 
+    beforeDestroy() {
+      window.removeEventListener("resize", this.resizeChange)
+    },
     methods:{
+      handlePreviewPdf(){
+        console.log("处理预览pdf")
+      },
+      handleValChange(val){
+        console.log("当前change",val)
+       const findItem= this.sealList.find(item=>item.sealId===val)
+        if (findItem){
+          this.sealPreviewUrl=findItem.sealAddress
+        }
+      },
+       resizeChange() {
+        return _debounce(() => {
+          try {
+            //热加载此处会出现异常
+            this.saveSignature()
+            this.$refs.fabricCanvasRef.renderAll()
+            this.showSign(this.$refs.yiPdfRef.getPageNum(), true)
+          } catch (e) {
+            console.log('重绘界面异常', e)
+          }
+
+        }, 300)
+      },
 
       //右键菜单
       handleShow (e,position) {
@@ -158,11 +232,8 @@
         this.handleHide()
       },
 
-      //设置PDF预览区域高度
-      setPdfArea(){
-        this.pdfUrl = 'http://localhost:9401/profile/upload/20221215/d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf';
-        this.$refs.yiPdfRef.show(this.pdfUrl)
-      },
+
+
       getPdfOptions() {
         return {
           beforeRenderPage: () => {
@@ -315,6 +386,7 @@
     padding-top: 10px;
   }
   .leftCol{
+    position: relative;
     width: 200px;
     margin-right: 20px;
 
@@ -348,6 +420,11 @@
       }
     }
 
+    .previewBtn{
+      width: 100%;
+      position: absolute;
+      bottom: 15px;
+    }
   }
   .contentCol{
 
