@@ -124,10 +124,9 @@
       window.addEventListener("resize", _debounce(()=>{
         try {
           //热加载此处会出现异常
-          this.saveSignature().then(res=>{
-            this.$refs.fabricCanvasRef.renderAll()
-            this.showSign(this.$refs.yiPdfRef.getPageNum(),true)
-          })
+          this.saveSignature()
+          this.$refs.fabricCanvasRef.renderAll()
+          this.showSign(this.$refs.yiPdfRef.getPageNum(),true)
         }catch (e) {
           console.log("重绘界面异常",e)
         }
@@ -163,8 +162,7 @@
       getPdfOptions() {
         return {
           beforeRenderPage: () => {
-            console.log("执行类渲染")
-            // this.clearRightMenuInfo()
+
           },
           afterRenderPage: (pageNum, width, height) => {
             this.fabricRectangle({ width, height })
@@ -195,8 +193,6 @@
 
       saveSignature(){
 
-
-        return new Promise((resolve,reject)=>{
           let data = this.$refs.fabricCanvasRef.getObjects(); //获取当前页面内的所有签章信息
           let caches=  this.$storage.local.getCache(SIGN_CACHE_KEY,{})
           const pageNum=this.$refs.yiPdfRef.currentPage
@@ -225,8 +221,7 @@
             caches[pageNum] = signDatas;
             this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
           }
-          resolve()
-        })
+
 
 
 
