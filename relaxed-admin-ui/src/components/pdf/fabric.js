@@ -23,4 +23,5 @@ fabric.Object.prototype.cornerStrokeColor = "gray";
 fabric.Object.prototype.controls.mtr.offsetY = -20;
 // 单独修改旋转控制点，光标移动到该点上时的样式为`pointer`，一个手的形状
 fabric.Object.prototype.controls.mtr.cursorStyle = "pointer";
+
 export { fabric }

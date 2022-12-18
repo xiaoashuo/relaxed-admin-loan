@@ -3,6 +3,9 @@ import ProTable from "@/components/table/src/ProTable";
 import FormModal from "@/components/form/src/FormModal";
 import ProFormModal from '@/components/form/src/ProFormModal'
 import {DictRadioGroup,DictSelect,DictCheckBoxGroup,DictText,DictTag} from "@/components/dict";
+
+
+
 export function registerComponents(Vue) {
 
   Vue.component('DictRadioGroup',DictRadioGroup)
@@ -16,4 +19,5 @@ export function registerComponents(Vue) {
   Vue.component('ProTable',ProTable)
 
   Vue.component('PageSearch',PageSearch)
+
 }

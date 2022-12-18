@@ -1,17 +1,11 @@
 <template>
     <div class="templateConfig">
-      <el-row >
-        <el-col :span="8" class="leftCol">
-          <div class="info" >
-            <div class="item">
-              <div class="right-item-title">文件主题</div>
-              <div class="detail-item-desc">操作项目名称</div>
-            </div>
-            <div class="item">
-              <div class="right-item-title">文件主题</div>
-              <div class="detail-item-desc">操作项目名称</div>
-            </div>
 
+        <div  class="leftCol">
+
+          <div class="fileType">
+            <div>文件类型</div>
+            <dict-select v-model="fileType" v-bind="fileTypeConfig"></dict-select>
           </div>
           <div class="keystore">
             <span>证书列表</span>
@@ -28,8 +22,8 @@
             </draggable>
           </div>
 
-        </el-col>
-        <el-col :span="14"  class="rightCol">
+        </div>
+        <div   class="contentCol">
 
           <yi-pdf ref="yiPdfRef" :options="pdfOptions"></yi-pdf>
           <!-- 盖章部分 -->
@@ -40,8 +34,32 @@
             <el-button class="btn-outline-dark" @click="clearAllSignature"> 清除所有签章</el-button>
             <el-button class="btn-outline-dark" @click="submitSignature">提交所有签章信息</el-button>
           </div>
-        </el-col>
-      </el-row>
+        </div>
+        <div  class="rightCol">
+          <div class="info" >
+            <div class="item">
+              <div class="right-item-title">文件主题</div>
+              <div class="detail-item-desc">操作项目名称</div>
+            </div>
+            <div class="item">
+              <div class="right-item-title">文件主题</div>
+              <div class="detail-item-desc">操作项目名称</div>
+            </div>
+
+          </div>
+        </div>
+
+
+      <div :class="['box', 'default']" >
+        <v-contextmenu  ref="contextmenu" theme="default">
+          <v-contextmenu-item :auto-hide="false" @click="showLocation">显示坐标</v-contextmenu-item>
+          <v-contextmenu-item divider></v-contextmenu-item>
+          <v-contextmenu-item  @click="removeSelectedSignature">删除</v-contextmenu-item>
+
+        </v-contextmenu>
+      </div>
+
+
     </div>
 </template>
 
@@ -67,6 +85,14 @@
         whDatas: null,
         fabricCanvas: null,
         sealList:[],
+        fileType: null,
+        fileTypeConfig:{
+          dictCode: 'file_type',
+          clearable: true,
+          otherProps:{
+            clearable: true
+          }
+        },
         keystoreId:null,
         keyStoreConfig:{
           remoteLoad: true,
@@ -109,14 +135,17 @@
 
     },
     methods:{
+      handleShow (e,position) {
+        this.$refs.contextmenu.show({ top:position.top,left:position.left })
+      },
+      handleHide() {
+        this.$refs.contextmenu.hide()
+      },
       // 生成绘图区域
       renderFabric() {
 
         let fabricCanvasElement = document.querySelector("#fabricCanvas");
-        //let pCenter=document.querySelector(".pCenter");
-      //  let pdfCenter=document.querySelector("#pdfCanvas");
-        let pdfCenter=this.$refs.yiPdfRef.$el;
-        console.log(this.$refs.yiPdfRef.$el)
+        let innerPdfCenter=document.querySelector("#pdfCanvas");
         //   console.log(pdfCenter.offsetLeft,pdfCenter.offsetLeft,pCenter.clientWidth)
         //canvaEle.width = pCenter.clientWidth;
         fabricCanvasElement.width = this.whDatas.width;
@@ -130,7 +159,7 @@
         let container = document.querySelector(".canvas-container");
         container.style.position = "absolute";
         container.style.top = "50px";
-        container.style.left = pdfCenter.offsetLeft+'px';
+        container.style.left = innerPdfCenter.offsetLeft+'px';
       },
 
       // 相关事件操作哟
@@ -163,45 +192,35 @@
        * @param opt
        */
       fabricOnMouseDown(opt){
-//
-//
-// // 右键，且在元素上右键
-//         // button: 1-左键；2-中键；3-右键
-//         // 在画布上右键，target 为 null
-//         if (opt.button === 3 && opt.target) {
-//           // 获取当前元素
-//           console.log(opt.target.left)
-//           this.canvasEle.setActiveObject(opt.target)
-//           // 显示菜单
-//           this.showRightMenu = true
-//           this.$nextTick(()=>{
-//             // 设置右键菜单位置
-//             // 1. 获取菜单组件的宽高
-//             const menuWidth = this.$refs.menu.offsetWidth
-//             const menuHeight = this.$refs.menu.offsetHeight
-//
-//             const canvasContainer=document.querySelector('.canvas-container')
-//             // 当前鼠标位置
-//             // let pointX = opt.pointer.x+200
-//             let pointX = opt.target.left+canvasContainer.offsetLeft
-//             let pointY = opt.pointer.y
-//
-//             console.log("菜单组件宽高",menuWidth,menuHeight,"当前鼠标位置",pointX,pointY,
-//               "当前画布宽高",this.canvasEle.width,this.canvasEle.height,opt.target)
-//             if (this.canvasEle.width - pointX <= menuWidth) {
-//               pointX -= menuWidth
-//             }
-//             if (this.canvasEle.height - pointY <= menuHeight) {
-//               pointY -= menuHeight
-//             }
-//
-//             this.menuPosition = ` left: ${pointX}px; top: ${pointY}px;`
-//
-//           })
-//
-//         } else {
-//           this.hiddenRightMenu()
-//         }
+        // 右键，且在元素上右键 button: 1-左键；2-中键；3-右键
+
+        console.log('====',opt)
+        // 在画布上右键，target 为 null
+        if (opt.button === 3 && opt.target) {
+          opt.e.preventDefault()
+          // 获取当前元素
+          this.fabricCanvas.setActiveObject(opt.target)
+          this.$nextTick(()=>{
+            // 设置右键菜单位置
+            // 当前鼠标位置
+            //相对于文档的距离event.pageY 相对于浏览器窗口的距离（不包含滚动的距离） event.clientX
+            const position={top: opt.e.pageY, left: opt.e.pageX}
+            this.handleShow(opt.e,position)
+          })
+
+        } else {
+          opt.e.preventDefault()
+          this.handleHide()
+
+        }
+      },
+      showLocation(){
+        const activeObject=this.fabricCanvas.getActiveObject()
+        const position={left: activeObject.left,top:activeObject.top,width:activeObject.width,
+        height:activeObject.height}
+        this.$message.info(JSON.stringify(position))
+        console.log(activeObject)
+        this.handleHide()
       },
       /**
        * 添加公章
@@ -213,13 +232,16 @@
         fabric.Image.fromURL(
           sealInfo.sealUrl,
           (oImg) => {
+            //等比例缩放到150
+            const scaleX=150/ oImg.width
+            const scaleY=150/oImg.height
             oImg.set({
               left: sealInfo.left,
               top: sealInfo.top,
 
               // angle: 10,
-              scaleX: 0.1,
-              scaleY: 0.1,
+              scaleX: scaleX,
+              scaleY: scaleY,
               index:sealInfo.index,
               uid:sealInfo.uid
             });
@@ -377,7 +399,10 @@
 </script>
 
 <style lang="scss" scoped>
+
   .templateConfig{
+    display: flex;
+    margin: auto;
     position: relative;
     padding-left: 10px;
     padding-top: 10px;
@@ -385,17 +410,7 @@
   .leftCol{
     width: 200px;
     margin-right: 20px;
-    .info{
 
-      height: 150px;
-
-      border: 1px solid red;
-    }
-    .left-title {
-      text-align:center;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #eee;
-    }
     .keystore{
       span{
         display: inline-block;
@@ -421,8 +436,13 @@
     }
 
   }
-  .rightCol{
+  .contentCol{
+
+    flex: 1;
+
+    text-align: center;
     /*pdf部分*/
+
 
     .pCenter{
       overflow-x: hidden;
@@ -443,6 +463,23 @@
     .ele-control {
       text-align: center;
       margin-top: 3%;
+    }
+  }
+  .rightCol{
+
+    width: 200px;
+
+
+    .info{
+
+      height: 150px;
+
+      border: 1px solid red;
+    }
+    .left-title {
+      text-align:center;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
     }
   }
 

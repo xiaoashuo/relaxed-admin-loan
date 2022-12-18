@@ -1,6 +1,23 @@
 <template>
     <div style="width: 100%;height: 100%">
 
+
+      <div class="example">
+        <div :class="['buttons', 'default']">
+          <button type="button" @click="handleShow">显示</button>
+          <button type="button" @click="handleHide">隐藏</button>
+        </div>
+        <div :class="['box', 'default']" ref="box">
+          展示区域
+
+          <v-contextmenu  ref="contextmenu" theme="default">
+            <v-contextmenu-item>菜单1</v-contextmenu-item>
+            <v-contextmenu-item divider></v-contextmenu-item>
+            <v-contextmenu-item>菜单2</v-contextmenu-item>
+            <v-contextmenu-item>菜单3</v-contextmenu-item>
+          </v-contextmenu>
+        </div>
+      </div>
       <canvas id="ele-canvas" style="border: 1px solid red"></canvas>
       <yi-upload class="upload-file" :upload-url="uploadUrl"
 
@@ -31,10 +48,12 @@
 
   import {deleteFile} from '@/api/common'
   import {fabric} from 'fabric';
+
   export default {
         name: "Nested",
         components:{
-          YiUpload
+          YiUpload,
+
         },
       data(){
           return{
@@ -69,6 +88,24 @@
       console.log("当前ele-CANVAS",document.querySelector("#ele-canvas"))
     },
     methods:{
+      handleShow (e) {
+        console.log(e)
+        e.stopPropagation();
+        const targetDimensions = this.$refs.box.getBoundingClientRect()
+
+        const postition = {
+          top: Math.random() * targetDimensions.height + targetDimensions.top,
+          left: Math.random() * targetDimensions.width + targetDimensions.left,
+        }
+        console.log("当前",this.$refs.contextmenu.$data,targetDimensions,postition)
+
+        this.$refs['contextmenu'].show({ top:100,left:100 })
+
+
+      },
+      handleHide() {
+        this.$refs.contextmenu.hide()
+      },
         handlePictureCardPreview(file) {
           this.dialogImageUrl = file.url
           this.dialogVisible = true;
@@ -89,7 +126,29 @@
       }
     }
 </script>
+<style lang="scss">
+  $main-color:#46a0fc;
+  $main-color-bright:#ef5350;
+  .buttons{
+    padding: 5px 10px;
+    border-left: 1px solid $main-color;
+    border-right: 1px solid $main-color;
+    background-color: #fff;
+    & .bright{
 
+      border-color: $main-color-bright
+    }
+
+  }
+
+  .box{
+    position: relative;
+    width: 100%;
+    height: 120px;
+    line-height: 120px
+  }
+
+</style>
 <style lang="scss" scoped>
   .upload-file{
     ::v-deep  .upload-file-uploader{
