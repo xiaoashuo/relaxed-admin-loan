@@ -11,6 +11,7 @@
     		<result property="sealSource" column="seal_source"/>
     		<result property="sealPictureType" column="seal_picture_type"/>
     		<result property="sealFilename" column="seal_filename"/>
+    		<result property="sealPath" column="seal_path"/>
     		<result property="createBy" column="create_by"/>
     		<result property="updateBy" column="update_by"/>
     		<result property="deleted" column="deleted"/>
@@ -26,6 +27,7 @@
 		seal_address,
 seal_source,
 seal_filename,
+seal_path,
 seal_picture_type,
 		create_by,        
 		update_by,        
@@ -42,6 +44,7 @@ seal_picture_type,
 		s.seal_address,
 s.seal_filename,
 s.seal_source,
+s.seal_path,
 s.seal_picture_type,
 		s.create_by,        
 		s.update_by,        

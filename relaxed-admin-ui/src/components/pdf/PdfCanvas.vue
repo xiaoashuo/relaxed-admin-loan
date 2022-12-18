@@ -48,6 +48,9 @@
       getPdfContext() {
         return new YiPdf('pdfCanvas', this.options)
       },
+      showPdfByBlob(blob){
+        this.pdfContext.showPdfByBlob(blob)
+      },
       show(pdfUrl){
         this.pdfContext.showPdf(pdfUrl)
       },

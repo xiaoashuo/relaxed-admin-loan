@@ -1,5 +1,7 @@
 package com.relaxed.boot.loan.controller;
 
+import com.relaxed.boot.loan.manage.SealManage;
+import com.relaxed.boot.loan.model.dto.PreviewInfoDTO;
 import com.relaxed.boot.loan.model.entity.Seal;
 import com.relaxed.boot.loan.model.qo.SealQO;
 import com.relaxed.boot.loan.model.vo.SealPageVO;
@@ -12,6 +14,8 @@ import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
+import com.relaxed.starter.download.annotation.ResponseDownload;
+import com.relaxed.starter.download.domain.DownloadModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +44,7 @@ import java.util.List;
 public class SealController {
 
     private final  SealService sealService;
-
+    private final SealManage sealManage;
     /**
      * 分页查询
      * @param pageParam 分页参数
@@ -61,6 +65,17 @@ public class SealController {
     @GetMapping("/list" )
     public R<List<SealPageVO>> getSealList() {
         return R.ok(sealService.queryList());
+    }
+
+    /**
+     * 预览PDF
+     * @return R 通用返回体
+     */
+    @Operation(summary = "预览PDF")
+    @PostMapping("/preview" )
+    @ResponseDownload
+    public DownloadModel preview(@RequestBody PreviewInfoDTO previewInfoDTO) {
+        return sealManage.preview(previewInfoDTO);
     }
     /**
      * 签章图片下拉列表

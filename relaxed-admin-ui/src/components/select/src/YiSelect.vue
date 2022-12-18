@@ -69,6 +69,9 @@
             this.selectData=res.data
           })
         },
+        getSelectData(){
+          return this.selectData
+        },
         handleChange(value){
           console.log("当前选中值",value)
           this.selectValue=value

@@ -11,6 +11,15 @@ export function getListData() {
     url: '/loan/seal/list',
   })
 }
+
+export function previewPdf(payload) {
+  return yiRequest.post({
+    url: '/loan/seal/preview',
+    data: payload,
+    'Content-Type':'application/json',
+    responseType: 'blob'
+  })
+}
 export function getSelectData() {
   return yiRequest.get({
     url: '/loan/seal/select',

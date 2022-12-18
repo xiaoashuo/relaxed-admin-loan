@@ -45,12 +45,22 @@
             </exclusions>
         </dependency>
 
+
         <!-- add all iText 7 modules -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itext7-core</artifactId>
             <version>7.2.2</version>
             <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>com.aspose</groupId>
+            <artifactId>aspose-words-jdk16</artifactId>
+            <version>15.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.lovecyy</groupId>
+            <artifactId>relaxed-spring-boot-starter-download</artifactId>
         </dependency>
 
     </dependencies>

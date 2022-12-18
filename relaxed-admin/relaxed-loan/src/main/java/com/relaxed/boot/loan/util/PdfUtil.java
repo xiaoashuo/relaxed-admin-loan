@@ -40,13 +40,7 @@ import lombok.SneakyThrows;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.PrivateKey;
@@ -96,7 +90,37 @@ public class PdfUtil {
         }
 
     }
+    public static final  void addImage(ByteArrayInputStream source, File dest, PreviewSignInfo previewSignInfo){
+        try (PdfReader pdfReader = new PdfReader(source);
+             PdfDocument pdfDoc = new PdfDocument(pdfReader,new PdfWriter(dest));
+        ){
+            ImageData img = ImageDataFactory.create(previewSignInfo.getImgPath());
+            Image image = new Image(img);
+            List<KeywordLocation> keywordLocationList = previewSignInfo.getKeywordLocationList();
+            for (KeywordLocation keywordLocation : keywordLocationList) {
+                Integer pageNum = keywordLocation.getPageNum();
+                List<IPdfTextLocation> ipdfTextLocations = keywordLocation.getIpdfTextLocations();
+                PdfPage page = pdfDoc.getPage(pageNum);
+                //低级别
+                PdfCanvas pdfCanvas = new PdfCanvas(page);
+                //我们想在已经存在的内容下添加内容，因此我们使用newContentStreamBefore()方法。
+                // 如果你想要在已经存在的内容上添加内容，你应该使用newContentStreamAfter()方法
+                //这些方法会创建一个新的内容流，并且把它添加到页面中
+                PdfStream pdfStream = previewSignInfo.isContentBefore() ? page.newContentStreamBefore() : page.newContentStreamAfter();
+                pdfCanvas.attachContentStream(pdfStream);
+                for (IPdfTextLocation ipdfTextLocation : ipdfTextLocations) {
+                    Rectangle rectangle = ipdfTextLocation.getRectangle();
+                    rectangle.setY(rectangle.getY()+30);
+                    Canvas canvas = new Canvas(pdfCanvas,rectangle);
+                    canvas.add(image);
+                    canvas.close();
+                }
+            }
+        } catch (Exception e) {
+            throw ExceptionUtil.wrapRuntime(e);
+        }
 
+    }
     private   void addImageTest(String source,String dest,Integer pageNum,String imgPath ){
        try (PdfReader pdfReader = new PdfReader(new FileInputStream(source));
             PdfDocument pdfDoc = new PdfDocument(pdfReader,new PdfWriter(dest));
@@ -378,6 +402,23 @@ public class PdfUtil {
     public static List<KeywordLocation> extractKeywordLocation(String source, Integer specifyPageNum, String keyword) {
         List<KeywordLocation> allKeywords = new ArrayList<>();
         try (PdfDocument pdfDoc = new PdfDocument(new PdfReader(new FileInputStream(source)))) {
+            if (specifyPageNum != null) {
+                PdfPage page = pdfDoc.getPage(specifyPageNum);
+                allKeywords.addAll(extractPageKeywordLocation(page, specifyPageNum, keyword));
+            } else {
+                int numberOfPages = pdfDoc.getNumberOfPages();
+                for (int pageNum = 1; pageNum <= numberOfPages; pageNum++) {
+                    PdfPage page = pdfDoc.getPage(pageNum);
+                    allKeywords.addAll(extractPageKeywordLocation(page, pageNum, keyword));
+                }
+            }
+        }
+        return allKeywords;
+    }
+    @SneakyThrows
+    public static List<KeywordLocation> extractKeywordLocation(ByteArrayInputStream source, Integer specifyPageNum, String keyword) {
+        List<KeywordLocation> allKeywords = new ArrayList<>();
+        try (PdfDocument pdfDoc = new PdfDocument(new PdfReader(source))) {
             if (specifyPageNum != null) {
                 PdfPage page = pdfDoc.getPage(specifyPageNum);
                 allKeywords.addAll(extractPageKeywordLocation(page, specifyPageNum, keyword));

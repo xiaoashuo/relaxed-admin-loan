@@ -1,6 +1,7 @@
 package com.relaxed.boot.loan.service.impl;
 
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.relaxed.boot.common.system.utils.file.ByteArrayMultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
@@ -93,8 +94,15 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
                 String address = RelaxedConfig.getUrl() + fileMeta.getRelativeFilePath();
                 seal.setSealFilename(filename);
                 seal.setSealAddress(address);
+                seal.setSealPath(fileMeta.getLocalFullFilePath());
+            }else{
+
             }
 
+        }else{
+            String sealAddress = seal.getSealAddress();
+            String path = StrUtil.removePrefix(sealAddress, RelaxedConfig.getUrl());
+            seal.setSealPath(RelaxedConfig.getProfile()+path);
         }
 
         boolean result = save(seal);

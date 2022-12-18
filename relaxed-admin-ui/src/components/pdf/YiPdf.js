@@ -40,7 +40,25 @@ class YiPdf{
     this.elementId = eleId;
     this.option=Object.assign(this.option,option)
   }
-
+  showPdfByBlob(blob){
+    //1.渲染pdf画布
+    this.canvas = document.getElementById(this.elementId);
+    this.ctx = this.canvas.getContext("2d");
+    //2.加载pdf文档
+    pdfjsLib.getDocument({
+      data:blob,
+      rangeChunkSize:65536, disableAutoFetch:false}
+    ).promise.then((pdfDoc_) => {
+      this.pdfDoc = pdfDoc_;
+      this.totalPage = this.pdfDoc.numPages;
+      this.renderPage(this.pageNum).then(() => {
+        //将渲染出来的pdf 宽高 发射给fabric 由fabric渲染画布
+        this.option.afterRenderPage(this.pageNum,this.canvas.width,this.canvas.height)
+      });
+      //3.回显签章信息
+      // this.showSign(this.pageNum, true);
+    });
+  }
    showPdf(url){
      //1.渲染pdf画布
      this.canvas = document.getElementById(this.elementId);
