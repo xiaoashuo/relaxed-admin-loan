@@ -27,8 +27,14 @@
 
           <pdf-canvas ref="yiPdfRef" :options="pdfOptions"></pdf-canvas>
           <!-- 盖章部分 -->
-          <canvas id="fabricCanvas"></canvas>
+<!--          <canvas id="fabricCanvas"></canvas>-->
 
+          <fabric-canvas ref="fabricCanvasRef"
+                         :source-style="getSourceStyle"
+                         :rectangle="fabricPosition"
+                          @rightMouseClick="handleShow"
+                         @cancelMouseClick="handleHide"
+          ></fabric-canvas>
           <div class="ele-control" style="margin-bottom:2%;">
             <el-button class="btn-outline-dark" @click="removeSelectedSignature"> 删除签章</el-button>
             <el-button class="btn-outline-dark" @click="clearAllSignature"> 清除所有签章</el-button>
@@ -71,21 +77,22 @@
   import { getSelectData as getCertificateSelectData } from '@/api/loan/certificate'
   import PdfCanvas from '@/components/pdf/PdfCanvas'
 
+  import FabricCanvas from '@/components/pdf/FabricCanvas'
   import YiFabric from '@/components/pdf/YiFabric'
+  import { _debounce } from '@/utils'
   const SIGN_CACHE_KEY="signs";
   export default {
     name: 'ProjectTemplateConfig',
     components:{
-      YiSelect,draggable,PdfCanvas
+      YiSelect,draggable,PdfCanvas,FabricCanvas
     },
     data(){
       return{
         //pdf
         pdfOptions:this.getPdfOptions(),
         //fabric
-        whDatas: null,
+        fabricPosition: null,
 
-        fabricContext: null,
         sealList:[],
         fileType: null,
         fileTypeConfig:{
@@ -114,106 +121,31 @@
     },
     mounted() {
       this.setPdfArea()
-      this.fabricContext=new YiFabric('#fabricCanvas',this.getFabricConfig())
+      window.addEventListener("resize", _debounce(()=>{
+
+          this.saveSignature().then(res=>{
+
+            const fabricPosition= {... this.fabricPosition }
+            this.fabricPosition=fabricPosition;
+            this.showSign(this.$refs.yiPdfRef.getPageNum(),true)
+          })
+
+        },500)
+      )
     },
-    watch: {
-      whDatas: {
-        handler() {
-          const loading = this.$loading({
-            lock: true,
-            text: 'Loading',
-            spinner: 'el-icon-loading',
-            background: 'rgba(0, 0, 0, 0.7)'
-          });
 
-          if (this.whDatas) {
-            loading.close();
-            let fabricCanvasElement=document.querySelector("#fabricCanvas");
-            fabricCanvasElement.style="border:1px solid #5ea6ef"
-            this.fabricContext.render(this.whDatas)
-
-          }
-        },
-      },
-
-    },
     methods:{
 
+      //右键菜单
       handleShow (e,position) {
         this.$refs.contextmenu.show({ top:position.top,left:position.left })
       },
       handleHide() {
         this.$refs.contextmenu.hide()
       },
-      // 生成绘图区域
-      getFabricConfig(){
-        return {
-          //实列化canvas 后调用回调
-          afterInstance:()=>{
-            let innerPdfCenter=document.querySelector("#pdfCanvas");
-            //canvas 容器
-            let container = document.querySelector(".canvas-container");
-            container.style.position = "absolute";
-            container.style.top = "50px";
-            container.style.left = innerPdfCenter.offsetLeft+'px';
-          },
-          addCanvasEvent:(fabricCanvas)=>{
-            // 按下鼠标
-            fabricCanvas.on('mouse:down', this.fabricOnMouseDown)
 
-            // 拖拽边界 不能将图片拖拽到绘图区域外
-            fabricCanvas.on("object:moving", function (e) {
-              var obj = e.target;
-              // if object is too big ignore
-              if(obj.currentHeight > obj.canvas.height || obj.currentWidth > obj.canvas.width){
-                return;
-              }
-              obj.setCoords();
-              // top-left  corner
-              if(obj.getBoundingRect().top < 0 || obj.getBoundingRect().left < 0){
-                obj.top = Math.max(obj.top, obj.top-obj.getBoundingRect().top);
-                obj.left = Math.max(obj.left, obj.left-obj.getBoundingRect().left);
-              }
-              // bot-right corner
-              if(obj.getBoundingRect().top+obj.getBoundingRect().height  > obj.canvas.height || obj.getBoundingRect().left+obj.getBoundingRect().width  > obj.canvas.width){
-                obj.top = Math.min(obj.top, obj.canvas.height-obj.getBoundingRect().height+obj.top-obj.getBoundingRect().top);
-                obj.left = Math.min(obj.left, obj.canvas.width-obj.getBoundingRect().width+obj.left-obj.getBoundingRect().left);
-              }
-            });
-          }
-        }
-      },
-
-
-      /**
-       * 监听鼠标事件
-       * @param opt
-       */
-      fabricOnMouseDown(opt){
-        // 右键，且在元素上右键 button: 1-左键；2-中键；3-右键
-
-        console.log('====',opt)
-        // 在画布上右键，target 为 null
-        if (opt.button === 3 && opt.target) {
-          opt.e.preventDefault()
-          // 获取当前元素
-          this.fabricContext.setActiveObject(opt.target)
-          this.$nextTick(()=>{
-            // 设置右键菜单位置
-            // 当前鼠标位置
-            //相对于文档的距离event.pageY 相对于浏览器窗口的距离（不包含滚动的距离） event.clientX
-            const position={top: opt.e.pageY, left: opt.e.pageX}
-            this.handleShow(opt.e,position)
-          })
-
-        } else {
-          opt.e.preventDefault()
-          this.handleHide()
-
-        }
-      },
       showLocation(){
-        const activeObject=this.fabricContext.getActiveObject()
+        const activeObject=this.$refs.fabricCanvasRef.getActiveObject()
         const position={left: activeObject.left,top:activeObject.top,width:activeObject.width,
         height:activeObject.height}
         this.$message.info(JSON.stringify(position))
@@ -247,42 +179,54 @@
           }
         }
       },
+      //fabric
       // 设置绘图区域宽高
       fabricRectangle(data) {
-        this.whDatas = data;
+        this.fabricPosition = data;
       },
+      getSourceStyle(){
+        let innerPdfCenter=document.querySelector("#pdfCanvas");
+        return {top:'50px',left: innerPdfCenter.offsetLeft+'px'}
+
+      },
+
+
       saveSignature(){
 
-        let data = this.fabricContext.getObjects(); //获取当前页面内的所有签章信息
-        let caches=  this.$storage.local.getCache(SIGN_CACHE_KEY,{})
-        const pageNum=this.$refs.yiPdfRef.currentPage
-        console.log("当前页面的所有签章信息",this.fabricContext,pageNum,this.fabricContext.getObjects())
-        let signDatas = {}; //存储当前页的所有签章信息
-        let i = 0;
-        // let sealUrl = '';
-        for(var val of data) {
-          signDatas[i] =  {
-            width: val.width,
-            height: val.height,
-            top: val.top,
-            left: val.left,
-            angle: val.angle,
-            translateX: val.translateX,
-            translateY: val.translateY,
-            scaleX: val.scaleX,
-            scaleY: val.scaleY,
-            pageNum: pageNum,
-            url: this.sealList[val.index].sealAddress,
-            index:val.index,
-            uid: val.uid
-          }
-          i++;
-        }
+        return new Promise((resolve,reject)=>{
 
-        if (signDatas&&Object.keys(signDatas).length>0){
-          caches[pageNum] = signDatas;
-          this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
-        }
+          let data = this.$refs.fabricCanvasRef.getObjects(); //获取当前页面内的所有签章信息
+
+          let caches=  this.$storage.local.getCache(SIGN_CACHE_KEY,{})
+          const pageNum=this.$refs.yiPdfRef.currentPage
+          let signDatas = {}; //存储当前页的所有签章信息
+          let i = 0;
+          for(var val of data) {
+            signDatas[i] =  {
+              width: val.width,
+              height: val.height,
+              top: val.top,
+              left: val.left,
+              angle: val.angle,
+              translateX: val.translateX,
+              translateY: val.translateY,
+              scaleX: val.scaleX,
+              scaleY: val.scaleY,
+              pageNum: pageNum,
+              url: this.sealList[val.index].sealAddress,
+              index:val.index,
+              uid: val.uid
+            }
+            i++;
+          }
+
+          if (signDatas&&Object.keys(signDatas).length>0){
+            caches[pageNum] = signDatas;
+            this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
+          }
+          resolve()
+        })
+
 
 
       },
@@ -293,24 +237,23 @@
        * @returns {boolean}
        */
       showSign(pageNum, isFirst = false) {
-        if(isFirst == false) this.fabricContext.clear(); //清空页面所有签章
+        if(isFirst == false) this.$refs.fabricCanvasRef.clear(); //清空页面所有签章
         let caches = this.$storage.local.getCache(SIGN_CACHE_KEY,{})
         let pageSealData = caches[pageNum];
         if(pageSealData) {
-          console.log("显示",pageSealData)
           for (let index in pageSealData) {
-            this.fabricContext.addImage(pageSealData[index])
+            this.$refs.fabricCanvasRef.addImage(pageSealData[index])
           }
         }
       },
       // 删除签章
       removeSelectedSignature() {
-        let activeObject = this.fabricContext.getActiveObject()
+        let activeObject = this.$refs.fabricCanvasRef.getActiveObject()
         if (!activeObject){
           this.$message.error("请选中签章")
           return
         }
-        this.fabricContext.remove(activeObject)
+        this.$refs.fabricCanvasRef.remove(activeObject)
         const caches=this.$storage.local.getCache(SIGN_CACHE_KEY,{})
         const pageNum=  this.$refs.yiPdfRef.currentPage
         const pageSeals=caches[pageNum]
@@ -322,7 +265,6 @@
             newPageSeals[key]=item
           }
         }
-        console.log("页面章数量",activeObject,sealIdIndex,newPageSeals)
         if(Object.keys(newPageSeals)<=0){
           //页面章小于等于0
           delete caches[pageNum]
@@ -344,7 +286,7 @@
       //清空数据
       clearAllSignature() {
         //清空页面所有签章
-        this.fabricContext.clear();
+        this.$refs.fabricCanvasRef.clear();
         //清除缓存
         this.$storage.local.deleteCache(SIGN_CACHE_KEY)
       },
@@ -357,7 +299,7 @@
           left: e.originalEvent.layerX,
           top: e.originalEvent.layerY,
           index: e.newDraggableIndex }
-          this.fabricContext.addImage(sealInfo,this.saveSignature)
+        this.$refs.fabricCanvasRef.addImage(sealInfo,this.saveSignature)
 
 
       },

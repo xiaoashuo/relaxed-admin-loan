@@ -61,6 +61,9 @@
         this.pdfContext.justPage(this.justPageNum)
         this.justPageNum=this.pdfContext.getPageNum()
       },
+      getPageNum(){
+       return   this.pdfContext.getPageNum()
+      }
     }
   }
 </script>
