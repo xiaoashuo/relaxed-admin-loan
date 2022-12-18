@@ -122,15 +122,17 @@
     mounted() {
       this.setPdfArea()
       window.addEventListener("resize", _debounce(()=>{
-
+        try {
+          //热加载此处会出现异常
           this.saveSignature().then(res=>{
-
-            const fabricPosition= {... this.fabricPosition }
-            this.fabricPosition=fabricPosition;
+            this.$refs.fabricCanvasRef.renderAll()
             this.showSign(this.$refs.yiPdfRef.getPageNum(),true)
           })
+        }catch (e) {
+          console.log("重绘界面异常",e)
+        }
 
-        },500)
+        },300)
       )
     },
 
@@ -193,10 +195,9 @@
 
       saveSignature(){
 
+
         return new Promise((resolve,reject)=>{
-
           let data = this.$refs.fabricCanvasRef.getObjects(); //获取当前页面内的所有签章信息
-
           let caches=  this.$storage.local.getCache(SIGN_CACHE_KEY,{})
           const pageNum=this.$refs.yiPdfRef.currentPage
           let signDatas = {}; //存储当前页的所有签章信息

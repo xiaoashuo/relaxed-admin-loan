@@ -49,7 +49,16 @@
       },
     },
     methods:{
+      renderAll(){
+        const remainObjects=this.getObjects()
+        console.log("yiliu",remainObjects)
+        this.fabricContext.dispose()
+        this.fabricContext=new YiFabric('#fabricCanvas',this.getFabricConfig())
+        let fabricCanvasElement=document.querySelector("#fabricCanvas");
+        fabricCanvasElement.style="border:1px solid #5ea6ef"
+        this.fabricContext.render(this.rectangle)
 
+      },
       // 生成绘图区域
       getFabricConfig(){
         return {
@@ -62,7 +71,9 @@
             container.style.top = positionStyle.top;
             container.style.left = positionStyle.left;
           },
+
           addCanvasEvent:(fabricCanvas)=>{
+
             // 按下鼠标
             fabricCanvas.on('mouse:down', this.fabricOnMouseDown)
             // 拖拽边界 不能将图片拖拽到绘图区域外
@@ -84,7 +95,8 @@
                 obj.left = Math.min(obj.left, obj.canvas.width-obj.getBoundingRect().width+obj.left-obj.getBoundingRect().left);
               }
             });
-          }
+          },
+
         }
       },
 

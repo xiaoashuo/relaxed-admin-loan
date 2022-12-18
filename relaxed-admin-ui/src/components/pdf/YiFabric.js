@@ -46,6 +46,10 @@ class YiFabric{
     this.config=Object.assign(this.config,config)
   }
 
+  dispose(){
+    this.fabricCanvas.dispose()
+  }
+
   /**
    * 渲染画布
    * @param option
@@ -58,8 +62,6 @@ class YiFabric{
       stopContextMenu: true, // 禁止默认右键菜单
     });
 
-    console.log("当亲",option,this.fabricCanvas)
-
     this.config.afterInstance()
     this.config.addCanvasEvent(this.fabricCanvas)
   }
@@ -67,7 +69,6 @@ class YiFabric{
 
   addImage(imageInfo,afterImgToCanvas){
 
-    console.log("当前",imageInfo,afterImgToCanvas)
     //引入图片
     fabric.Image.fromURL(
       imageInfo.url,
@@ -85,7 +86,6 @@ class YiFabric{
           uid:imageInfo.uid
         });
         this.fabricCanvas.add(oImg);
-        console.log(this.fabricCanvas.getObjects())
         if (afterImgToCanvas){
           afterImgToCanvas()
         }
