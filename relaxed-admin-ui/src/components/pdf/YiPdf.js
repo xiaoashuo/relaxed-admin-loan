@@ -1,7 +1,7 @@
 let pdfjsLib =require("pdfjs-dist/legacy/build/pdf.js");
 import workerSrc from "pdfjs-dist/legacy/build/pdf.worker.entry";
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
-class PDF{
+class YiPdf{
   //当前页码
   pageNum=1;
   //总页数
@@ -171,4 +171,4 @@ class PDF{
 
 }
 
-export default PDF
+export default YiPdf

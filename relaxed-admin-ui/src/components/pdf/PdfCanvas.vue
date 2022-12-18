@@ -15,7 +15,7 @@
 </template>
 
 <script>
-  import PDF from '@/components/pdf/pdf'
+  import YiPdf from '@/components/pdf/YiPdf'
   export default {
     name: 'yi-pdf',
     props:{
@@ -43,7 +43,7 @@
     },
     methods:{
       getPdfContext() {
-        return new PDF('pdfCanvas', this.options)
+        return new YiPdf('pdfCanvas', this.options)
       },
       show(pdfUrl){
         this.pdfContext.showPdf(pdfUrl)

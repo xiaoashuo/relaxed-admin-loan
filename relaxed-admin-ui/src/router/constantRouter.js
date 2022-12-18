@@ -33,11 +33,11 @@ export const constantRoutes = [
   //   component: () => import('@/views/login/index'),
   //   hidden: 1
   // },
-  {
-    path: '/pdf',
-    component: () => import('@/components/pdf/pdf'),
-    hidden: 1
-  },
+  // {
+  //   path: '/pdf',
+  //   component: () => import('@/components/pdf/pdf'),
+  //   hidden: 1
+  // },
   {
     path: '/404',
     component: () => import('@/views/error/404'),

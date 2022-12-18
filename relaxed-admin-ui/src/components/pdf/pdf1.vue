@@ -163,7 +163,7 @@
           _this.canvas.width = viewport.width;
           // 要是做拖拽签章功能时，注意图片单位要和PDF单位保持一致
 
-          // Render PDF page into canvas context
+          // Render YiPdf page into canvas context
           let renderContext = {
             canvasContext: _this.ctx,
             viewport: viewport,

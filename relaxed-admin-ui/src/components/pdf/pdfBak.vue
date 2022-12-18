@@ -71,7 +71,7 @@
 <script>
   import {_debounce} from '@/utils'
   import {fabric} from './fabric';
-  import PDF from './pdf'
+  import YiPdf from './pdf'
   import draggable from "vuedraggable";
   const SIGN_CACHE_KEY="signs";
   export default {
@@ -140,7 +140,7 @@
     methods: {
 
        getPdfContext() {
-        return new PDF('pdfCanvas', {
+        return new Yipdf('pdfCanvas', {
           beforeRenderPage: () => {
             this.clearRightMenuInfo()
           },

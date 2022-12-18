@@ -15,7 +15,7 @@
       props:{
         placeholder:{
           type: String,
-          default: ''
+          default: '请选择'
         },
         otherProps:{
           type: Object,
