@@ -11,8 +11,9 @@
             <span>证书列表</span>
             <yi-select  v-model="keystoreId" v-bind="keyStoreConfig"></yi-select>
           </div>
+          <div class="left-title">我的印章</div>
           <div class="seal">
-            <div class="left-title">我的印章</div>
+
             <draggable v-model="sealList" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
               <transition-group type="transition">
                 <li v-for="item in sealList" :key="item.sealId" class="item" style="text-align:center;">
@@ -42,14 +43,18 @@
           </div>
         </div>
         <div  class="rightCol">
-          <div class="info" >
+          <div class="right-item" >
             <div class="item">
-              <div class="right-item-title">文件主题</div>
-              <div class="detail-item-desc">操作项目名称</div>
+              <div class="right-item-title">项目名称</div>
+              <div class="detail-item-desc">天机40-2</div>
             </div>
             <div class="item">
-              <div class="right-item-title">文件主题</div>
-              <div class="detail-item-desc">操作项目名称</div>
+              <div class="right-item-title">信托产品</div>
+              <div class="detail-item-desc">45010101</div>
+            </div>
+            <div class="item">
+              <div class="right-item-title">信托计划</div>
+              <div class="detail-item-desc">450101</div>
             </div>
 
           </div>
@@ -73,12 +78,10 @@
   import { YiSelect } from '@/components/select'
   import draggable from "vuedraggable";
   import {getListData as getSealListData} from '@/api/loan/seal'
-
   import { getSelectData as getCertificateSelectData } from '@/api/loan/certificate'
   import PdfCanvas from '@/components/pdf/PdfCanvas'
-
   import FabricCanvas from '@/components/pdf/FabricCanvas'
-  import YiFabric from '@/components/pdf/YiFabric'
+
   import { _debounce } from '@/utils'
   const SIGN_CACHE_KEY="signs";
   export default {
@@ -123,6 +126,7 @@
       this.setPdfArea()
       window.addEventListener("resize", _debounce(()=>{
         try {
+          console.log("界面变动")
           //热加载此处会出现异常
           this.saveSignature()
           this.$refs.fabricCanvasRef.renderAll()
@@ -287,15 +291,13 @@
         this.$storage.local.deleteCache(SIGN_CACHE_KEY)
       },
       end(e){
-
         let sealListElement = this.sealList[e.newDraggableIndex]
-
         const sealInfo={url: sealListElement.sealAddress,
           uid:new Date().getTime(),
           left: e.originalEvent.layerX,
           top: e.originalEvent.layerY,
           index: e.newDraggableIndex }
-        this.$refs.fabricCanvasRef.addImage(sealInfo,this.saveSignature)
+          this.$refs.fabricCanvasRef.addImage(sealInfo,this.saveSignature)
 
 
       },
@@ -322,6 +324,12 @@
         margin: 5px 0;
       }
     }
+    .left-title {
+
+      margin-top: 5px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #eee;
+    }
     .seal{
       margin-top: 20px;
       height: 600px;
@@ -345,7 +353,7 @@
 
     flex: 1;
 
-    text-align: center;
+    /*text-align: center;*/
     /*pdf部分*/
 
 
@@ -366,13 +374,13 @@
       to { transform: rotate(360deg);}
     }
     .ele-control {
-      text-align: center;
+
       margin-top: 3%;
     }
   }
   .rightCol{
 
-    width: 200px;
+    width: 150px;
 
 
     .info{
@@ -381,10 +389,28 @@
 
       border: 1px solid red;
     }
-    .left-title {
-      text-align:center;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #eee;
+
+    .right-item {
+      margin-bottom: 15px;
+      margin-left: 10px;
+    }
+    .right-item-title {
+      margin: 5px 0px;
+
+      color: #000000;
+      height: 20px;
+      line-height: 20px;
+      font-size: 15px;
+      font-weight: 400;
+      text-align: left !important;
+    }
+    .detail-item-desc {
+      color: #333;
+      line-height: 20px;
+      width: 100%;
+      font-size: 12px;
+      display: inline-block;
+      text-align: left;
     }
   }
 
