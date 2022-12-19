@@ -1,5 +1,5 @@
 <template>
-  <div class="templateConfig">
+  <div class="templateConfig"  ref="templateConfig">
 
     <div  class="leftCol">
 
@@ -93,6 +93,7 @@
   import PdfCanvas from '@/components/pdf/PdfCanvas'
   import FabricCanvas from '@/components/pdf/FabricCanvas'
 
+
   import { debounce } from '@/utils'
   const SIGN_CACHE_KEY="signs";
   export default {
@@ -145,12 +146,8 @@
 
     },
     mounted() {
-      console.log("监听到屏幕变化")
       this.pdfUrl = 'http://localhost:9401/profile/upload/20221215/d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf';
       this.$refs.yiPdfRef.show(this.pdfUrl)
-
-
-
       window.addEventListener("resize",   this.resizeChange)
 
 
@@ -163,7 +160,7 @@
     methods:{
       resizeChange:debounce(function(){
         try {
-          console.log("执行类1")
+
           //热加载此处会出现异常,需要将pdfcanvas设置居中对齐 resize才会重新渲染
           this.saveSignature()
           this.$refs.fabricCanvasRef.renderAll()
