@@ -51,7 +51,6 @@
     methods:{
       renderAll(){
         const remainObjects=this.getObjects()
-        console.log("yiliu",remainObjects)
         this.fabricContext.dispose()
         this.fabricContext=new YiFabric('#fabricCanvas',this.getFabricConfig())
         let fabricCanvasElement=document.querySelector("#fabricCanvas");
