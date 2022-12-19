@@ -146,7 +146,7 @@
         console.log(payload)
         previewPdf(payload).then(res=>{
           console.log(res)
-          this.$refs.yiPdfRef.show(window.URL.createObjectURL(res.data))
+          this.$refs.yiPdfRef.showBlob(res.data)
         })
 
         console.log("处理预览pdf")

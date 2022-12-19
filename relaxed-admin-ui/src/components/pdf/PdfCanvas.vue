@@ -48,11 +48,11 @@
       getPdfContext() {
         return new YiPdf('pdfCanvas', this.options)
       },
-      showPdfByBlob(blob){
-        this.pdfContext.showPdfByBlob(blob)
+      showBlob(blob){
+        this.pdfContext.showBlob(blob)
       },
       show(pdfUrl){
-        this.pdfContext.showPdf(pdfUrl)
+        this.pdfContext.showUrl(pdfUrl)
       },
       prevPage(){
         this.pdfContext.prevPage()

@@ -37,10 +37,7 @@
 
   import TemplateSealConfig from '@/views/loan/project/TemplateSealConfig'
   import KeywordSealConfig from '@/views/loan/project/KeywordSealConfig'
-  import {getListData as getSealListData,getSelectData as getSealSelectData} from '@/api/loan/seal'
-  import { getSelectData as getCertificateSelectData } from '@/api/loan/certificate'
 
-  const SIGN_CACHE_KEY="signs";
   export default {
     name: 'ProjectTemplateConfig',
     components:{
@@ -79,9 +76,9 @@
       color: red;
       font-weight: 500;
       font-size: 30px;
-      /*text-align: center;*/
+      text-align: center;
       align-content: center;
-      margin-left: 20px;
+
     }
     .right{
       width: 200px;

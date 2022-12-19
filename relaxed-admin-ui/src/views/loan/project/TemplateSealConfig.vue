@@ -93,7 +93,7 @@
   import PdfCanvas from '@/components/pdf/PdfCanvas'
   import FabricCanvas from '@/components/pdf/FabricCanvas'
 
-  import { _debounce } from '@/utils'
+  import { debounce } from '@/utils'
   const SIGN_CACHE_KEY="signs";
   export default {
     name: 'TemplateSealConfig',
@@ -128,9 +128,13 @@
 
             clearable: true
           }
-        }
+        },
+
+
+
       }
     },
+
 
 
     created() {
@@ -138,31 +142,37 @@
         this.sealList=res.data
       })
 
+
     },
     mounted() {
+      console.log("监听到屏幕变化")
       this.pdfUrl = 'http://localhost:9401/profile/upload/20221215/d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf';
       this.$refs.yiPdfRef.show(this.pdfUrl)
-      window.addEventListener("resize", this.resizeChange)
+
+
+
+      window.addEventListener("resize",   this.resizeChange)
+
+
     },
+
 
     beforeDestroy() {
       window.removeEventListener("resize", this.resizeChange)
     },
     methods:{
+      resizeChange:debounce(function(){
+        try {
+          console.log("执行类1")
+          //热加载此处会出现异常,需要将pdfcanvas设置居中对齐 resize才会重新渲染
+          this.saveSignature()
+          this.$refs.fabricCanvasRef.renderAll()
+          this.showSign(this.$refs.yiPdfRef.getPageNum(), true)
+        } catch (e) {
+          console.log('重绘界面异常', e)
+        }
+      }, 300,false),
 
-      resizeChange() {
-        return _debounce(() => {
-          try {
-            //热加载此处会出现异常,需要将pdfcanvas设置居中对齐 resize才会重新渲染
-            this.saveSignature()
-            this.$refs.fabricCanvasRef.renderAll()
-            this.showSign(this.$refs.yiPdfRef.getPageNum(), true)
-          } catch (e) {
-            console.log('重绘界面异常', e)
-          }
-
-        }, 300)
-      },
 
       //右键菜单
       handleShow (e,position) {
@@ -379,7 +389,7 @@
 
     flex: 1;
 
-    /*text-align: center;*/
+    text-align: center;
     /*pdf部分*/
 
 

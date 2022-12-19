@@ -59,14 +59,51 @@ class YiPdf{
       // this.showSign(this.pageNum, true);
     });
   }
-   showPdf(url){
+
+  /**
+   * 将blob转为pdfjs 可预览的
+   * @param blob 文件流
+   * @param convertType 转换类型 1 url 2base64 默认转为url
+   */
+  showBlob(blob,convertType){
+    if (!convertType||convertType==1){
+      this.show({
+        url:window.URL.createObjectURL(blob),
+        rangeChunkSize:65536, disableAutoFetch:false})
+    }else{
+      let reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onload = () => {
+        let data = atob(
+          reader.result.substring(reader.result.indexOf(",") + 1)
+        );
+        this.showBase64(data)
+      };
+    }
+
+  }
+  showBase64(base64){
+    // 引入pdf.js的字体
+    //let CMAP_URL = "https://unpkg.com/pdfjs-dist@2.0.943/cmaps/";
+    this.show({
+      data:base64,
+      rangeChunkSize:65536,
+      disableAutoFetch:false,
+      //  cMapUrl: CMAP_URL,
+      //  cMapPacked: true,
+    })
+  }
+  showUrl(url){
+    this.show({
+      url:url,
+      rangeChunkSize:65536, disableAutoFetch:false})
+  }
+   show(option){
      //1.渲染pdf画布
      this.canvas = document.getElementById(this.elementId);
      this.ctx = this.canvas.getContext("2d");
      //2.加载pdf文档
-     pdfjsLib.getDocument({
-         url:url,
-         rangeChunkSize:65536, disableAutoFetch:false}
+     pdfjsLib.getDocument(option
        ).promise.then((pdfDoc_) => {
        this.pdfDoc = pdfDoc_;
        this.totalPage = this.pdfDoc.numPages;
@@ -74,8 +111,6 @@ class YiPdf{
          //将渲染出来的pdf 宽高 发射给fabric 由fabric渲染画布
          this.option.afterRenderPage(this.pageNum,this.canvas.width,this.canvas.height)
        });
-       //3.回显签章信息
-      // this.showSign(this.pageNum, true);
      });
    }
 
