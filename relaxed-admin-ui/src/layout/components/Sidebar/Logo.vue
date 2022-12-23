@@ -36,7 +36,7 @@ export default {
 
     return {
       title: '后台管理系统',
-      logo: require('@/assets/img/logo.svg')
+      logo: require('@/assets/img/logo.png')
     }
   }
 }
