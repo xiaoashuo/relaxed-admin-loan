@@ -9,8 +9,6 @@
     		<result property="trustPlanId" column="trust_plan_id"/>
     		<result property="projectCode" column="project_code"/>
     		<result property="projectName" column="project_name"/>
-    		<result property="sealId" column="seal_id"/>
-    		<result property="keystoreId" column="keystore_id"/>
     		<result property="deleted" column="deleted"/>
     		<result property="createdTime" column="created_time"/>
     		<result property="updatedTime" column="updated_time"/>
@@ -24,8 +22,6 @@
 		project_code,        
 		project_name,        
 
-seal_id,
-keystore_id,
 		deleted,        
 		created_time,        
 		updated_time        
@@ -38,10 +34,17 @@ keystore_id,
 		p.trust_plan_id,        
 		p.project_code,        
 		p.project_name,        
-		 p.seal_id,
-p.keystore_id,
+
 		p.deleted,        
 		p.created_time,        
 		p.updated_time        
 	</sql>
+
+	<select id="selectByPage" resultType="com.relaxed.boot.loan.model.vo.ProjectPageVO">
+		SELECT  pt.*,p.`product_name`,tp.`trust_plan_name` ,pr.`partner_alias` FROM `t_project` pt
+				LEFT JOIN `t_partner` pr ON pt.`partner_id`=pr.`partner_id`
+				LEFT JOIN `t_product` p ON pt.`product_id`=p.`product_id`
+				LEFT JOIN `t_trust_plan` tp ON pt.`trust_plan_id`=tp.`trust_plan_id`
+		${ew.customSqlSegment}
+	</select>
 </mapper>

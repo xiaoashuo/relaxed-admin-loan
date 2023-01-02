@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("t_template_area")
-@Schema(title = "模板文件文本域表")  
+@Schema(title = "模板文件文本域表")
 public class TemplateArea {
 
 	private static final long serialVersionUID = 1L;
@@ -25,40 +25,39 @@ public class TemplateArea {
 	 * 模板参数主键
 	 */
 	@TableId
-    @Schema(title = "模板参数主键", description = "模板参数主键")
+	@Schema(title = "模板参数主键", description = "模板参数主键")
 	private Integer areaId;
-    
+
 	/**
 	 * 文件模板编号
 	 */
-    @Schema(title = "文件模板编号", description = "文件模板编号")
+	@Schema(title = "文件模板编号", description = "文件模板编号")
 	private Integer templateId;
-    
+
 	/**
 	 * 文本域
 	 */
-    @Schema(title = "文本域", description = "文本域")
+	@Schema(title = "文本域", description = "文本域")
 	private String textArea;
-    
+
 	/**
 	 * 节点名称
 	 */
-    @Schema(title = "节点名称", description = "节点名称")
+	@Schema(title = "节点名称", description = "节点名称")
 	private String tagName;
-    
+
 	/**
 	 * 创建时间
 	 */
 	@TableField(fill = FieldFill.INSERT)
-    @Schema(title = "创建时间", description = "创建时间")
+	@Schema(title = "创建时间", description = "创建时间")
 	private LocalDateTime createdTime;
-    
+
 	/**
 	 * 更新时间
 	 */
 	@TableField(fill = FieldFill.INSERT_UPDATE)
-    @Schema(title = "更新时间", description = "更新时间")
+	@Schema(title = "更新时间", description = "更新时间")
 	private LocalDateTime updatedTime;
-    
 
 }

@@ -24,12 +24,13 @@ public interface SysUserConverter {
 	 * @return SysUserPageVO 系统用户PageVO
 	 */
 	SysUserPageVO poToPageVo(SysUser sysUser);
+
 	/**
 	 * 转换DTO 为 PO
 	 * @param sysUserDTO 系统用户DTO
 	 * @return SysUser 系统用户
 	 */
-	//@Mapping(target = "password", ignore = true)
+	// @Mapping(target = "password", ignore = true)
 	SysUser dtoToPo(SysUserDTO sysUserDTO);
 
 	/**
@@ -37,5 +38,6 @@ public interface SysUserConverter {
 	 * @param sysUser
 	 * @return
 	 */
-    SysUserProfileVO poToProfileVO(SysUser sysUser);
+	SysUserProfileVO poToProfileVO(SysUser sysUser);
+
 }

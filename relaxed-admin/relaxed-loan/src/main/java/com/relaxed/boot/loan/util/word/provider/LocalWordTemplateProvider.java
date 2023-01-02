@@ -30,12 +30,10 @@ public class LocalWordTemplateProvider implements WordTemplateProvider<String> {
 		}
 	}
 
-
 	@Override
 	public String get(String templateCode) {
 		return TEMPLATE_HOLDER.get(templateCode);
 	}
-
 
 	@SneakyThrows
 	@Override

@@ -22,23 +22,21 @@ export const contentTableConfig={
       minWidth:180,
       slotName: 'projectId'
     },
-              {
-      prop: 'partnerId',
-      label:'项目主键',
+
+    {
+      prop: 'partnerAlias',
+      label:'合作方',
       minWidth:180,
-      slotName: 'partnerId'
     },
               {
-      prop: 'productId',
+      prop: 'productName',
       label:'信托产品',
       minWidth:180,
-      slotName: 'productId'
     },
               {
-      prop: 'trustPlanId',
+      prop: 'trustPlanName',
       label:'信托计划',
       minWidth:180,
-      slotName: 'trustPlanId'
     },
               {
       prop: 'projectCode',

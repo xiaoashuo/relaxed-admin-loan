@@ -14,43 +14,51 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class CertificateEnum {
 
-    /**
-     * 授权类型
-     */
-    @RequiredArgsConstructor
-    @Getter
-    public enum AUTHORIZE_TYPE{
-        SYSTEM(1,"系统生成"),
-        CUSTOM(2,"自定义"),
+	/**
+	 * 授权类型
+	 */
+	@RequiredArgsConstructor
+	@Getter
+	public enum AUTHORIZE_TYPE {
 
-        ;
-        private final Integer val;
-        private final String desc;
-    }
+		SYSTEM(1, "系统生成"), CUSTOM(2, "自定义"),
 
-    /**
-     * 密钥库类型 keystore
-     */
-    @RequiredArgsConstructor
-    @Getter
-    public enum KEYSTORE_TYPE{
-        JKS(1,"JKS","jks"),
+		;
 
-        PKCS12(2,"PKCS12","p12"),
+		private final Integer val;
 
+		private final String desc;
 
-        ;
-        private final Integer val;
-        private final String desc;
-        private final String suffix;
-        public static KEYSTORE_TYPE getByVal(Integer val){
-            for (KEYSTORE_TYPE value : values()) {
-                if (value.getVal().equals(val)) {
-                    return value;
-                }
-            }
-            throw new BusinessException(400,"算法不支持");
-        }
-    }
+	}
+
+	/**
+	 * 密钥库类型 keystore
+	 */
+	@RequiredArgsConstructor
+	@Getter
+	public enum KEYSTORE_TYPE {
+
+		JKS(1, "JKS", "jks"),
+
+		PKCS12(2, "PKCS12", "p12"),
+
+		;
+
+		private final Integer val;
+
+		private final String desc;
+
+		private final String suffix;
+
+		public static KEYSTORE_TYPE getByVal(Integer val) {
+			for (KEYSTORE_TYPE value : values()) {
+				if (value.getVal().equals(val)) {
+					return value;
+				}
+			}
+			throw new BusinessException(400, "算法不支持");
+		}
+
+	}
 
 }

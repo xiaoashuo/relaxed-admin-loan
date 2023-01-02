@@ -10,8 +10,9 @@ import lombok.Data;
  * @author yakir 2022-12-15 10:25:25
  */
 @Data
-@Schema(title = "签章图片表")  
-public class SealQO  {
+@Schema(title = "签章图片表")
+public class SealQO {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

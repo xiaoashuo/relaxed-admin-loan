@@ -10,8 +10,9 @@ import lombok.Data;
  * @author yakir 2022-12-14 11:36:23
  */
 @Data
-@Schema(title = "信托计划配置表")  
-public class TrustPlanQO  {
+@Schema(title = "信托计划配置表")
+public class TrustPlanQO {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

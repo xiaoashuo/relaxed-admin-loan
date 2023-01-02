@@ -5,8 +5,11 @@ import com.relaxed.boot.loan.model.vo.TemplatePageVO;
 import com.relaxed.boot.loan.model.qo.TemplateQO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
  * 模板文件配置表
@@ -15,15 +18,17 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface TemplateService extends ExtendService<Template> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;TemplatePageVO&gt; 分页数据
-    */
-    PageResult<TemplatePageVO> queryPage(PageParam pageParam, TemplateQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;TemplatePageVO&gt; 分页数据
+	 */
+	PageResult<TemplatePageVO> queryPage(PageParam pageParam, TemplateQO qo);
+
+	String getByTemplateCode(String templateCode);
+
+	List<SelectData> querySelectData();
 
 
-
-    String getByTemplateCode(String templateCode);
 }

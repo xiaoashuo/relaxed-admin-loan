@@ -12,8 +12,8 @@
     		<result property="deleted" column="deleted"/>
     		<result property="createBy" column="create_by"/>
     		<result property="updateBy" column="update_by"/>
-    		<result property="createTime" column="create_time"/>
-    		<result property="updateTime" column="update_time"/>
+    		<result property="createdTime" column="create_time"/>
+    		<result property="updatedTime" column="update_time"/>
       </resultMap>
 
 	<sql id="Base_Column_List">

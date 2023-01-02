@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
 /**
  * 合作方
  *
@@ -35,70 +34,69 @@ import java.util.List;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan/partner" )
+@RequestMapping("/loan/partner")
 @Tag(name = "合作方管理")
 public class PartnerController {
 
-    private final  PartnerService partnerService;
+	private final PartnerService partnerService;
 
-    /**
-     * 分页查询
-     * @param pageParam 分页参数
-     * @param partnerQO 合作方查询对象
-     * @return R 通用返回体
-     */
-    @Operation(summary = "分页查询")
-    @GetMapping("/page" )
-    public R<PageResult<PartnerPageVO>> getPartnerPage(
-            PageParam pageParam, PartnerQO partnerQO) {
-        return R.ok(partnerService.queryPage(pageParam, partnerQO));
-    }
-    /**
-     * 合作方下拉列表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "合作方下拉列表")
-    @GetMapping("/select" )
-    public R<List<SelectData>> getPartnerList() {
-        return R.ok(partnerService.queryPartnerList());
-    }
-    /**
-     * 新增合作方
-     * @param partner 合作方
-     * @return R 通用返回体
-     */
-    @Operation(summary = "新增合作方")
-    @CreateLog(msg = "新增合作方" )
-    @PostMapping
-    public R<Void> save(@RequestBody Partner partner) {
-        return partnerService.save(partner) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增合作方失败");
-    }
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param partnerQO 合作方查询对象
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "分页查询")
+	@GetMapping("/page")
+	public R<PageResult<PartnerPageVO>> getPartnerPage(PageParam pageParam, PartnerQO partnerQO) {
+		return R.ok(partnerService.queryPage(pageParam, partnerQO));
+	}
 
-    /**
-     * 修改合作方
-     * @param partner 合作方
-     * @return R 通用返回体
-     */
-    @Operation(summary = "修改合作方")
-    @UpdateLog(msg = "修改合作方" )
-    @PutMapping
-    public R<Void> updateById(@RequestBody Partner partner) {
-        return partnerService.updateById(partner) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改合作方失败");
-    }
+	/**
+	 * 合作方下拉列表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "合作方下拉列表")
+	@GetMapping("/select")
+	public R<List<SelectData>> getPartnerList() {
+		return R.ok(partnerService.queryPartnerList());
+	}
 
-    /**
-     * 通过id删除合作方
-     * @param partnerId id
-     * @return R 通用返回体
-     */
-    @Operation(summary = "通过id删除合作方")
-    @DeleteLog(msg = "通过id删除合作方" )
-    @DeleteMapping("/{partnerId}" )
-    public R<Void> removeById(@PathVariable("partnerId") Integer partnerId) {
-        return partnerService.removeById(partnerId) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除合作方失败");
-    }
+	/**
+	 * 新增合作方
+	 * @param partner 合作方
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "新增合作方")
+	@CreateLog(msg = "新增合作方")
+	@PostMapping
+	public R<Void> save(@RequestBody Partner partner) {
+		return partnerService.save(partner) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增合作方失败");
+	}
+
+	/**
+	 * 修改合作方
+	 * @param partner 合作方
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "修改合作方")
+	@UpdateLog(msg = "修改合作方")
+	@PutMapping
+	public R<Void> updateById(@RequestBody Partner partner) {
+		return partnerService.updateById(partner) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改合作方失败");
+	}
+
+	/**
+	 * 通过id删除合作方
+	 * @param partnerId id
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "通过id删除合作方")
+	@DeleteLog(msg = "通过id删除合作方")
+	@DeleteMapping("/{partnerId}")
+	public R<Void> removeById(@PathVariable("partnerId") Integer partnerId) {
+		return partnerService.removeById(partnerId) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除合作方失败");
+	}
 
 }

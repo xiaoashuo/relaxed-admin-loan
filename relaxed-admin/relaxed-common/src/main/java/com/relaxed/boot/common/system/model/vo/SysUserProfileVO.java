@@ -17,76 +17,80 @@ import java.util.List;
  */
 @Data
 public class SysUserProfileVO {
-    /**
-     * 主键id
-     */
-    @Schema(title = "主键id", description = "主键id")
-    private Integer userId;
 
-    /**
-     * 登录账号
-     */
-    @Schema(title = "登录账号", description = "登录账号")
-    private String username;
+	/**
+	 * 主键id
+	 */
+	@Schema(title = "主键id", description = "主键id")
+	private Integer userId;
 
-    /**
-     * 显示名称
-     */
-    @Schema(title = "显示名称", description = "显示名称")
-    private String nickname;
+	/**
+	 * 登录账号
+	 */
+	@Schema(title = "登录账号", description = "登录账号")
+	private String username;
 
-    /**
-     * md5密码盐
-     */
-    @Schema(title = "md5密码盐", description = "md5密码盐")
-    private String salt;
+	/**
+	 * 显示名称
+	 */
+	@Schema(title = "显示名称", description = "显示名称")
+	private String nickname;
 
-    /**
-     * 头像
-     */
-    @Schema(title = "头像", description = "头像")
-    private String avatar;
+	/**
+	 * md5密码盐
+	 */
+	@Schema(title = "md5密码盐", description = "md5密码盐")
+	private String salt;
 
-    /**
-     * 性别(0-默认未知,1-男,2-女)
-     */
-    @Schema(title = "性别(0-默认未知,1-男,2-女)", description = "性别(0-默认未知,1-男,2-女)")
-    private Integer sex;
+	/**
+	 * 头像
+	 */
+	@Schema(title = "头像", description = "头像")
+	private String avatar;
 
-    /**
-     * 电子邮件
-     */
-    @Schema(title = "电子邮件", description = "电子邮件")
-    private String email;
+	/**
+	 * 性别(0-默认未知,1-男,2-女)
+	 */
+	@Schema(title = "性别(0-默认未知,1-男,2-女)", description = "性别(0-默认未知,1-男,2-女)")
+	private Integer sex;
 
-    /**
-     * 电话
-     */
-    @Schema(title = "电话", description = "电话")
-    private String phone;
+	/**
+	 * 电子邮件
+	 */
+	@Schema(title = "电子邮件", description = "电子邮件")
+	private String email;
 
-    /**
-     * 状态(1-正常,0-冻结)
-     */
-    @Schema(title = "状态(1-正常,0-冻结)", description = "状态(1-正常,0-冻结)")
-    private Integer status;
+	/**
+	 * 电话
+	 */
+	@Schema(title = "电话", description = "电话")
+	private String phone;
 
-    /**
-     * 账户类型
-     */
-    @Schema(title = "账户类型", description = "账户类型")
-    private Integer type;
-    /**
-     * 组织vo
-     */
-    @Schema(title = "组织", description = "组织")
-    private SysOrganization organization;
+	/**
+	 * 状态(1-正常,0-冻结)
+	 */
+	@Schema(title = "状态(1-正常,0-冻结)", description = "状态(1-正常,0-冻结)")
+	private Integer status;
 
-    @Schema(title = "身份列表", description = "身份列表")
-    private List<SysRole> roleList;
-    /**
-     * 创建时间
-     */
-    @Schema(title = "创建时间", description = "创建时间")
-    private LocalDateTime createdTime;
+	/**
+	 * 账户类型
+	 */
+	@Schema(title = "账户类型", description = "账户类型")
+	private Integer type;
+
+	/**
+	 * 组织vo
+	 */
+	@Schema(title = "组织", description = "组织")
+	private SysOrganization organization;
+
+	@Schema(title = "身份列表", description = "身份列表")
+	private List<SysRole> roleList;
+
+	/**
+	 * 创建时间
+	 */
+	@Schema(title = "创建时间", description = "创建时间")
+	private LocalDateTime createdTime;
+
 }

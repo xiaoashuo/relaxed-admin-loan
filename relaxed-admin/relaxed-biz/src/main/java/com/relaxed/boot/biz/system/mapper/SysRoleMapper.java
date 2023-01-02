@@ -30,8 +30,8 @@ public interface SysRoleMapper extends ExtendMapper<SysRole> {
 	default PageResult<SysRolePageVO> queryPage(PageParam pageParam, SysRoleQO qo) {
 		IPage<SysRole> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<SysRole> wrapper = WrappersX.lambdaQueryX(SysRole.class);
-		wrapper.eqIfPresent(SysRole::getName,qo.getName());
-		wrapper.eqIfPresent(SysRole::getCode,qo.getCode());
+		wrapper.eqIfPresent(SysRole::getName, qo.getName());
+		wrapper.eqIfPresent(SysRole::getCode, qo.getCode());
 		this.selectPage(page, wrapper);
 		IPage<SysRolePageVO> voPage = page.convert(SysRoleConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

@@ -21,6 +21,7 @@ import com.relaxed.boot.loan.util.word.StoreWordTemplate;
 import com.relaxed.boot.loan.util.word.domain.ElementMeta;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -48,23 +49,33 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TemplateServiceImpl extends ExtendServiceImpl<TemplateMapper, Template> implements TemplateService {
 
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<TemplatePageVO> 分页数据
+	 */
+	@Override
+	public PageResult<TemplatePageVO> queryPage(PageParam pageParam, TemplateQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<TemplatePageVO> 分页数据
-    */
-    @Override
-    public PageResult<TemplatePageVO> queryPage(PageParam pageParam, TemplateQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	@Override
+	public String getByTemplateCode(String templateCode) {
+		return getOne(Wrappers.lambdaQuery(Template.class).eq(Template::getTemplateCode, templateCode))
+				.getTemplatePath();
+	}
 
-    @Override
-    public String getByTemplateCode(String templateCode) {
-        return getOne(Wrappers.lambdaQuery(Template.class)
-                .eq(Template::getTemplateCode,templateCode)).getTemplatePath();
-    }
-
-
+	@Override
+	public List<SelectData> querySelectData() {
+		List<Template> templateList = list();
+		List<SelectData> selectDataList = templateList.stream().map(e -> {
+			SelectData<Template> selectData = new SelectData<>();
+			selectData.setLabel(e.getTemplateName());
+			selectData.setValue(e.getTemplateId());
+			selectData.setExtendObj(e);
+			return selectData;
+		}).collect(Collectors.toList());
+		return selectDataList;
+	}
 }

@@ -15,7 +15,9 @@ import java.util.List;
  */
 @Data
 public class KeywordLocation {
-    private Integer pageNum;
 
-    private List<IPdfTextLocation> ipdfTextLocations=new ArrayList<>();
+	private Integer pageNum;
+
+	private List<IPdfTextLocation> ipdfTextLocations = new ArrayList<>();
+
 }

@@ -18,43 +18,46 @@ import java.util.Map;
  */
 
 public class BaseEntity implements Serializable {
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    @Schema(title = "创建时间")
-    private LocalDateTime createTime;
 
-    /**
-     * 修改时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    @Schema(title = "修改时间")
-    private LocalDateTime updateTime;
-    /** 请求参数 */
-    private Map<String, Object> params;
+	/**
+	 * 创建时间
+	 */
+	@TableField(fill = FieldFill.INSERT)
+	@Schema(title = "创建时间")
+	private LocalDateTime createTime;
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
+	/**
+	 * 修改时间
+	 */
+	@TableField(fill = FieldFill.INSERT_UPDATE)
+	@Schema(title = "修改时间")
+	private LocalDateTime updateTime;
 
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
+	/** 请求参数 */
+	private Map<String, Object> params;
 
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
+	public LocalDateTime getCreateTime() {
+		return createTime;
+	}
 
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
+	public void setCreateTime(LocalDateTime createTime) {
+		this.createTime = createTime;
+	}
 
-    public Map<String, Object> getParams() {
-        return params;
-    }
+	public LocalDateTime getUpdateTime() {
+		return updateTime;
+	}
 
-    public void setParams(Map<String, Object> params) {
-        this.params = params;
-    }
+	public void setUpdateTime(LocalDateTime updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Map<String, Object> getParams() {
+		return params;
+	}
+
+	public void setParams(Map<String, Object> params) {
+		this.params = params;
+	}
+
 }

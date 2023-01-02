@@ -38,4 +38,12 @@ public interface SysDictItemService extends ExtendService<SysDictItem> {
 	 */
 	boolean exist(String dictCode);
 
+	/**
+	 * 得到字典项 根据指定dictCode 和 值
+	 * @param key
+	 * @param value
+	 * @param <V>
+	 * @return
+	 */
+    <V>SysDictItem getByDictKeyAndValue(String key, V value);
 }

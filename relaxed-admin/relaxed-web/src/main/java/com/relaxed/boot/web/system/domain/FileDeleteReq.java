@@ -11,6 +11,9 @@ import lombok.Data;
  */
 @Data
 public class FileDeleteReq {
-    private String fileId;
-    private String url;
+
+	private String fileId;
+
+	private String url;
+
 }

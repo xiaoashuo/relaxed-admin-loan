@@ -32,31 +32,32 @@ import java.util.Map;
 @Tag(name = "通用服务")
 public class CommonController {
 
-    @PostMapping("/file/upload")
-    public R<?> uploadFile(MultipartFile file) {
-        String originalFilename = file.getOriginalFilename();
-        // 上传文件路径
-        FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(),"profile/upload", file,
-                FileConfig.create().splitDate(true));
-        String fullFilePath = fileMeta.getRelativeFilePath();
-        Map<String,String> data=new HashMap<>();
-       String fullUrl= RelaxedConfig.getUrl()+fullFilePath;
+	@PostMapping("/file/upload")
+	public R<?> uploadFile(MultipartFile file) {
+		String originalFilename = file.getOriginalFilename();
+		// 上传文件路径
+		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/upload", file,
+				FileConfig.create().splitDate(true));
+		String fullFilePath = fileMeta.getRelativeFilePath();
+		Map<String, String> data = new HashMap<>();
+		String fullUrl = RelaxedConfig.getUrl() + fullFilePath;
 
-        data.put("url",fullUrl);
-        data.put("fileId",fileMeta.getFileId());
-        data.put("oldFilename",originalFilename);
-        data.put("filename",fileMeta.getFilename());
-        return R.ok(data);
+		data.put("url", fullUrl);
+		data.put("fileId", fileMeta.getFileId());
+		data.put("oldFilename", originalFilename);
+		data.put("filename", fileMeta.getFilename());
+		return R.ok(data);
 
-    }
+	}
 
+	@PostMapping("/file/delete")
+	public R<?> deleteFile(@RequestBody FileDeleteReq fileDeleteReq) {
+		// 本地文件路径
+		String localFilePath = RelaxedConfig.getProfile()
+				+ StrUtil.removePrefixIgnoreCase(fileDeleteReq.getUrl(), RelaxedConfig.getUrl());
+		FileUtil.del(localFilePath);
+		return R.ok();
 
-    @PostMapping("/file/delete")
-    public R<?> deleteFile(@RequestBody FileDeleteReq fileDeleteReq) {
-        // 本地文件路径
-        String localFilePath = RelaxedConfig.getProfile()+StrUtil.removePrefixIgnoreCase(fileDeleteReq.getUrl(),RelaxedConfig.getUrl());
-        FileUtil.del(localFilePath);
-        return R.ok();
+	}
 
-    }
 }

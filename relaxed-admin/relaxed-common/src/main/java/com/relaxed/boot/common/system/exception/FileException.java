@@ -9,12 +9,14 @@ import com.relaxed.common.core.exception.BusinessException;
  * @date 2022/11/27 12:19
  * @Version 1.0
  */
-public class FileException  extends BusinessException {
-    public FileException(int code, String message) {
-        super(code, message);
-    }
+public class FileException extends BusinessException {
 
-    public FileException(int code, String messageTemplate, Object... args) {
-        super(code, messageTemplate, args);
-    }
+	public FileException(int code, String message) {
+		super(code, message);
+	}
+
+	public FileException(int code, String messageTemplate, Object... args) {
+		super(code, messageTemplate, args);
+	}
+
 }

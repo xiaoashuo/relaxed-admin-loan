@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 产品配置表
  *
@@ -32,62 +31,60 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan/project" )
+@RequestMapping("/loan/project")
 @Tag(name = "产品配置表管理")
 public class ProjectController {
 
-    private final  ProjectService projectService;
+	private final ProjectService projectService;
 
-    /**
-     * 分页查询
-     * @param pageParam 分页参数
-     * @param projectQO 产品配置表查询对象
-     * @return R 通用返回体
-     */
-    @Operation(summary = "分页查询")
-    @GetMapping("/page" )
-    public R<PageResult<ProjectPageVO>> getProjectPage(
-            PageParam pageParam, ProjectQO projectQO) {
-        return R.ok(projectService.queryPage(pageParam, projectQO));
-    }
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param projectQO 产品配置表查询对象
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "分页查询")
+	@GetMapping("/page")
+	public R<PageResult<ProjectPageVO>> getProjectPage(PageParam pageParam, ProjectQO projectQO) {
+		return R.ok(projectService.queryPage(pageParam, projectQO));
+	}
 
-    /**
-     * 新增产品配置表
-     * @param project 产品配置表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "新增产品配置表")
-    @CreateLog(msg = "新增产品配置表" )
-    @PostMapping
-    public R<Void> save(@RequestBody Project project) {
-        return projectService.save(project) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增产品配置表失败");
-    }
+	/**
+	 * 新增产品配置表
+	 * @param project 产品配置表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "新增产品配置表")
+	@CreateLog(msg = "新增产品配置表")
+	@PostMapping
+	public R<Void> save(@RequestBody Project project) {
+		return projectService.save(project) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增产品配置表失败");
+	}
 
-    /**
-     * 修改产品配置表
-     * @param project 产品配置表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "修改产品配置表")
-    @UpdateLog(msg = "修改产品配置表" )
-    @PutMapping
-    public R<Void> updateById(@RequestBody Project project) {
-        return projectService.updateById(project) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改产品配置表失败");
-    }
+	/**
+	 * 修改产品配置表
+	 * @param project 产品配置表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "修改产品配置表")
+	@UpdateLog(msg = "修改产品配置表")
+	@PutMapping
+	public R<Void> updateById(@RequestBody Project project) {
+		return projectService.updateById(project) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改产品配置表失败");
+	}
 
-    /**
-     * 通过id删除产品配置表
-     * @param projectId id
-     * @return R 通用返回体
-     */
-    @Operation(summary = "通过id删除产品配置表")
-    @DeleteLog(msg = "通过id删除产品配置表" )
-    @DeleteMapping("/{projectId}" )
-    public R<Void> removeById(@PathVariable("projectId") Integer projectId) {
-        return projectService.removeById(projectId) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除产品配置表失败");
-    }
+	/**
+	 * 通过id删除产品配置表
+	 * @param projectId id
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "通过id删除产品配置表")
+	@DeleteLog(msg = "通过id删除产品配置表")
+	@DeleteMapping("/{projectId}")
+	public R<Void> removeById(@PathVariable("projectId") Integer projectId) {
+		return projectService.removeById(projectId) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除产品配置表失败");
+	}
 
 }

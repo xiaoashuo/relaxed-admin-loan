@@ -1,7 +1,5 @@
 package com.relaxed.boot.loan.util.word;
 
-
-
 import com.deepoove.poi.XWPFTemplate;
 import com.deepoove.poi.config.Configure;
 import com.deepoove.poi.template.ElementTemplate;
@@ -109,7 +107,7 @@ public abstract class AbstractWordTemplate implements IWordTemplate {
 	 * @param outputStream
 	 */
 	public void convertToPdf(InputStream inputStream, OutputStream outputStream) {
-		//PdfUtil.doc2pdf(inputStream, outputStream);
+		// PdfUtil.doc2pdf(inputStream, outputStream);
 	}
 
 	/**

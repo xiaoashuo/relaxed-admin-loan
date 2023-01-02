@@ -39,59 +39,62 @@ import java.util.List;
 @Service
 @Slf4j
 public class SealManage {
-    private final SealService sealService;
 
-    private final TemplateService templateService;
+	private final SealService sealService;
 
-    public DownloadModel preview(PreviewInfoDTO previewInfoDTO) {
-        Integer templateId = previewInfoDTO.getTemplateId();
-        Template template = templateService.getById(templateId);
-        Assert.notNull(template,()->{
-            throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"模板不存在");
-        });
-        //模板路径
-        String templatePath = template.getTemplatePath();
-        File templateWordFile = new File(templatePath);
+	private final TemplateService templateService;
 
-        try {
-            //pdf 模板
-            ByteArrayOutputStream templatePdfFileByte=new ByteArrayOutputStream();
-            FileConvert.doc2pdf(new FileInputStream(templateWordFile),templatePdfFileByte);
-            Integer sealId = previewInfoDTO.getSealId();
-            Seal seal = sealService.getById(sealId);
+	public DownloadModel preview(PreviewInfoDTO previewInfoDTO) {
+		Integer templateId = previewInfoDTO.getTemplateId();
+		Template template = templateService.getById(templateId);
+		Assert.notNull(template, () -> {
+			throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "模板不存在");
+		});
+		// 模板路径
+		String templatePath = template.getTemplatePath();
+		File templateWordFile = new File(templatePath);
 
-            //签章路径
-            String sealPath = seal.getSealPath();
-            String keyword = previewInfoDTO.getKeyword();
+		try {
+			// pdf 模板
+			ByteArrayOutputStream templatePdfFileByte = new ByteArrayOutputStream();
+			FileConvert.doc2pdf(new FileInputStream(templateWordFile), templatePdfFileByte);
+			Integer sealId = previewInfoDTO.getSealId();
+			Seal seal = sealService.getById(sealId);
 
-            String fileName = IdUtil.simpleUUID() + ".pdf";
-            String profile = RelaxedConfig.getProfile();
-            File dirFile = new File(profile, "preview");
-            FileUtil.mkdir(dirFile);
-            File targetFile=new File(dirFile,fileName);
+			// 签章路径
+			String sealPath = seal.getSealPath();
+			String keyword = previewInfoDTO.getKeyword();
 
-            byte[] pdfContent = templatePdfFileByte.toByteArray();
-            ByteArrayInputStream pdfByteInputStream = new ByteArrayInputStream(pdfContent);
-            List<KeywordLocation> keywordLocations = PdfUtil.extractKeywordLocation(pdfByteInputStream,null, keyword);
-            pdfByteInputStream.reset();
-            PreviewSignInfo previewSignInfo = new PreviewSignInfo();
-            previewSignInfo.setImgPath(sealPath);
-            previewSignInfo.setContentBefore(false);
-            previewSignInfo.setKeywordLocationList(keywordLocations);
-            PdfUtil.addImage(pdfByteInputStream,targetFile,previewSignInfo);
-            DownloadModel downloadModel = new DownloadModel(dirFile.getAbsolutePath(), fileName, "pdf", StrPool.SLASH);
-            DownloadCallback downloadCallback = () -> {
-                // 清理工作
-                FileUtil.del(targetFile);
-            };
-            downloadModel.setDownloadCallback(downloadCallback);
-            return downloadModel;
-        }catch (Exception e){
-          throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"预览文件异常",e);
-        }finally {
+			String fileName = IdUtil.simpleUUID() + ".pdf";
+			String profile = RelaxedConfig.getProfile();
+			File dirFile = new File(profile, "preview");
+			FileUtil.mkdir(dirFile);
+			File targetFile = new File(dirFile, fileName);
 
-        }
+			byte[] pdfContent = templatePdfFileByte.toByteArray();
+			ByteArrayInputStream pdfByteInputStream = new ByteArrayInputStream(pdfContent);
+			List<KeywordLocation> keywordLocations = PdfUtil.extractKeywordLocation(pdfByteInputStream, null, keyword);
+			pdfByteInputStream.reset();
+			PreviewSignInfo previewSignInfo = new PreviewSignInfo();
+			previewSignInfo.setImgPath(sealPath);
+			previewSignInfo.setContentBefore(false);
+			previewSignInfo.setKeywordLocationList(keywordLocations);
+			PdfUtil.addImage(pdfByteInputStream, targetFile, previewSignInfo);
+			DownloadModel downloadModel = new DownloadModel(dirFile.getAbsolutePath(), fileName, "pdf", StrPool.SLASH);
+			DownloadCallback downloadCallback = () -> {
+				// 清理工作
+				FileUtil.del(targetFile);
+			};
+			downloadModel.setDownloadCallback(downloadCallback);
+			return downloadModel;
+		}
+		catch (Exception e) {
+			throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "预览文件异常", e);
+		}
+		finally {
 
+		}
 
-    }
+	}
+
 }

@@ -18,18 +18,19 @@ import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
  */
 public interface TemplateAreaMapper extends ExtendMapper<TemplateArea> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<TemplateAreaPageVO> VO分页数据
-    */
-   default PageResult<TemplateAreaPageVO> queryPage(PageParam pageParam, TemplateAreaQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<TemplateAreaPageVO> VO分页数据
+	 */
+	default PageResult<TemplateAreaPageVO> queryPage(PageParam pageParam, TemplateAreaQO qo) {
 		IPage<TemplateArea> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<TemplateArea> wrapper = WrappersX.lambdaQueryX(TemplateArea.class);
-	   wrapper.eq(TemplateArea::getTemplateId,qo.getTemplateId());
+		wrapper.eq(TemplateArea::getTemplateId, qo.getTemplateId());
 		this.selectPage(page, wrapper);
 		IPage<TemplateAreaPageVO> voPage = page.convert(TemplateAreaConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
-   }
+	}
+
 }

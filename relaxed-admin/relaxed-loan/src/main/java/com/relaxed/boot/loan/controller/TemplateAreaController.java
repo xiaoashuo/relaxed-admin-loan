@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-
 /**
  * 模板文件文本域表
  *
@@ -34,62 +33,62 @@ import javax.validation.Valid;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan/template-area" )
+@RequestMapping("/loan/template-area")
 @Tag(name = "模板文件文本域表管理")
 public class TemplateAreaController {
 
-    private final  TemplateAreaService templateAreaService;
+	private final TemplateAreaService templateAreaService;
 
-    /**
-     * 分页查询
-     * @param pageParam 分页参数
-     * @param templateAreaQO 模板文件文本域表查询对象
-     * @return R 通用返回体
-     */
-    @Operation(summary = "分页查询")
-    @GetMapping("/page" )
-    public R<PageResult<TemplateAreaPageVO>> getTemplateAreaPage(
-            PageParam pageParam, @Valid TemplateAreaQO templateAreaQO) {
-        return R.ok(templateAreaService.queryPage(pageParam, templateAreaQO));
-    }
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param templateAreaQO 模板文件文本域表查询对象
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "分页查询")
+	@GetMapping("/page")
+	public R<PageResult<TemplateAreaPageVO>> getTemplateAreaPage(PageParam pageParam,
+			@Valid TemplateAreaQO templateAreaQO) {
+		return R.ok(templateAreaService.queryPage(pageParam, templateAreaQO));
+	}
 
-    /**
-     * 新增模板文件文本域表
-     * @param templateArea 模板文件文本域表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "新增模板文件文本域表")
-    @CreateLog(msg = "新增模板文件文本域表" )
-    @PostMapping
-    public R<Void> save(@RequestBody TemplateArea templateArea) {
-        return templateAreaService.save(templateArea) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增模板文件文本域表失败");
-    }
+	/**
+	 * 新增模板文件文本域表
+	 * @param templateArea 模板文件文本域表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "新增模板文件文本域表")
+	@CreateLog(msg = "新增模板文件文本域表")
+	@PostMapping
+	public R<Void> save(@RequestBody TemplateArea templateArea) {
+		return templateAreaService.save(templateArea) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增模板文件文本域表失败");
+	}
 
-    /**
-     * 修改模板文件文本域表
-     * @param templateArea 模板文件文本域表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "修改模板文件文本域表")
-    @UpdateLog(msg = "修改模板文件文本域表" )
-    @PutMapping
-    public R<Void> updateById(@RequestBody TemplateArea templateArea) {
-        return templateAreaService.updateById(templateArea) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改模板文件文本域表失败");
-    }
+	/**
+	 * 修改模板文件文本域表
+	 * @param templateArea 模板文件文本域表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "修改模板文件文本域表")
+	@UpdateLog(msg = "修改模板文件文本域表")
+	@PutMapping
+	public R<Void> updateById(@RequestBody TemplateArea templateArea) {
+		return templateAreaService.updateById(templateArea) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改模板文件文本域表失败");
+	}
 
-    /**
-     * 通过id删除模板文件文本域表
-     * @param areaId id
-     * @return R 通用返回体
-     */
-    @Operation(summary = "通过id删除模板文件文本域表")
-    @DeleteLog(msg = "通过id删除模板文件文本域表" )
-    @DeleteMapping("/{areaId}" )
-    public R<Void> removeById(@PathVariable("areaId") Integer areaId) {
-        return templateAreaService.removeById(areaId) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除模板文件文本域表失败");
-    }
+	/**
+	 * 通过id删除模板文件文本域表
+	 * @param areaId id
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "通过id删除模板文件文本域表")
+	@DeleteLog(msg = "通过id删除模板文件文本域表")
+	@DeleteMapping("/{areaId}")
+	public R<Void> removeById(@PathVariable("areaId") Integer areaId) {
+		return templateAreaService.removeById(areaId) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除模板文件文本域表失败");
+	}
 
 }

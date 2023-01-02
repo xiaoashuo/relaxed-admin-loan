@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc'
 dayjs.extend(utc)
 export function formatUtcString(utcString,format=DATE_TIME_FORMAT) {
+
   if (!utcString){
     return null
   }

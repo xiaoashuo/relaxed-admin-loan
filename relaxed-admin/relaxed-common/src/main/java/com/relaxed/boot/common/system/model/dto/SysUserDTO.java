@@ -30,20 +30,20 @@ public class SysUserDTO {
 	@Schema(title = "主键id")
 	private Integer userId;
 
-//	/**
-//	 * 前端传入密码
-//	 */
-//	@NotEmpty(message = "pass {}", groups = GroupType.CreateGroup.class)
-////	@JsonRegexDesensitize(type = RegexDesensitizationTypeEnum.ENCRYPTED_PASSWORD)
-//	@Schema(title = "前端传入密码")
-//	private String pass;
+	// /**
+	// * 前端传入密码
+	// */
+	// @NotEmpty(message = "pass {}", groups = GroupType.CreateGroup.class)
+	//// @JsonRegexDesensitize(type = RegexDesensitizationTypeEnum.ENCRYPTED_PASSWORD)
+	// @Schema(title = "前端传入密码")
+	// private String pass;
 
 	/**
 	 * 用户明文密码, 不参与前后端交互
 	 */
-//	@NotEmpty(message = "password 不能为空", groups = GroupType.CreateGroup.class)
+	// @NotEmpty(message = "password 不能为空", groups = GroupType.CreateGroup.class)
 	@JsonRegexDesensitize(type = RegexDesensitizationTypeEnum.ENCRYPTED_PASSWORD)
-	@Schema(title = "密码",description = "密码")
+	@Schema(title = "密码", description = "密码")
 	private String password;
 
 	/**

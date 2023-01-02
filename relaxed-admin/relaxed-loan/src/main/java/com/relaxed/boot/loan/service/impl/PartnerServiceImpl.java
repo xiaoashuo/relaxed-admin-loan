@@ -24,24 +24,25 @@ import java.util.stream.Collectors;
 @Service
 public class PartnerServiceImpl extends ExtendServiceImpl<PartnerMapper, Partner> implements PartnerService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<PartnerPageVO> 分页数据
-    */
-    @Override
-    public PageResult<PartnerPageVO> queryPage(PageParam pageParam, PartnerQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<PartnerPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<PartnerPageVO> queryPage(PageParam pageParam, PartnerQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    @Override
-    public List<SelectData> queryPartnerList() {
-        return list().stream().map(item -> {
-            SelectData<Void> selectItem = new SelectData<>();
-            selectItem.setLabel(item.getPartnerAlias());
-            selectItem.setValue(item.getPartnerId());
-            return selectItem;
-        }).collect(Collectors.toList());
-    }
+	@Override
+	public List<SelectData> queryPartnerList() {
+		return list().stream().map(item -> {
+			SelectData<Void> selectItem = new SelectData<>();
+			selectItem.setLabel(item.getPartnerAlias());
+			selectItem.setValue(item.getPartnerId());
+			return selectItem;
+		}).collect(Collectors.toList());
+	}
+
 }

@@ -37,9 +37,6 @@ import java.util.List;
 @Service
 public class SysUserServiceImpl extends ExtendServiceImpl<SysUserMapper, SysUser> implements SysUserService {
 
-
-
-
 	/**
 	 * 根据QueryObeject查询分页数据
 	 * @param pageParam 分页参数
@@ -69,14 +66,13 @@ public class SysUserServiceImpl extends ExtendServiceImpl<SysUserMapper, SysUser
 
 	@Override
 	public boolean updateUserStatus(Long userId, Integer status) {
-		boolean success = SqlHelper.retBool(baseMapper.update(null,new LambdaUpdateWrapper<SysUser>()
-				.eq(SysUser::getUserId, userId)
-				.set(SysUser::getStatus, status)
-		));
-		Assert.isTrue(success,()->{
+		boolean success = SqlHelper.retBool(baseMapper.update(null,
+				new LambdaUpdateWrapper<SysUser>().eq(SysUser::getUserId, userId).set(SysUser::getStatus, status)));
+		Assert.isTrue(success, () -> {
 			log.error("[updateUserStatus] 修改用户状态失败，userId：{}", userId);
 			return new BusinessException(BaseResultCode.UPDATE_DATABASE_ERROR.getCode(), "修改用户状态失败");
 		});
 		return success;
 	}
+
 }

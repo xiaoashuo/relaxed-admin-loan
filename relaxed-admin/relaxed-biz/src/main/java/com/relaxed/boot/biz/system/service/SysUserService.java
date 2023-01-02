@@ -40,7 +40,6 @@ public interface SysUserService extends ExtendService<SysUser> {
 	 */
 	PageResult<SysUserRolePageDetailVO> queryRelatedSysUserPageByRole(PageParam pageParam, SysUserRoleQO sysUserRoleQO);
 
-
 	/**
 	 * 更新用户状态
 	 * @author yakir
@@ -49,5 +48,6 @@ public interface SysUserService extends ExtendService<SysUser> {
 	 * @param status
 	 * @return boolean
 	 */
-    boolean updateUserStatus(Long userId, Integer status);
+	boolean updateUserStatus(Long userId, Integer status);
+
 }

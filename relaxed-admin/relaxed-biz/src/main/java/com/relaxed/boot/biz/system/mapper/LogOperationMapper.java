@@ -28,8 +28,8 @@ public interface LogOperationMapper extends ExtendMapper<LogOperation> {
 	default PageResult<LogOperationPageVO> queryPage(PageParam pageParam, LogOperationQO qo) {
 		IPage<LogOperation> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<LogOperation> wrapper = WrappersX.lambdaQueryX(LogOperation.class);
-		wrapper.eqIfPresent(LogOperation::getTraceId,qo.getTraceId());
-		wrapper.eqIfPresent(LogOperation::getIp,qo.getIp());
+		wrapper.eqIfPresent(LogOperation::getTraceId, qo.getTraceId());
+		wrapper.eqIfPresent(LogOperation::getIp, qo.getIp());
 		this.selectPage(page, wrapper);
 		IPage<LogOperationPageVO> voPage = page.convert(LogOperationConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

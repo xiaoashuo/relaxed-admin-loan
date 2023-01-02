@@ -17,8 +17,6 @@ public interface UserConstant {
 
 	String ROLE_CODES = "roleCodes";
 
-
-
 	String PERMISSIONS = "permissions";
 
 	String USER_DATA_SCOPE = "userDataScope";

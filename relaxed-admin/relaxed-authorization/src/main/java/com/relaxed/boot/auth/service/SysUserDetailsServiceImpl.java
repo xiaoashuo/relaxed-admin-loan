@@ -73,19 +73,10 @@ public class SysUserDetailsServiceImpl implements ExtendUserDetailsService {
 		HashMap<String, Object> attributes = new HashMap<>(8);
 		attributes.put(UserConstant.ROLE_CODES, roleCodes);
 		attributes.put(UserConstant.PERMISSIONS, permissions);
-		return new SysUserDetails()
-				.setUserId(sysUser.getUserId())
-				.setUsername(sysUser.getUsername())
-				.setNickname(sysUser.getNickname())
-				.setPassword(sysUser.getPassword())
-				.setPhone(sysUser.getPhone())
-				.setAvatar(sysUser.getAvatar())
-				.setEmail(sysUser.getEmail())
-				.setStatus(sysUser.getStatus())
-				.setCreatedTime(sysUser.getCreatedTime())
-				.setAuthorities(authorities)
-				.setAttributes(attributes)
-				;
+		return new SysUserDetails().setUserId(sysUser.getUserId()).setUsername(sysUser.getUsername())
+				.setNickname(sysUser.getNickname()).setPassword(sysUser.getPassword()).setPhone(sysUser.getPhone())
+				.setAvatar(sysUser.getAvatar()).setEmail(sysUser.getEmail()).setStatus(sysUser.getStatus())
+				.setCreatedTime(sysUser.getCreatedTime()).setAuthorities(authorities).setAttributes(attributes);
 	}
 
 }

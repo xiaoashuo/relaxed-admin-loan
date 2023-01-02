@@ -4,8 +4,10 @@
     @change="handleChange">
       <el-option style="width: 100%;"
                  v-for="option in selectData" :key="option.value"
-                 :value="option.value" :label="option.label"></el-option>
+                 :value="option.value" :label="option.label">
+      </el-option>
     </el-select>
+
   </div>
 </template>
 

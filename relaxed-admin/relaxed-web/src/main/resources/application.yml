@@ -5,7 +5,7 @@ spring:
     active:  @profiles.active@  # 当前激活配置，默认dev
 
 mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  mapper-locations: classpath*:/mapper/**/*Mapper.xml
   global-config:
     banner: false
     db-config:

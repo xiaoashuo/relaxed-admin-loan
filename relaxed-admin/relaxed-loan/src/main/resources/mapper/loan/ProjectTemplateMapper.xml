@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.ProjectTemplateMapper">
+
+	<resultMap id="projectTemplateMap" type="com.relaxed.boot.loan.model.entity.ProjectTemplate">
+  		<id property="projectTemplateId" column="project_template_id"/>
+    		<result property="projectId" column="project_id"/>
+    		<result property="fileType" column="file_type"/>
+    		<result property="templateId" column="template_id"/>
+    		<result property="sealId" column="seal_id"/>
+    		<result property="keystoreId" column="keystore_id"/>
+    		<result property="sealWay" column="seal_way"/>
+    		<result property="sealLocation" column="seal_location"/>
+    		<result property="sealKeyword" column="seal_keyword"/>
+    		<result property="deleted" column="deleted"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		project_template_id,
+project_id,
+		file_type,        
+		template_id,        
+		seal_id,        
+		keystore_id,        
+		seal_way,        
+		seal_location,        
+		seal_keyword,        
+		deleted,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		pt.project_template_id,
+ pt.project_id,
+		pt.file_type,        
+		pt.template_id,        
+		pt.seal_id,        
+		pt.keystore_id,        
+		pt.seal_way,        
+		pt.seal_location,        
+		pt.seal_keyword,        
+		pt.deleted,        
+		pt.created_time,        
+		pt.updated_time        
+	</sql>
+	<select id="selectByPage" resultType="com.relaxed.boot.loan.model.vo.ProjectTemplatePageVO">
+
+		SELECT pt.* ,t.`template_name`,p.`project_name` FROM `t_project_template` pt
+		 LEFT JOIN `t_template` t ON pt.`template_id`=t.`template_id`
+		 LEFT JOIN `t_project` p ON pt.`project_id`=p.`project_id`
+		${ew.customSqlSegment}
+	</select>
+</mapper>

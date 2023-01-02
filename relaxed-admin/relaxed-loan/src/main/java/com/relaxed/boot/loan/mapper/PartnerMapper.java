@@ -18,17 +18,18 @@ import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
  */
 public interface PartnerMapper extends ExtendMapper<Partner> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<PartnerPageVO> VO分页数据
-    */
-   default PageResult<PartnerPageVO> queryPage(PageParam pageParam, PartnerQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<PartnerPageVO> VO分页数据
+	 */
+	default PageResult<PartnerPageVO> queryPage(PageParam pageParam, PartnerQO qo) {
 		IPage<Partner> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<Partner> wrapper = WrappersX.lambdaQueryX(Partner.class);
 		this.selectPage(page, wrapper);
 		IPage<PartnerPageVO> voPage = page.convert(PartnerConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
-   }
+	}
+
 }

@@ -12,14 +12,15 @@ import javax.validation.constraints.NotNull;
  * @author Yakir 2022-12-16 11:18:37
  */
 @Data
-@Schema(title = "模板文件文本域表")  
-public class TemplateAreaQO  {
+@Schema(title = "模板文件文本域表")
+public class TemplateAreaQO {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 模板参数主键
 	 */
-	@NotNull(message="模板id不能为空")
+	@NotNull(message = "模板id不能为空")
 	@Schema(title = "模板id", description = "模板id")
 	private Integer templateId;
 

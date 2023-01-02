@@ -27,5 +27,4 @@ public class LogAccessQO {
 	@Schema(title = "登陆IP", description = "登陆IP")
 	private String ip;
 
-
 }

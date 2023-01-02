@@ -15,68 +15,74 @@ import java.io.*;
  */
 @Slf4j
 public class ByteArrayMultipartFile implements MultipartFile {
-    private byte[] content;
 
-    private String filename;
-    @Nullable
-    private String contentType;
-    public ByteArrayMultipartFile(byte[] content,String filename){
-        this.content=content;
-        this.filename=filename;
-    }
-    public ByteArrayMultipartFile(byte[] content,String filename,String contentType){
-      this.content=content;
-      this.filename=filename;
-      this.contentType=contentType;
-    }
-    @Override
-    public String getName() {
-        return filename;
-    }
+	private byte[] content;
 
-    @Override
-    public String getOriginalFilename() {
-        return filename;
-    }
+	private String filename;
 
-    @Override
-    public String getContentType() {
-        return contentType;
-    }
+	@Nullable
+	private String contentType;
 
-    @Override
-    public boolean isEmpty() {
-        return content == null || content.length == 0;
-    }
+	public ByteArrayMultipartFile(byte[] content, String filename) {
+		this.content = content;
+		this.filename = filename;
+	}
 
-    @Override
-    public long getSize() {
-        return content.length;
-    }
+	public ByteArrayMultipartFile(byte[] content, String filename, String contentType) {
+		this.content = content;
+		this.filename = filename;
+		this.contentType = contentType;
+	}
 
-    @Override
-    public byte[] getBytes() throws IOException {
-        return content;
-    }
+	@Override
+	public String getName() {
+		return filename;
+	}
 
-    @Override
-    public InputStream getInputStream() throws IOException {
-        return new ByteArrayInputStream(content);
-    }
+	@Override
+	public String getOriginalFilename() {
+		return filename;
+	}
 
-    @Override
-    public void transferTo(File dest) throws IOException, IllegalStateException {
-        OutputStream stream = null;
-        try {
-            stream = new FileOutputStream(dest);
-            stream.write(content);
-        }
-        catch (IOException e) {
-            log.error("transferTo错误", e);
-        }
-        finally {
-            assert stream != null;
-            stream.close();
-        }
-    }
+	@Override
+	public String getContentType() {
+		return contentType;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return content == null || content.length == 0;
+	}
+
+	@Override
+	public long getSize() {
+		return content.length;
+	}
+
+	@Override
+	public byte[] getBytes() throws IOException {
+		return content;
+	}
+
+	@Override
+	public InputStream getInputStream() throws IOException {
+		return new ByteArrayInputStream(content);
+	}
+
+	@Override
+	public void transferTo(File dest) throws IOException, IllegalStateException {
+		OutputStream stream = null;
+		try {
+			stream = new FileOutputStream(dest);
+			stream.write(content);
+		}
+		catch (IOException e) {
+			log.error("transferTo错误", e);
+		}
+		finally {
+			assert stream != null;
+			stream.close();
+		}
+	}
+
 }

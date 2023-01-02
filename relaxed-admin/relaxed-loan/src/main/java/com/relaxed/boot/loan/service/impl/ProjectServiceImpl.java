@@ -18,15 +18,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProjectServiceImpl extends ExtendServiceImpl<ProjectMapper, Project> implements ProjectService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<ProjectPageVO> 分页数据
-    */
-    @Override
-    public PageResult<ProjectPageVO> queryPage(PageParam pageParam, ProjectQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<ProjectPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<ProjectPageVO> queryPage(PageParam pageParam, ProjectQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
 }

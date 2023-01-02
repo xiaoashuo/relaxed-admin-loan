@@ -41,59 +41,64 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class TemplateManage {
-    private final TransactionTemplate transactionTemplate;
-    private final TemplateService templateService;
-    private final TemplateAreaService templateAreaService;
-    private final StoreWordTemplate wordTemplate;
-    @SneakyThrows
-    public boolean saveTemplate(Template template, MultipartFile file){
-        String originalFilename = file.getOriginalFilename();
-        String extName = FileUtil.extName(originalFilename);
-        Assert.isTrue(StrUtil.equalsIgnoreCase("docx", extName), "模板文件仅支持后缀docx");
-        String wordFileName = IdUtil.getSnowflakeNextIdStr() + ".docx";
-        String excelFilename = IdUtil.getSnowflakeNextIdStr() + ".xlsx";
-        String profile = RelaxedConfig.getProfile();
-        FileMeta fileMeta = FileUtils.upload(profile,"profile/word", file,
-                FileConfig.create().splitDate(false));
-        String docFile = fileMeta.getLocalFullFilePath();
-        String docUrl = RelaxedConfig.getUrl() + fileMeta.getRelativeFilePath();
-        // 2.生成数据文件
-        File docfilePath = new File(docFile);
-        List<ElementMeta> elementMetas = wordTemplate.templateElement(new FileInputStream(docfilePath));
-        List<List<String>> headList = new ArrayList<>();
-        headList.addAll(elementMetas.stream().map(e -> {
-            String tagName = e.getTagName();
-            List<String> names = new ArrayList<>(1);
-            names.add(tagName);
-            return names;
-        }).collect(Collectors.toList()));
-        String dir = profile + "/profile/excel/";
-        FileUtil.mkdir(dir);
-        String excelPath= dir + excelFilename;
-        EasyExcel.write(excelPath).head(headList).inMemory(true).sheet().doWrite(ListUtil.empty());
-        template.setTemplateFilename(originalFilename);
-        template.setTemplateUrl(docUrl);
-        template.setTemplatePath(docFile);
-        template.setDatafilePath(excelPath);
-        template.setTemplateCode(IdUtil.getSnowflakeNextIdStr()+"");
-        // 模板填充域
-        List<TemplateArea> templateAreas = new ArrayList<>();
-        for (ElementMeta elementMeta : elementMetas) {
-            TemplateArea templateArea = new TemplateArea();
-            templateArea.setTextArea(elementMeta.getSource());
-            templateArea.setTagName(elementMeta.getTagName());
-            templateArea.setCreatedTime(LocalDateTime.now());
-            templateArea.setUpdatedTime(LocalDateTime.now());
-            templateAreas.add(templateArea);
-        }
-        return Boolean.TRUE.equals(transactionTemplate.execute(status -> {
-            templateService.save(template);
-            for (TemplateArea templateArea : templateAreas) {
-                templateArea.setTemplateId(template.getTemplateId());
-            }
-            templateAreaService.insertBatchSomeColumn(templateAreas);
-            return Boolean.TRUE;
-        }));
 
-    }
+	private final TransactionTemplate transactionTemplate;
+
+	private final TemplateService templateService;
+
+	private final TemplateAreaService templateAreaService;
+
+	private final StoreWordTemplate wordTemplate;
+
+	@SneakyThrows
+	public boolean saveTemplate(Template template, MultipartFile file) {
+		String originalFilename = file.getOriginalFilename();
+		String extName = FileUtil.extName(originalFilename);
+		Assert.isTrue(StrUtil.equalsIgnoreCase("docx", extName), "模板文件仅支持后缀docx");
+		String wordFileName = IdUtil.getSnowflakeNextIdStr() + ".docx";
+		String excelFilename = IdUtil.getSnowflakeNextIdStr() + ".xlsx";
+		String profile = RelaxedConfig.getProfile();
+		FileMeta fileMeta = FileUtils.upload(profile, "profile/word", file, FileConfig.create().splitDate(false));
+		String docFile = fileMeta.getLocalFullFilePath();
+		String docUrl = RelaxedConfig.getUrl() + fileMeta.getRelativeFilePath();
+		// 2.生成数据文件
+		File docfilePath = new File(docFile);
+		List<ElementMeta> elementMetas = wordTemplate.templateElement(new FileInputStream(docfilePath));
+		List<List<String>> headList = new ArrayList<>();
+		headList.addAll(elementMetas.stream().map(e -> {
+			String tagName = e.getTagName();
+			List<String> names = new ArrayList<>(1);
+			names.add(tagName);
+			return names;
+		}).collect(Collectors.toList()));
+		String dir = profile + "/profile/excel/";
+		FileUtil.mkdir(dir);
+		String excelPath = dir + excelFilename;
+		EasyExcel.write(excelPath).head(headList).inMemory(true).sheet().doWrite(ListUtil.empty());
+		template.setTemplateFilename(originalFilename);
+		template.setTemplateUrl(docUrl);
+		template.setTemplatePath(docFile);
+		template.setDatafilePath(excelPath);
+		template.setTemplateCode(IdUtil.getSnowflakeNextIdStr() + "");
+		// 模板填充域
+		List<TemplateArea> templateAreas = new ArrayList<>();
+		for (ElementMeta elementMeta : elementMetas) {
+			TemplateArea templateArea = new TemplateArea();
+			templateArea.setTextArea(elementMeta.getSource());
+			templateArea.setTagName(elementMeta.getTagName());
+			templateArea.setCreatedTime(LocalDateTime.now());
+			templateArea.setUpdatedTime(LocalDateTime.now());
+			templateAreas.add(templateArea);
+		}
+		return Boolean.TRUE.equals(transactionTemplate.execute(status -> {
+			templateService.save(template);
+			for (TemplateArea templateArea : templateAreas) {
+				templateArea.setTemplateId(template.getTemplateId());
+			}
+			templateAreaService.insertBatchSomeColumn(templateAreas);
+			return Boolean.TRUE;
+		}));
+
+	}
+
 }

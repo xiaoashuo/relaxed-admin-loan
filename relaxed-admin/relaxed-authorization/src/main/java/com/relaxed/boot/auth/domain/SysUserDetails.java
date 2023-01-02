@@ -29,30 +29,31 @@ public class SysUserDetails implements UserDetails {
 
 	private static final long serialVersionUID = -5445208192069734241L;
 
-	private  Integer userId;
+	private Integer userId;
 
-	private  String username;
+	private String username;
 
-	private  String password;
+	private String password;
 
-	private  String nickname;
+	private String nickname;
 
-	private  String email;
+	private String email;
+
 	/**
 	 * 电话
 	 */
 	@Schema(title = "电话", description = "电话")
 	private String phone;
-	private  Integer status;
 
-	private  String avatar;
+	private Integer status;
 
+	private String avatar;
 
+	private LocalDateTime createdTime;
 
-	private  LocalDateTime createdTime;
-	private  Collection<? extends GrantedAuthority> authorities;
+	private Collection<? extends GrantedAuthority> authorities;
 
-	private  Map<String, Object> attributes;
+	private Map<String, Object> attributes;
 
 	@Override
 	public boolean isAccountNonExpired() {

@@ -28,8 +28,8 @@ public interface LogAccessMapper extends ExtendMapper<LogAccess> {
 	default PageResult<LogAccessPageVO> queryPage(PageParam pageParam, LogAccessQO qo) {
 		IPage<LogAccess> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<LogAccess> wrapper = WrappersX.lambdaQueryX(LogAccess.class);
-		wrapper.eqIfPresent(LogAccess::getTraceId,qo.getTraceId());
-		wrapper.eqIfPresent(LogAccess::getIp,qo.getIp());
+		wrapper.eqIfPresent(LogAccess::getTraceId, qo.getTraceId());
+		wrapper.eqIfPresent(LogAccess::getIp, qo.getIp());
 		this.selectPage(page, wrapper);
 		IPage<LogAccessPageVO> voPage = page.convert(LogAccessConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

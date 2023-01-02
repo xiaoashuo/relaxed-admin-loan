@@ -29,72 +29,61 @@ import java.util.stream.Collectors;
  * @author yakir 2022-12-14 11:36:23
  */
 @Service
-public class CertificateServiceImpl extends ExtendServiceImpl<CertificateMapper, Certificate> implements CertificateService {
+public class CertificateServiceImpl extends ExtendServiceImpl<CertificateMapper, Certificate>
+		implements CertificateService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<CertificatePageVO> 分页数据
-    */
-    @Override
-    public PageResult<CertificatePageVO> queryPage(PageParam pageParam, CertificateQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<CertificatePageVO> 分页数据
+	 */
+	@Override
+	public PageResult<CertificatePageVO> queryPage(PageParam pageParam, CertificateQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    @Override
-    public List<SelectData> queryCertificateList() {
-        return list().stream().map(item -> {
-            Map<String,Object> additionalInfo = new HashMap<>();
-            additionalInfo.put("url",item.getCertificateAddress());
-            additionalInfo.put("name",item.getCertificateFilename());
-            SelectData<Map<String, Object>> selectItem = new SelectData<>();
-            selectItem.setLabel(item.getCertificateSubject());
-            selectItem.setValue(item.getCertificateId());
-            selectItem.setExtendObj(additionalInfo);
-            return selectItem;
-        }).collect(Collectors.toList());
-    }
+	@Override
+	public List<SelectData> queryCertificateList() {
+		return list().stream().map(item -> {
+			Map<String, Object> additionalInfo = new HashMap<>();
+			additionalInfo.put("url", item.getCertificateAddress());
+			additionalInfo.put("name", item.getCertificateFilename());
+			SelectData<Map<String, Object>> selectItem = new SelectData<>();
+			selectItem.setLabel(item.getCertificateSubject());
+			selectItem.setValue(item.getCertificateId());
+			selectItem.setExtendObj(additionalInfo);
+			return selectItem;
+		}).collect(Collectors.toList());
+	}
 
-    @Override
-    public boolean saveCertificate(Certificate certificate) {
-        Integer authorizeType = certificate.getAuthorizeType();
-        Integer keystoreType = certificate.getKeystoreType();
+	@Override
+	public boolean saveCertificate(Certificate certificate) {
+		Integer authorizeType = certificate.getAuthorizeType();
+		Integer keystoreType = certificate.getKeystoreType();
 
-        if (CertificateEnum.AUTHORIZE_TYPE.SYSTEM.getVal().equals(authorizeType)){
-            String certificateSubject = certificate.getCertificateSubject();
-            String certificateAlias = certificate.getCertificateAlias();
-            CertificateEnum.KEYSTORE_TYPE keystoreTypeEnum = CertificateEnum.KEYSTORE_TYPE.getByVal(keystoreType);
-            //系统生成
-            KeystoreMeta keystoreMeta = new KeystoreMeta()
-                    .password("123456")
-                    .validity(3650)
-                    .certificateCRL("https://relaxed.cn")
-                    .keystoreType(keystoreTypeEnum.getDesc())
-                    .alias(certificateAlias)
-                    .subject().CN(certificateAlias)
-                    .OU(certificateSubject)
-                    .O(certificateSubject)
-                    .C("CN").end()
-                    .issuer()
-                    .CN("Yakir")
-                    .OU("relaxed研发部")
-                    .O("relaxed有限公司")
-                    .L("上海")
-                    .E("relaxed@qq.com")
-                    .ST("上海")
-                    .C("CN").end();
-            String filename = "sys-"+IdUtil.simpleUUID() + "."+keystoreTypeEnum.getSuffix();
+		if (CertificateEnum.AUTHORIZE_TYPE.SYSTEM.getVal().equals(authorizeType)) {
+			String certificateSubject = certificate.getCertificateSubject();
+			String certificateAlias = certificate.getCertificateAlias();
+			CertificateEnum.KEYSTORE_TYPE keystoreTypeEnum = CertificateEnum.KEYSTORE_TYPE.getByVal(keystoreType);
+			// 系统生成
+			KeystoreMeta keystoreMeta = new KeystoreMeta().password("123456").validity(3650)
+					.certificateCRL("https://relaxed.cn").keystoreType(keystoreTypeEnum.getDesc())
+					.alias(certificateAlias).subject().CN(certificateAlias).OU(certificateSubject).O(certificateSubject)
+					.C("CN").end().issuer().CN("Yakir").OU("relaxed研发部").O("relaxed有限公司").L("上海").E("relaxed@qq.com")
+					.ST("上海").C("CN").end();
+			String filename = "sys-" + IdUtil.simpleUUID() + "." + keystoreTypeEnum.getSuffix();
 
-            ByteArrayOutputStream byteArrayOutputStream = KeystoreUtil.generateKeyStoreV3(keystoreMeta);
-            ByteArrayMultipartFile file = new ByteArrayMultipartFile(byteArrayOutputStream.toByteArray(), filename);
-            FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(),"profile/keystore", file,
-                    FileConfig.create().splitDate(false));
-            String address = RelaxedConfig.getUrl() + fileMeta.getRelativeFilePath();
-            certificate.setCertificateFilename(filename);
-            certificate.setCertificateAddress(address);
-        }
-        boolean result = save(certificate);
-        return result;
-    }
+			ByteArrayOutputStream byteArrayOutputStream = KeystoreUtil.generateKeyStoreV3(keystoreMeta);
+			ByteArrayMultipartFile file = new ByteArrayMultipartFile(byteArrayOutputStream.toByteArray(), filename);
+			FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/keystore", file,
+					FileConfig.create().splitDate(false));
+			String address = RelaxedConfig.getUrl() + fileMeta.getRelativeFilePath();
+			certificate.setCertificateFilename(filename);
+			certificate.setCertificateAddress(address);
+		}
+		boolean result = save(certificate);
+		return result;
+	}
+
 }

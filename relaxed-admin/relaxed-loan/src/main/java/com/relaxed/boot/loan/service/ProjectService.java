@@ -14,12 +14,12 @@ import com.relaxed.extend.mybatis.plus.service.ExtendService;
  */
 public interface ProjectService extends ExtendService<Project> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;ProjectPageVO&gt; 分页数据
-    */
-    PageResult<ProjectPageVO> queryPage(PageParam pageParam, ProjectQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;ProjectPageVO&gt; 分页数据
+	 */
+	PageResult<ProjectPageVO> queryPage(PageParam pageParam, ProjectQO qo);
 
 }

@@ -49,11 +49,13 @@ public class SysUserQO extends BaseEntity {
 	 */
 	@Schema(title = "状态(1-正常,0-冻结)", description = "状态(1-正常,0-冻结)")
 	private Integer status;
+
 	/**
 	 * 所属组织ID
 	 */
 	@Schema(title = "所属组织ID", description = "所属组织ID")
 	private Integer organizationId;
+
 	@Schema(description = "开始时间")
 	private String startTime;
 

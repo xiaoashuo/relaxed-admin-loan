@@ -14,12 +14,12 @@ import com.relaxed.extend.mybatis.plus.service.ExtendService;
  */
 public interface TemplateAreaService extends ExtendService<TemplateArea> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;TemplateAreaPageVO&gt; 分页数据
-    */
-    PageResult<TemplateAreaPageVO> queryPage(PageParam pageParam, TemplateAreaQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;TemplateAreaPageVO&gt; 分页数据
+	 */
+	PageResult<TemplateAreaPageVO> queryPage(PageParam pageParam, TemplateAreaQO qo);
 
 }

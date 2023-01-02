@@ -16,35 +16,31 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 @ConfigurationProperties(prefix = "sys")
 public class RelaxedConfig {
-    /** 上传路径 */
-    private static String profile;
-    public static String getProfile()
-    {
-        return profile;
-    }
 
-    public void setProfile(String profile)
-    {
-        RelaxedConfig.profile = profile;
-    }
+	/** 上传路径 */
+	private static String profile;
 
+	public static String getProfile() {
+		return profile;
+	}
 
+	public void setProfile(String profile) {
+		RelaxedConfig.profile = profile;
+	}
 
-    /**
-     * 获取完整的请求路径，包括：域名，端口，上下文访问路径
-     *
-     * @return 服务地址
-     */
-    public static String getUrl()
-    {
-        HttpServletRequest request = WebUtils.getRequest();
-        return getDomain(request);
-    }
+	/**
+	 * 获取完整的请求路径，包括：域名，端口，上下文访问路径
+	 * @return 服务地址
+	 */
+	public static String getUrl() {
+		HttpServletRequest request = WebUtils.getRequest();
+		return getDomain(request);
+	}
 
-    public static String getDomain(HttpServletRequest request)
-    {
-        StringBuffer url = request.getRequestURL();
-        String contextPath = request.getServletContext().getContextPath();
-        return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();
-    }
+	public static String getDomain(HttpServletRequest request) {
+		StringBuffer url = request.getRequestURL();
+		String contextPath = request.getServletContext().getContextPath();
+		return url.delete(url.length() - request.getRequestURI().length(), url.length()).append(contextPath).toString();
+	}
+
 }

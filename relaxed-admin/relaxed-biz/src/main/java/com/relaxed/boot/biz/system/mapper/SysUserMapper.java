@@ -45,11 +45,10 @@ public interface SysUserMapper extends ExtendMapper<SysUser> {
 		wrapper.eqIfPresent(SysUser::getStatus, qo.getStatus());
 		wrapper.eqIfPresent(SysUser::getOrganizationId, qo.getOrganizationId());
 		Map<String, Object> params = qo.getParams();
-		if (MapUtil.isNotEmpty(params)){
+		if (MapUtil.isNotEmpty(params)) {
 			wrapper.geIfPresent(SysUser::getCreatedTime, params.get("beginCreatedTime"));
 			wrapper.leIfPresent(SysUser::getCreatedTime, params.get("endCreatedTime"));
 		}
-
 
 		this.selectPage(page, wrapper);
 		IPage<SysUserPageVO> voPage = page.convert(SysUserConverter.INSTANCE::poToPageVo);

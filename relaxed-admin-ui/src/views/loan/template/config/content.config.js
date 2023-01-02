@@ -19,7 +19,7 @@ export const contentTableConfig={
            {
       prop: 'templateId',
       label:'主键id',
-      minWidth:180,
+      minWidth:80,
       slotName: 'templateId'
     },
               {

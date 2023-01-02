@@ -16,17 +16,18 @@ import org.springframework.stereotype.Service;
  * @author Yakir 2022-12-16 11:18:37
  */
 @Service
-public class TemplateAreaServiceImpl extends ExtendServiceImpl<TemplateAreaMapper, TemplateArea> implements TemplateAreaService {
+public class TemplateAreaServiceImpl extends ExtendServiceImpl<TemplateAreaMapper, TemplateArea>
+		implements TemplateAreaService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<TemplateAreaPageVO> 分页数据
-    */
-    @Override
-    public PageResult<TemplateAreaPageVO> queryPage(PageParam pageParam, TemplateAreaQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<TemplateAreaPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<TemplateAreaPageVO> queryPage(PageParam pageParam, TemplateAreaQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
 }

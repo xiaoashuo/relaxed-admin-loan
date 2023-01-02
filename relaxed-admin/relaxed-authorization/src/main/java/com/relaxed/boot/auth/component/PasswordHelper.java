@@ -32,7 +32,7 @@ public class PasswordHelper {
 	 * @param encodedPassword
 	 * @return
 	 */
-	public boolean matches(String rawPassword,String encodedPassword) {
+	public boolean matches(String rawPassword, String encodedPassword) {
 		return passwordEncoder.matches(rawPassword, encodedPassword);
 	}
 

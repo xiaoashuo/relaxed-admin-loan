@@ -13,11 +13,14 @@ import java.util.List;
  */
 @Data
 public class PreviewSignInfo {
-    private String imgPath;
-    /**
-     * 是否在内容上 添加内容 默认为false
-     */
-    private boolean contentBefore=false;
 
-    private List<KeywordLocation> keywordLocationList;
+	private String imgPath;
+
+	/**
+	 * 是否在内容上 添加内容 默认为false
+	 */
+	private boolean contentBefore = false;
+
+	private List<KeywordLocation> keywordLocationList;
+
 }

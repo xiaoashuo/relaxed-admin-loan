@@ -20,7 +20,6 @@ public class Base64MultipartFile implements MultipartFile {
 	private final String header;
 
 	/**
-	 *
 	 * @param imgContent
 	 * @param header 格式类似于: data:image/png;base64
 	 */

@@ -1,37 +1,7 @@
 <template>
   <div class="templateConfig"  ref="templateConfig">
 
-    <div  class="leftCol">
 
-
-
-      <div class="fileType">
-        <div>文件类型</div>
-        <dict-select v-model="fileType" v-bind="fileTypeConfig"></dict-select>
-      </div>
-      <div class="keystore">
-        <span>证书列表</span>
-        <yi-select  v-model="keystoreId" v-bind="keyStoreConfig"></yi-select>
-      </div>
-
-        <div class="left-title">我的印章</div>
-        <div class="seal">
-
-          <draggable v-model="sealList" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
-            <transition-group type="transition">
-              <li v-for="item in sealList" :key="item.sealId" class="item" style="text-align:center;">
-                <img :src="item.sealAddress" width="100%;" height="100%" class="imgstyle" />
-              </li>
-            </transition-group>
-          </draggable>
-        </div>
-
-
-
-
-
-
-    </div>
     <div   class="contentCol">
 
       <pdf-canvas ref="yiPdfRef" :options="pdfOptions"></pdf-canvas>
@@ -51,25 +21,7 @@
 
     </div>
 
-    <div  class="rightCol">
-      <div class="right-item" >
-        <div class="item">
-          <div class="right-item-title">项目名称</div>
-          <div class="detail-item-desc">天机40-2</div>
-        </div>
-        <div class="item">
-          <div class="right-item-title">信托产品</div>
-          <div class="detail-item-desc">45010101</div>
-        </div>
-        <div class="item">
-          <div class="right-item-title">信托计划</div>
-          <div class="detail-item-desc">450101</div>
-        </div>
 
-      </div>
-
-
-    </div>
 
 
     <div :class="['box', 'default']" >
@@ -88,8 +40,7 @@
 <script>
   import { YiSelect } from '@/components/select'
   import draggable from "vuedraggable";
-  import {getListData as getSealListData} from '@/api/loan/seal'
-  import { getSelectData as getCertificateSelectData } from '@/api/loan/certificate'
+
   import PdfCanvas from '@/components/pdf/PdfCanvas'
   import FabricCanvas from '@/components/pdf/FabricCanvas'
 
@@ -101,35 +52,23 @@
     components:{
       YiSelect,draggable,PdfCanvas,FabricCanvas
     },
+    props:{
+      sealList:{
+        type: Array,
+        default:()=>([])
+      }
+    },
     data(){
       return{
         //pdf
         pdfOptions:this.getPdfOptions(),
         //fabric
         fabricPosition: null,
-        sealList:[],
 
 
 
-        fileType: null,
-        fileTypeConfig:{
-          dictCode: 'file_type',
 
-          otherProps:{
-            clearable: true
-          }
-        },
-        keystoreId:null,
 
-        keyStoreConfig:{
-          remoteLoad: true,
-          request: getCertificateSelectData,
-
-          otherProps:{
-
-            clearable: true
-          }
-        },
 
 
 
@@ -139,9 +78,6 @@
 
 
     created() {
-      getSealListData().then(res=>{
-        this.sealList=res.data
-      })
 
 
     },
@@ -317,17 +253,10 @@
         //清除缓存
         this.$storage.local.deleteCache(SIGN_CACHE_KEY)
       },
-      end(e){
-        let sealListElement = this.sealList[e.newDraggableIndex]
-        const sealInfo={url: sealListElement.sealAddress,
-          uid:new Date().getTime(),
-          left: e.originalEvent.layerX,
-          top: e.originalEvent.layerY,
-          index: e.newDraggableIndex }
+      saveImage(sealInfo){
         this.$refs.fabricCanvasRef.addImage(sealInfo,this.saveSignature)
+      }
 
-
-      },
     }
   }
 </script>
@@ -341,47 +270,7 @@
     padding-left: 10px;
     padding-top: 10px;
   }
-  .leftCol{
-    position: relative;
-    width: 200px;
-    margin-right: 20px;
 
-    .keystore{
-      span{
-        display: inline-block;
-        margin: 5px 0;
-      }
-    }
-    .left-title {
-
-      margin-top: 5px;
-      padding-bottom: 5px;
-      border-bottom: 1px solid #eee;
-    }
-    .seal{
-      margin-top: 20px;
-      height: 600px;
-      border: 1px solid darkgray;
-      overflow-y: auto;
-      li {
-        list-style-type:none;
-        padding: 10px;
-      }
-      .imgstyle{
-        vertical-align: middle;
-        width: 130px;
-        border: solid 1px #e8eef2;
-        background-image: url("~@/assets/img/tuo.png");
-        background-repeat:no-repeat;
-      }
-    }
-
-    .previewBtn{
-      width: 100%;
-      position: absolute;
-      bottom: 15px;
-    }
-  }
   .contentCol{
 
     flex: 1;
@@ -411,40 +300,6 @@
       margin-top: 3%;
     }
   }
-  .rightCol{
 
-    width: 150px;
-
-
-    .info{
-
-      height: 150px;
-
-      border: 1px solid red;
-    }
-
-    .right-item {
-      margin-bottom: 15px;
-      margin-left: 10px;
-    }
-    .right-item-title {
-      margin: 5px 0px;
-
-      color: #000000;
-      height: 20px;
-      line-height: 20px;
-      font-size: 15px;
-      font-weight: 400;
-      text-align: left !important;
-    }
-    .detail-item-desc {
-      color: #333;
-      line-height: 20px;
-      width: 100%;
-      font-size: 12px;
-      display: inline-block;
-      text-align: left;
-    }
-  }
 
 </style>

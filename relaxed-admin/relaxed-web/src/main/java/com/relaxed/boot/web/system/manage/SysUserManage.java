@@ -46,7 +46,9 @@ public class SysUserManage {
 	private final SysUserService sysUserService;
 
 	private final SysUserRoleService sysUserRoleService;
+
 	private final SysOrganizationService sysOrganizationService;
+
 	private final PasswordHelper passwordHelper;
 
 	/**
@@ -60,6 +62,7 @@ public class SysUserManage {
 		// 更新用户角色关联关系
 		return sysUserRoleService.updateUserRoles(userId, sysUserScope.getRoleCodes());
 	}
+
 	/**
 	 * 新增系统用户
 	 * @param sysUserDto 系统用户DTO
@@ -72,15 +75,15 @@ public class SysUserManage {
 		// 明文密码
 		String encryptPassword = passwordHelper.encode(sysUser.getPassword());
 		sysUser.setPassword(encryptPassword);
-		//设置默认头像
+		// 设置默认头像
 		String avatarBase64Img = AvatarUtil.generateImg(sysUser.getNickname());
 		MultipartFile avatarMultipartFile = Base64MultipartFile.base64Convert(avatarBase64Img);
-		//上传头像
-		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(),"profile/upload", avatarMultipartFile,
+		// 上传头像
+		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/upload", avatarMultipartFile,
 				FileConfig.create().splitDate(true));
 		String fullFilePath = fileMeta.getRelativeFilePath();
 		String url = RelaxedConfig.getUrl();
-		sysUser.setAvatar(url+fullFilePath);
+		sysUser.setAvatar(url + fullFilePath);
 		// 保存用户
 		boolean insertSuccess = sysUserService.save(sysUser);
 		Assert.isTrue(insertSuccess, () -> {
@@ -99,7 +102,8 @@ public class SysUserManage {
 		}
 
 		// 发布用户创建事件
-		//publisher.publishEvent(new UserCreatedEvent(sysUser, sysUserDto.getRoleCodes()));
+		// publisher.publishEvent(new UserCreatedEvent(sysUser,
+		// sysUserDto.getRoleCodes()));
 
 		return true;
 	}
@@ -115,33 +119,31 @@ public class SysUserManage {
 		SysUser sysUser = SysUserConverter.INSTANCE.dtoToPo(sysUserDTO);
 		List<String> roleCodes = sysUserDTO.getRoleCodes();
 		Integer userId = sysUserDTO.getUserId();
-		SysUserScope sysUserScope=new SysUserScope();
+		SysUserScope sysUserScope = new SysUserScope();
 		sysUserScope.setRoleCodes(roleCodes);
 		updateUserScope(userId, sysUserScope);
 
 		boolean success = sysUserService.updateById(sysUser);
-		Assert.isTrue(success,()->{
-		    log.error("[updateUserInfo] 更新用户信息失败，userId：{}", userId);
-	    	return new BusinessException(BaseResultCode.UPDATE_DATABASE_ERROR.getCode(), "更新用户信息失败");
+		Assert.isTrue(success, () -> {
+			log.error("[updateUserInfo] 更新用户信息失败，userId：{}", userId);
+			return new BusinessException(BaseResultCode.UPDATE_DATABASE_ERROR.getCode(), "更新用户信息失败");
 		});
 		return success;
 	}
 
 	public boolean updateUserPassword(Integer userId, String oldPassword, String newPassword) {
 		SysUser sqlSysUser = sysUserService.getById(userId);
-		Assert.notNull(sqlSysUser,()->{
+		Assert.notNull(sqlSysUser, () -> {
 			throw new BusinessException(BaseResultCode.UPDATE_DATABASE_ERROR.getCode(), "更新用户密码失败,原始用户不存在");
 		});
 		String oldEncryptedPassword = sqlSysUser.getPassword();
-		if (!passwordHelper.matches(oldPassword,oldEncryptedPassword)){
+		if (!passwordHelper.matches(oldPassword, oldEncryptedPassword)) {
 			throw new BusinessException(BaseResultCode.UPDATE_DATABASE_ERROR.getCode(), "更新用户密码失败,原始密码不正确");
 		}
 		String encryptedPassword = passwordHelper.encode(newPassword);
-		boolean success = sysUserService.update(new LambdaUpdateWrapper<SysUser>()
-				.eq(SysUser::getUserId, userId)
-				.set(SysUser::getPassword, encryptedPassword)
-		);
-		Assert.isTrue(success,()->{
+		boolean success = sysUserService.update(new LambdaUpdateWrapper<SysUser>().eq(SysUser::getUserId, userId)
+				.set(SysUser::getPassword, encryptedPassword));
+		Assert.isTrue(success, () -> {
 			log.error("[updateUserPassword] 修改用户密码失败，userId：{}", userId);
 			return new BusinessException(BaseResultCode.UPDATE_DATABASE_ERROR.getCode(), "修改用户密码失败");
 		});
@@ -149,7 +151,7 @@ public class SysUserManage {
 	}
 
 	public String uploadAvatar(SysUserDetails sysUserDetails, MultipartFile file) {
-		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(),"profile/upload", file,
+		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/upload", file,
 				FileConfig.create().splitDate(true));
 		String relativeFilePath = fileMeta.getRelativeFilePath();
 		String url = RelaxedConfig.getUrl() + relativeFilePath;
@@ -157,9 +159,9 @@ public class SysUserManage {
 		Integer userId = sysUserDetails.getUserId();
 		sysUser.setUserId(userId);
 		sysUser.setAvatar(url);
-		Assert.isTrue(sysUserService.updateById(sysUser),()->{
-				log.error("[uploadAvatar] 上传头像失败，userId：{}", userId);
-		return new BusinessException(BaseResultCode.UPDATE_DATABASE_ERROR.getCode(), "上传头像失败");
+		Assert.isTrue(sysUserService.updateById(sysUser), () -> {
+			log.error("[uploadAvatar] 上传头像失败，userId：{}", userId);
+			return new BusinessException(BaseResultCode.UPDATE_DATABASE_ERROR.getCode(), "上传头像失败");
 		});
 		return url;
 
@@ -174,7 +176,7 @@ public class SysUserManage {
 	public SysUserProfileVO profile(SysUserDetails sysUserDetails) {
 		Integer userId = sysUserDetails.getUserId();
 		SysUser sysUser = sysUserService.getById(userId);
-		SysUserProfileVO sysUserProfileVO=SysUserConverter.INSTANCE.poToProfileVO(sysUser);
+		SysUserProfileVO sysUserProfileVO = SysUserConverter.INSTANCE.poToProfileVO(sysUser);
 		Integer organizationId = sysUser.getOrganizationId();
 		SysOrganization sysOrganization = sysOrganizationService.getById(organizationId);
 		List<SysRole> sysRoles = sysUserRoleService.listRoles(userId);
@@ -182,4 +184,5 @@ public class SysUserManage {
 		sysUserProfileVO.setRoleList(sysRoles);
 		return sysUserProfileVO;
 	}
+
 }

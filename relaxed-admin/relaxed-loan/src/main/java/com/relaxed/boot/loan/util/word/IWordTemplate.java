@@ -3,7 +3,6 @@ package com.relaxed.boot.loan.util.word;
 import com.deepoove.poi.config.Configure;
 import com.relaxed.boot.loan.util.word.domain.ElementMeta;
 
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;

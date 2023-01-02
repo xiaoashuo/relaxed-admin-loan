@@ -17,17 +17,18 @@ import java.util.List;
  */
 public interface SealService extends ExtendService<Seal> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;SealPageVO&gt; 分页数据
-    */
-    PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;SealPageVO&gt; 分页数据
+	 */
+	PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo);
 
-    boolean saveSeal(Seal seal);
+	boolean saveSeal(Seal seal);
 
-    List<SelectData> querySealList();
+	List<SelectData> querySealList();
 
-    List<SealPageVO> queryList();
+	List<SealPageVO> queryList();
+
 }

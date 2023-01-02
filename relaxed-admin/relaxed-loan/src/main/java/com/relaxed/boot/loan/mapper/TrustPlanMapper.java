@@ -18,17 +18,18 @@ import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
  */
 public interface TrustPlanMapper extends ExtendMapper<TrustPlan> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<TrustPlanPageVO> VO分页数据
-    */
-   default PageResult<TrustPlanPageVO> queryPage(PageParam pageParam, TrustPlanQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<TrustPlanPageVO> VO分页数据
+	 */
+	default PageResult<TrustPlanPageVO> queryPage(PageParam pageParam, TrustPlanQO qo) {
 		IPage<TrustPlan> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<TrustPlan> wrapper = WrappersX.lambdaQueryX(TrustPlan.class);
 		this.selectPage(page, wrapper);
 		IPage<TrustPlanPageVO> voPage = page.convert(TrustPlanConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
-   }
+	}
+
 }

@@ -18,17 +18,18 @@ import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
  */
 public interface SealMapper extends ExtendMapper<Seal> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<SealPageVO> VO分页数据
-    */
-   default PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<SealPageVO> VO分页数据
+	 */
+	default PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo) {
 		IPage<Seal> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<Seal> wrapper = WrappersX.lambdaQueryX(Seal.class);
 		this.selectPage(page, wrapper);
 		IPage<SealPageVO> voPage = page.convert(SealConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
-   }
+	}
+
 }

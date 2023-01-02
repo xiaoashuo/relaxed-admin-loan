@@ -17,21 +17,21 @@ import java.util.List;
  */
 public interface CertificateService extends ExtendService<Certificate> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;CertificatePageVO&gt; 分页数据
-    */
-    PageResult<CertificatePageVO> queryPage(PageParam pageParam, CertificateQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;CertificatePageVO&gt; 分页数据
+	 */
+	PageResult<CertificatePageVO> queryPage(PageParam pageParam, CertificateQO qo);
 
-    /**
-     * 存储证书
-     * @param certificate
-     * @return
-     */
-    boolean saveCertificate(Certificate certificate);
+	/**
+	 * 存储证书
+	 * @param certificate
+	 * @return
+	 */
+	boolean saveCertificate(Certificate certificate);
 
-    List<SelectData> queryCertificateList();
+	List<SelectData> queryCertificateList();
 
 }

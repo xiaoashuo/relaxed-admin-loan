@@ -20,17 +20,10 @@ public class RemoteWordTemplateProvider implements WordTemplateProvider<String> 
 
 	private final TemplateService templateService;
 
-
-
-
-
-
 	@Override
 	public String get(String templateCode) {
 		return templateService.getByTemplateCode(templateCode);
 	}
-
-
 
 	@SneakyThrows
 	@Override
@@ -40,7 +33,5 @@ public class RemoteWordTemplateProvider implements WordTemplateProvider<String> 
 		Assert.hasText(templatePath, "template path can not empty.");
 		return new FileInputStream(templatePath);
 	}
-
-
 
 }

@@ -156,9 +156,11 @@ public class SysUserController {
 	@Operation(summary = "修改系统用户")
 	@UpdateLog(msg = "修改系统用户")
 	@PutMapping
-	public R<Void> updateById(@Validated({ Default.class, GroupType.CreateGroup.class }) @RequestBody SysUserDTO sysUserDTO) {
+	public R<Void> updateById(
+			@Validated({ Default.class, GroupType.CreateGroup.class }) @RequestBody SysUserDTO sysUserDTO) {
 
-		return sysUserManage.updateUser(sysUserDTO) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改系统用户失败");
+		return sysUserManage.updateUser(sysUserDTO) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改系统用户失败");
 	}
 
 	/**
@@ -173,9 +175,10 @@ public class SysUserController {
 	public R<Boolean> updateUserPassword(@RequestParam String oldPassword, @RequestParam String newPassword) {
 		SysUserDetails user = SecurityHelper.getUser();
 		Integer userId = user.getUserId();
-		boolean result = sysUserManage.updateUserPassword(userId,oldPassword, newPassword);
+		boolean result = sysUserManage.updateUserPassword(userId, oldPassword, newPassword);
 		return R.ok(result);
 	}
+
 	/**
 	 * 修改用户状态
 	 * @author yakir
@@ -186,10 +189,11 @@ public class SysUserController {
 	 */
 	@Operation(summary = "修改用户状态")
 	@PatchMapping(value = "/{userId}/status")
-	public  R<Boolean> updateUserPassword( @PathVariable Long userId, @RequestParam Integer status) {
-		boolean result = sysUserService.updateUserStatus(userId,status);
+	public R<Boolean> updateUserPassword(@PathVariable Long userId, @RequestParam Integer status) {
+		boolean result = sysUserService.updateUserStatus(userId, status);
 		return R.ok(result);
 	}
+
 	/**
 	 * 通过id删除系统用户
 	 * @param userId id
@@ -206,7 +210,7 @@ public class SysUserController {
 	/**
 	 * 头像上传
 	 */
-	@Log(msg = "用户头像",type = OperationTypes.OTHER)
+	@Log(msg = "用户头像", type = OperationTypes.OTHER)
 	@PostMapping("/avatar")
 	public R avatar(@RequestParam("avatarfile") MultipartFile file) {
 
@@ -214,20 +218,21 @@ public class SysUserController {
 		// 上传文件路径
 		String url = sysUserManage.uploadAvatar(sysUserDetails, file);
 
-		Map<String,String> data=new HashMap<>(2);
-		data.put("url",url);
+		Map<String, String> data = new HashMap<>(2);
+		data.put("url", url);
 		return R.ok(data);
 	}
-
 
 	@ResponseExcel(name = "导出用户")
 	@Operation(summary = "导出用户")
 	@PostMapping("export")
-	public List<ExcelSysUserVO> export(@RequestBody  List<String> userIds, HttpServletResponse response){
+	public List<ExcelSysUserVO> export(@RequestBody List<String> userIds, HttpServletResponse response) {
 		response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
 		List<SysUser> sysUsers = sysUserService.listByIds(userIds);
-		Assert.notEmpty(sysUsers,"导出列表不能为空");
-		List<ExcelSysUserVO> sysUserVOS = sysUsers.stream().map(sysUser -> BeanUtil.toBean(sysUser, ExcelSysUserVO.class)).collect(Collectors.toList());
+		Assert.notEmpty(sysUsers, "导出列表不能为空");
+		List<ExcelSysUserVO> sysUserVOS = sysUsers.stream()
+				.map(sysUser -> BeanUtil.toBean(sysUser, ExcelSysUserVO.class)).collect(Collectors.toList());
 		return sysUserVOS;
 	}
+
 }

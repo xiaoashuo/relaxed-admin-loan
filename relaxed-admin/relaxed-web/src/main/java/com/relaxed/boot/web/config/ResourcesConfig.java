@@ -14,14 +14,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry)
-    {
-        /** 本地文件上传路径 */
-        //指定路径 为/profile 则访问此路径下面的路径 会被资源处理器提取出来 ,拼接在默认的profile本地路径后面
-        registry.addResourceHandler( "/profile/**")
-                .addResourceLocations("file:" + RelaxedConfig.getProfile() + "/profile/");
 
-    }
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+		/** 本地文件上传路径 */
+		// 指定路径 为/profile 则访问此路径下面的路径 会被资源处理器提取出来 ,拼接在默认的profile本地路径后面
+		registry.addResourceHandler("/profile/**")
+				.addResourceLocations("file:" + RelaxedConfig.getProfile() + "/profile/");
+
+	}
 
 }

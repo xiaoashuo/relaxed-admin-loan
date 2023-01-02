@@ -1,5 +1,6 @@
 package com.relaxed.boot.biz.system.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.relaxed.boot.common.system.model.entity.SysDictItem;
 import com.relaxed.boot.common.system.model.vo.SysDictItemPageVO;
 import com.relaxed.boot.common.system.model.qo.SysDictItemQO;
@@ -52,4 +53,10 @@ public class SysDictItemServiceImpl extends ExtendServiceImpl<SysDictItemMapper,
 		return baseMapper.existsDictItem(dictCode);
 	}
 
+	@Override
+	public <V> SysDictItem getByDictKeyAndValue(String key, V value) {
+		return baseMapper.selectOne(Wrappers.lambdaQuery(SysDictItem.class)
+				.eq(SysDictItem::getDictCode,key)
+				.eq(SysDictItem::getValue,value));
+	}
 }

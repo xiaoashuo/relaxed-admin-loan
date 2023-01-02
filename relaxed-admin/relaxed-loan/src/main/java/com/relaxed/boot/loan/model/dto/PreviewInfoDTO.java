@@ -11,25 +11,30 @@ import lombok.Data;
  */
 @Data
 public class PreviewInfoDTO {
-    /**
-     * 证书id
-     */
-    private Integer keystoreId;
 
-    /**
-     * 模板id
-     */
-    private Integer templateId;
-    /**
-     * 签章id
-     */
-    private Integer sealId;
-    /**
-     * 关键字
-     */
-    private String keyword;
-    /**
-     * 文件类型
-     */
-    private Integer fileType;
+	/**
+	 * 证书id
+	 */
+	private Integer keystoreId;
+
+	/**
+	 * 模板id
+	 */
+	private Integer templateId;
+
+	/**
+	 * 签章id
+	 */
+	private Integer sealId;
+
+	/**
+	 * 关键字
+	 */
+	private String keyword;
+
+	/**
+	 * 文件类型
+	 */
+	private Integer fileType;
+
 }

@@ -17,14 +17,14 @@ import java.util.List;
  */
 public interface PartnerService extends ExtendService<Partner> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;PartnerPageVO&gt; 分页数据
-    */
-    PageResult<PartnerPageVO> queryPage(PageParam pageParam, PartnerQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;PartnerPageVO&gt; 分页数据
+	 */
+	PageResult<PartnerPageVO> queryPage(PageParam pageParam, PartnerQO qo);
 
-    List<SelectData> queryPartnerList();
+	List<SelectData> queryPartnerList();
 
 }

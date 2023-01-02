@@ -18,17 +18,18 @@ import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
  */
 public interface CertificateMapper extends ExtendMapper<Certificate> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<CertificatePageVO> VO分页数据
-    */
-   default PageResult<CertificatePageVO> queryPage(PageParam pageParam, CertificateQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<CertificatePageVO> VO分页数据
+	 */
+	default PageResult<CertificatePageVO> queryPage(PageParam pageParam, CertificateQO qo) {
 		IPage<Certificate> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<Certificate> wrapper = WrappersX.lambdaQueryX(Certificate.class);
 		this.selectPage(page, wrapper);
 		IPage<CertificatePageVO> voPage = page.convert(CertificateConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
-   }
+	}
+
 }

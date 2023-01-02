@@ -4,10 +4,6 @@ import java.io.InputStream;
 
 public interface WordTemplateProvider<V> {
 
-
-
-
-
 	/**
 	 * 根据模板code获取值
 	 * @author yakir
@@ -16,8 +12,6 @@ public interface WordTemplateProvider<V> {
 	 * @return V
 	 */
 	V get(String templateCode);
-
-
 
 	/**
 	 * 根据模板Code 获取原始Word数据流

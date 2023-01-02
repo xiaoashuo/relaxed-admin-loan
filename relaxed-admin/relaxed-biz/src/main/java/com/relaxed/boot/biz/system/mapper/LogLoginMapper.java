@@ -27,8 +27,8 @@ public interface LogLoginMapper extends ExtendMapper<LogLogin> {
 	default PageResult<LogLoginPageVO> queryPage(PageParam pageParam, LogLoginQO qo) {
 		IPage<LogLogin> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<LogLogin> wrapper = WrappersX.lambdaQueryX(LogLogin.class);
-		wrapper.eqIfPresent(LogLogin::getTraceId,qo.getTraceId());
-		wrapper.eqIfPresent(LogLogin::getIp,qo.getIp());
+		wrapper.eqIfPresent(LogLogin::getTraceId, qo.getTraceId());
+		wrapper.eqIfPresent(LogLogin::getIp, qo.getIp());
 		this.selectPage(page, wrapper);
 		IPage<LogLoginPageVO> voPage = page.convert(LogLoginConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

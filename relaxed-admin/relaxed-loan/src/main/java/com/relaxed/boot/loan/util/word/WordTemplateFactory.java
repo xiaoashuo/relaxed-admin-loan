@@ -3,7 +3,6 @@ package com.relaxed.boot.loan.util.word;
 import com.deepoove.poi.config.Configure;
 import com.relaxed.boot.loan.util.word.provider.WordTemplateProvider;
 
-
 public class WordTemplateFactory {
 
 	public static DefaultWordTemplate create() {

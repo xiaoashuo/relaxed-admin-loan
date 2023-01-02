@@ -87,4 +87,5 @@ public class SysConfig {
 	 */
 	@Schema(title = "修改时间", description = "修改时间")
 	private LocalDateTime updatedTime;
+
 }

@@ -10,8 +10,9 @@ import lombok.Data;
  * @author yakir 2022-12-14 11:36:23
  */
 @Data
-@Schema(title = "模板文件配置表")  
-public class TemplateQO  {
+@Schema(title = "模板文件配置表")
+public class TemplateQO {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
