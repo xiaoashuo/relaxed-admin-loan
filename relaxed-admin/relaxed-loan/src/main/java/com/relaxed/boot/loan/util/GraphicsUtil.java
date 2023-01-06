@@ -1,10 +1,9 @@
 package com.relaxed.boot.loan.util;
 
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGEncodeParam;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
+
 import sun.font.FontDesignMetrics;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
@@ -166,10 +165,12 @@ public class GraphicsUtil {
 
 			g.dispose();
 			out = new FileOutputStream(jpgname); // 指定输出文件
-			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-			JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bimage);
-			param.setQuality(50f, true);
-			encoder.encode(bimage, param); // 存盘
+
+			ImageIO.write(bimage,"JPEG",out);
+//			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+//			JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bimage);
+//			param.setQuality(50f, true);
+//			encoder.encode(bimage, param); // 存盘
 			out.flush();
 			return true;
 		}
