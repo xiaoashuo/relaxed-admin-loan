@@ -13,11 +13,7 @@
                      @rightMouseClick="handleShow"
                      @cancelMouseClick="handleHide"
       ></fabric-canvas>
-      <div class="ele-control" style="margin-bottom:2%;">
-        <el-button class="btn-outline-dark" @click="removeSelectedSignature"> 删除签章</el-button>
-        <el-button class="btn-outline-dark" @click="clearAllSignature"> 清除所有签章</el-button>
-        <el-button class="btn-outline-dark" @click="submitSignature">提交所有签章信息</el-button>
-      </div>
+
 
     </div>
 
@@ -46,16 +42,21 @@
 
 
   import { debounce } from '@/utils'
-  const SIGN_CACHE_KEY="signs";
+
   export default {
     name: 'TemplateSealConfig',
     components:{
       YiSelect,draggable,PdfCanvas,FabricCanvas
     },
     props:{
+
       sealList:{
         type: Array,
         default:()=>([])
+      },
+      sealLocation:{
+        type:Object,
+        default:()=>({})
       }
     },
     data(){
@@ -72,30 +73,25 @@
          * }
          *
          */
-        signLocations:{}
+        signLocations: this.sealLocation
 
       }
     },
 
 
-
-    created() {
-
-
-    },
     mounted() {
-      this.pdfUrl = 'http://localhost:9401/profile/upload/20221215/d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf';
-      this.$refs.yiPdfRef.show(this.pdfUrl)
+      // this.pdfUrl = 'http://localhost:9401/profile/upload/20221215/d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf';
+      // this.$refs.yiPdfRef.show(this.pdfUrl)
       window.addEventListener("resize",   this.resizeChange)
-
-
     },
-
 
     beforeDestroy() {
       window.removeEventListener("resize", this.resizeChange)
     },
     methods:{
+      showPdf(blob){
+        this.$refs.yiPdfRef.showBlob(blob)
+      },
       resizeChange:debounce(function(){
         try {
 
@@ -107,7 +103,6 @@
           console.log('重绘界面异常', e)
         }
       }, 300,false),
-
 
       //右键菜单
       handleShow (e,position) {
@@ -155,7 +150,7 @@
       },
       getSourceStyle(){
         let innerPdfCenter=document.querySelector("#pdfCanvas");
-        return {top:'50px',left: innerPdfCenter.offsetLeft+'px'}
+        return {top:'60px',left: innerPdfCenter.offsetLeft+'px'}
 
       },
 
@@ -163,7 +158,7 @@
       saveSignature(){
 
         let data = this.$refs.fabricCanvasRef.getObjects(); //获取当前页面内的所有签章信息
-        let caches=  this.$storage.local.getCache(SIGN_CACHE_KEY,{})
+
         const pageNum=this.$refs.yiPdfRef.currentPage
         let signDatas = {}; //存储当前页的所有签章信息
         let i = 0;
@@ -187,13 +182,8 @@
         }
 
         if (signDatas&&Object.keys(signDatas).length>0){
-          caches[pageNum] = signDatas;
-          this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
+          this.signLocations[pageNum] = signDatas;
         }
-
-
-
-
       },
       /**
        * 展示盖章信息
@@ -203,8 +193,7 @@
        */
       showSign(pageNum, isFirst = false) {
         if(isFirst == false) this.$refs.fabricCanvasRef.clear(); //清空页面所有签章
-        let caches = this.$storage.local.getCache(SIGN_CACHE_KEY,{})
-        let pageSealData = caches[pageNum];
+        let pageSealData = this.signLocations[pageNum];
         if(pageSealData) {
           for (let index in pageSealData) {
             this.$refs.fabricCanvasRef.addImage(pageSealData[index])
@@ -219,9 +208,9 @@
           return
         }
         this.$refs.fabricCanvasRef.remove(activeObject)
-        const caches=this.$storage.local.getCache(SIGN_CACHE_KEY,{})
+
         const pageNum=  this.$refs.yiPdfRef.currentPage
-        const pageSeals=caches[pageNum]
+        const pageSeals=this.signLocations[pageNum]
         const sealIdIndex=activeObject['uid']
         let newPageSeals={}
         for(const key in pageSeals){
@@ -232,28 +221,25 @@
         }
         if(Object.keys(newPageSeals)<=0){
           //页面章小于等于0
-          delete caches[pageNum]
+          delete this.signLocations[pageNum]
         }else{
-          caches[pageNum]=newPageSeals
+          this.signLocations[pageNum]=newPageSeals
         }
 
-        this.$storage.local.setCache(SIGN_CACHE_KEY,caches)
       },
       //提交数据
       submitSignature() {
         //保存当前页面签章事件,防止当前移动坐标不更新
         this.saveSignature();
-        let caches = localStorage.getItem(SIGN_CACHE_KEY);
-        console.log(caches);
-        return false
-
+        console.log(this.signLocations);
       },
+
       //清空数据
       clearAllSignature() {
         //清空页面所有签章
         this.$refs.fabricCanvasRef.clear();
         //清除缓存
-        this.$storage.local.deleteCache(SIGN_CACHE_KEY)
+        this.signLocations= {}
       },
       saveImage(sealInfo){
         this.$refs.fabricCanvasRef.addImage(sealInfo,this.saveSignature)
@@ -297,10 +283,7 @@
       50% { transform: rotate(180deg);}
       to { transform: rotate(360deg);}
     }
-    .ele-control {
 
-      margin-top: 3%;
-    }
   }
 
 

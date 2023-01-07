@@ -5,6 +5,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.text.StrPool;
 import cn.hutool.core.util.IdUtil;
 import com.relaxed.boot.framework.config.RelaxedConfig;
+import com.relaxed.boot.loan.config.download.StreamDownloadModel;
 import com.relaxed.boot.loan.model.dto.PreviewInfoDTO;
 import com.relaxed.boot.loan.model.entity.Seal;
 import com.relaxed.boot.loan.model.entity.Template;
@@ -97,4 +98,29 @@ public class SealManage {
 
 	}
 
+	public DownloadModel previewTemplate(Integer templateId) {
+
+		Template template = templateService.getById(templateId);
+		Assert.notNull(template, () -> {
+			throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "模板不存在");
+		});
+		// 模板路径
+		String templatePath = template.getTemplatePath();
+		File templateWordFile = new File(templatePath);
+
+		try {
+			// pdf 模板
+			ByteArrayOutputStream templatePdfFileByte = new ByteArrayOutputStream();
+			FileConvert.doc2pdf(new FileInputStream(templateWordFile), templatePdfFileByte);
+			StreamDownloadModel streamDownloadModel = new StreamDownloadModel();
+			streamDownloadModel.setContent(templatePdfFileByte.toByteArray());
+			streamDownloadModel.setFileName(template.getTemplateFilename());
+			streamDownloadModel.setFileType("pdf");
+			return streamDownloadModel;
+		}
+		catch (Exception e) {
+			throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "预览文件异常", e);
+		}
+
+	}
 }

@@ -4,7 +4,7 @@
        <div class="left">
          <div class="sealWay">
            <div>签章方式</div>
-           <dict-select v-model="sealWay" dict-code="seal_way" ></dict-select>
+           <dict-select style="width: 190px" v-model="sealWay" dict-code="seal_way" ></dict-select>
          </div>
          <div class="keystore">
            <span>证书列表</span>
@@ -44,7 +44,7 @@
 
       <div class="content">
         <template v-if="sealWay===1">
-          <template-seal-config ref="templateSealRef" :seal-list="sealImageList"></template-seal-config>
+          <template-seal-config ref="templateSealRef" :seal-location="sealLocation"  :seal-list="sealImageList"></template-seal-config>
         </template>
         <template v-if="sealWay===2">
           <keyword-seal-config ref="keywordSealRef"></keyword-seal-config>
@@ -66,20 +66,35 @@
         </div>
         <div class="right-tools">
           <template v-if="sealWay===1">
-            <div class="ele-control" style="margin-bottom:2%;">
-              <el-button class="btn-outline-dark" @click="removeSelectedSignature"> 删除签章</el-button>
-              <el-button class="btn-outline-dark" @click="clearAllSignature"> 清除所有签章</el-button>
-              <el-button class="btn-outline-dark" @click="submitSignature">提交所有签章信息</el-button>
-            </div>
+
+              <el-button class="right-tools-item-btn" @click="removeSelectedSignature">删除签章</el-button>
+              <el-button class="right-tools-item-btn" @click="clearAllSignature"> 清除所有签章</el-button>
+              <el-button class="right-tools-item-btn" @click="submitSignature">同步签章信息</el-button>
+
           </template>
           <template v-if="sealWay===2">
             <div>
-              <el-button   @click="handlePreviewPdf">预览</el-button>
+              <el-button  class="right-tools-item-btn"  @click="handlePreviewPdf">预览</el-button>
             </div>
           </template>
           <div>
-            <el-button   @click="handleSave">保存签名信息</el-button>
+            <el-button  class="right-tools-item-btn"  @click="handleSave">保存签名信息</el-button>
           </div>
+        </div>
+        <div class="right-tips">
+          <template v-if="sealWay===1">
+            <h4>模板方式注意事项</h4>
+            <p>当前页签章选则完毕后,<br/>
+              建议同步签章信息<br/>
+              ,在进行下一页操作。</p>
+          </template>
+
+          <template v-if="sealWay===2">
+            <h4>关键字方式注意事项</h4>
+            <p>填写关键信息后,<br/>
+              先进行预览,确认无误。<br/>
+              在进行保存操作。</p>
+          </template>
         </div>
       </div>
 
@@ -101,7 +116,7 @@
   import KeywordSealConfig from '@/views/loan/project/KeywordSealConfig'
   import {modifySealConfig} from '@/api/loan/project-template'
   import { getSelectData as getCertificateSelectData } from '@/api/loan/certificate'
-  import {  previewPdf } from '@/api/loan/seal'
+  import {  previewPdf,previewTemplatePdf } from '@/api/loan/seal'
 
   export default {
     name: 'ProjectTemplateConfig',
@@ -137,6 +152,7 @@
         sealId: null,
         keywordText:'',
         sealPreviewUrl:null,
+        sealLocation:{}
 
       }
     },
@@ -153,6 +169,7 @@
           this.sealId=this.projectData.sealId
           this.keystoreId=this.projectData.keystoreId
           this.keywordText=this.projectData.sealKeyword
+          this.sealLocation=this.projectData.sealLocation?JSON.parse(this.projectData.sealLocation):{}
         },
         deep:true,
         immediate:true
@@ -162,6 +179,17 @@
           const findItem=  this.sealImageList.find(item=>item.sealId===val)
           if (findItem){
             this.sealPreviewUrl=findItem.sealAddress
+          }
+        },
+        immediate:true
+      },
+      sealWay:{
+        handler(val){
+          if (this.sealWay===1) {
+            previewTemplatePdf(this.projectData.templateId).then(res=>{
+              this.$refs.templateSealRef.showPdf(res.data)
+            })
+
           }
         },
         immediate:true
@@ -198,13 +226,16 @@
       },
       //模板
       removeSelectedSignature(){
-
+        this.$refs.templateSealRef.removeSelectedSignature()
+        this.$message.success("删除签章成功")
       },
       clearAllSignature(){
-
+        this.$refs.templateSealRef.clearAllSignature()
+        this.$message.success("清楚所有签章成功")
       },
       submitSignature(){
-
+        this.$refs.templateSealRef.submitSignature()
+        this.$message.success("同步签章信息成功")
       },
       paramValid(){
         if (!this.sealWay){
@@ -215,13 +246,14 @@
           this.$message.error("证书不能为空");
           return false
         }
-        if (!this.sealId){
-          this.$message.error("签章不能为空");
-          return false
-        }
+
         if (this.sealWay===1){
           //模板
         }else if (this.sealWay===2){
+          if (!this.sealId){
+            this.$message.error("签章不能为空");
+            return false
+          }
           if (!this.keywordText){
             this.$message.error("关键字不能为空");
             return false
@@ -234,21 +266,28 @@
         if (!this.paramValid()){
           return
         }
+        let reqInfo={projectTemplateId:this.projectData.projectTemplateId,
+          sealWay:this.sealWay,keystoreId:this.keystoreId}
         if (this.sealWay===1){
+          //同步一次签署信息
+          this.$refs.templateSealRef.submitSignature()
+          if (!this.sealLocation||Object.keys(this.sealLocation).length===0){
+            this.$message.error("签约坐标信息不存在")
+            return
+          }
           //模板
+          reqInfo.sealLocation=JSON.stringify(this.sealLocation)
         }
         else if (this.sealWay===2){
           //关键字
-          let reqInfo={projectTemplateId:this.projectData.projectTemplateId,
-            sealWay:this.sealWay,keystoreId:this.keystoreId,
-            sealKeyword: this.keywordText,sealId:this.sealId}
-            modifySealConfig(reqInfo).then(res=>{
-               this.$message.success("保存签名成功")
-            }).catch(err=>{
-              this.$message.success("保存签名失败"+err)
-            })
-
+          reqInfo.sealKeyword=this.keywordText
+          reqInfo.sealId=this.sealId
         }
+        modifySealConfig(reqInfo).then(res=>{
+          this.$message.success("保存签名成功")
+        }).catch(err=>{
+          this.$message.success("保存签名失败"+err)
+        })
       }
     }
   }
@@ -351,6 +390,10 @@
     }
     .right-tools{
       margin-top: 20px;
+      .right-tools-item-btn{
+        width: 120px;
+        margin: 3px 0;
+      }
     }
 
   }

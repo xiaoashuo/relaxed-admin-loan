@@ -11,7 +11,14 @@ export function getListData() {
     url: '/loan/seal/list',
   })
 }
-
+export function previewTemplatePdf(templateId) {
+  return yiRequest.post({
+    url: '/loan/seal/preview/template',
+    params: {templateId:templateId},
+    'Content-Type':'application/json',
+    responseType: 'blob'
+  })
+}
 export function previewPdf(payload) {
   return yiRequest.post({
     url: '/loan/seal/preview',

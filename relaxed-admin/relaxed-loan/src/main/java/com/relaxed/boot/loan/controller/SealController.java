@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.controller;
 
+import com.relaxed.boot.loan.config.download.StreamDownloadHandler;
 import com.relaxed.boot.loan.manage.SealManage;
 import com.relaxed.boot.loan.model.dto.PreviewInfoDTO;
 import com.relaxed.boot.loan.model.entity.Seal;
@@ -16,18 +17,12 @@ import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
 import com.relaxed.starter.download.annotation.ResponseDownload;
 import com.relaxed.starter.download.domain.DownloadModel;
+import com.relaxed.starter.download.enums.DownTypeEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -77,6 +72,16 @@ public class SealController {
 	@ResponseDownload
 	public DownloadModel preview(@RequestBody PreviewInfoDTO previewInfoDTO) {
 		return sealManage.preview(previewInfoDTO);
+	}
+	/**
+	 * 预览PDF
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "预览PDF")
+	@PostMapping("/preview/template")
+	@ResponseDownload(channel = DownTypeEnum.OTHER,customHandler = StreamDownloadHandler.class)
+	public DownloadModel previewTemplate(@RequestParam Integer templateId) {
+		return sealManage.previewTemplate(templateId);
 	}
 
 	/**
