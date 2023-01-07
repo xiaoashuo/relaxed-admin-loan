@@ -212,6 +212,7 @@
         const pageNum=  this.$refs.yiPdfRef.currentPage
         const pageSeals=this.signLocations[pageNum]
         const sealIdIndex=activeObject['uid']
+
         let newPageSeals={}
         for(const key in pageSeals){
           const item=pageSeals[key]
@@ -219,7 +220,7 @@
             newPageSeals[key]=item
           }
         }
-        if(Object.keys(newPageSeals)<=0){
+        if(Object.keys(newPageSeals).length<=0){
           //页面章小于等于0
           delete this.signLocations[pageNum]
         }else{
