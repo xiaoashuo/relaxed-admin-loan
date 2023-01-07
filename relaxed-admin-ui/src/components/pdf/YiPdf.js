@@ -129,7 +129,7 @@ class YiPdf{
    }
   nextPage() {
     this.option.beforePageChange(this.pageNum)
-    if (this.pageNum >= this.totalPage) {
+    if (this.pageNum > this.totalPage) {
       return;
     }
     const currentPage=this.pageNum
@@ -141,7 +141,7 @@ class YiPdf{
   justPage(num){
     console.log("当前跳转页",num)
     this.option.beforePageChange(this.pageNum)
-    if (num <= 1||num >= this.totalPage) {
+    if (num < 1||num > this.totalPage) {
       return;
     }
     const oldPage=this.pageNum
