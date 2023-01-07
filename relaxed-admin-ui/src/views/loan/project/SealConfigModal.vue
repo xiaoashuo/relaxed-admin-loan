@@ -3,6 +3,7 @@
     :title="title"
     :visible.sync="visible"
     fullscreen
+
     :before-close="dialogClose"
   >
     <project-template-config :seal-image-list="sealImageList" :project-data="projectData"></project-template-config>

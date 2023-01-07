@@ -44,7 +44,7 @@
 
       <div class="content">
         <template v-if="sealWay===1">
-          <template-seal-config ref="templateSealRef" :seal-location="sealLocation"  :seal-list="sealImageList"></template-seal-config>
+          <template-seal-config ref="templateSealRef" :seal-location.sync="sealLocation"  :seal-list="sealImageList"></template-seal-config>
         </template>
         <template v-if="sealWay===2">
           <keyword-seal-config ref="keywordSealRef"></keyword-seal-config>
@@ -136,7 +136,7 @@
 
     data(){
       return {
-        sealWay:1,
+        sealWay:null,
         keystoreId:null,
 
 
@@ -165,7 +165,7 @@
     watch:{
       projectData:{
         handler(val){
-          this.sealWay=this.projectData.sealWay
+          this.sealWay=this.projectData.sealWay??1
           this.sealId=this.projectData.sealId
           this.keystoreId=this.projectData.keystoreId
           this.keywordText=this.projectData.sealKeyword
@@ -231,7 +231,7 @@
       },
       clearAllSignature(){
         this.$refs.templateSealRef.clearAllSignature()
-        this.$message.success("清楚所有签章成功")
+        this.$message.success("清除所有签章成功")
       },
       submitSignature(){
         this.$refs.templateSealRef.submitSignature()

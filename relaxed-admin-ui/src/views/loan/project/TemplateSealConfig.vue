@@ -117,7 +117,6 @@
         const position={left: activeObject.left,top:activeObject.top,width:activeObject.width,
           height:activeObject.height}
         this.$message.info(JSON.stringify(position))
-        console.log(activeObject)
         this.handleHide()
       },
 
@@ -241,6 +240,7 @@
         this.$refs.fabricCanvasRef.clear();
         //清除缓存
         this.signLocations= {}
+        this.$emit("update:sealLocation",this.signLocations)
       },
       saveImage(sealInfo){
         this.$refs.fabricCanvasRef.addImage(sealInfo,this.saveSignature)

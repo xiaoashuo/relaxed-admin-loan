@@ -7,7 +7,18 @@
     <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
-    ></pro-table>
+    >
+      <template #extHandler="scope">
+
+        <el-button
+          size="small"
+          type="text"
+          @click="showTemplateConfigList(scope.row)"
+        >
+          模板列表
+        </el-button>
+      </template>
+    </pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :req-function="reqFunction"
@@ -70,7 +81,14 @@
       handleResetClick() {
         this.$refs.pageContentRef.resetTable()
       },
-
+      showTemplateConfigList(row){
+        this.$router.push({
+          path:'/loan/project-template',
+          query:{
+            projectId: row.projectId
+          }
+        })
+      }
     }
 
   }

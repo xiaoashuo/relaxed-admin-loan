@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 
 /**
  * 项目模板配置表
@@ -42,7 +44,7 @@ public class ProjectTemplateController {
     @Operation(summary = "分页查询")
     @GetMapping("/page" )
     public R<PageResult<ProjectTemplatePageVO>> getProjectTemplatePage(
-            PageParam pageParam, ProjectTemplateQO projectTemplateQO) {
+            PageParam pageParam, @Valid ProjectTemplateQO projectTemplateQO) {
         return R.ok(projectTemplateService.queryPage(pageParam, projectTemplateQO));
     }
     @Operation(summary = "分页查询")

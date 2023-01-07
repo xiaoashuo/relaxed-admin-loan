@@ -11,6 +11,7 @@ import com.relaxed.boot.loan.model.vo.ProjectPageVO;
 import com.relaxed.boot.loan.model.vo.ProjectTemplatePageVO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.extend.mybatis.plus.conditions.query.LambdaAliasQueryWrapperX;
 import com.relaxed.extend.mybatis.plus.conditions.query.LambdaQueryWrapperX;
 import com.relaxed.extend.mybatis.plus.mapper.ExtendMapper;
 import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
@@ -31,7 +32,8 @@ public interface ProjectTemplateMapper extends ExtendMapper<ProjectTemplate> {
     */
    default PageResult<ProjectTemplatePageVO> queryPage(PageParam pageParam, ProjectTemplateQO qo){
 		IPage<ProjectTemplatePageVO> page = this.prodPage(pageParam);
-		LambdaQueryWrapperX<ProjectTemplate> wrapper = WrappersX.lambdaQueryX(ProjectTemplate.class);
+		LambdaAliasQueryWrapperX<ProjectTemplate> wrapper = WrappersX.lambdaAliasQueryX(ProjectTemplate.class);
+		wrapper.eq(ProjectTemplate::getProjectId,qo.getProjectId());
 		this.selectByPage(page, wrapper);
 		return new PageResult<>(page.getRecords(), page.getTotal());
    }

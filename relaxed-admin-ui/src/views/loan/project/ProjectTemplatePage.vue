@@ -4,7 +4,7 @@
     <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
-    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig"   :lazy-load="true" :request="tableRequest"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
     >
@@ -70,14 +70,21 @@
           create: addObj,
           update: putObj
         },
+        projectId:this.$route.query.projectId
       }
     },
+   created() {
+      this.$nextTick(()=>{
+        this.$refs.pageContentRef.searchTable({ projectId:this.projectId })
+      })
+   },
     methods: {
       //表格相关
       showNewModal() {
-        this.$refs.formModal.add({title: '新增'})
+        this.$refs.formModal.add({title: '新增',item:{projectId:this.projectId}})
       },
       showEditModal(item) {
+        item.projectId=this.projectId
         this.$refs.formModal.update({title: '编辑', item})
       },
       //删除数据
@@ -92,11 +99,12 @@
       },
       //搜索框相关 搜索数据
       handleSearchClick(formData) {
+        formData.projectId=this.projectId
         this.$refs.pageContentRef.searchTable(formData)
       },
       //重置搜索
       handleResetClick() {
-        this.$refs.pageContentRef.resetTable()
+        this.$refs.pageContentRef.searchTable({ projectId:this.projectId })
       },
       showSealConfigModal(row){
         this.$refs.sealConfigModalRef.add({title:'配置签章',item:row})

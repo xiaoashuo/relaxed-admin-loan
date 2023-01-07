@@ -109,6 +109,13 @@ const yiRequest = new YiRequest({
             duration: 5 * 1000
           })
         }
+        if (error.response.status === 400) {
+          Notification.error({
+            title: '参数错误',
+            message: data.message,
+            duration: 5 * 1000
+          })
+        }
         if (error.response.status === 401) {
           //
           Notification.error({
