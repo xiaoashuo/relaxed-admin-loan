@@ -1,6 +1,7 @@
 package com.relaxed.boot.loan.controller;
 
 import com.relaxed.boot.loan.model.dto.ProjectTemplateDTO;
+import com.relaxed.boot.loan.model.dto.ProjectTemplateSignReqDTO;
 import com.relaxed.boot.loan.model.entity.ProjectTemplate;
 import com.relaxed.boot.loan.model.qo.ProjectTemplateQO;
 import com.relaxed.boot.loan.model.vo.ProjectTemplatePageVO;
@@ -62,7 +63,18 @@ public class ProjectTemplateController {
         return projectTemplateService.save(projectTemplate) ?
                 R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增项目模板配置表失败");
     }
-
+    /**
+     * 项目签章配置
+     * @param projectTemplateSignReqDTO 项目签章配置
+     * @return R 通用返回体
+     */
+    @Operation(summary = "项目签章配置")
+    @CreateLog(msg = "项目签章配置" )
+    @PostMapping("/signConfig")
+    public R<Void> saveSignInfo(@RequestBody ProjectTemplateSignReqDTO projectTemplateSignReqDTO) {
+        return projectTemplateService.saveSignInfo(projectTemplateSignReqDTO) ?
+                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增项目签章配置失败");
+    }
     /**
      * 修改项目模板配置表
      * @param projectTemplate 项目模板配置表

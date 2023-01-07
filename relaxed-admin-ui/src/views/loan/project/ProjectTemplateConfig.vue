@@ -4,7 +4,7 @@
        <div class="left">
          <div class="sealWay">
            <div>签章方式</div>
-           <dict-select v-model="sealWay" v-bind="sealWayConfig"></dict-select>
+           <dict-select v-model="sealWay" dict-code="seal_way" ></dict-select>
          </div>
          <div class="keystore">
            <span>证书列表</span>
@@ -16,9 +16,9 @@
            <div class="left-title">我的印章</div>
            <div class="seal">
 
-             <draggable v-model="sealList" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
+             <draggable v-model="sealImageList" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
                <transition-group type="transition">
-                 <li v-for="item in sealList" :key="item.sealId" class="item" style="text-align:center;">
+                 <li v-for="item in sealImageList" :key="item.sealId" class="item" style="text-align:center;">
                    <img :src="item.sealAddress" width="100%;" height="100%" class="imgstyle" />
                  </li>
                </transition-group>
@@ -32,7 +32,7 @@
            </div>
            <div class="sealSelect">
              <div>印章列表</div>
-             <yi-select  v-bind="sealImageConfig" v-model="sealId"  ref="sealListRef"></yi-select>
+             <yi-select  :other-props="{  clearable: true}" :options="sealSelectData" v-model="sealId"  ref="sealListRef"></yi-select>
 
              <div class="item-preview">
                <img :src="sealPreviewUrl" style="margin-top: 10px" width="100%;" height="100%" class="imgstyle"/>
@@ -43,10 +43,8 @@
        </div>
 
       <div class="content">
-        Relaxed电子用印系统配置平台页
-
         <template v-if="sealWay===1">
-          <template-seal-config ref="templateSealRef" :seal-list="sealList"></template-seal-config>
+          <template-seal-config ref="templateSealRef" :seal-list="sealImageList"></template-seal-config>
         </template>
         <template v-if="sealWay===2">
           <keyword-seal-config ref="keywordSealRef"></keyword-seal-config>
@@ -55,10 +53,8 @@
       </div>
       <div class="right">
 
-        <div class="right-item" >
-          <div class="item">
-            当前时间:{{new Date()|formatUtcString}}
-          </div>
+        <div class="right-top" >
+
           <div class="item">
             <div class="right-item-title">项目名称</div>
             <div class="detail-item-desc">{{projectData.projectName}}</div>
@@ -67,24 +63,23 @@
             <div class="right-item-title">文件名称</div>
             <div class="detail-item-desc">{{projectData.fileName}}</div>
           </div>
-          <div class="tools">
-            <template v-if="sealWay===1">
-              <div class="ele-control" style="margin-bottom:2%;">
-                <el-button class="btn-outline-dark" @click="removeSelectedSignature"> 删除签章</el-button>
-                <el-button class="btn-outline-dark" @click="clearAllSignature"> 清除所有签章</el-button>
-                <el-button class="btn-outline-dark" @click="submitSignature">提交所有签章信息</el-button>
-              </div>
-            </template>
-            <template v-if="sealWay===2">
-              <div>
-                <el-button  class="previewBtn" @click="handlePreviewPdf">预览</el-button>
-              </div>
-            </template>
-            <div>
-              <el-button   @click="handleSave">保存签名信息</el-button>
+        </div>
+        <div class="right-tools">
+          <template v-if="sealWay===1">
+            <div class="ele-control" style="margin-bottom:2%;">
+              <el-button class="btn-outline-dark" @click="removeSelectedSignature"> 删除签章</el-button>
+              <el-button class="btn-outline-dark" @click="clearAllSignature"> 清除所有签章</el-button>
+              <el-button class="btn-outline-dark" @click="submitSignature">提交所有签章信息</el-button>
             </div>
+          </template>
+          <template v-if="sealWay===2">
+            <div>
+              <el-button   @click="handlePreviewPdf">预览</el-button>
+            </div>
+          </template>
+          <div>
+            <el-button   @click="handleSave">保存签名信息</el-button>
           </div>
-
         </div>
       </div>
 
@@ -104,78 +99,79 @@
 
   import TemplateSealConfig from '@/views/loan/project/TemplateSealConfig'
   import KeywordSealConfig from '@/views/loan/project/KeywordSealConfig'
-  import {getDetail} from '@/api/loan/project-template'
+  import {modifySealConfig} from '@/api/loan/project-template'
   import { getSelectData as getCertificateSelectData } from '@/api/loan/certificate'
-  import { getListData as getSealListData, getSelectData as getSealSelectData, previewPdf } from '@/api/loan/seal'
+  import {  previewPdf } from '@/api/loan/seal'
 
   export default {
     name: 'ProjectTemplateConfig',
     components:{
       YiSelect,TemplateSealConfig,KeywordSealConfig,draggable
     },
-    created() {
-      console.log(this.$route.query.projectTemplateId)
-      getDetail(this.projectTemplateId).then(res=>{
-        console.log("当前结果",res)
-        this.projectData=res.data
-      })
-      getSealListData().then(res=>{
-        this.sealList=res.data
-      })
+    props:{
+      sealImageList:{
+        type:Array,
+        default:()=>([])
+      },
+      projectData:{
+        type: Object,
+        default:()=>({})
+      }
     },
+
     data(){
       return {
-        projectTemplateId:this.$route.query.projectTemplateId,
-        projectData:{},
         sealWay:1,
-        sealWayConfig:{
-          dictCode: 'seal_way',
-
-          otherProps:{
-            clearable: true
-          }
-        },
         keystoreId:null,
+
+
 
         keyStoreConfig:{
           remoteLoad: true,
           request: getCertificateSelectData,
-
           otherProps:{
-
             clearable: true
           }
         },
-        sealList:[],
         //关键字
         sealId: null,
         keywordText:'',
         sealPreviewUrl:null,
-        sealImageConfig:{
-          remoteLoad: true,
-          request: getSealSelectData,
 
-          otherProps:{
-
-            clearable: true
-          }
-        },
+      }
+    },
+    computed:{
+      sealSelectData(){
+        let map = this.sealImageList.map(item=>({label:item.sealSubject,value:item.sealId}))
+        return  map
       }
     },
     watch:{
-      sealId(val){
-
-        const allItem=this.$refs.sealListRef.getSelectData()
-        console.log(val,allItem)
-        const findItem=  allItem.find(item=>item.value===val)
-        if (findItem){
-          this.sealPreviewUrl=findItem.extendObj.url
-        }
+      projectData:{
+        handler(val){
+          this.sealWay=this.projectData.sealWay
+          this.sealId=this.projectData.sealId
+          this.keystoreId=this.projectData.keystoreId
+          this.keywordText=this.projectData.sealKeyword
+        },
+        deep:true,
+        immediate:true
+      },
+      sealId:{
+        handler(val){
+          const findItem=  this.sealImageList.find(item=>item.sealId===val)
+          if (findItem){
+            this.sealPreviewUrl=findItem.sealAddress
+          }
+        },
+        immediate:true
       }
+
     },
     methods:{
+
       end(e){
-        let sealListElement = this.sealList[e.newDraggableIndex]
+        let sealListElement = this.sealImageList[e.newDraggableIndex]
         const sealInfo={url: sealListElement.sealAddress,
           uid:new Date().getTime(),
           left: e.originalEvent.layerX,
@@ -185,22 +181,20 @@
 
       },
       handlePreviewPdf(){
-        this.pdfUrl = 'http://localhost:9401/profile/upload/20221215/d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf';
-
+        if (!this.paramValid()){
+          return
+        }
         const payload={
           keystoreId: this.keystoreId,
-          templateId: 4,
+          templateId: this.projectData.templateId,
           sealId: this.sealId,
           keyword: this.keywordText,
           fileType: this.projectData.fileType
         }
-        console.log(payload)
         previewPdf(payload).then(res=>{
-          console.log(res)
           this.$refs.keywordSealRef.showPreviewPdf(res.data)
         })
 
-        console.log("处理预览pdf")
       },
       //模板
       removeSelectedSignature(){
@@ -212,8 +206,49 @@
       submitSignature(){
 
       },
+      paramValid(){
+        if (!this.sealWay){
+          this.$message.error("签章方式不能为空");
+          return false
+        }
+        if (!this.keystoreId){
+          this.$message.error("证书不能为空");
+          return false
+        }
+        if (!this.sealId){
+          this.$message.error("签章不能为空");
+          return false
+        }
+        if (this.sealWay===1){
+          //模板
+        }else if (this.sealWay===2){
+          if (!this.keywordText){
+            this.$message.error("关键字不能为空");
+            return false
+          }
+        }
+        return true
+      },
       handleSave(){
         console.log("存储签名信息")
+        if (!this.paramValid()){
+          return
+        }
+        if (this.sealWay===1){
+          //模板
+        }
+        else if (this.sealWay===2){
+          //关键字
+          let reqInfo={projectTemplateId:this.projectData.projectTemplateId,
+            sealWay:this.sealWay,keystoreId:this.keystoreId,
+            sealKeyword: this.keywordText,sealId:this.sealId}
+            modifySealConfig(reqInfo).then(res=>{
+               this.$message.success("保存签名成功")
+            }).catch(err=>{
+              this.$message.success("保存签名失败"+err)
+            })
+
+        }
       }
     }
   }
@@ -292,28 +327,32 @@
       border: 1px solid red;
     }
 
-    .right-item {
+    .right-top {
       margin-bottom: 15px;
       margin-left: 10px;
-    }
-    .right-item-title {
-      margin: 5px 0px;
+      .right-item-title {
+        margin: 5px 0px;
 
-      color: #000000;
-      height: 20px;
-      line-height: 20px;
-      font-size: 15px;
-      font-weight: 400;
-      text-align: left !important;
+        color: #000000;
+        height: 20px;
+        line-height: 20px;
+        font-size: 15px;
+        font-weight: 400;
+        text-align: left !important;
+      }
+      .detail-item-desc {
+        color: #333;
+        line-height: 20px;
+        width: 100%;
+        font-size: 12px;
+        display: inline-block;
+        text-align: left;
+      }
     }
-    .detail-item-desc {
-      color: #333;
-      line-height: 20px;
-      width: 100%;
-      font-size: 12px;
-      display: inline-block;
-      text-align: left;
+    .right-tools{
+      margin-top: 20px;
     }
+
   }
 }
 

@@ -46,7 +46,7 @@
           }
       },
       created() {
-          console.log("进去当前",this.remoteLoad,this.value)
+          console.log("进去当前",this.remoteLoad,this.value,this.options)
           if (this.remoteLoad){
             this.getTreeData()
           }else{

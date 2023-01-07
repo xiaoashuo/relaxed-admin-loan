@@ -1,6 +1,7 @@
 package com.relaxed.boot.loan.service;
 
 import com.relaxed.boot.loan.model.dto.ProjectTemplateDTO;
+import com.relaxed.boot.loan.model.dto.ProjectTemplateSignReqDTO;
 import com.relaxed.boot.loan.model.entity.ProjectTemplate;
 import com.relaxed.boot.loan.model.vo.ProjectTemplatePageVO;
 import com.relaxed.boot.loan.model.qo.ProjectTemplateQO;
@@ -24,4 +25,7 @@ public interface ProjectTemplateService extends ExtendService<ProjectTemplate> {
     PageResult<ProjectTemplatePageVO> queryPage(PageParam pageParam, ProjectTemplateQO qo);
 
     ProjectTemplateDTO detail(Integer projectTemplateId);
+
+    boolean saveSignInfo(ProjectTemplateSignReqDTO projectTemplateSignReqDTO);
+
 }

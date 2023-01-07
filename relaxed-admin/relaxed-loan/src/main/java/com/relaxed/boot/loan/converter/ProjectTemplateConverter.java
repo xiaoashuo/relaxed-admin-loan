@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.converter;
 
+import com.relaxed.boot.loan.model.dto.ProjectTemplateSignReqDTO;
 import com.relaxed.boot.loan.model.entity.ProjectTemplate;
 import com.relaxed.boot.loan.model.vo.ProjectTemplatePageVO;
 import org.mapstruct.Mapper;
@@ -21,5 +22,12 @@ public interface ProjectTemplateConverter {
 	 * @return ProjectTemplatePageVO 项目模板配置表PageVO
 	 */
 	ProjectTemplatePageVO poToPageVo(ProjectTemplate projectTemplate);
+
+	/**
+	 * 签章reqDto -> po
+	 * @param projectTemplateSignReqDTO
+	 * @return
+	 */
+	ProjectTemplate reqDtoToPo(ProjectTemplateSignReqDTO projectTemplateSignReqDTO);
 
 }

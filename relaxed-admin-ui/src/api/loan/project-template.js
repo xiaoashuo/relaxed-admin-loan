@@ -14,6 +14,13 @@ export function getDetail(projectTemplateId) {
     }
   })
 }
+export function modifySealConfig(payload) {
+  return yiRequest.post({
+    url: '/loan/project-template/signConfig',
+    data: payload
+  })
+}
+
 export function addObj(obj) {
   return yiRequest.post({
     url: '/loan/project-template',

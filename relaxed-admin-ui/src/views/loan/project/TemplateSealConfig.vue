@@ -64,13 +64,15 @@
         pdfOptions:this.getPdfOptions(),
         //fabric
         fabricPosition: null,
-
-
-
-
-
-
-
+        /**
+         * {
+         *   pageNo:{
+         *     sealIndex: sealInfo
+         *   }
+         * }
+         *
+         */
+        signLocations:{}
 
       }
     },

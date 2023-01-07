@@ -12,14 +12,14 @@
         <dict-text v-model="scope.row.fileType"     dict-code="file_type" ></dict-text>
       </template>
       <template #extHandler="scope">
+
         <el-button
           size="small"
           type="text"
-          @click="showSealConfig(scope.row)"
+          @click="showSealConfigModal(scope.row)"
         >
           签章配置
         </el-button>
-
       </template>
     </pro-table>
     <!--模态表单组件-->
@@ -36,6 +36,7 @@
       </template>
     </form-modal>
 
+    <seal-config-modal ref="sealConfigModalRef"></seal-config-modal>
 
   </div>
 </template>
@@ -50,10 +51,11 @@
   import {getPage, addObj, putObj, delObj} from "@/api/loan/project-template";
 
   import { YiSelect } from '@/components/select'
+  import SealConfigModal from '@/views/loan/project/SealConfigModal'
   export default {
     name: "ProjectTemplatePage",
     components:{
-      YiSelect
+      YiSelect,SealConfigModal
     },
     data() {
       return {
@@ -96,16 +98,10 @@
       handleResetClick() {
         this.$refs.pageContentRef.resetTable()
       },
-      //处理
-      showSealConfig(row){
-        this.$router.push({
-          path: '/loan/project/config',
-          query: {
-            projectTemplateId: row.projectTemplateId,
-            templateId: row.templateId
-          }
-        })
-      }
+      showSealConfigModal(row){
+        this.$refs.sealConfigModalRef.add({title:'配置签章',item:row})
+      },
+
 
     }
 

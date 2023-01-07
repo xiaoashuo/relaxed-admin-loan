@@ -3,7 +3,9 @@ package com.relaxed.boot.loan.service.impl;
 import com.relaxed.boot.biz.system.service.SysDictItemService;
 import com.relaxed.boot.common.system.enums.SysDictKey;
 import com.relaxed.boot.common.system.model.entity.SysDictItem;
+import com.relaxed.boot.loan.converter.ProjectTemplateConverter;
 import com.relaxed.boot.loan.model.dto.ProjectTemplateDTO;
+import com.relaxed.boot.loan.model.dto.ProjectTemplateSignReqDTO;
 import com.relaxed.boot.loan.model.entity.Project;
 import com.relaxed.boot.loan.model.entity.ProjectTemplate;
 import com.relaxed.boot.loan.model.entity.Template;
@@ -73,5 +75,11 @@ public class ProjectTemplateServiceImpl extends ExtendServiceImpl<ProjectTemplat
         projectTemplateDTO.setSealLocation(projectTemplate.getSealLocation());
         projectTemplateDTO.setSealKeyword(projectTemplate.getSealKeyword());
         return projectTemplateDTO;
+    }
+
+    @Override
+    public boolean saveSignInfo(ProjectTemplateSignReqDTO projectTemplateSignReqDTO) {
+        ProjectTemplate projectTemplate = ProjectTemplateConverter.INSTANCE.reqDtoToPo(projectTemplateSignReqDTO);
+        return updateById(projectTemplate);
     }
 }
