@@ -28,7 +28,7 @@
   import {getPage, addObj, putObj, delObj} from "@/api/loan/project";
 
   export default {
-    name: "产品配置表",
+    name: "projectPage",
     data() {
       return {
         //页面相关配置
