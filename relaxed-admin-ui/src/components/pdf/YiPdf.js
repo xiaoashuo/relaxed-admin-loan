@@ -129,7 +129,7 @@ class YiPdf{
    }
   nextPage() {
     this.option.beforePageChange(this.pageNum)
-    if (this.pageNum > this.totalPage) {
+    if (this.pageNum >= this.totalPage) {
       return;
     }
     const currentPage=this.pageNum
