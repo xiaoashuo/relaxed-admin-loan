@@ -134,7 +134,7 @@
       },
       //删除数据
       handleDelClick(item) {
-        delObj(item.id).then(res => {
+        delObj(item.sealId).then(res => {
           this.$refs.pageContentRef.refreshTable(false)
         })
       },

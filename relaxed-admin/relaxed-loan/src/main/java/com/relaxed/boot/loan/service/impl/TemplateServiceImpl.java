@@ -2,6 +2,7 @@ package com.relaxed.boot.loan.service.impl;
 
 import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
@@ -19,16 +20,18 @@ import com.relaxed.boot.loan.service.TemplateAreaService;
 import com.relaxed.boot.loan.service.TemplateService;
 import com.relaxed.boot.loan.util.word.StoreWordTemplate;
 import com.relaxed.boot.loan.util.word.domain.ElementMeta;
+import com.relaxed.common.core.exception.BusinessException;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.common.model.domain.SelectData;
+import com.relaxed.common.model.result.SysResultCode;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
-import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -49,6 +52,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class TemplateServiceImpl extends ExtendServiceImpl<TemplateMapper, Template> implements TemplateService {
 
+	private final TemplateAreaService templateAreaService;
 	/**
 	 * 根据QueryObeject查询分页数据
 	 * @param pageParam 分页参数
@@ -77,5 +81,13 @@ public class TemplateServiceImpl extends ExtendServiceImpl<TemplateMapper, Templ
 			return selectData;
 		}).collect(Collectors.toList());
 		return selectDataList;
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	@Override
+	public boolean removeTemplate(Integer templateId) {
+		Assert.isTrue(templateAreaService.removeByTemplateId(templateId),()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"删除模板参数异常"));
+		boolean success = removeById(templateId);
+		return success;
 	}
 }

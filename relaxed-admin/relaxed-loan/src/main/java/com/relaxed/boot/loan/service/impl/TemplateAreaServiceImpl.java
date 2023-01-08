@@ -8,6 +8,7 @@ import com.relaxed.boot.loan.service.TemplateAreaService;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
+import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,4 +31,9 @@ public class TemplateAreaServiceImpl extends ExtendServiceImpl<TemplateAreaMappe
 		return baseMapper.queryPage(pageParam, qo);
 	}
 
+	@Override
+	public boolean removeByTemplateId(Integer templateId) {
+		return remove(WrappersX.lambdaQueryX(TemplateArea.class)
+				.eq(TemplateArea::getTemplateId, templateId));
+	}
 }

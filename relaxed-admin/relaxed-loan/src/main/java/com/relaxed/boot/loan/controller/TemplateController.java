@@ -109,7 +109,7 @@ public class TemplateController {
 	@DeleteLog(msg = "通过id删除模板文件配置表")
 	@DeleteMapping("/{templateId}")
 	public R<Void> removeById(@PathVariable("templateId") Integer templateId) {
-		return templateService.removeById(templateId) ? R.ok()
+		return templateService.removeTemplate(templateId) ? R.ok()
 				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除模板文件配置表失败");
 	}
 

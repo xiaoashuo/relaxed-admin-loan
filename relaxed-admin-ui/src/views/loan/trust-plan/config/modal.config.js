@@ -36,35 +36,45 @@ export const modalConfig= {
 
 
          {
-      type:'text',
+      type:'datepicker',
       label: '成立日期',
       field:'establishedTime',
-      placeholder:'请输入信托计划成立日期',
       rules:[
-        { required: true, message: '请输入信托计划成立日期', trigger: 'blur' },
-      ]
+        { required: true, message: '请选择信托计划成立日期', trigger: 'blur' },
+      ],
+           config:{
+          type:'date',
+             placeholder:'请选择信托计划成立日期'
+           }
       },
 
 
          {
-      type:'text',
+      type:'datepicker',
       label: '到期日期',
       field:'expireTime',
-      placeholder:'请输入信托计划到期日期',
+
       rules:[
-        { required: true, message: '请输入信托计划到期日期', trigger: 'blur' },
-      ]
+        { required: true, message: '请选择信托计划到期日期', trigger: 'blur' },
+      ],
+           config:{
+             type:'date',
+             placeholder:'请选择信托计划到期日期'
+           }
       },
 
 
          {
-      type:'text',
+      type:'datepicker',
       label: '摊还期开始日期',
       field:'repayTime',
-      placeholder:'请输入信托计划摊还期开始日期',
       rules:[
-        { required: true, message: '请输入信托计划摊还期开始日期', trigger: 'blur' },
-      ]
+        { required: true, message: '请选择信托计划摊还期开始日期', trigger: 'blur' },
+      ],
+           config:{
+             type:'date',
+             placeholder:'请选择信托计划摊还期开始日期'
+           }
       },
 
 

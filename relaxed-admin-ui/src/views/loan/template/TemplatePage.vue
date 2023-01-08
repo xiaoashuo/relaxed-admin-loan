@@ -9,7 +9,7 @@
         <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                    @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                    @delBtnClick="handleDelClick"
-                   @row-click="handleRowClick"
+                   @row-dblclick="handleRowDbClick"
         ></pro-table>
         <!--模态表单组件-->
         <form-modal ref="formModal" :modal-config="modalConfig"
@@ -119,11 +119,11 @@
       },
       //删除数据
       handleDelClick(item) {
-        delObj(item.id).then(res => {
+        delObj(item.templateId).then(res => {
           this.$refs.pageContentRef.refreshTable(false)
         })
       },
-      handleRowClick(row,column,event){
+      handleRowDbClick(row,column,event){
         this.currentTemplateId=row.templateId
         const formData={templateId:this.currentTemplateId}
         this.$refs.pageItemContentRef.searchTable(formData)

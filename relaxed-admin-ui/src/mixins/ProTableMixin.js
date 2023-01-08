@@ -83,9 +83,12 @@ export default {
       return currentValue
     },
     handleRowClick(row,column,event){
-      console.log("行被双击",row,column,event)
       this.$emit('row-click',row,column,event)
     },
+    handleRowDbClick(row,column,event){
+      this.$emit('row-dblclick',row,column,event)
+    },
+
       /**
        * 处理排序字段改变
        * @param column

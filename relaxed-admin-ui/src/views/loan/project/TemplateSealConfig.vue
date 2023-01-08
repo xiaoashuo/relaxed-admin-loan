@@ -226,12 +226,14 @@
           this.signLocations[pageNum]=newPageSeals
         }
 
+        this.$message.success("删除签章成功")
       },
       //提交数据
       submitSignature() {
         //保存当前页面签章事件,防止当前移动坐标不更新
         this.saveSignature();
         console.log(this.signLocations);
+        this.$message.success("同步签章信息成功")
       },
 
       //清空数据
@@ -241,6 +243,7 @@
         //清除缓存
         this.signLocations= {}
         this.$emit("update:sealLocation",this.signLocations)
+        this.$message.success("清除所有签章成功")
       },
       saveImage(sealInfo){
         this.$refs.fabricCanvasRef.addImage(sealInfo,this.saveSignature)

@@ -20,19 +20,23 @@ export const contentConfig={
       prop: 'productId',
       label:'主键',
       minWidth:180,
-      slotName: 'productId'
+
     },
               {
       prop: 'productName',
       label:'信托产品名称',
       minWidth:180,
-      slotName: 'productName'
+    },
+    {
+      prop: 'productCode',
+      label:'Code',
+      minWidth:180,
     },
               {
       prop: 'productDesc',
       label:'描述',
       minWidth:180,
-      slotName: 'productDesc'
+
     },
 
               {
