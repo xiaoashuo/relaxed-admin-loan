@@ -71,7 +71,7 @@ export const modalConfig= {
         { required: true, message: '请选择密钥库类型', trigger: 'blur' },
       ],
       config:{
-        dictCode: 'certificate_type',
+        dictCode: 'keystore_type',
         clearable: true
       }
     },
