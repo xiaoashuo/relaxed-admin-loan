@@ -5,7 +5,7 @@ import {getMenuRouter} from "@/api/permission";
 import {firstUpperCase} from "@/utils/strUtil";
 
 import LocalRouteTable from './localTables'
-import fi from "element-ui/src/locale/lang/fi";
+
 
 //前端未找到页面路由
 const NotFoundRouter=  { path: '*', redirect: '/404', hidden: true }
@@ -57,7 +57,13 @@ export const generator = (routerMap, parent) => {
       //菜单
       if (targetType===1){
         let cppn = LocalRouteTable.find(source=>source.path===path);
-        currentRouter.component = cppn.component
+
+        if (cppn){
+          currentRouter.component = cppn.component
+        }else{
+          console.error("路由地址:",path,"组件注册失败,原因:本地组件未注册")
+        }
+
 
       }else if (targetType===2){
           //iframe
