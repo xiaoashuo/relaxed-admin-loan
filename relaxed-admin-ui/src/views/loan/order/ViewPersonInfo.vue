@@ -81,12 +81,24 @@
         <el-col :span="8"><span>年收入(元)</span><b>{{customerInfo.annualIncome}}</b></el-col>
       </el-row>
     </div>
+    <h2>银行账户信息</h2>
+    <div class="bankInfo-list">
+      <yi-table ref="proTableRef"
+                 v-if="bankCards"
+                :loading="false"
+                :list-data="bankCards"
+                :list-count="bankCards.length"
+                v-bind="contentTableConfig"
 
+      >
+      </yi-table>
+    </div>
 
   </div>
 </template>
 
 <script>
+import YiTable from '@/components/table'
 export default {
   name: 'ViewPersonInfo',
   props:{
@@ -97,6 +109,107 @@ export default {
     bankCards:{
       type:Array,
       default:()=>({})
+    }
+  },
+  components:{
+    YiTable
+  },
+  data(){
+    return{
+      contentTableConfig:{
+        title: '',
+        showSelectColumn:false,
+        tableProps:{
+          'row-style': {
+            height: '10px'
+          },
+          'cell-style': {
+            padding: '2px 0'
+          },
+
+        },
+        headerProps:{
+          visible: false
+        },
+        showFooter:false,
+        permissions: {
+          create: 'loan:order-bank-card:add',
+          update: 'loan:order-bank-card:edit',
+          delete: 'loan:order-bank-card:delete'
+        },
+        propList:[
+
+
+          {
+            prop: 'accountType',
+            label:'账户类型',
+            minWidth:180,
+            slotName: 'accountType'
+          },
+          {
+            prop: 'accountName',
+            label:'户名',
+            minWidth:180,
+
+          },
+          {
+            prop: 'accountNo',
+            label:'户号',
+            minWidth:180,
+
+          },
+          {
+            prop: 'bankCode',
+            label:'银行代号',
+            minWidth:180,
+
+          },
+          {
+            prop: 'bankName',
+            label:'银行名称',
+            minWidth:180,
+
+          },
+          {
+            prop: 'openBankName',
+            label:'开户行',
+            minWidth:180,
+
+          },
+          {
+            prop: 'openBankUnionBank',
+            label:'开户行（分支行）联行号',
+            minWidth:180,
+
+          },
+          {
+            prop: 'reserveMobile',
+            label:'预留手机号',
+            minWidth:180,
+
+          },
+          {
+            prop: 'cardPurpose',
+            label:'银行卡用途',
+            minWidth:180,
+
+          },
+
+          {
+            prop: 'authStatus',
+            label:'认证状态',
+            minWidth:180,
+
+          },
+          {
+            prop: 'createdTime',
+            label:'创建时间',
+            minWidth: 180,
+          },
+
+
+        ]
+      }
     }
   }
 }
