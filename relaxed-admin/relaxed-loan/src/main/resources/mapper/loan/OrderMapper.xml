@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.OrderMapper">
+
+	<resultMap id="orderMap" type="com.relaxed.boot.loan.model.entity.Order">
+  		<id property="orderId" column="order_id"/>
+    		<result property="creditId" column="credit_id"/>
+    		<result property="partnerBizNo" column="partner_biz_no"/>
+    		<result property="applyBatchNo" column="apply_batch_no"/>
+    		<result property="preAuditNo" column="pre_audit_no"/>
+    		<result property="regionCode" column="region_code"/>
+    		<result property="pushTime" column="push_time"/>
+    		<result property="pushFlag" column="push_flag"/>
+    		<result property="loanBizNo" column="loan_biz_no"/>
+    		<result property="regionName" column="region_name"/>
+    		<result property="applyAmount" column="apply_amount"/>
+    		<result property="applyPassedAmount" column="apply_passed_amount"/>
+    		<result property="repaymentWay" column="repayment_way"/>
+    		<result property="orderStage" column="order_stage"/>
+    		<result property="patnerOrderStage" column="patner_order_stage"/>
+    		<result property="submitFlag" column="submit_flag"/>
+    		<result property="signFlag" column="sign_flag"/>
+    		<result property="submitTime" column="submit_time"/>
+    		<result property="refuseReason" column="refuse_reason"/>
+    		<result property="periodUnit" column="period_unit"/>
+    		<result property="loanPeriod" column="loan_period"/>
+    		<result property="loanPeriodPassed" column="loan_period_passed"/>
+    		<result property="interestRateUnit" column="interest_rate_unit"/>
+    		<result property="interestRate" column="interest_rate"/>
+    		<result property="interestRateUnitPassed" column="interest_rate_unit_passed"/>
+    		<result property="penaltyInterestRate" column="penalty_interest_rate"/>
+    		<result property="interestRatePassed" column="interest_rate_passed"/>
+    		<result property="loanStartDate" column="loan_start_date"/>
+    		<result property="loanDate" column="loan_date"/>
+    		<result property="applyDate" column="apply_date"/>
+    		<result property="partnerBankSerial" column="partner_bank_serial"/>
+    		<result property="loanDueDate" column="loan_due_date"/>
+    		<result property="loanType" column="loan_type"/>
+    		<result property="creditLoanType" column="credit_loan_type"/>
+    		<result property="investIndustry" column="invest_industry"/>
+    		<result property="loanPurpose" column="loan_purpose"/>
+    		<result property="repaymentSource" column="repayment_source"/>
+    		<result property="industryDetail" column="industry_detail"/>
+    		<result property="investType" column="invest_type"/>
+    		<result property="businessDetail" column="business_detail"/>
+    		<result property="guaranteeWay" column="guarantee_way"/>
+    		<result property="partnerContractNo" column="partner_contract_no"/>
+    		<result property="orderCsvFileName" column="order_csv_file_name"/>
+    		<result property="receiveCardId" column="receive_card_id"/>
+    		<result property="repaymentCardId" column="repayment_card_id"/>
+    		<result property="partnerId" column="partner_id"/>
+    		<result property="partnerName" column="partner_name"/>
+    		<result property="trustPlanCode" column="trust_plan_code"/>
+    		<result property="trustPlanName" column="trust_plan_name"/>
+    		<result property="productCode" column="product_code"/>
+    		<result property="productName" column="product_name"/>
+    		<result property="projectId" column="project_id"/>
+    		<result property="partnerNo" column="partner_no"/>
+    		<result property="valid" column="valid"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+    		<result property="assetPkgNo" column="asset_pkg_no"/>
+    		<result property="graceDays" column="grace_days"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		order_id,        
+		credit_id,        
+		partner_biz_no,        
+		apply_batch_no,        
+		pre_audit_no,        
+		region_code,        
+		push_time,        
+		push_flag,        
+		loan_biz_no,        
+		region_name,        
+		apply_amount,        
+		apply_passed_amount,        
+		repayment_way,        
+		order_stage,        
+		patner_order_stage,        
+		submit_flag,        
+		sign_flag,        
+		submit_time,        
+		refuse_reason,        
+		period_unit,        
+		loan_period,        
+		loan_period_passed,        
+		interest_rate_unit,        
+		interest_rate,        
+		interest_rate_unit_passed,        
+		penalty_interest_rate,        
+		interest_rate_passed,        
+		loan_start_date,        
+		loan_date,        
+		apply_date,        
+		partner_bank_serial,        
+		loan_due_date,        
+		loan_type,        
+		credit_loan_type,        
+		invest_industry,        
+		loan_purpose,        
+		repayment_source,        
+		industry_detail,        
+		invest_type,        
+		business_detail,        
+		guarantee_way,        
+		partner_contract_no,        
+		order_csv_file_name,        
+		receive_card_id,        
+		repayment_card_id,        
+		partner_id,        
+		partner_name,        
+		trust_plan_code,        
+		trust_plan_name,        
+		product_code,        
+		product_name,        
+		project_id,        
+		partner_no,        
+		valid,        
+		created_time,        
+		updated_time,        
+		asset_pkg_no,        
+		grace_days        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		o.order_id,        
+		o.credit_id,        
+		o.partner_biz_no,        
+		o.apply_batch_no,        
+		o.pre_audit_no,        
+		o.region_code,        
+		o.push_time,        
+		o.push_flag,        
+		o.loan_biz_no,        
+		o.region_name,        
+		o.apply_amount,        
+		o.apply_passed_amount,        
+		o.repayment_way,        
+		o.order_stage,        
+		o.patner_order_stage,        
+		o.submit_flag,        
+		o.sign_flag,        
+		o.submit_time,        
+		o.refuse_reason,        
+		o.period_unit,        
+		o.loan_period,        
+		o.loan_period_passed,        
+		o.interest_rate_unit,        
+		o.interest_rate,        
+		o.interest_rate_unit_passed,        
+		o.penalty_interest_rate,        
+		o.interest_rate_passed,        
+		o.loan_start_date,        
+		o.loan_date,        
+		o.apply_date,        
+		o.partner_bank_serial,        
+		o.loan_due_date,        
+		o.loan_type,        
+		o.credit_loan_type,        
+		o.invest_industry,        
+		o.loan_purpose,        
+		o.repayment_source,        
+		o.industry_detail,        
+		o.invest_type,        
+		o.business_detail,        
+		o.guarantee_way,        
+		o.partner_contract_no,        
+		o.order_csv_file_name,        
+		o.receive_card_id,        
+		o.repayment_card_id,        
+		o.partner_id,        
+		o.partner_name,        
+		o.trust_plan_code,        
+		o.trust_plan_name,        
+		o.product_code,        
+		o.product_name,        
+		o.project_id,        
+		o.partner_no,        
+		o.valid,        
+		o.created_time,        
+		o.updated_time,        
+		o.asset_pkg_no,        
+		o.grace_days        
+	</sql>
+    <select id="selectByPage" resultType="com.relaxed.boot.loan.model.vo.OrderPageVO">
+		SELECT <include refid="Base_Alias_Column_List"/>,
+		    oc.real_name ,oc.certificate_no ,oc.mobile_no
+		FROM `t_order` o
+		 INNER JOIN `t_order_customer` oc ON o.order_id=oc.`order_id`
+		${ew.customSqlSegment}
+	</select>
+</mapper>

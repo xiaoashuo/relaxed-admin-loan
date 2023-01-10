@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.BillItemFillerMapper">
+
+	<resultMap id="billItemFillerMap" type="com.relaxed.boot.loan.model.entity.BillItemFiller">
+  		<id property="itemFillerId" column="item_filler_id"/>
+    		<result property="loanId" column="loan_id"/>
+    		<result property="billId" column="bill_id"/>
+    		<result property="billItemId" column="bill_item_id"/>
+    		<result property="fillerName" column="filler_name"/>
+    		<result property="fillerType" column="filler_type"/>
+    		<result property="fillerAmount" column="filler_amount"/>
+    		<result property="fillerTarget" column="filler_target"/>
+    		<result property="repayEvent" column="repay_event"/>
+    		<result property="tradeId" column="trade_id"/>
+    		<result property="operatorId" column="operator_id"/>
+    		<result property="remark" column="remark"/>
+    		<result property="partnerFillerTime" column="partner_filler_time"/>
+    		<result property="reportNo" column="report_no"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		item_filler_id,        
+		loan_id,        
+		bill_id,        
+		bill_item_id,        
+		filler_name,        
+		filler_type,        
+		filler_amount,        
+		filler_target,        
+		repay_event,        
+		trade_id,        
+		operator_id,        
+		remark,        
+		partner_filler_time,        
+		report_no,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		bif.item_filler_id,        
+		bif.loan_id,        
+		bif.bill_id,        
+		bif.bill_item_id,        
+		bif.filler_name,        
+		bif.filler_type,        
+		bif.filler_amount,        
+		bif.filler_target,        
+		bif.repay_event,        
+		bif.trade_id,        
+		bif.operator_id,        
+		bif.remark,        
+		bif.partner_filler_time,        
+		bif.report_no,        
+		bif.created_time,        
+		bif.updated_time        
+	</sql>
+</mapper>

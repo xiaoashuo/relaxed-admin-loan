@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.AuditMapper">
+
+	<resultMap id="auditMap" type="com.relaxed.boot.loan.model.entity.Audit">
+  		<id property="auditId" column="audit_id"/>
+    		<result property="creditId" column="credit_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="productCode" column="product_code"/>
+    		<result property="productName" column="product_name"/>
+    		<result property="strategyCode" column="strategy_code"/>
+    		<result property="name" column="name"/>
+    		<result property="idNo" column="id_no"/>
+    		<result property="bankCardNo" column="bank_card_no"/>
+    		<result property="mobileNo" column="mobile_no"/>
+    		<result property="extParamJsonStr" column="ext_param_json_str"/>
+    		<result property="auditStatus" column="audit_status"/>
+    		<result property="auditStatusPeople" column="audit_status_people"/>
+    		<result property="reasonCode" column="reason_code"/>
+    		<result property="reasonDesc" column="reason_desc"/>
+    		<result property="resTime" column="res_time"/>
+    		<result property="resultTime" column="result_time"/>
+    		<result property="peopleResultTime" column="people_result_time"/>
+    		<result property="approvalMark" column="approval_mark"/>
+    		<result property="bhCreditRptId" column="bh_credit_rpt_id"/>
+    		<result property="brSpeclistRptId" column="br_speclist_rpt_id"/>
+    		<result property="brIntentionRptId" column="br_intention_rpt_id"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		audit_id,        
+		credit_id,        
+		order_id,        
+		product_code,        
+		product_name,        
+		strategy_code,        
+		name,        
+		id_no,        
+		bank_card_no,        
+		mobile_no,        
+		ext_param_json_str,        
+		audit_status,        
+		audit_status_people,        
+		reason_code,        
+		reason_desc,        
+		res_time,        
+		result_time,        
+		people_result_time,        
+		approval_mark,        
+		bh_credit_rpt_id,        
+		br_speclist_rpt_id,        
+		br_intention_rpt_id,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		a.audit_id,        
+		a.credit_id,        
+		a.order_id,        
+		a.product_code,        
+		a.product_name,        
+		a.strategy_code,        
+		a.name,        
+		a.id_no,        
+		a.bank_card_no,        
+		a.mobile_no,        
+		a.ext_param_json_str,        
+		a.audit_status,        
+		a.audit_status_people,        
+		a.reason_code,        
+		a.reason_desc,        
+		a.res_time,        
+		a.result_time,        
+		a.people_result_time,        
+		a.approval_mark,        
+		a.bh_credit_rpt_id,        
+		a.br_speclist_rpt_id,        
+		a.br_intention_rpt_id,        
+		a.created_time,        
+		a.updated_time        
+	</sql>
+</mapper>

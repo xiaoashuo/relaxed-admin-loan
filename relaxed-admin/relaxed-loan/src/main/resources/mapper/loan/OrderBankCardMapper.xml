@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.OrderBankCardMapper">
+
+	<resultMap id="orderBankCardMap" type="com.relaxed.boot.loan.model.entity.OrderBankCard">
+  		<id property="bankCardId" column="bank_card_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="accountType" column="account_type"/>
+    		<result property="accountName" column="account_name"/>
+    		<result property="accountNo" column="account_no"/>
+    		<result property="bankCode" column="bank_code"/>
+    		<result property="bankName" column="bank_name"/>
+    		<result property="openBankName" column="open_bank_name"/>
+    		<result property="openBankUnionBank" column="open_bank_union_bank"/>
+    		<result property="reserveMobile" column="reserve_mobile"/>
+    		<result property="cardPurpose" column="card_purpose"/>
+    		<result property="valid" column="valid"/>
+    		<result property="authStatus" column="auth_status"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		bank_card_id,        
+		order_id,        
+		account_type,        
+		account_name,        
+		account_no,        
+		bank_code,        
+		bank_name,        
+		open_bank_name,        
+		open_bank_union_bank,        
+		reserve_mobile,        
+		card_purpose,        
+		valid,        
+		auth_status,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		obc.bank_card_id,        
+		obc.order_id,        
+		obc.account_type,        
+		obc.account_name,        
+		obc.account_no,        
+		obc.bank_code,        
+		obc.bank_name,        
+		obc.open_bank_name,        
+		obc.open_bank_union_bank,        
+		obc.reserve_mobile,        
+		obc.card_purpose,        
+		obc.valid,        
+		obc.auth_status,        
+		obc.created_time,        
+		obc.updated_time        
+	</sql>
+</mapper>

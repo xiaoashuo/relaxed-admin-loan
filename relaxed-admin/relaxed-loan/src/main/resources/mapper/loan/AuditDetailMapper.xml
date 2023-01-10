@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.AuditDetailMapper">
+
+	<resultMap id="auditDetailMap" type="com.relaxed.boot.loan.model.entity.AuditDetail">
+  		<id property="auditDetailId" column="audit_detail_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="auditId" column="audit_id"/>
+    		<result property="reasonCode" column="reason_code"/>
+    		<result property="reasonDesc" column="reason_desc"/>
+    		<result property="auditType" column="audit_type"/>
+    		<result property="auditStatus" column="audit_status"/>
+    		<result property="resTime" column="res_time"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		audit_detail_id,        
+		order_id,        
+		audit_id,        
+		reason_code,        
+		reason_desc,        
+		audit_type,        
+		audit_status,        
+		res_time,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		ad.audit_detail_id,        
+		ad.order_id,        
+		ad.audit_id,        
+		ad.reason_code,        
+		ad.reason_desc,        
+		ad.audit_type,        
+		ad.audit_status,        
+		ad.res_time,        
+		ad.created_time,        
+		ad.updated_time        
+	</sql>
+</mapper>

@@ -14,7 +14,11 @@ import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
+import com.relaxed.starter.download.domain.DownloadModel;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,10 +51,16 @@ public class TemplateController {
 
 	private final TemplateManage templateManage;
 
+
+	@Operation(description = "下载excel接口",
+			 responses = {@ApiResponse(responseCode="200",content = {@Content(mediaType = "application/octet-stream",
+			 schema = @Schema(ref = "#/definitions/MultipartFile"))})}
+			)
 	@GetMapping("test")
-	public void test(HttpServletResponse response) {
+	public DownloadModel test(HttpServletResponse response) {
 		File file = new File("D:\\other\\oss\\profile\\upload\\20221215\\d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf");
 		ServletUtil.write(response, file);
+		return new DownloadModel();
 	}
 
 	/**

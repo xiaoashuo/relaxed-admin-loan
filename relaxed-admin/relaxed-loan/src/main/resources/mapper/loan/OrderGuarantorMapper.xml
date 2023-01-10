@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.OrderGuarantorMapper">
+
+	<resultMap id="orderGuarantorMap" type="com.relaxed.boot.loan.model.entity.OrderGuarantor">
+  		<id property="guarantorId" column="guarantor_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="guarantorName" column="guarantor_name"/>
+    		<result property="guarantorNo" column="guarantor_no"/>
+    		<result property="remark" column="remark"/>
+    		<result property="valid" column="valid"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		guarantor_id,        
+		order_id,        
+		guarantor_name,        
+		guarantor_no,        
+		remark,        
+		valid,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		og.guarantor_id,        
+		og.order_id,        
+		og.guarantor_name,        
+		og.guarantor_no,        
+		og.remark,        
+		og.valid,        
+		og.created_time,        
+		og.updated_time        
+	</sql>
+</mapper>

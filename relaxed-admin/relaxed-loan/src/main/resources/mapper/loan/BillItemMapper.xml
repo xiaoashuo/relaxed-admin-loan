@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.BillItemMapper">
+
+	<resultMap id="billItemMap" type="com.relaxed.boot.loan.model.entity.BillItem">
+  		<id property="billItemId" column="bill_item_id"/>
+    		<result property="loanId" column="loan_id"/>
+    		<result property="billId" column="bill_id"/>
+    		<result property="itemName" column="item_name"/>
+    		<result property="itemType" column="item_type"/>
+    		<result property="receivableAmt" column="receivable_amt"/>
+    		<result property="receiptsAmt" column="receipts_amt"/>
+    		<result property="valid" column="valid"/>
+    		<result property="latestSyncTime" column="latest_sync_time"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		bill_item_id,        
+		loan_id,        
+		bill_id,        
+		item_name,        
+		item_type,        
+		receivable_amt,        
+		receipts_amt,        
+		valid,        
+		latest_sync_time,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		bi.bill_item_id,        
+		bi.loan_id,        
+		bi.bill_id,        
+		bi.item_name,        
+		bi.item_type,        
+		bi.receivable_amt,        
+		bi.receipts_amt,        
+		bi.valid,        
+		bi.latest_sync_time,        
+		bi.created_time,        
+		bi.updated_time        
+	</sql>
+</mapper>

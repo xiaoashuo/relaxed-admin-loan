@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.BillMapper">
+
+	<resultMap id="billMap" type="com.relaxed.boot.loan.model.entity.Bill">
+  		<id property="billId" column="bill_id"/>
+    		<result property="loanId" column="loan_id"/>
+    		<result property="partnerBillNo" column="partner_bill_no"/>
+    		<result property="termNo" column="term_no"/>
+    		<result property="startDate" column="start_date"/>
+    		<result property="endDate" column="end_date"/>
+    		<result property="dueDate" column="due_date"/>
+    		<result property="clearDate" column="clear_date"/>
+    		<result property="billType" column="bill_type"/>
+    		<result property="termStatus" column="term_status"/>
+    		<result property="billReceivableAmt" column="bill_receivable_amt"/>
+    		<result property="billReceiptsAmt" column="bill_receipts_amt"/>
+    		<result property="billMitigateAmt" column="bill_mitigate_amt"/>
+    		<result property="latestSyncTime" column="latest_sync_time"/>
+    		<result property="valid" column="valid"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		bill_id,        
+		loan_id,        
+		partner_bill_no,        
+		term_no,        
+		start_date,        
+		end_date,        
+		due_date,        
+		clear_date,        
+		bill_type,        
+		term_status,        
+		bill_receivable_amt,        
+		bill_receipts_amt,        
+		bill_mitigate_amt,        
+		latest_sync_time,        
+		valid,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		b.bill_id,        
+		b.loan_id,        
+		b.partner_bill_no,        
+		b.term_no,        
+		b.start_date,        
+		b.end_date,        
+		b.due_date,        
+		b.clear_date,        
+		b.bill_type,        
+		b.term_status,        
+		b.bill_receivable_amt,        
+		b.bill_receipts_amt,        
+		b.bill_mitigate_amt,        
+		b.latest_sync_time,        
+		b.valid,        
+		b.created_time,        
+		b.updated_time        
+	</sql>
+</mapper>

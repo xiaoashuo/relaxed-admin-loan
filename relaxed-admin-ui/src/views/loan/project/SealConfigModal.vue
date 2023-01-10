@@ -304,7 +304,7 @@
 
 <style lang="scss" scoped>
   ::v-deep .el-dialog__header{
-   border-bottom: 1px solid gray;
+   border-bottom: 1px solid #e8e8e8;
  }
   .templateConfig{
     position: relative;

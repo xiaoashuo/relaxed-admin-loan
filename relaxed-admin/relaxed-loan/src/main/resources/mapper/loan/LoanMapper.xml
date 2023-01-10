@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.LoanMapper">
+
+	<resultMap id="loanMap" type="com.relaxed.boot.loan.model.entity.Loan">
+  		<id property="loanId" column="loan_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="loanBizNo" column="loan_biz_no"/>
+    		<result property="partnerBizNo" column="partner_biz_no"/>
+    		<result property="partnerLoanNo" column="partner_loan_no"/>
+    		<result property="contractNo" column="contract_no"/>
+    		<result property="productCode" column="product_code"/>
+    		<result property="productName" column="product_name"/>
+    		<result property="trustPlanCode" column="trust_plan_code"/>
+    		<result property="trustPlanName" column="trust_plan_name"/>
+    		<result property="realName" column="real_name"/>
+    		<result property="certificateType" column="certificate_type"/>
+    		<result property="certificateNo" column="certificate_no"/>
+    		<result property="applyDate" column="apply_date"/>
+    		<result property="loanDate" column="loan_date"/>
+    		<result property="startDate" column="start_date"/>
+    		<result property="endDate" column="end_date"/>
+    		<result property="clearDate" column="clear_date"/>
+    		<result property="repayDay" column="repay_day"/>
+    		<result property="tradeId" column="trade_id"/>
+    		<result property="loanAmt" column="loan_amt"/>
+    		<result property="currency" column="currency"/>
+    		<result property="repaymentWay" column="repayment_way"/>
+    		<result property="periodUnit" column="period_unit"/>
+    		<result property="totalTerms" column="total_terms"/>
+    		<result property="irrRate" column="irr_rate"/>
+    		<result property="currentTerm" column="current_term"/>
+    		<result property="merchantDisAmt" column="merchant_dis_amt"/>
+    		<result property="graceDays" column="grace_days"/>
+    		<result property="interestRateUnit" column="interest_rate_unit"/>
+    		<result property="interestRate" column="interest_rate"/>
+    		<result property="penaltyRateUnit" column="penalty_rate_unit"/>
+    		<result property="penaltyRate" column="penalty_rate"/>
+    		<result property="loanStatus" column="loan_status"/>
+    		<result property="overdueFlag" column="overdue_flag"/>
+    		<result property="principalReceivable" column="principal_receivable"/>
+    		<result property="principalReceipts" column="principal_receipts"/>
+    		<result property="interestReceivable" column="interest_receivable"/>
+    		<result property="interestReceipts" column="interest_receipts"/>
+    		<result property="penaltyReceivable" column="penalty_receivable"/>
+    		<result property="penaltyReceipts" column="penalty_receipts"/>
+    		<result property="receivableAmt" column="receivable_amt"/>
+    		<result property="receiptsAmt" column="receipts_amt"/>
+    		<result property="latestSyncTime" column="latest_sync_time"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+    		<result property="nbContractId" column="nb_contract_id"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		loan_id,        
+		order_id,        
+		loan_biz_no,        
+		partner_biz_no,        
+		partner_loan_no,        
+		contract_no,        
+		product_code,        
+		product_name,        
+		trust_plan_code,        
+		trust_plan_name,        
+		real_name,        
+		certificate_type,        
+		certificate_no,        
+		apply_date,        
+		loan_date,        
+		start_date,        
+		end_date,        
+		clear_date,        
+		repay_day,        
+		trade_id,        
+		loan_amt,        
+		currency,        
+		repayment_way,        
+		period_unit,        
+		total_terms,        
+		irr_rate,        
+		current_term,        
+		merchant_dis_amt,        
+		grace_days,        
+		interest_rate_unit,        
+		interest_rate,        
+		penalty_rate_unit,        
+		penalty_rate,        
+		loan_status,        
+		overdue_flag,        
+		principal_receivable,        
+		principal_receipts,        
+		interest_receivable,        
+		interest_receipts,        
+		penalty_receivable,        
+		penalty_receipts,        
+		receivable_amt,        
+		receipts_amt,        
+		latest_sync_time,        
+		created_time,        
+		updated_time,        
+		nb_contract_id        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		l.loan_id,        
+		l.order_id,        
+		l.loan_biz_no,        
+		l.partner_biz_no,        
+		l.partner_loan_no,        
+		l.contract_no,        
+		l.product_code,        
+		l.product_name,        
+		l.trust_plan_code,        
+		l.trust_plan_name,        
+		l.real_name,        
+		l.certificate_type,        
+		l.certificate_no,        
+		l.apply_date,        
+		l.loan_date,        
+		l.start_date,        
+		l.end_date,        
+		l.clear_date,        
+		l.repay_day,        
+		l.trade_id,        
+		l.loan_amt,        
+		l.currency,        
+		l.repayment_way,        
+		l.period_unit,        
+		l.total_terms,        
+		l.irr_rate,        
+		l.current_term,        
+		l.merchant_dis_amt,        
+		l.grace_days,        
+		l.interest_rate_unit,        
+		l.interest_rate,        
+		l.penalty_rate_unit,        
+		l.penalty_rate,        
+		l.loan_status,        
+		l.overdue_flag,        
+		l.principal_receivable,        
+		l.principal_receipts,        
+		l.interest_receivable,        
+		l.interest_receipts,        
+		l.penalty_receivable,        
+		l.penalty_receipts,        
+		l.receivable_amt,        
+		l.receipts_amt,        
+		l.latest_sync_time,        
+		l.created_time,        
+		l.updated_time,        
+		l.nb_contract_id        
+	</sql>
+</mapper>

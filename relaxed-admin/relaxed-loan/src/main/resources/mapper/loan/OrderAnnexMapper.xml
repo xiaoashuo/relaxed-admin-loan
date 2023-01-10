@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.OrderAnnexMapper">
+
+	<resultMap id="orderAnnexMap" type="com.relaxed.boot.loan.model.entity.OrderAnnex">
+  		<id property="fileId" column="file_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="fileNo" column="file_no"/>
+    		<result property="fileName" column="file_name"/>
+    		<result property="fileType" column="file_type"/>
+    		<result property="fileUrl" column="file_url"/>
+    		<result property="remark" column="remark"/>
+    		<result property="uploadTime" column="upload_time"/>
+    		<result property="valid" column="valid"/>
+    		<result property="updStatus" column="upd_status"/>
+    		<result property="isPush" column="is_push"/>
+    		<result property="noticeBatchNo" column="notice_batch_no"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+    		<result property="auditRecord" column="audit_record"/>
+    		<result property="auditFlag" column="audit_flag"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		file_id,        
+		order_id,        
+		file_no,        
+		file_name,        
+		file_type,        
+		file_url,        
+		remark,        
+		upload_time,        
+		valid,        
+		upd_status,        
+		is_push,        
+		notice_batch_no,        
+		created_time,        
+		updated_time,        
+		audit_record,        
+		audit_flag        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		oa.file_id,        
+		oa.order_id,        
+		oa.file_no,        
+		oa.file_name,        
+		oa.file_type,        
+		oa.file_url,        
+		oa.remark,        
+		oa.upload_time,        
+		oa.valid,        
+		oa.upd_status,        
+		oa.is_push,        
+		oa.notice_batch_no,        
+		oa.created_time,        
+		oa.updated_time,        
+		oa.audit_record,        
+		oa.audit_flag        
+	</sql>
+</mapper>

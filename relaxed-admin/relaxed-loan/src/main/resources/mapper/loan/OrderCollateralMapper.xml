@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.OrderCollateralMapper">
+
+	<resultMap id="orderCollateralMap" type="com.relaxed.boot.loan.model.entity.OrderCollateral">
+  		<id property="collateralId" column="collateral_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="propOwner" column="prop_owner"/>
+    		<result property="propIdNo" column="prop_id_no"/>
+    		<result property="propCertNo" column="prop_cert_no"/>
+    		<result property="districtCode" column="district_code"/>
+    		<result property="addressPrex" column="address_prex"/>
+    		<result property="communityNo" column="community_no"/>
+    		<result property="buildingNo" column="building_no"/>
+    		<result property="roomNo" column="room_no"/>
+    		<result property="addressDetail" column="address_detail"/>
+    		<result property="floor" column="floor"/>
+    		<result property="totalFloor" column="total_floor"/>
+    		<result property="floorage" column="floorage"/>
+    		<result property="houseNature" column="house_nature"/>
+    		<result property="housePurpose" column="house_purpose"/>
+    		<result property="ownershipQty" column="ownership_qty"/>
+    		<result property="ownershipName" column="ownership_name"/>
+    		<result property="houseAge" column="house_age"/>
+    		<result property="collateralSituation" column="collateral_situation"/>
+    		<result property="leaseSituation" column="lease_situation"/>
+    		<result property="evalValuationWay" column="eval_valuation_way"/>
+    		<result property="evalValuation" column="eval_valuation"/>
+    		<result property="evalAgencyCode" column="eval_agency_code"/>
+    		<result property="evalAgency" column="eval_agency"/>
+    		<result property="ownTwoYear" column="own_two_year"/>
+    		<result property="onlyHousing" column="only_housing"/>
+    		<result property="collateralRanking" column="collateral_ranking"/>
+    		<result property="identifyValuation" column="identify_valuation"/>
+    		<result property="collateralRate" column="collateral_rate"/>
+    		<result property="collateralBalance" column="collateral_balance"/>
+    		<result property="remark" column="remark"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		collateral_id,        
+		order_id,        
+		prop_owner,        
+		prop_id_no,        
+		prop_cert_no,        
+		district_code,        
+		address_prex,        
+		community_no,        
+		building_no,        
+		room_no,        
+		address_detail,        
+		floor,        
+		total_floor,        
+		floorage,        
+		house_nature,        
+		house_purpose,        
+		ownership_qty,        
+		ownership_name,        
+		house_age,        
+		collateral_situation,        
+		lease_situation,        
+		eval_valuation_way,        
+		eval_valuation,        
+		eval_agency_code,        
+		eval_agency,        
+		own_two_year,        
+		only_housing,        
+		collateral_ranking,        
+		identify_valuation,        
+		collateral_rate,        
+		collateral_balance,        
+		remark,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		oc.collateral_id,        
+		oc.order_id,        
+		oc.prop_owner,        
+		oc.prop_id_no,        
+		oc.prop_cert_no,        
+		oc.district_code,        
+		oc.address_prex,        
+		oc.community_no,        
+		oc.building_no,        
+		oc.room_no,        
+		oc.address_detail,        
+		oc.floor,        
+		oc.total_floor,        
+		oc.floorage,        
+		oc.house_nature,        
+		oc.house_purpose,        
+		oc.ownership_qty,        
+		oc.ownership_name,        
+		oc.house_age,        
+		oc.collateral_situation,        
+		oc.lease_situation,        
+		oc.eval_valuation_way,        
+		oc.eval_valuation,        
+		oc.eval_agency_code,        
+		oc.eval_agency,        
+		oc.own_two_year,        
+		oc.only_housing,        
+		oc.collateral_ranking,        
+		oc.identify_valuation,        
+		oc.collateral_rate,        
+		oc.collateral_balance,        
+		oc.remark,        
+		oc.created_time,        
+		oc.updated_time        
+	</sql>
+</mapper>

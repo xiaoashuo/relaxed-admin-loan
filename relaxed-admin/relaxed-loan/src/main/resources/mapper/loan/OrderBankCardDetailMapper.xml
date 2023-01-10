@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.OrderBankCardDetailMapper">
+
+	<resultMap id="orderBankCardDetailMap" type="com.relaxed.boot.loan.model.entity.OrderBankCardDetail">
+  		<id property="detailId" column="detail_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="bankCardId" column="bank_card_id"/>
+    		<result property="userId" column="user_id"/>
+    		<result property="loanType" column="loan_type"/>
+    		<result property="realName" column="real_name"/>
+    		<result property="certificateNo" column="certificate_no"/>
+    		<result property="loanAmt" column="loan_amt"/>
+    		<result property="valid" column="valid"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		detail_id,        
+		order_id,        
+		bank_card_id,        
+		user_id,        
+		loan_type,        
+		real_name,        
+		certificate_no,        
+		loan_amt,        
+		valid,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		obcd.detail_id,        
+		obcd.order_id,        
+		obcd.bank_card_id,        
+		obcd.user_id,        
+		obcd.loan_type,        
+		obcd.real_name,        
+		obcd.certificate_no,        
+		obcd.loan_amt,        
+		obcd.valid,        
+		obcd.created_time,        
+		obcd.updated_time        
+	</sql>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.TradeMapper">
+
+	<resultMap id="tradeMap" type="com.relaxed.boot.loan.model.entity.Trade">
+  		<id property="tradeId" column="trade_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="partnerBizNo" column="partner_biz_no"/>
+    		<result property="tradeNo" column="trade_no"/>
+    		<result property="repayType" column="repay_type"/>
+    		<result property="tradeStatus" column="trade_status"/>
+    		<result property="tradeAmount" column="trade_amount"/>
+    		<result property="tradeAccountBank" column="trade_account_bank"/>
+    		<result property="tradeAccount" column="trade_account"/>
+    		<result property="tradeAccountType" column="trade_account_type"/>
+    		<result property="tradeAccountName" column="trade_account_name"/>
+    		<result property="tradeAccountId" column="trade_account_id"/>
+    		<result property="payChannel" column="pay_channel"/>
+    		<result property="payPlatformId" column="pay_platform_id"/>
+    		<result property="payPlatformMerchantId" column="pay_platform_merchant_id"/>
+    		<result property="payPlatformUserName" column="pay_platform_user_name"/>
+    		<result property="payPlatformBusinessCode" column="pay_platform_business_code"/>
+    		<result property="tradeTime" column="trade_time"/>
+    		<result property="loanPurpose" column="loan_purpose"/>
+    		<result property="failReason" column="fail_reason"/>
+    		<result property="tradeRemark" column="trade_remark"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		trade_id,        
+		order_id,        
+		partner_biz_no,        
+		trade_no,        
+		repay_type,        
+		trade_status,        
+		trade_amount,        
+		trade_account_bank,        
+		trade_account,        
+		trade_account_type,        
+		trade_account_name,        
+		trade_account_id,        
+		pay_channel,        
+		pay_platform_id,        
+		pay_platform_merchant_id,        
+		pay_platform_user_name,        
+		pay_platform_business_code,        
+		trade_time,        
+		loan_purpose,        
+		fail_reason,        
+		trade_remark,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		t.trade_id,        
+		t.order_id,        
+		t.partner_biz_no,        
+		t.trade_no,        
+		t.repay_type,        
+		t.trade_status,        
+		t.trade_amount,        
+		t.trade_account_bank,        
+		t.trade_account,        
+		t.trade_account_type,        
+		t.trade_account_name,        
+		t.trade_account_id,        
+		t.pay_channel,        
+		t.pay_platform_id,        
+		t.pay_platform_merchant_id,        
+		t.pay_platform_user_name,        
+		t.pay_platform_business_code,        
+		t.trade_time,        
+		t.loan_purpose,        
+		t.fail_reason,        
+		t.trade_remark,        
+		t.created_time,        
+		t.updated_time        
+	</sql>
+</mapper>

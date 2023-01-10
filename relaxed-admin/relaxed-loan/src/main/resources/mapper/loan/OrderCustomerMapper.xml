@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.OrderCustomerMapper">
+
+	<resultMap id="orderCustomerMap" type="com.relaxed.boot.loan.model.entity.OrderCustomer">
+  		<id property="customerId" column="customer_id"/>
+    		<result property="partnerCustomerNo" column="partner_customer_no"/>
+    		<result property="creditId" column="credit_id"/>
+    		<result property="orderId" column="order_id"/>
+    		<result property="orgUserNo" column="org_user_no"/>
+    		<result property="realName" column="real_name"/>
+    		<result property="certificateType" column="certificate_type"/>
+    		<result property="certificateNo" column="certificate_no"/>
+    		<result property="customType" column="custom_type"/>
+    		<result property="gender" column="gender"/>
+    		<result property="age" column="age"/>
+    		<result property="birthDate" column="birth_date"/>
+    		<result property="nationality" column="nationality"/>
+    		<result property="mobileNo" column="mobile_no"/>
+    		<result property="educationCode" column="education_code"/>
+    		<result property="degreeCode" column="degree_code"/>
+    		<result property="residenceRegion" column="residence_region"/>
+    		<result property="residenceAddress" column="residence_address"/>
+    		<result property="residenceCode" column="residence_code"/>
+    		<result property="residencePostCode" column="residence_post_code"/>
+    		<result property="residenceStatus" column="residence_status"/>
+    		<result property="homePhone" column="home_phone"/>
+    		<result property="permanentAddress" column="permanent_address"/>
+    		<result property="permanentRegion" column="permanent_region"/>
+    		<result property="nativePlace" column="native_place"/>
+    		<result property="maritalStatus" column="marital_status"/>
+    		<result property="eMail" column="e_mail"/>
+    		<result property="employmentStatus" column="employment_status"/>
+    		<result property="professionCode" column="profession_code"/>
+    		<result property="jobDuties" column="job_duties"/>
+    		<result property="positionalTitles" column="positional_titles"/>
+    		<result property="companyName" column="company_name"/>
+    		<result property="companyKind" column="company_kind"/>
+    		<result property="companyTrade" column="company_trade"/>
+    		<result property="companyAddress" column="company_address"/>
+    		<result property="companyRegion" column="company_region"/>
+    		<result property="companyPostCode" column="company_post_code"/>
+    		<result property="companyPhone" column="company_phone"/>
+    		<result property="salaryAccount" column="salary_account"/>
+    		<result property="accountOpenBank" column="account_open_bank"/>
+    		<result property="mailingAddress" column="mailing_address"/>
+    		<result property="mailingCode" column="mailing_code"/>
+    		<result property="mailingPostCode" column="mailing_post_code"/>
+    		<result property="mailingRegion" column="mailing_region"/>
+    		<result property="fullMailingAddress" column="full_mailing_address"/>
+    		<result property="jobYears" column="job_years"/>
+    		<result property="annualIncome" column="annual_income"/>
+    		<result property="certificateValidityDate" column="certificate_validity_date"/>
+    		<result property="certificateExpiryDate" column="certificate_expiry_date"/>
+    		<result property="certificateIssuer" column="certificate_issuer"/>
+    		<result property="certificateIssuerRegion" column="certificate_issuer_region"/>
+    		<result property="existsLink" column="exists_link"/>
+    		<result property="linkType" column="link_type"/>
+    		<result property="linkInvestMoney" column="link_invest_money"/>
+    		<result property="valid" column="valid"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		customer_id,        
+		partner_customer_no,        
+		credit_id,        
+		order_id,        
+		org_user_no,        
+		real_name,        
+		certificate_type,        
+		certificate_no,        
+		custom_type,        
+		gender,        
+		age,        
+		birth_date,        
+		nationality,        
+		mobile_no,        
+		education_code,        
+		degree_code,        
+		residence_region,        
+		residence_address,        
+		residence_code,        
+		residence_post_code,        
+		residence_status,        
+		home_phone,        
+		permanent_address,        
+		permanent_region,        
+		native_place,        
+		marital_status,        
+		e_mail,        
+		employment_status,        
+		profession_code,        
+		job_duties,        
+		positional_titles,        
+		company_name,        
+		company_kind,        
+		company_trade,        
+		company_address,        
+		company_region,        
+		company_post_code,        
+		company_phone,        
+		salary_account,        
+		account_open_bank,        
+		mailing_address,        
+		mailing_code,        
+		mailing_post_code,        
+		mailing_region,        
+		full_mailing_address,        
+		job_years,        
+		annual_income,        
+		certificate_validity_date,        
+		certificate_expiry_date,        
+		certificate_issuer,        
+		certificate_issuer_region,        
+		exists_link,        
+		link_type,        
+		link_invest_money,        
+		valid,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		oc.customer_id,        
+		oc.partner_customer_no,        
+		oc.credit_id,        
+		oc.order_id,        
+		oc.org_user_no,        
+		oc.real_name,        
+		oc.certificate_type,        
+		oc.certificate_no,        
+		oc.custom_type,        
+		oc.gender,        
+		oc.age,        
+		oc.birth_date,        
+		oc.nationality,        
+		oc.mobile_no,        
+		oc.education_code,        
+		oc.degree_code,        
+		oc.residence_region,        
+		oc.residence_address,        
+		oc.residence_code,        
+		oc.residence_post_code,        
+		oc.residence_status,        
+		oc.home_phone,        
+		oc.permanent_address,        
+		oc.permanent_region,        
+		oc.native_place,        
+		oc.marital_status,        
+		oc.e_mail,        
+		oc.employment_status,        
+		oc.profession_code,        
+		oc.job_duties,        
+		oc.positional_titles,        
+		oc.company_name,        
+		oc.company_kind,        
+		oc.company_trade,        
+		oc.company_address,        
+		oc.company_region,        
+		oc.company_post_code,        
+		oc.company_phone,        
+		oc.salary_account,        
+		oc.account_open_bank,        
+		oc.mailing_address,        
+		oc.mailing_code,        
+		oc.mailing_post_code,        
+		oc.mailing_region,        
+		oc.full_mailing_address,        
+		oc.job_years,        
+		oc.annual_income,        
+		oc.certificate_validity_date,        
+		oc.certificate_expiry_date,        
+		oc.certificate_issuer,        
+		oc.certificate_issuer_region,        
+		oc.exists_link,        
+		oc.link_type,        
+		oc.link_invest_money,        
+		oc.valid,        
+		oc.created_time,        
+		oc.updated_time        
+	</sql>
+</mapper>
