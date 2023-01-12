@@ -1,7 +1,7 @@
 export default [
   {
     //组件访问路径 与 实际访问路径保持一致
-    path:'/loan/loan',
+    path:'/loan/list',
     //指定组件存放路径
     component: () => import('@/views/loan/loan/LoanPage'),
   },
@@ -17,12 +17,7 @@ export default [
     //指定组件存放路径
     component: () => import('@/views/loan/bill-item-filler/BillItemFillerPage'),
   },
-  {
-    //组件访问路径 与 实际访问路径保持一致
-    path:'/loan/order-bank-card-detail',
-    //指定组件存放路径
-    component: () => import('@/views/loan/order-bank-card-detail/OrderBankCardDetailPage'),
-  },
+
   {
     //组件访问路径 与 实际访问路径保持一致
     path:'/loan/order-bank-card',
@@ -47,18 +42,8 @@ export default [
     //指定组件存放路径
     component: () => import('@/views/loan/order-guarantor/OrderGuarantorPage'),
   },
-  {
-    //组件访问路径 与 实际访问路径保持一致
-    path:'/loan/audit-detail',
-    //指定组件存放路径
-    component: () => import('@/views/loan/audit-detail/AuditDetailPage'),
-  },
-  {
-    //组件访问路径 与 实际访问路径保持一致
-    path:'/loan/audit',
-    //指定组件存放路径
-    component: () => import('@/views/loan/audit/AuditPage'),
-  },
+
+
   {
     //组件访问路径 与 实际访问路径保持一致
     path:'/loan/bill-item',
@@ -85,8 +70,14 @@ export default [
   },
   {
     //组件访问路径 与 实际访问路径保持一致
-    path:'/loan/trade',
+    path:'/loan/trade/repayment',
     //指定组件存放路径
-    component: () => import('@/views/loan/trade/TradePage'),
+    component: () => import('@/views/loan/trade/TradeRepaymentPage.vue'),
+  },
+  {
+    //组件访问路径 与 实际访问路径保持一致
+    path:'/loan/trade/loan',
+    //指定组件存放路径
+    component: () => import('@/views/loan/trade/TradeLoanPage.vue'),
   },
 ]

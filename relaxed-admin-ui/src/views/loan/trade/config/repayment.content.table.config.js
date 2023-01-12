@@ -32,7 +32,13 @@ export const contentTableConfig={
       prop: 'partnerBizNo',
       label:'合作方编号',
       minWidth:180,
-      slotName: 'partnerBizNo'
+
+    },
+    {
+      prop: 'trustPlanName',
+      label: '信托计划名称',
+      minWidth:180,
+
     },
               {
       prop: 'tradeNo',
@@ -42,49 +48,19 @@ export const contentTableConfig={
     },
 
               {
-      prop: 'tradeStatus',
-      label:'交易状态',
-      minWidth:180,
-      slotName: 'tradeStatus'
-    },
-              {
       prop: 'tradeAmount',
       label:'交易金额',
       minWidth:180,
       slotName: 'tradeAmount'
     },
               {
-      prop: 'tradeAccountBank',
-      label:'交易银行名称',
+      prop: 'repayType',
+      label:'还款方式',
       minWidth:180,
-      slotName: 'tradeAccountBank'
-    },
-              {
-      prop: 'tradeAccount',
-      label:'交易账号',
-      minWidth:180,
-      slotName: 'tradeAccount'
-    },
-
-              {
-      prop: 'tradeAccountName',
-      label:'账户姓名 ',
-      minWidth:180,
+      slotName: 'repayType'
     },
 
 
-   {
-      prop: 'payPlatformId',
-      label:'放款通道',
-      minWidth:180,
-      slotName: 'payPlatformId'
-    },
-    {
-      prop: 'trustPlanName',
-      label: '信托计划名称',
-      minWidth:180,
-
-    },
      {
       prop: 'failReason',
       label:'交易备注',

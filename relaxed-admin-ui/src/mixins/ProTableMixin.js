@@ -115,6 +115,9 @@ export default {
 
           this.refreshTable(false)
       },
+    handleExpandChange(row,expanded){
+      this.$emit('expand-change', row,expanded)
+    },
       /**
        * 转换sort值
        * @param order ascending,descending null

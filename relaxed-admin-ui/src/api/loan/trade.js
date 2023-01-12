@@ -1,12 +1,17 @@
 import yiRequest from "@/utils/request";
 
-export function getPage(query) {
+export function getTradeRepaymentPage(query) {
   return yiRequest.get({
-    url: '/loan/trade/page',
+    url: '/loan/trade/page/repayment',
     params: query
   })
 }
-
+export function getTradeLoanPage(query) {
+  return yiRequest.get({
+    url: '/loan/trade/page/loan',
+    params: query
+  })
+}
 export function addObj(obj) {
   return yiRequest.post({
     url: '/loan/trade',

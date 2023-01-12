@@ -14,12 +14,8 @@ import com.relaxed.extend.mybatis.plus.service.ExtendService;
  */
 public interface TradeService extends ExtendService<Trade> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;TradePageVO&gt; 分页数据
-    */
-    PageResult<TradePageVO> queryPage(PageParam pageParam, TradeQO qo);
 
+
+    PageResult<TradePageVO> queryRepaymentPage(PageParam pageParam, TradeQO tradeQO);
+    PageResult<TradePageVO> queryLoanPage(PageParam pageParam, TradeQO tradeQO);
 }

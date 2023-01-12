@@ -49,19 +49,86 @@
         <el-col :span="8"><span>担保方式</span><b>{{order.guaranteeWay}}</b></el-col>
       </el-row>
     </div>
+    <div class="auditInfo">
+      <h2>系统审核</h2>
+
+      <el-row :gutter="10" type="flex" justify="space-between">
+        <el-col :span="8"><span>审核时间</span><b>{{auditInfo.resultTime}}</b></el-col>
+        <el-col :span="8"><span>审核结果</span><b>{{auditInfo.auditStatus}}</b></el-col>
+      </el-row>
+      <div class="auditDetail-list">
+        <yi-table ref="proTableRef"
+                  v-if="auditInfo.auditDetails"
+                  :loading="false"
+                  :list-data="auditInfo.auditDetails"
+                  :list-count="auditInfo.auditDetails.length"
+                  v-bind="contentTableConfig"
+
+        >
+        </yi-table>
+      </div>
+    </div>
 
   </div>
 </template>
 
 <script>
+import YiTable from '@/components/table'
 export default {
   name: 'ViewOrderDetail',
+  components:{
+    YiTable
+  },
   props:{
     order:{
       type: Object,
       require:true
+    },
+    auditInfo:{
+      type: Object,
+      default:()=>({})
     }
 
+  },
+
+  data(){
+    return{
+      contentTableConfig:{
+        title:'',
+        headerProps:{
+          visible:false
+        },
+        showFooter:false,
+        showSelectColumn:false,
+        tableProps:{
+          'row-style': {
+            height: '10px'
+          },
+          'cell-style': {
+            padding: '2px 0'
+          },
+
+        },
+
+        propList:[
+
+          {
+            prop: 'reasonCode',
+            label:'拒绝原因码仅',
+            minWidth:180,
+
+          },
+          {
+            prop: 'reasonDesc',
+            label:'拒绝原因描述',
+            minWidth:180,
+
+          },
+
+
+        ]
+      }
+    }
   }
 }
 </script>

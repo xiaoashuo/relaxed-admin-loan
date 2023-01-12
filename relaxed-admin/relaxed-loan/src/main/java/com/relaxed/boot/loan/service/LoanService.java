@@ -1,6 +1,7 @@
 package com.relaxed.boot.loan.service;
 
 import com.relaxed.boot.loan.model.entity.Loan;
+import com.relaxed.boot.loan.model.vo.LoanDetailVO;
 import com.relaxed.boot.loan.model.vo.LoanPageVO;
 import com.relaxed.boot.loan.model.qo.LoanQO;
 import com.relaxed.common.model.domain.PageParam;
@@ -22,4 +23,5 @@ public interface LoanService extends ExtendService<Loan> {
     */
     PageResult<LoanPageVO> queryPage(PageParam pageParam, LoanQO qo);
 
+    LoanDetailVO getLoanDetail(Long loanId);
 }

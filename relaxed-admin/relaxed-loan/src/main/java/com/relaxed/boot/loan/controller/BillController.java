@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 
 /**
  * 
@@ -47,7 +49,7 @@ public class BillController {
     @Operation(summary = "分页查询")
     @GetMapping("/page" )
     public R<PageResult<BillPageVO>> getBillPage(
-            PageParam pageParam, BillQO billQO) {
+            PageParam pageParam, @Valid BillQO billQO) {
         return R.ok(billService.queryPage(pageParam, billQO));
     }
 

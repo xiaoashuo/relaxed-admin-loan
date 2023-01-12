@@ -18,15 +18,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class TradeServiceImpl extends ExtendServiceImpl<TradeMapper, Trade> implements TradeService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<TradePageVO> 分页数据
-    */
+
+
+
     @Override
-    public PageResult<TradePageVO> queryPage(PageParam pageParam, TradeQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
+    public PageResult<TradePageVO> queryRepaymentPage(PageParam pageParam, TradeQO qo) {
+        return baseMapper.queryRepaymentPage(pageParam, qo);
     }
 
+    @Override
+    public PageResult<TradePageVO> queryLoanPage(PageParam pageParam, TradeQO qo) {
+        return baseMapper.queryLoanPage(pageParam, qo);
+    }
 }

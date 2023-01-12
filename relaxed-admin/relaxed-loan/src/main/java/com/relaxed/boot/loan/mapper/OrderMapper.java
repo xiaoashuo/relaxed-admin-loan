@@ -33,6 +33,7 @@ public interface OrderMapper extends ExtendMapper<Order> {
    default PageResult<OrderPageVO> queryPage(PageParam pageParam, OrderQO qo){
 		IPage<OrderPageVO> page = this.prodPage(pageParam);
 		LambdaAliasQueryWrapperX<Order> wrapper = WrappersX.lambdaAliasQueryX(Order.class);
+		wrapper.eqIfPresent(Order::getPartnerBizNo,qo.getPartnerBizNo());
 		this.selectByPage(page, wrapper);
 		return new PageResult<>(page.getRecords(), page.getTotal());
    }

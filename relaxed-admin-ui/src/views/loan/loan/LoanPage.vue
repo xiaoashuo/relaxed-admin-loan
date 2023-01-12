@@ -7,13 +7,21 @@
     <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
-    ></pro-table>
+    >
+      <template #customHandler="scope">
+
+        <el-button size="mini" type="text"
+                   @click="handleViewClick(scope.row)">查看
+        </el-button>
+      </template>
+    </pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :req-function="reqFunction"
                 @submitSuccess="handleSubmit"
     ></form-modal>
 
+    <loan-detail-model ref="loanDetailRef"></loan-detail-model>
 
   </div>
 </template>
@@ -27,8 +35,12 @@
   //页面相关请求方法
   import {getPage, addObj, putObj, delObj} from "@/api/loan/loan";
 
+  import LoanDetailModel from '@/views/loan/loan-detail/LoanDetailModel.vue'
   export default {
     name: "LoanPage",
+    components:{
+      LoanDetailModel
+    },
     data() {
       return {
         //页面相关配置
@@ -70,6 +82,9 @@
       handleResetClick() {
         this.$refs.pageContentRef.resetTable()
       },
+      handleViewClick(row){
+        this.$refs.loanDetailRef.update({ title:'借据信息',item:row })
+      }
 
     }
 

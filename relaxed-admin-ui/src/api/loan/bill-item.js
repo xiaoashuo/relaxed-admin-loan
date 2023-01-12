@@ -6,7 +6,20 @@ export function getPage(query) {
     params: query
   })
 }
-
+export function getList(query) {
+  return yiRequest.get({
+    url: '/loan/bill-item/list',
+    params: query,
+    interceptors:{
+      responseInterceptor:(res)=>{
+        const data=res.data
+        delete res.data
+        res.data={records: data}
+        return res
+      }
+    }
+  })
+}
 export function addObj(obj) {
   return yiRequest.post({
     url: '/loan/bill-item',

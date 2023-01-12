@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 /**
  * 
@@ -50,7 +52,11 @@ public class BillItemController {
             PageParam pageParam, BillItemQO billItemQO) {
         return R.ok(billItemService.queryPage(pageParam, billItemQO));
     }
-
+    @Operation(summary = "列表查询")
+    @GetMapping("/list" )
+    public R<List<BillItemPageVO>> getBillItemList( BillItemQO billItemQO) {
+        return R.ok(billItemService.queryList(billItemQO));
+    }
     /**
      * 新增
      * @param billItem 

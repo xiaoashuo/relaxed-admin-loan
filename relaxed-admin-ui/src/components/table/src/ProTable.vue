@@ -9,6 +9,7 @@
             @row-click="handleRowClick"
             @row-dblclick="handleRowDbClick"
            @sort-change="handleSortChange"
+            @expand-change="handleExpandChange"
 
 
   >

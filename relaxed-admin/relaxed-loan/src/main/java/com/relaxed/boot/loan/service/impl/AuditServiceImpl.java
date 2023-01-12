@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.relaxed.boot.loan.model.entity.Audit;
 import com.relaxed.boot.loan.model.vo.AuditPageVO;
 import com.relaxed.boot.loan.model.qo.AuditQO;
@@ -29,4 +30,9 @@ public class AuditServiceImpl extends ExtendServiceImpl<AuditMapper, Audit> impl
         return baseMapper.queryPage(pageParam, qo);
     }
 
+    @Override
+    public Audit getByOrderId(Long orderId) {
+        return getOne(Wrappers.lambdaQuery(Audit.class)
+                .eq(Audit::getOrderId, orderId));
+    }
 }

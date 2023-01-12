@@ -108,7 +108,7 @@ export default {
     },
     bankCards:{
       type:Array,
-      default:()=>({})
+      default:()=>([])
     }
   },
   components:{

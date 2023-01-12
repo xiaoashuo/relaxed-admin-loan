@@ -27,6 +27,7 @@ public interface BillMapper extends ExtendMapper<Bill> {
    default PageResult<BillPageVO> queryPage(PageParam pageParam, BillQO qo){
 		IPage<Bill> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<Bill> wrapper = WrappersX.lambdaQueryX(Bill.class);
+		wrapper.eq(Bill::getLoanId,qo.getLoanId());
 		this.selectPage(page, wrapper);
 		IPage<BillPageVO> voPage = page.convert(BillConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

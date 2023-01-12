@@ -79,4 +79,13 @@
 		t.created_time,        
 		t.updated_time        
 	</sql>
+    <select id="selectByPage" resultType="com.relaxed.boot.loan.model.vo.TradePageVO">
+		SELECT <include refid="Base_Alias_Column_List"/>,l.`partner_loan_no`,o.`trust_plan_code`,o.`trust_plan_name`,
+			   o.`product_code`,o.`product_name`,l.`loan_id`
+		FROM `t_trade` t
+				 LEFT JOIN  `t_order` o ON t.`order_id`=o.`order_id`
+				 LEFT JOIN  `t_loan` l  ON  t.`order_id`=l.`order_id`
+				 LEFT JOIN  `t_order_customer` oc ON t.`order_id`=oc.order_id
+      ${ew.customSqlSegment}
+	</select>
 </mapper>

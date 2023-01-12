@@ -1,6 +1,10 @@
 package com.relaxed.boot.loan.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.relaxed.boot.loan.converter.BillItemFillerConverter;
+import com.relaxed.boot.loan.model.entity.BillItem;
 import com.relaxed.boot.loan.model.entity.BillItemFiller;
+import com.relaxed.boot.loan.model.qo.BillItemQO;
 import com.relaxed.boot.loan.model.vo.BillItemFillerPageVO;
 import com.relaxed.boot.loan.model.qo.BillItemFillerQO;
 import com.relaxed.boot.loan.mapper.BillItemFillerMapper;
@@ -9,6 +13,8 @@ import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 
@@ -29,4 +35,10 @@ public class BillItemFillerServiceImpl extends ExtendServiceImpl<BillItemFillerM
         return baseMapper.queryPage(pageParam, qo);
     }
 
+    @Override
+    public List<BillItemFillerPageVO> queryList(BillItemFillerQO billItemFillerQO) {
+        List<BillItemFiller> list = list(Wrappers.lambdaQuery(BillItemFiller.class)
+                .eq(BillItemFiller::getBillItemId, billItemFillerQO.getBillItemId()));
+        return BillItemFillerConverter.INSTANCE.poToPageVos(list);
+    }
 }

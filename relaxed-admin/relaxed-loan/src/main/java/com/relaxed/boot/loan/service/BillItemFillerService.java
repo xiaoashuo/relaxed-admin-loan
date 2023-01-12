@@ -1,11 +1,14 @@
 package com.relaxed.boot.loan.service;
 
 import com.relaxed.boot.loan.model.entity.BillItemFiller;
+import com.relaxed.boot.loan.model.qo.BillItemQO;
 import com.relaxed.boot.loan.model.vo.BillItemFillerPageVO;
 import com.relaxed.boot.loan.model.qo.BillItemFillerQO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
+
+import java.util.List;
 
 /**
  * 
@@ -22,4 +25,5 @@ public interface BillItemFillerService extends ExtendService<BillItemFiller> {
     */
     PageResult<BillItemFillerPageVO> queryPage(PageParam pageParam, BillItemFillerQO qo);
 
+    List<BillItemFillerPageVO> queryList(BillItemFillerQO billItemQO);
 }

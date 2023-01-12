@@ -160,6 +160,18 @@ public class TradePageVO {
      */
     @Schema(title = "更新时间", description = "更新时间")
     private LocalDateTime updatedTime;
-    
+
+    @Schema(description = "借据编号")
+    private String partnerLoanNo;
+    @Schema(description = "产品code")
+    private String productCode;
+    @Schema(description = "产品名称")
+    private String productName;
+    @Schema(description = "信托计划名称")
+    private String trustPlanName;
+    @Schema(description = "信托计划code")
+    private String trustPlanCode;
+    @Schema(description = "借据ID")
+    private Long loanId;
 
 }

@@ -59,6 +59,7 @@
       }
     },
     created() {
+
       this.$nextTick(()=>{
         this.$refs.pageContentRef.searchTable({orderId:this.orderId})
       })

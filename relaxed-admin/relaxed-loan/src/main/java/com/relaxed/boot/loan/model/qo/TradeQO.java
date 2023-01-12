@@ -19,5 +19,6 @@ public class TradeQO  {
 	 */
 	@Schema(title = "交易编号", description = "交易编号")
 	private Long tradeId;
-
+	@Schema(title = "订单id", description = "订单id")
+	private Long orderId;
 }

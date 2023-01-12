@@ -7,6 +7,8 @@ import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
 
+import java.util.List;
+
 /**
  * 
  *
@@ -21,5 +23,7 @@ public interface BillItemService extends ExtendService<BillItem> {
     * @return PageResult&lt;BillItemPageVO&gt; 分页数据
     */
     PageResult<BillItemPageVO> queryPage(PageParam pageParam, BillItemQO qo);
+
+    List<BillItemPageVO> queryList(BillItemQO billItemQO);
 
 }

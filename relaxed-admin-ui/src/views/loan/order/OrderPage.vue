@@ -35,7 +35,7 @@
    //页面相关请求方法
   import {getPage, addObj, putObj, delObj} from "@/api/loan/order";
 
-  import OrderDetailModel from '@/views/loan/order/OrderDetailModel.vue'
+  import OrderDetailModel from '@/views/loan/order-detail/OrderDetailModel.vue'
   export default {
     name: "OrderPage",
     components:{

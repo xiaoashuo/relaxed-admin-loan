@@ -14,7 +14,7 @@
 
         <template v-for="col in row.cols">
 
-          <el-col v-for="item in col.formItems"  v-bind="item.colLayout">
+          <el-col v-for="item in col.formItems"  v-bind="item.colLayout?item.colLayout:colLayout">
             <template v-if="!item.isHidden && item.type === 'slot'">
               <slot
                 :name="item.slotName"
@@ -68,6 +68,15 @@
                   v-bind="item.config"
                   @input="handleValueChange($event, item.field)"
                 />
+              </template>
+              <template v-else-if="item.type === 'cascader-select'">
+                <cascader-select
+                  :placeholder="item.placeholder"
+                  v-bind="item.config"
+                  :value="modelValue[`${item.field}`]"
+                  @input="handleValueChange($event, item.field)"
+                >
+                </cascader-select>
               </template>
               <template v-else-if="item.type === 'dict-radio-group'">
                 <dict-radio-group
@@ -125,6 +134,17 @@
         type: Array,
         default: () => []
       },
+      //全局列布局
+      colLayout: {
+        type: Object,
+        default: () => ({
+          xl: 6, // >1920 显示4个
+          lg: 8,
+          md: 12,
+          sm: 24,
+          xs: 24
+        })
+      },
       formProps: {
         type: Object,
         default: () => ({
@@ -139,6 +159,7 @@
     data() {
       return {}
     },
+
     methods: {
       handleValueChange(value, field) {
         this.$emit('update:input', { ...this.modelValue, [field]: value })

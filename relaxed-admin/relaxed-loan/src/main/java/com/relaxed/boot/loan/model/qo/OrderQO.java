@@ -20,4 +20,7 @@ public class OrderQO  {
 	@Schema(title = "主键id", description = "主键id")
 	private Long orderId;
 
+	@Schema(title = "合作方业务号", description = "合作方业务号")
+	private String partnerBizNo;
+
 }

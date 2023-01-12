@@ -50,6 +50,15 @@
                   @input="handleValueChange($event, item.field)"
                 />
               </template>
+              <template v-else-if="item.type === 'cascader-select'">
+                <cascader-select
+                                 :placeholder="item.placeholder"
+                                 v-bind="item.config"
+                                 :value="modelValue[`${item.field}`]"
+                                 @input="handleValueChange($event, item.field)"
+                >
+                </cascader-select>
+              </template>
               <template v-else-if="item.type === 'dict-select'">
                 <dict-select
                   :placeholder="item.placeholder"
@@ -105,12 +114,14 @@
 
 <script>
 import {YiRadioGroup} from '@/components/radio'
-import { YiSelect, YiTreeSelect } from '@/components/select'
+import { YiSelect, YiTreeSelect ,CascaderSelect} from '@/components/select'
 import {YiUpload} from '@/components/upload'
+
 
 export default {
   name: 'YiForm',
   components: {
+    CascaderSelect,
     YiRadioGroup,
     YiSelect,
     YiTreeSelect,

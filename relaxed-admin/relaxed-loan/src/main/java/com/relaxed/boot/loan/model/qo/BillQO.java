@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  *  查询对象
  *
@@ -19,5 +21,7 @@ public class BillQO  {
 	 */
 	@Schema(title = "账单编号", description = "账单编号")
 	private Long billId;
-
+	@NotNull(message = "借据编号不存在")
+	@Schema(title = "借款编号", description = "借款编号")
+	private Long loanId;
 }

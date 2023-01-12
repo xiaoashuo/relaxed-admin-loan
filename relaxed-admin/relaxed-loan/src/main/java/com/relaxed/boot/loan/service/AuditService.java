@@ -22,4 +22,5 @@ public interface AuditService extends ExtendService<Audit> {
     */
     PageResult<AuditPageVO> queryPage(PageParam pageParam, AuditQO qo);
 
+    Audit getByOrderId(Long orderId);
 }

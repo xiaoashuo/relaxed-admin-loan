@@ -6,7 +6,12 @@ export function getPage(query) {
     params: query
   })
 }
-
+export function getList(query) {
+  return yiRequest.get({
+    url: '/loan/bill-item-filler/list',
+    params: query,
+  })
+}
 export function addObj(obj) {
   return yiRequest.post({
     url: '/loan/bill-item-filler',

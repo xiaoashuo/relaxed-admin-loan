@@ -5,6 +5,8 @@ import com.relaxed.boot.loan.model.vo.BillItemFillerPageVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 /**
  * 模型转换器
  *
@@ -21,5 +23,6 @@ public interface BillItemFillerConverter {
 	 * @return BillItemFillerPageVO PageVO
 	 */
 	BillItemFillerPageVO poToPageVo(BillItemFiller billItemFiller);
+	List<BillItemFillerPageVO> poToPageVos(List<BillItemFiller> billItemFillers);
 
 }

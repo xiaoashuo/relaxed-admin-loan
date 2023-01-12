@@ -7,7 +7,11 @@
     <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
-    ></pro-table>
+    >
+      <template #repayType="scope">
+        <dict-text dict-code="repay_type" :value="scope.row.repayType"></dict-text>
+      </template>
+    </pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :req-function="reqFunction"
@@ -21,14 +25,14 @@
 <script>
 
   //页面配置参数
-  import {contentTableConfig} from "./config/content.table.config";
+  import {contentTableConfig} from "./config/repayment.content.table.config";
   import {searchFormConfig} from "./config/search.form.config";
   import {modalFormConfig} from "./config/modal.form.config";
   //页面相关请求方法
-  import {getPage, addObj, putObj, delObj} from "@/api/loan/trade";
+  import {getTradeRepaymentPage, addObj, putObj, delObj} from "@/api/loan/trade";
 
   export default {
-    name: "TradePage",
+    name: "TradeRepaymentPage",
     data() {
       return {
         //页面相关配置
@@ -36,7 +40,7 @@
         searchFormConfig: searchFormConfig,
         modalConfig: modalFormConfig,
         //表格请求
-        tableRequest: getPage,
+        tableRequest: getTradeRepaymentPage,
         //表单请求
         reqFunction: {
           create: addObj,

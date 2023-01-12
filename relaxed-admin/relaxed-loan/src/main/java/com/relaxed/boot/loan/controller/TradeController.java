@@ -44,11 +44,17 @@ public class TradeController {
      * @param tradeQO 查询对象
      * @return R 通用返回体
      */
-    @Operation(summary = "分页查询")
-    @GetMapping("/page" )
-    public R<PageResult<TradePageVO>> getTradePage(
+    @Operation(summary = "还款明细分页查询")
+    @GetMapping("/page/repayment" )
+    public R<PageResult<TradePageVO>> queryRepaymentPage(
             PageParam pageParam, TradeQO tradeQO) {
-        return R.ok(tradeService.queryPage(pageParam, tradeQO));
+        return R.ok(tradeService.queryRepaymentPage(pageParam, tradeQO));
+    }
+    @Operation(summary = "放款明细分页查询")
+    @GetMapping("/page/loan" )
+    public R<PageResult<TradePageVO>> queryLoanPage(
+            PageParam pageParam, TradeQO tradeQO) {
+        return R.ok(tradeService.queryLoanPage(pageParam, tradeQO));
     }
 
     /**

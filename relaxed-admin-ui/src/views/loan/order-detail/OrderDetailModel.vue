@@ -8,12 +8,12 @@
   >
     <el-tabs type="border-card" stretch v-model="activeName" @tab-click="handleClick">
       <el-tab-pane label="订单详情" name="detail">
-        <view-order-detail :order="orderInfo.order"></view-order-detail>
+        <view-order-detail :order="orderInfo.order" :audit-info="orderInfo.auditInfo"></view-order-detail>
       </el-tab-pane>
       <el-tab-pane label="个人信息" name="personInfo">
         <view-person-info :customerInfo="orderInfo.orderCustomer" :bankCards="orderInfo.orderBankCardList"></view-person-info>
       </el-tab-pane>
-      <el-tab-pane label="房屋相关信息" name="houseInfo">房屋相关信息</el-tab-pane>
+
       <el-tab-pane label="共同借款人" name="borrowInfo">
         <view-order-borrow :orderId="item.orderId" ref="orderBorrowRef"></view-order-borrow>
       </el-tab-pane>
@@ -27,10 +27,10 @@
 <script>
 import formModalMixin from "@/mixins/form/formModalMixin";
 
-import ViewOrderDetail from '@/views/loan/order/ViewOrderDetail.vue'
-import ViewOrderBorrow from '@/views/loan/order/ViewOrderBorrow.vue'
-import ViewOrderAnnex from '@/views/loan/order/ViewOrderAnnex.vue'
-import ViewPersonInfo from '@/views/loan/order/ViewPersonInfo.vue'
+import ViewOrderDetail from '@/views/loan/order-detail/ViewOrderDetail.vue'
+import ViewOrderBorrow from '@/views/loan/order-detail/ViewOrderBorrow.vue'
+import ViewOrderAnnex from '@/views/loan/order-detail/ViewOrderAnnex.vue'
+import ViewPersonInfo from '@/views/loan/order-detail/ViewPersonInfo.vue'
 import {getDetail} from '@/api/loan/order'
 
 export default {

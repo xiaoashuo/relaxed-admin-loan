@@ -30,6 +30,7 @@
               @row-dblclick="handleRowDbClick"
       @sort-change="handleSortChange"
       @header-click="handleHeaderClick"
+              @expand-change="handleExpandChange"
      >
       <el-table-column v-if="showSelectColumn" type="selection"  align="center" min-width="60"></el-table-column>
 
@@ -142,6 +143,9 @@
         },
         handleSortChange({column, prop, order}){
           this.$emit('sort-change', {column, prop, order})
+        },
+        handleExpandChange(row,expanded){
+          this.$emit('expand-change', row,expanded)
         },
         handleRowDbClick(row, column, event){
          this.$emit('row-dblclick',row,column,event)

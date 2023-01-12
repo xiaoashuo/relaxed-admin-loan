@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.relaxed.extend.mybatis.plus.alias.TableAlias;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("t_trade")
+@TableAlias("t")
 @Schema(title = "")  
 public class Trade {
 

@@ -19,5 +19,6 @@ public class BillItemFillerQO  {
 	 */
 	@Schema(title = "填充项编号", description = "填充项编号")
 	private Long itemFillerId;
-
+	@Schema(title = "账单科目表", description = "账单科目表")
+	private Long billItemId;
 }

@@ -2,7 +2,9 @@ package com.relaxed.boot.loan.controller;
 
 import com.relaxed.boot.loan.model.entity.Loan;
 import com.relaxed.boot.loan.model.qo.LoanQO;
+import com.relaxed.boot.loan.model.vo.LoanDetailVO;
 import com.relaxed.boot.loan.model.vo.LoanPageVO;
+import com.relaxed.boot.loan.model.vo.OrderDetailVO;
 import com.relaxed.boot.loan.service.LoanService;
 import com.relaxed.common.log.operation.annotation.CreateLog;
 import com.relaxed.common.log.operation.annotation.DeleteLog;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -32,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan/loan" )
+@RequestMapping("/loan" )
 @Tag(name = "借款合同表管理")
 public class LoanController {
 
@@ -50,7 +53,11 @@ public class LoanController {
             PageParam pageParam, LoanQO loanQO) {
         return R.ok(loanService.queryPage(pageParam, loanQO));
     }
-
+    @Operation(summary = "借据详情")
+    @GetMapping("/detail" )
+    public R<LoanDetailVO> getOrderDetail(@RequestParam Long loanId) {
+        return R.ok(loanService.getLoanDetail(loanId));
+    }
     /**
      * 新增借款合同表
      * @param loan 借款合同表
