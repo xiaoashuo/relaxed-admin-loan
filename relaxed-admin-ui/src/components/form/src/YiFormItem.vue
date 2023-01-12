@@ -1,13 +1,7 @@
 <template>
- <div>
-   <template v-if="!item.isHidden && item.type === 'slot'">
-     <slot
-       :name="item.slotName"
-       :row="{ item, data: modelValue }"
-     />
-   </template>
+
    <el-form-item
-     v-if="!item.isHidden && item.type !== 'slot'"
+     class="yi-form-item"
      :label="item.label"
      :prop="item.field"
      :rules="item.rules"
@@ -84,13 +78,28 @@
          @input="handleValueChange($event, item.field)"
        />
      </template>
+     <template v-else-if="item.type === 'upload'">
+       <yi-upload  v-bind="item.config"  :value="modelValue[`${item.field}`]"
+                   @input="handleValueChange($event, item.field)"></yi-upload>
+
+     </template>
    </el-form-item>
- </div>
+
 </template>
 
 <script>
+import {YiRadioGroup} from '@/components/radio'
+import { YiSelect, YiTreeSelect ,CascaderSelect} from '@/components/select'
+import {YiUpload} from '@/components/upload'
 export default {
-  name: 'Col',
+  name: 'YiCol',
+  components:{
+    YiRadioGroup,
+    YiSelect,
+    YiTreeSelect,
+    CascaderSelect,
+    YiUpload
+  },
   props:{
     modelValue: {
       type: Object,
