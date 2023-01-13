@@ -23,6 +23,8 @@
     <order-detail-model ref="orderDetailRef"></order-detail-model>
 
 
+    <order-form-modal ref="orderFormRef"></order-form-modal>
+
 
   </div>
 </template>
@@ -36,10 +38,11 @@
   import {getPage, addObj, putObj, delObj} from "@/api/loan/order";
 
   import OrderDetailModel from '@/views/loan/order-detail/OrderDetailModel.vue'
+  import OrderFormModal from '@/views/loan/order/OrderFormModal.vue'
   export default {
     name: "OrderPage",
     components:{
-      OrderDetailModel
+      OrderDetailModel,OrderFormModal
     },
     data() {
       return {
@@ -55,7 +58,7 @@
     methods: {
       //表格相关
       showNewModal() {
-        this.$refs.formModal.add({title: '新增'})
+        this.$refs.orderFormRef.add({title: '新增订单'})
       },
       showEditModal(item) {
         this.$refs.formModal.update({title: '编辑', item})

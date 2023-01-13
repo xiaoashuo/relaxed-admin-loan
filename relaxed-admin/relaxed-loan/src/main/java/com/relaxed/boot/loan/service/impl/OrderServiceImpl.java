@@ -3,6 +3,7 @@ package com.relaxed.boot.loan.service.impl;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.relaxed.boot.loan.model.dto.OrderDTO;
 import com.relaxed.boot.loan.model.entity.Audit;
 import com.relaxed.boot.loan.model.entity.Order;
 import com.relaxed.boot.loan.model.entity.OrderBankCard;
@@ -56,6 +57,60 @@ public class OrderServiceImpl extends ExtendServiceImpl<OrderMapper, Order> impl
     public Order getByPartnerBizNo(String partnerBizNo) {
         return getOne(Wrappers.lambdaQuery(Order.class )
                 .eq(Order::getPartnerBizNo,partnerBizNo));
+    }
+
+    @Override
+    public OrderDTO getOrderFormDetailDTO(Long orderId) {
+        Order order = getById(orderId);
+        Assert.notNull(order, "订单{}信息不存在",orderId);
+        OrderCustomer orderCustomer = orderCustomerService.getByOrderId(orderId);
+        OrderDTO orderDTO = new OrderDTO();
+        orderDTO.setOrderId(orderId);
+        orderDTO.setPeriodUnit(order.getPeriodUnit());
+        orderDTO.setInterestRateUnit(order.getInterestRateUnit());
+        orderDTO.setRepaymentWay(order.getRepaymentWay());
+        orderDTO.setApplyAmount(order.getApplyAmount());
+        orderDTO.setPartnerBizNo(order.getPartnerBizNo());
+        orderDTO.setLoanPeriod(order.getLoanPeriod());
+        orderDTO.setInterestRate(order.getInterestRate());
+        orderDTO.setProductCode(order.getProductCode());
+        orderDTO.setTrustPlanCode(order.getTrustPlanCode());
+        orderDTO.setRealName(orderCustomer.getRealName());
+        orderDTO.setMobileNo(orderCustomer.getMobileNo());
+        orderDTO.setCertificateNo(orderCustomer.getCertificateNo());
+        orderDTO.setEmail(orderCustomer.getEMail());
+        orderDTO.setCertificateStartDate(orderCustomer.getCertificateValidityDate());
+        orderDTO.setCertificateEndDate(orderCustomer.getCertificateExpiryDate());
+        orderDTO.setResidenceAddress(orderCustomer.getResidenceAddress());
+        orderDTO.setMailingAddress(orderCustomer.getMailingAddress());
+        orderDTO.setResidenceCode(orderCustomer.getResidenceCode());
+        orderDTO.setMailingCode(orderCustomer.getMailingCode());
+        orderDTO.setJobYears(orderCustomer.getJobYears());
+        orderDTO.setAnnualIncome(orderCustomer.getAnnualIncome());
+        orderDTO.setCompanyName(orderCustomer.getCompanyName());
+        orderDTO.setGraceDays(order.getGraceDays());
+        orderDTO.setPenaltyRate(order.getPenaltyInterestRate());
+        orderDTO.setEmploymentStatus(orderCustomer.getEmploymentStatus());
+        orderDTO.setProfessionCode(orderCustomer.getProfessionCode());
+        orderDTO.setLoanPurpose(order.getLoanPurpose());
+        orderDTO.setContractNo(order.getPartnerContractNo());
+        orderDTO.setGuaranteeWay(order.getGuaranteeWay());
+        orderDTO.setInvestType(order.getInvestType());
+        orderDTO.setBusinessDetail(order.getBusinessDetail());
+        orderDTO.setIndustryDetail(order.getIndustryDetail());
+        orderDTO.setRepaymentSource(order.getRepaymentSource());
+        orderDTO.setInvestIndustry(order.getInvestIndustry());
+        orderDTO.setLoanType(order.getLoanType());
+        orderDTO.setCertificateType(orderCustomer.getCertificateType());
+        orderDTO.setCustomType(orderCustomer.getCustomType());
+        orderDTO.setGender(orderCustomer.getGender());
+        orderDTO.setAge(orderCustomer.getAge());
+        orderDTO.setBirthDate(orderCustomer.getBirthDate());
+        orderDTO.setLoanPeriod(order.getLoanPeriod());
+        orderDTO.setInterestRate(order.getInterestRate());
+        orderDTO.setAnnualIncome(orderCustomer.getAnnualIncome());
+        orderDTO.setGraceDays(order.getGraceDays());
+        return orderDTO;
     }
 
     @Override

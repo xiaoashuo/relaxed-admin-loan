@@ -73,6 +73,7 @@
      <template v-else-if="item.type === 'datepicker'">
        <el-date-picker
          style="width: 100%"
+         :placeholder="item.placeholder"
          v-bind="item.config"
          :value="modelValue[`${item.field}`]"
          @input="handleValueChange($event, item.field)"
@@ -111,9 +112,8 @@ export default {
     }
   },
   methods:{
-
       handleValueChange(value, field) {
-        this.$emit('update:input', { ...this.modelValue, [field]: value })
+        this.$emit('itemChange',  value,field)
       },
 
 

@@ -1,6 +1,7 @@
 <template>
   <div class="yi-select">
-    <el-select :placeholder="placeholder" v-bind="otherProps" :value="this.selectValue"
+    <el-select :placeholder="placeholder" v-bind="nativeProps"
+               :value="this.selectValue"
     @change="handleChange">
       <el-option style="width: 100%;"
                  v-for="option in selectData" :key="option.value"
@@ -19,7 +20,7 @@
           type: String,
           default: '请选择'
         },
-        otherProps:{
+        nativeProps:{
           type: Object,
           default: ()=>({})
         },

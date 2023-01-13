@@ -13,17 +13,19 @@
       <el-row v-for="row in rows" v-bind="row.layout" >
 
         <template v-for="col in row.cols">
-
-          <el-col v-for="item in col.formItems"  v-bind="item.colLayout?item.colLayout:colLayout">
-            <template v-if="!item.isHidden && item.type === 'slot'">
-              <slot
-                :name="item.slotName"
-                :row="{ item, data: modelValue }"
-              />
+          <el-col v-bind="col.colLayout?col.colLayout:colLayout">
+            <template v-for="item in col.formItems">
+              <template v-if="!item.isHidden && item.type === 'slot'">
+                <slot
+                  :name="item.slotName"
+                  :row="{ item, data: modelValue }"
+                />
+              </template>
+              <yi-form-item   @itemChange="handleValueChange"    v-if="!item.isHidden && item.type !== 'slot'"
+                                 :item="item" :model-value="modelValue"></yi-form-item>
             </template>
-            <yi-form-item      v-if="!item.isHidden && item.type !== 'slot'"
-                               :item="item" :model-value="modelValue"></yi-form-item>
           </el-col>
+
         </template>
       </el-row>
     </el-form>
@@ -82,7 +84,9 @@
     },
 
     methods: {
-
+      handleValueChange(value, field) {
+        this.$emit('update:input', { ...this.modelValue, [field]: value })
+      },
       getCurrentForm() {
         return this.$refs['inner-form']
       }

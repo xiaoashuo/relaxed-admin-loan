@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.service;
 
+import com.relaxed.boot.loan.model.dto.OrderDTO;
 import com.relaxed.boot.loan.model.entity.Order;
 import com.relaxed.boot.loan.model.vo.OrderDetailVO;
 import com.relaxed.boot.loan.model.vo.OrderPageVO;
@@ -26,4 +27,6 @@ public interface OrderService extends ExtendService<Order> {
     Order getByPartnerBizNo(String partnerBizNo);
 
     OrderDetailVO getOrderDetail(Long orderId);
+
+    OrderDTO getOrderFormDetailDTO(Long orderId);
 }

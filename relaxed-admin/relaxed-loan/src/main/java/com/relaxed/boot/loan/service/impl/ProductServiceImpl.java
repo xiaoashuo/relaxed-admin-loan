@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.relaxed.boot.loan.model.entity.Product;
 import com.relaxed.boot.loan.model.vo.ProductPageVO;
 import com.relaxed.boot.loan.model.qo.ProductQO;
@@ -39,10 +40,15 @@ public class ProductServiceImpl extends ExtendServiceImpl<ProductMapper, Product
 		List<SelectData> productSelectData = productList.stream().map(e -> {
 			SelectData<Void> selectData = new SelectData<>();
 			selectData.setLabel(e.getProductName());
-			selectData.setValue(e.getProductId());
+			selectData.setValue(e.getProductCode());
 			return selectData;
 		}).collect(Collectors.toList());
 		return productSelectData;
 	}
 
+	@Override
+	public Product getByProductCode(Integer productCode) {
+		return getOne(Wrappers.lambdaQuery(Product.class )
+				.eq(Product::getProductCode,productCode));
+	}
 }

@@ -28,7 +28,7 @@ export default {
   },
   data(){
     return{
-      selectValue:[],
+      selectValue:this.value,
       selectData:[]
 
     }
@@ -36,6 +36,7 @@ export default {
   created() {
      this.reloadData()
   },
+
   watch:{
     value(){
       this.selectValue=this.value

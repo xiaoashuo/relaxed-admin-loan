@@ -115,7 +115,7 @@
               placeholder:'请选择角色',
               remoteLoad: true,
               request: getRoleSelectData,
-              otherProps:{
+              nativeProps:{
                 multiple: true
               }
             },

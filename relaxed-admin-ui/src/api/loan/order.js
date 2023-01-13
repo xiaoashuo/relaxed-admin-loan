@@ -6,6 +6,12 @@ export function getPage(query) {
     params: query
   })
 }
+export function getFormDetail(orderId) {
+  return yiRequest.get({
+    url: '/loan/order/form/detail',
+    params: { orderId:orderId }
+  })
+}
 export function getDetail(query) {
   return yiRequest.get({
     url: '/loan/order/detail',

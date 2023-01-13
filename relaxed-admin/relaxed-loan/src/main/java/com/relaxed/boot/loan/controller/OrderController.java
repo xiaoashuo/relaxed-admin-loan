@@ -1,5 +1,8 @@
 package com.relaxed.boot.loan.controller;
 
+import com.relaxed.boot.loan.manage.OrderManage;
+import com.relaxed.boot.loan.model.dto.OrderDTO;
+import com.relaxed.boot.loan.model.dto.SaveOrderResult;
 import com.relaxed.boot.loan.model.entity.Order;
 import com.relaxed.boot.loan.model.qo.OrderBorrowQO;
 import com.relaxed.boot.loan.model.qo.OrderQO;
@@ -41,6 +44,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
 
     private final  OrderService orderService;
+    private final OrderManage orderManage;
 
     /**
      * 分页查询
@@ -54,7 +58,11 @@ public class OrderController {
             PageParam pageParam, OrderQO orderQO) {
         return R.ok(orderService.queryPage(pageParam, orderQO));
     }
-
+    @Operation(summary = "订单详情")
+    @GetMapping("/form/detail" )
+    public R<OrderDTO> getOrderFormDetailDTO(@RequestParam Long orderId) {
+        return R.ok(orderService.getOrderFormDetailDTO(orderId));
+    }
 
     @Operation(summary = "订单详情")
     @GetMapping("/detail" )
@@ -69,9 +77,8 @@ public class OrderController {
     @Operation(summary = "新增")
     @CreateLog(msg = "新增" )
     @PostMapping
-    public R<Void> save(@RequestBody Order order) {
-        return orderService.save(order) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增失败");
+    public R<SaveOrderResult> saveOrder(@RequestBody OrderDTO orderDTO) {
+        return R.ok(orderManage.saveOrder(orderDTO)) ;
     }
 
     /**

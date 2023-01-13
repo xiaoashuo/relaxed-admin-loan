@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.relaxed.boot.loan.model.entity.TrustPlan;
 import com.relaxed.boot.loan.model.vo.TrustPlanPageVO;
 import com.relaxed.boot.loan.model.qo.TrustPlanQO;
@@ -39,10 +40,14 @@ public class TrustPlanServiceImpl extends ExtendServiceImpl<TrustPlanMapper, Tru
 		List<SelectData> selectDataList = trustPlanList.stream().map(e -> {
 			SelectData<Void> selectData = new SelectData<>();
 			selectData.setLabel(e.getTrustPlanName());
-			selectData.setValue(e.getTrustPlanId());
+			selectData.setValue(e.getTrustPlanNo());
 			return selectData;
 		}).collect(Collectors.toList());
 		return selectDataList;
 	}
 
+	@Override
+	public TrustPlan getByTrustPlanCode(Integer trustPlanCode) {
+		return getOne(Wrappers.lambdaQuery(TrustPlan.class).eq(TrustPlan::getTrustPlanNo, trustPlanCode));
+	}
 }

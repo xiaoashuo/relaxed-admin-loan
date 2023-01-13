@@ -19,7 +19,7 @@
                 :row="{ item, data: modelValue }"
               />
             </template>
-            <yi-form-item      v-if="!item.isHidden && item.type !== 'slot'"
+            <yi-form-item    @itemChange="handleValueChange"    v-if="!item.isHidden && item.type !== 'slot'"
                                :item="item" :model-value="modelValue"></yi-form-item>
           </el-col>
         </template>
@@ -82,7 +82,9 @@ export default {
   },
 
   methods: {
-
+    handleValueChange(value, field) {
+      this.$emit('update:input', { ...this.modelValue, [field]: value })
+    },
     getCurrentForm() {
       return this.$refs['inner-form']
     }

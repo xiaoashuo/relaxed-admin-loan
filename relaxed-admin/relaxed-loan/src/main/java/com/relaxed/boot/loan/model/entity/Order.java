@@ -202,7 +202,7 @@ http://49.234.128.78/showdoc/web/#/27?page_id=1176
 	 * 利率单位（1:日利率 30:月利率 365:年利率）
 	 */
     @Schema(title = "利率单位（1:日利率 30:月利率 365:年利率）", description = "利率单位（1:日利率 30:月利率 365:年利率）")
-	private String interestRateUnit;
+	private Integer interestRateUnit;
     
 	/**
 	 * 利率
@@ -312,7 +312,7 @@ http://49.234.128.78/showdoc/web/#/27?page_id=1176
 99-未知
 	 */
     @Schema(title = "贷款用途", description = "贷款用途")
-	private String loanPurpose;
+	private Integer loanPurpose;
     
 	/**
 	 * 还款来源（116101 经营性现金流

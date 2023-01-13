@@ -27,6 +27,7 @@ public interface OrderBankCardMapper extends ExtendMapper<OrderBankCard> {
    default PageResult<OrderBankCardPageVO> queryPage(PageParam pageParam, OrderBankCardQO qo){
 		IPage<OrderBankCard> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<OrderBankCard> wrapper = WrappersX.lambdaQueryX(OrderBankCard.class);
+		wrapper.eqIfPresent(OrderBankCard::getOrderId,qo.getOrderId());
 		this.selectPage(page, wrapper);
 		IPage<OrderBankCardPageVO> voPage = page.convert(OrderBankCardConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

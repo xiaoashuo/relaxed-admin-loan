@@ -32,7 +32,7 @@ export const modalAuthConfig= {
 
         remoteLoad: true,
         request: getRoleSelectData,
-        otherProps:{
+        nativeProps:{
           multiple: true,
         }
       }

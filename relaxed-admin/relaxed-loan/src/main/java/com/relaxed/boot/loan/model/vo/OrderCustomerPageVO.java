@@ -75,7 +75,7 @@ public class OrderCustomerPageVO {
 0-未知的性别1-男性2-女性9-未说明的性别
      */
     @Schema(title = "性别")
-    private String gender;
+    private Integer gender;
     
     /**
      * 年龄
@@ -202,7 +202,7 @@ public class OrderCustomerPageVO {
 99-未知
      */
     @Schema(title = "就业状态")
-    private String employmentStatus;
+    private Integer employmentStatus;
     
     /**
      * 职业
@@ -337,7 +337,7 @@ E-建筑业F-批发和零售业G-交通运输、仓储和邮储业H-住宿和餐
      * 年收入
      */
     @Schema(title = "年收入", description = "年收入")
-    private String annualIncome;
+    private Integer annualIncome;
     
     /**
      * 证件有效期起始日期

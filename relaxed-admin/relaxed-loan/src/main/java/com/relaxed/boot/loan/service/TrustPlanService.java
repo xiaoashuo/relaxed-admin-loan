@@ -27,4 +27,5 @@ public interface TrustPlanService extends ExtendService<TrustPlan> {
 
 	List<SelectData> querySelectData();
 
+    TrustPlan getByTrustPlanCode(Integer trustPlanCode);
 }

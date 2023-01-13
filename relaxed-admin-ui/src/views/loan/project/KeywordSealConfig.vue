@@ -33,7 +33,7 @@
           remoteLoad: true,
           request: getSealSelectData,
 
-          otherProps:{
+          nativeProps:{
 
             clearable: true
           }

@@ -125,6 +125,13 @@ const yiRequest = new YiRequest({
           })
           store.dispatch('auth/logout')
         }
+        if (error.response.status === 500) {
+          Notification.error({
+            title: 'Error',
+            message: data.message,
+            duration: 1 * 1000
+          })
+        }
       }
       return Promise.reject(error)
     }

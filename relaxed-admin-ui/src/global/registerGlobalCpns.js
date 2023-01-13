@@ -1,5 +1,6 @@
 import PageSearch from '@/components/page-search'
 import ProTable from "@/components/table/src/ProTable";
+import ProForm from '@/components/form/src/ProForm.vue'
 import FormModal from "@/components/form/src/FormModal";
 import ProFormModal from '@/components/form/src/ProFormModal'
 import {DictRadioGroup,DictSelect,DictCheckBoxGroup,DictText,DictTag} from "@/components/dict";
@@ -16,6 +17,7 @@ export function registerComponents(Vue) {
 
   Vue.component('FormModal',FormModal)
   Vue.component('ProFormModal',ProFormModal)
+  Vue.component('ProForm',ProForm)
   Vue.component('ProTable',ProTable)
 
   Vue.component('PageSearch',PageSearch)

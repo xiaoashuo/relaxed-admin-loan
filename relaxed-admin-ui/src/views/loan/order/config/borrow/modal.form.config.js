@@ -6,7 +6,7 @@ export const modalFormConfig= {
 
 
 
-         {
+    {
       type:'text',
       label: '姓名',
       field:'relatedName',
@@ -14,10 +14,10 @@ export const modalFormConfig= {
       rules:[
         { required: true, message: '请输入姓名', trigger: 'blur' },
       ]
-      },
+    },
 
 
-         {
+    {
       type:'text',
       label: '证件号码',
       field:'certificateNo',
@@ -25,10 +25,10 @@ export const modalFormConfig= {
       rules:[
         { required: true, message: '请输入证件号码', trigger: 'blur' },
       ]
-      },
+    },
 
 
-         {
+    {
       type:'text',
       label: '手机号',
       field:'mobileNo',
@@ -36,10 +36,10 @@ export const modalFormConfig= {
       rules:[
         { required: true, message: '请输入手机号', trigger: 'blur' },
       ]
-      },
+    },
 
 
-         {
+    {
       type:'text',
       label: '地址',
       field:'address',
@@ -47,7 +47,7 @@ export const modalFormConfig= {
       rules:[
         { required: true, message: '请输入地址', trigger: 'blur' },
       ]
-      },
+    },
 
 
   ],

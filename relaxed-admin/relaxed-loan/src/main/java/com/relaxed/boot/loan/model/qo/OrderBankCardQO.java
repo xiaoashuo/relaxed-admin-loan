@@ -19,5 +19,6 @@ public class OrderBankCardQO  {
 	 */
 	@Schema(title = "银行卡主键", description = "银行卡主键")
 	private Long bankCardId;
-
+	@Schema(title = "主键id", description = "主键id")
+	private Long orderId;
 }

@@ -144,7 +144,7 @@
         keyStoreConfig:{
           remoteLoad: true,
           request: getCertificateSelectData,
-          otherProps:{
+          nativeProps:{
             clearable: true
           }
         },

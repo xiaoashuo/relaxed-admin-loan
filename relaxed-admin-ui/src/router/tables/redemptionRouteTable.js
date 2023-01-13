@@ -36,12 +36,7 @@ export default [
     //指定组件存放路径
     component: () => import('@/views/loan/order-customer/OrderCustomerPage'),
   },
-  {
-    //组件访问路径 与 实际访问路径保持一致
-    path:'/loan/order-guarantor',
-    //指定组件存放路径
-    component: () => import('@/views/loan/order-guarantor/OrderGuarantorPage'),
-  },
+
 
 
   {

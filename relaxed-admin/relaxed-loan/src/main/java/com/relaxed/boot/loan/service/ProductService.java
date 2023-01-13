@@ -27,4 +27,5 @@ public interface ProductService extends ExtendService<Product> {
 
 	List<SelectData> querySelectData();
 
+    Product getByProductCode(Integer productCode);
 }
