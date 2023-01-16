@@ -1,6 +1,8 @@
 package com.relaxed.boot.loan.service.impl;
 
 import cn.hutool.core.lang.Assert;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.relaxed.boot.loan.model.entity.Loan;
 import com.relaxed.boot.loan.model.entity.OrderCustomer;
 import com.relaxed.boot.loan.model.vo.LoanDetailVO;
@@ -14,6 +16,8 @@ import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 借款合同表
@@ -47,5 +51,10 @@ public class LoanServiceImpl extends ExtendServiceImpl<LoanMapper, Loan> impleme
         loanDetailVO.setLoan(loan);
         loanDetailVO.setOrderCustomer(orderCustomer);
         return loanDetailVO;
+    }
+
+    @Override
+    public List<Loan> listByStatus(Integer status) {
+        return list(Wrappers.<Loan>lambdaQuery().eq(Loan::getLoanStatus, status));
     }
 }

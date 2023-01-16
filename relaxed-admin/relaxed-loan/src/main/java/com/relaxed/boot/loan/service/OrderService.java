@@ -9,6 +9,8 @@ import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
 
+import java.util.List;
+
 /**
  * 
  *
@@ -29,4 +31,6 @@ public interface OrderService extends ExtendService<Order> {
     OrderDetailVO getOrderDetail(Long orderId);
 
     OrderDTO getOrderFormDetailDTO(Long orderId);
+
+    List<Order> listByStatus(Integer status);
 }

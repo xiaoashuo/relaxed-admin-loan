@@ -43,18 +43,7 @@ export const contentTableConfig={
       minWidth:180,
       slotName: 'bankName'
     },
-              {
-      prop: 'openBankName',
-      label:'开户行',
-      minWidth:180,
-      slotName: 'openBankName'
-    },
-              {
-      prop: 'openBankUnionBank',
-      label:'开户行（分支行）联行号',
-      minWidth:180,
-      slotName: 'openBankUnionBank'
-    },
+
               {
       prop: 'reserveMobile',
       label:'预留手机号',

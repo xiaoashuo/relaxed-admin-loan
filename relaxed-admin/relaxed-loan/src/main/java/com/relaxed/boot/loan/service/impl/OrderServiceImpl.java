@@ -8,7 +8,6 @@ import com.relaxed.boot.loan.model.entity.Audit;
 import com.relaxed.boot.loan.model.entity.Order;
 import com.relaxed.boot.loan.model.entity.OrderBankCard;
 import com.relaxed.boot.loan.model.entity.OrderCustomer;
-import com.relaxed.boot.loan.model.entity.OrderGuarantor;
 import com.relaxed.boot.loan.model.vo.OrderDetailVO;
 import com.relaxed.boot.loan.model.vo.OrderPageVO;
 import com.relaxed.boot.loan.model.qo.OrderQO;
@@ -16,7 +15,6 @@ import com.relaxed.boot.loan.mapper.OrderMapper;
 import com.relaxed.boot.loan.service.AuditService;
 import com.relaxed.boot.loan.service.OrderBankCardService;
 import com.relaxed.boot.loan.service.OrderCustomerService;
-import com.relaxed.boot.loan.service.OrderGuarantorService;
 import com.relaxed.boot.loan.service.OrderService;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
@@ -26,7 +24,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * 
@@ -37,7 +34,7 @@ import java.util.Optional;
 @Service
 public class OrderServiceImpl extends ExtendServiceImpl<OrderMapper, Order> implements OrderService {
     private final OrderCustomerService orderCustomerService;
-    private final OrderGuarantorService orderGuarantorService;
+
 
     private final OrderBankCardService orderBankCardService;
 
@@ -57,6 +54,11 @@ public class OrderServiceImpl extends ExtendServiceImpl<OrderMapper, Order> impl
     public Order getByPartnerBizNo(String partnerBizNo) {
         return getOne(Wrappers.lambdaQuery(Order.class )
                 .eq(Order::getPartnerBizNo,partnerBizNo));
+    }
+
+    @Override
+    public List<Order> listByStatus(Integer status) {
+        return list(Wrappers.lambdaQuery(Order.class).eq(Order::getOrderStage,status));
     }
 
     @Override
@@ -118,13 +120,11 @@ public class OrderServiceImpl extends ExtendServiceImpl<OrderMapper, Order> impl
         Order order = getById(orderId);
         Assert.notNull(order, "订单{}信息不存在",orderId);
         OrderCustomer orderCustomer= orderCustomerService.getByOrderId(orderId);
-        OrderGuarantor orderGuarantor=orderGuarantorService.getByOrderId(orderId);
         List<OrderBankCard> orderBankCardList= orderBankCardService.listByOrderId(orderId);
         Audit audit=auditService.getByOrderId(orderId);
         OrderDetailVO orderDetailVO = new OrderDetailVO();
         orderDetailVO.setOrder(order);
         orderDetailVO.setOrderCustomer(orderCustomer);
-        orderDetailVO.setOrderGuarantor(orderGuarantor);
         orderDetailVO.setOrderBankCardList(orderBankCardList);
         OrderDetailVO.AuditInfo auditInfo = new OrderDetailVO.AuditInfo();
         auditInfo.setAuditId(audit.getAuditId());

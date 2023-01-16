@@ -60,7 +60,7 @@ public class OrderBankCardController {
     @CreateLog(msg = "新增" )
     @PostMapping
     public R<Void> save(@RequestBody OrderBankCard orderBankCard) {
-        return orderBankCardService.save(orderBankCard) ?
+        return orderBankCardService.saveBankCard(orderBankCard) ?
                 R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增失败");
     }
 

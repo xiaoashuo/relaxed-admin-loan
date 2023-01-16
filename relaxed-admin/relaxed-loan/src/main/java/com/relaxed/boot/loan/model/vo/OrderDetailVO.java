@@ -3,7 +3,6 @@ package com.relaxed.boot.loan.model.vo;
 import com.relaxed.boot.loan.model.entity.Order;
 import com.relaxed.boot.loan.model.entity.OrderBankCard;
 import com.relaxed.boot.loan.model.entity.OrderCustomer;
-import com.relaxed.boot.loan.model.entity.OrderGuarantor;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -23,8 +22,7 @@ public class OrderDetailVO {
     private Order order;
     @Schema(description = "联系人信息")
     private OrderCustomer orderCustomer;
-    @Schema(description = "房屋相关信息")
-    private OrderGuarantor orderGuarantor;
+
 
 
 

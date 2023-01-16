@@ -64,6 +64,8 @@ public class OrderController {
         return R.ok(orderService.getOrderFormDetailDTO(orderId));
     }
 
+
+
     @Operation(summary = "订单详情")
     @GetMapping("/detail" )
     public R<OrderDetailVO> getOrderDetail(@RequestParam Long orderId) {
@@ -79,6 +81,19 @@ public class OrderController {
     @PostMapping
     public R<SaveOrderResult> saveOrder(@RequestBody OrderDTO orderDTO) {
         return R.ok(orderManage.saveOrder(orderDTO)) ;
+    }
+    @Operation(summary = "提交进件")
+    @CreateLog(msg = "提交进件" )
+    @PostMapping("/submit")
+    public R<SaveOrderResult> submitOrder(Long orderId) {
+        return R.ok(orderManage.submitOrder(orderId));
+    }
+    @Operation(summary = "确认放款")
+    @CreateLog(msg = "确认放款" )
+    @PostMapping("/loan/confirm")
+    public R<Void> loanConfirm(Long orderId) {
+        orderManage.loanConfirm(orderId);
+        return R.ok();
     }
 
     /**

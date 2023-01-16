@@ -5,7 +5,10 @@ import com.relaxed.boot.loan.model.vo.BankCodePageVO;
 import com.relaxed.boot.loan.model.qo.BankCodeQO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
+
+import java.util.List;
 
 /**
  * 银行编码表
@@ -21,5 +24,9 @@ public interface BankCodeService extends ExtendService<BankCode> {
     * @return PageResult&lt;BankCodePageVO&gt; 分页数据
     */
     PageResult<BankCodePageVO> queryPage(PageParam pageParam, BankCodeQO qo);
+
+    List<SelectData> querySelectData();
+
+    BankCode getByBankCode(String bankCode);
 
 }

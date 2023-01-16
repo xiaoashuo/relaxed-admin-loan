@@ -25,4 +25,6 @@ public interface OrderBankCardService extends ExtendService<OrderBankCard> {
     PageResult<OrderBankCardPageVO> queryPage(PageParam pageParam, OrderBankCardQO qo);
 
     List<OrderBankCard> listByOrderId(Long orderId);
+
+    boolean saveBankCard(OrderBankCard orderBankCard);
 }

@@ -6,11 +6,19 @@
                :lazy-load="true"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
-    ></pro-table>
+    >
+      <template #accountType="scope">
+        <dict-text dict-code="bank_account_type" :value="scope.row.accountType"></dict-text>
+      </template>
+      <template #cardPurpose="scope">
+        <dict-text dict-code="bank_card_purpose" :value="scope.row.cardPurpose"></dict-text>
+      </template>
+    </pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :append-to-body="true"
                 :req-function="reqFunction"
+                :before-request="beforeRequestDataHandle"
                 @submitSuccess="handleSubmit"
     ></form-modal>
 
@@ -39,11 +47,9 @@ export default {
     }
   },
   created() {
-    if (!this.isCreamForm){
-      this.$nextTick(()=>{
-        this.$refs.pageContentRef.searchTable({orderId:this.orderId})
-      })
-    }
+    this.$nextTick(()=>{
+      this.$refs.pageContentRef.searchTable({orderId:this.orderId})
+    })
 
   },
   watch:{
@@ -78,6 +84,10 @@ export default {
       delObj(item.id).then(res => {
         this.$refs.pageContentRef.refreshTable(false)
       })
+    },
+    beforeRequestDataHandle(formData){
+      formData.orderId=this.orderId
+      return formData
     },
     //模态框相关 提交成功后刷新表格
     handleSubmit(res) {

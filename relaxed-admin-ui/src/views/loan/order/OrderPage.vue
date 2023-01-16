@@ -5,7 +5,7 @@
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
     <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
-               @newBtnClick="showNewModal" @editBtnClick="showEditModal"
+               @newBtnClick="showNewModal"
                @delBtnClick="handleDelClick"
     >
       <template #orderStage="scope">
@@ -15,6 +15,10 @@
         <el-button size="mini" type="text"
                    @click="handleViewClick(scope.row)">查看
         </el-button>
+        <el-button size="mini" type="text"
+                   @click="showEditModal(scope.row)">编辑
+        </el-button>
+
       </template>
 
     </pro-table>
@@ -61,7 +65,7 @@
         this.$refs.orderFormRef.add({title: '新增订单'})
       },
       showEditModal(item) {
-        this.$refs.formModal.update({title: '编辑', item})
+        this.$refs.orderFormRef.update({title: '编辑订单', item})
       },
       //删除数据
       handleDelClick(item) {
@@ -83,7 +87,8 @@
       },
       handleViewClick(row){
         this.$refs.orderDetailRef.update({ title:'订单信息',item:row })
-      }
+      },
+
     }
 
   }

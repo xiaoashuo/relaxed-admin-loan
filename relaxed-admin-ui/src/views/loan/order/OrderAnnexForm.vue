@@ -19,6 +19,8 @@
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :append-to-body="true"
                 :req-function="reqFunction"
+                :before-request="beforeRequestDataHandle"
+                 :before-submit="beforeSubmitDataHandle"
                 @submitSuccess="handleSubmit"
     ></form-modal>
 
@@ -91,6 +93,26 @@ export default {
     //模态框相关 提交成功后刷新表格
     handleSubmit(res) {
       this.$refs.pageContentRef.refreshTable(false)
+    },
+    beforeRequestDataHandle(formData){
+      const uploadData= formData.uploadData
+      let  reqInfo={orderId:this.orderId,fileType:formData.fileType}
+      if (uploadData){
+        const firstData= uploadData[0]
+        reqInfo.fileNo=firstData.fileId
+        reqInfo.fileName=firstData.name
+        reqInfo.fileUrl=firstData.url
+      }
+      return reqInfo
+    },
+    beforeSubmitDataHandle(formData){
+
+      console.log(formData)
+      if (!formData.fileUrl){
+        this.$message.error("上传文件不能为空")
+        return false
+      }
+      return  true
     },
     //搜索框相关 搜索数据
     handleSearchClick(formData) {

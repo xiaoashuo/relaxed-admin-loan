@@ -19,6 +19,7 @@
 
     <div style="text-align: center">
       <el-button  v-if="active==3" @click="close">保存</el-button>
+
       <el-button  @click="close">取消</el-button>
       <el-button v-if="active<3" type="primary" @click="next">下一步</el-button>
       <el-button v-if="active>0" type="primary" @click="prev">上一步</el-button>
@@ -47,16 +48,25 @@ export default {
     }
   },
   methods:{
+    createdFormCallback(payload){
+      this.active=0
+      this.orderId=null
+    },
+    updatedFormCallback(payload){
+      this.active=0
+      this.orderId=payload.item.orderId
+    },
     next() {
       if (this.active==0){
         //准备进入下一页时
         this.saveOrder()
 
-      }
-      if (this.active==1){
+      }else
+      if (this.active==1||this.active==2){
        //准备进入下一页
         this.incrementActiveIndex()
       }
+
 
       // if (this.active++ > 3) this.active = 0;
     },
@@ -77,11 +87,7 @@ export default {
       this.close()
       done()
     },
-    beforeClose(){
-      this.orderId=null
-      this.active=0
-      this.$refs.orderInfoFormRef.resetForm()
-    },
+
   }
 }
 </script>

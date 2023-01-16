@@ -11,6 +11,7 @@
     <form-modal ref="formModal" :modal-config="modalFormConfig"
                 :append-to-body="true"
                 :req-function="reqFunction"
+                :beforeRequest="beforeRequestDataHandle"
                 @submitSuccess="handleSubmit"
     ></form-modal>
 
@@ -41,11 +42,9 @@ export default {
   },
 
   created() {
-    if (!this.isCreamForm){
-      this.$nextTick(()=>{
-        this.$refs.pageContentRef.searchTable({orderId:this.orderId})
-      })
-    }
+    this.$nextTick(()=>{
+      this.$refs.pageContentRef.searchTable({orderId:this.orderId})
+    })
 
   },
   watch:{
@@ -76,6 +75,10 @@ export default {
     handleSubmit(res) {
       this.$refs.pageContentRef.searchTable({orderId:this.orderId})
     },
+    beforeRequestDataHandle(payload){
+      payload.orderId=this.orderId
+      return payload;
+    }
   }
 
 }

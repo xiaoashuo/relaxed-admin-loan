@@ -202,7 +202,7 @@ public class Loan {
 	 * 利率单位（1:日利率 30:月利率 365:年利率）
 	 */
     @Schema(title = "利率单位（1:日利率 30:月利率 365:年利率）", description = "利率单位（1:日利率 30:月利率 365:年利率）")
-	private String interestRateUnit;
+	private Integer interestRateUnit;
     
 	/**
 	 * 利率

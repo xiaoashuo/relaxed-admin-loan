@@ -8,6 +8,8 @@ import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
 
+import java.util.List;
+
 /**
  * 借款合同表
  *
@@ -24,4 +26,6 @@ public interface LoanService extends ExtendService<Loan> {
     PageResult<LoanPageVO> queryPage(PageParam pageParam, LoanQO qo);
 
     LoanDetailVO getLoanDetail(Long loanId);
+
+    List<Loan> listByStatus(Integer status);
 }

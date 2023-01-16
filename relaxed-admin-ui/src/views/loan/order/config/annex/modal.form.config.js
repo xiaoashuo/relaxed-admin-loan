@@ -1,3 +1,4 @@
+import {FILE_UPLOAD_URL} from '@/constants/SysConstants'
 export const modalFormConfig= {
   colLayout:{
     span: 24
@@ -24,13 +25,15 @@ export const modalFormConfig= {
          {
       type:'upload',
       label: '上传文件',
-      field:'fileUrl',
+      field:'uploadData',
       rules:[
         { required: true, message: '请选择文件', trigger: 'blur' },
       ],
            config: {
              limit:1,
-             drag:true
+             drag:true,
+             uploadUrl:FILE_UPLOAD_URL,
+             fileType:['txt','docx','xlsx']
            }
       },
 
