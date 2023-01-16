@@ -42,7 +42,7 @@ public class LoanResultQuery {
         }
         for (Trade trade : tradeList) {
             String partnerBizNo = trade.getPartnerBizNo();
-            BigDecimal splitLine = BigDecimal.valueOf(1200);
+            BigDecimal splitLine = BigDecimal.valueOf(2500);
             BigDecimal tradeAmount = trade.getTradeAmount();
             Loan loan = loanService.getOne(Wrappers.lambdaQuery(Loan.class).eq(Loan::getPartnerBizNo, partnerBizNo)
                     .eq(Loan::getTradeId, trade.getTradeId()));
