@@ -31,7 +31,7 @@ public interface TradeMapper extends ExtendMapper<Trade> {
    default PageResult<TradePageVO> queryRepaymentPage(PageParam pageParam, TradeQO qo){
 	   IPage<TradePageVO> page = this.prodPage(pageParam);
 	   LambdaAliasQueryWrapperX<Trade> wrapper = WrappersX.lambdaAliasQueryX(Trade.class);
-	   wrapper.eq(Trade::getLoanPurpose, LoanEnum.LoanPurpose.LOAN.getVal());
+	   wrapper.eq(Trade::getLoanPurpose, LoanEnum.LoanPurpose.REPAYMENT.getVal());
 	   wrapper.eqIfPresent(Trade::getOrderId,qo.getOrderId());
 	   this.selectByPage(page, wrapper);
 	   return new PageResult<>(page.getRecords(), page.getTotal());
@@ -39,7 +39,7 @@ public interface TradeMapper extends ExtendMapper<Trade> {
 	default PageResult<TradePageVO> queryLoanPage(PageParam pageParam, TradeQO qo){
 		IPage<TradePageVO> page = this.prodPage(pageParam);
 		LambdaAliasQueryWrapperX<Trade> wrapper = WrappersX.lambdaAliasQueryX(Trade.class);
-		wrapper.eq(Trade::getLoanPurpose, LoanEnum.LoanPurpose.REPAYMENT.getVal());
+		wrapper.eq(Trade::getLoanPurpose, LoanEnum.LoanPurpose.LOAN.getVal());
 		wrapper.eqIfPresent(Trade::getOrderId,qo.getOrderId());
 		this.selectByPage(page, wrapper);
 		return new PageResult<>(page.getRecords(), page.getTotal());

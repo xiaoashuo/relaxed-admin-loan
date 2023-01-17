@@ -68,6 +68,7 @@ public class OrderServiceImpl extends ExtendServiceImpl<OrderMapper, Order> impl
         OrderCustomer orderCustomer = orderCustomerService.getByOrderId(orderId);
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setOrderId(orderId);
+        orderDTO.setProjectId(order.getProjectId());
         orderDTO.setPeriodUnit(order.getPeriodUnit());
         orderDTO.setInterestRateUnit(order.getInterestRateUnit());
         orderDTO.setRepaymentWay(order.getRepaymentWay());
@@ -75,8 +76,6 @@ public class OrderServiceImpl extends ExtendServiceImpl<OrderMapper, Order> impl
         orderDTO.setPartnerBizNo(order.getPartnerBizNo());
         orderDTO.setLoanPeriod(order.getLoanPeriod());
         orderDTO.setInterestRate(order.getInterestRate());
-        orderDTO.setProductCode(order.getProductCode());
-        orderDTO.setTrustPlanCode(order.getTrustPlanCode());
         orderDTO.setRealName(orderCustomer.getRealName());
         orderDTO.setMobileNo(orderCustomer.getMobileNo());
         orderDTO.setCertificateNo(orderCustomer.getCertificateNo());

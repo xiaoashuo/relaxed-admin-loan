@@ -18,7 +18,7 @@
     <order-annex-form :orderId="orderId"  :is-cream-form="isCreateForm"  v-if="active==3"></order-annex-form>
 
     <div style="text-align: center">
-      <el-button  v-if="active==3" @click="close">保存</el-button>
+      <el-button  v-if="active==3" @click="handleSubmit">保存</el-button>
 
       <el-button  @click="close">取消</el-button>
       <el-button v-if="active<3" type="primary" @click="next">下一步</el-button>
@@ -35,6 +35,9 @@ import OrderInfoForm from '@/views/loan/order/OrderInfoForm.vue'
 import OrderBorrowForm from '@/views/loan/order/OrderBorrowForm.vue'
 import OrderBankForm from '@/views/loan/order/OrderBankForm.vue'
 import OrderAnnexForm from '@/views/loan/order/OrderAnnexForm.vue'
+
+import {submitOrder} from '@/api/loan/order'
+
 export default {
   name: 'OrderCreateModal',
   mixins:[formModalMixin],
@@ -87,6 +90,12 @@ export default {
       this.close()
       done()
     },
+    handleSubmit(){
+      submitOrder(this.orderId).then(res=>{
+        this.$message.success("保存订单成功")
+        this.close()
+      })
+    }
 
   }
 }

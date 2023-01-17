@@ -5,7 +5,10 @@ import com.relaxed.boot.loan.model.vo.ProjectPageVO;
 import com.relaxed.boot.loan.model.qo.ProjectQO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
+
+import java.util.List;
 
 /**
  * 产品配置表
@@ -21,5 +24,7 @@ public interface ProjectService extends ExtendService<Project> {
 	 * @return PageResult&lt;ProjectPageVO&gt; 分页数据
 	 */
 	PageResult<ProjectPageVO> queryPage(PageParam pageParam, ProjectQO qo);
+
+	List<SelectData> querySelectData();
 
 }

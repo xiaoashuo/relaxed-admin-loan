@@ -51,12 +51,7 @@ public class Order {
     @Schema(title = "批次号", description = "批次号")
 	private String applyBatchNo;
     
-	/**
-	 * 预审编号
-预审接口的凭证
-	 */
-    @Schema(title = "预审编号预审接口的凭证", description = "预审编号预审接口的凭证")
-	private String preAuditNo;
+
     
 	/**
 	 * 地区代码
@@ -64,23 +59,9 @@ public class Order {
     @Schema(title = "地区代码", description = "地区代码")
 	private String regionCode;
     
-	/**
-	 * 
-	 */
-    @Schema(title = "", description = "")
-	private LocalDateTime pushTime;
+
     
-	/**
-	 * 
-	 */
-    @Schema(title = "", description = "")
-	private Long pushFlag;
-    
-	/**
-	 * 云融业务号
-	 */
-    @Schema(title = "云融业务号", description = "云融业务号")
-	private String loanBizNo;
+
     
 	/**
 	 * 地区名称
@@ -134,44 +115,9 @@ public class Order {
     @Schema(title = "订单阶段）", description = "订单阶段")
 	private Integer orderStage;
     
-	/**
-	 * 订单阶段（
-0:待进件
-1:已进件
-2:待签约
-6:待进件
-10:待审批
-11:已审批
-12:审批拒绝
-20:待放款
-21:已放款\还款中
-22:放款失败
-25: 逾期
-30:已结清
-40:回购中
-99:债权置换
-）
-	 */
-    @Schema(title = "订单阶段", description = "订单阶段")
-	private Integer patnerOrderStage;
+
     
-	/**
-	 * 提交状态（0:未提交 1:已提交）
-	 */
-    @Schema(title = "提交状态（0:未提交 1:已提交）", description = "提交状态（0:未提交 1:已提交）")
-	private Integer submitFlag;
-    
-	/**
-	 * 签约状态 0：未签约 1：已电子签约 2：人工签约
-	 */
-    @Schema(title = "签约状态 0：未签约 1：已电子签约 2：人工签约", description = "签约状态 0：未签约 1：已电子签约 2：人工签约")
-	private Integer signFlag;
-    
-	/**
-	 * 订单创建时间即为提交时间
-	 */
-    @Schema(title = "订单创建时间即为提交时间", description = "订单创建时间即为提交时间")
-	private LocalDateTime submitTime;
+
     
 	/**
 	 * 拒绝理由
@@ -228,35 +174,10 @@ http://49.234.128.78/showdoc/web/#/27?page_id=1176
     @Schema(title = "审核通过利率", description = "审核通过利率")
 	private BigDecimal interestRatePassed;
     
-	/**
-	 * 贷款开始日期
-	 */
-    @Schema(title = "贷款开始日期", description = "贷款开始日期")
-	private LocalDate loanStartDate;
+
+
     
-	/**
-	 * 放款日期
-	 */
-    @Schema(title = "放款日期", description = "放款日期")
-	private LocalDate loanDate;
-    
-	/**
-	 * 申请时间
-	 */
-    @Schema(title = "申请时间", description = "申请时间")
-	private LocalDateTime applyDate;
-    
-	/**
-	 * 合作方银行流水
-	 */
-    @Schema(title = "合作方银行流水", description = "合作方银行流水")
-	private String partnerBankSerial;
-    
-	/**
-	 * 贷款到期日
-	 */
-    @Schema(title = "贷款到期日", description = "贷款到期日")
-	private LocalDate loanDueDate;
+
     
 	/**
 	 * 贷款类型（1:流动资金贷款 2:固定资产贷款 3:境外筹资转贷 4:买方信贷 5:出口卖方信贷 6:项目融资 7:其他贷款）
@@ -361,11 +282,7 @@ C01 联保贷款 C99:其他保证贷款 D:信用/免担保贷款 E:组合担保 
     @Schema(title = "合作方合同号", description = "合作方合同号")
 	private String partnerContractNo;
     
-	/**
-	 * 订单对应的进件文件名称
-	 */
-    @Schema(title = "订单对应的进件文件名称", description = "订单对应的进件文件名称")
-	private String orderCsvFileName;
+
     
 	/**
 	 * 收款卡编号
@@ -447,11 +364,7 @@ C01 联保贷款 C99:其他保证贷款 D:信用/免担保贷款 E:组合担保 
     @Schema(title = "更新时间", description = "更新时间")
 	private LocalDateTime updatedTime;
     
-	/**
-	 * 云融资产包编号
-	 */
-    @Schema(title = "云融资产包编号", description = "云融资产包编号")
-	private String assetPkgNo;
+
     
 	/**
 	 * 宽限期天数

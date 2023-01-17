@@ -6,7 +6,11 @@ export function getPage(query) {
     params: query
   })
 }
-
+export function getSelectData() {
+  return yiRequest.get({
+    url: '/loan/project/select',
+  })
+}
 export function addObj(obj) {
   return yiRequest.post({
     url: '/loan/project',

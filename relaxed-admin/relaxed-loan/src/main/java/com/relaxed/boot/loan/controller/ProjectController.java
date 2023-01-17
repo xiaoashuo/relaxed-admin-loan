@@ -9,6 +9,7 @@ import com.relaxed.common.log.operation.annotation.DeleteLog;
 import com.relaxed.common.log.operation.annotation.UpdateLog;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 产品配置表
@@ -47,6 +50,15 @@ public class ProjectController {
 	@GetMapping("/page")
 	public R<PageResult<ProjectPageVO>> getProjectPage(PageParam pageParam, ProjectQO projectQO) {
 		return R.ok(projectService.queryPage(pageParam, projectQO));
+	}
+	/**
+	 * 信托项目下拉列表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "信托项目下拉列表")
+	@GetMapping("/select")
+	public R<List<SelectData>> getProductSelectedList() {
+		return R.ok(projectService.querySelectData());
 	}
 
 	/**

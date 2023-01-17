@@ -58,6 +58,7 @@ public class LoanEnum {
 		GIVE_MONEY_FAIL(22, 22, "放款失败"),
 
 		REPAYMENTING(1, 21, "正常"),
+		CLEAR(2, 30, "结清"),
 
 
 

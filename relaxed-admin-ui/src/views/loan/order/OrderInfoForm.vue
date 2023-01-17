@@ -34,7 +34,7 @@ export default {
   },
   methods:{
     getDefaultForm(){
-      return {
+      return  {
         "age": 18,
         "contractNo": "999987915244",
         "applyAmount": "10000.00",
@@ -76,7 +76,8 @@ export default {
         "interestRate": "0.0002",
         "repaymentWay": 116104,
         "annualIncome": 3,
-        "orderId": null
+        "orderId": null,
+        "projectId": 2
       }
     },
     loadDetail(){

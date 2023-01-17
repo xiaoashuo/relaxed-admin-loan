@@ -3,32 +3,24 @@ package com.relaxed.boot.loan.manage;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
+import com.relaxed.boot.loan.enums.AuditStatusEnum;
 import com.relaxed.boot.loan.enums.LoanEnum;
+import com.relaxed.boot.loan.enums.OrderEnum;
 import com.relaxed.boot.loan.enums.TradeStatusEnum;
 import com.relaxed.boot.loan.model.dto.OrderDTO;
 import com.relaxed.boot.loan.model.dto.SaveOrderResult;
-import com.relaxed.boot.loan.model.entity.Audit;
-import com.relaxed.boot.loan.model.entity.Loan;
-import com.relaxed.boot.loan.model.entity.Order;
-import com.relaxed.boot.loan.model.entity.OrderBankCard;
-import com.relaxed.boot.loan.model.entity.OrderCustomer;
-import com.relaxed.boot.loan.model.entity.Product;
-import com.relaxed.boot.loan.model.entity.Trade;
-import com.relaxed.boot.loan.model.entity.TrustPlan;
-import com.relaxed.boot.loan.service.AuditService;
-import com.relaxed.boot.loan.service.LoanService;
-import com.relaxed.boot.loan.service.OrderBankCardService;
-import com.relaxed.boot.loan.service.OrderCustomerService;
-import com.relaxed.boot.loan.service.OrderService;
-import com.relaxed.boot.loan.service.ProductService;
-import com.relaxed.boot.loan.service.TradeService;
-import com.relaxed.boot.loan.service.TrustPlanService;
+import com.relaxed.boot.loan.model.entity.*;
+import com.relaxed.boot.loan.service.*;
 import com.relaxed.boot.loan.util.ProNoUtil;
+import com.relaxed.common.core.exception.BusinessException;
+import com.relaxed.common.model.result.SysResultCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Yakir
@@ -51,16 +43,23 @@ public class OrderManage {
     private final OrderBankCardService orderBankCardService;
 
     private final TradeService tradeService;
+    private final ProjectService projectService;
 
+    private final PartnerService partnerService;
     private final LoanService loanService;
     public SaveOrderResult saveOrder(OrderDTO orderDTO) {
-        Integer productCode = orderDTO.getProductCode();
-        Integer trustPlanCode = orderDTO.getTrustPlanCode();
-        Product product=productService.getByProductCode(productCode);
-        TrustPlan trustPlan=trustPlanService.getByTrustPlanCode(trustPlanCode);
+        Integer projectId = orderDTO.getProjectId();
+        Project project = projectService.getById(projectId);
+        Integer productId = project.getProductId();
+        Integer trustPlanId = project.getTrustPlanId();
+        Integer partnerId = project.getPartnerId();
+        Partner partner = partnerService.getById(partnerId);
+        Product product=productService.getById(productId);
+        TrustPlan trustPlan=trustPlanService.getById(trustPlanId);
+
         String partnerBizNo = IdUtil.getSnowflakeNextIdStr();
         orderDTO.setPartnerBizNo(partnerBizNo);
-        Order order = convertToNewOrder(orderDTO, product, trustPlan);
+        Order order = convertToNewOrder(orderDTO,project,partner ,product, trustPlan);
         OrderCustomer orderCustomer = convertToNewOrderCustomer(orderDTO);
         Long orderId = order.getOrderId();
         if (orderId == null){
@@ -119,7 +118,7 @@ public class OrderManage {
         return orderCustomer;
     }
 
-    private static Order convertToNewOrder(OrderDTO orderDTO, Product product, TrustPlan trustPlan) {
+    private static Order convertToNewOrder(OrderDTO orderDTO, Project project,Partner partner,Product product, TrustPlan trustPlan) {
         Order order = new Order();
         order.setOrderId(orderDTO.getOrderId());
         order.setCreditId(0L);
@@ -142,94 +141,58 @@ public class OrderManage {
         order.setPartnerContractNo(orderDTO.getContractNo());
         order.setReceiveCardId(0L);
         order.setRepaymentCardId(0L);
-        order.setPartnerId(1);
-        order.setPartnerName("1");
+        order.setGraceDays(order.getGraceDays());
+        order.setPartnerId(partner.getPartnerId());
+        order.setPartnerName(partner.getPartnerAlias());
         order.setTrustPlanCode(Integer.valueOf(trustPlan.getTrustPlanNo()));
         order.setTrustPlanName(trustPlan.getTrustPlanName());
         order.setProductCode(Integer.valueOf(product.getProductCode()));
         order.setProductName(product.getProductName());
-        order.setProjectId(1);
-        order.setGraceDays(order.getGraceDays());
+        order.setProjectId(project.getProjectId());
         return order;
     }
 
     public SaveOrderResult submitOrder(Long orderId) {
         Order order = orderService.getById(orderId);
         Assert.notNull(order,"订单信息不能为空");
+        String partnerBizNo = order.getPartnerBizNo();
+        //提取收款卡
+        List<OrderBankCard> orderBankCardList = orderBankCardService.listByOrderId(orderId);
+        List<OrderBankCard> loanBankCards = orderBankCardList.stream().filter(item -> LoanEnum.LoanPurpose.LOAN.getVal().equals(item.getCardPurpose())).collect(Collectors.toList());
+        Assert.notEmpty(loanBankCards,()->new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"订单号{},放款卡不能为空",partnerBizNo));
+        OrderBankCard orderBankCard = loanBankCards.get(0);
+        Long receiveBankCardId = orderBankCard.getBankCardId();
+        order.setReceiveCardId(receiveBankCardId);
+        orderService.updateById(order);
         //开始调用风控
         //获取风控结果
         //执行放款信息
-        Audit audit = auditService.getByOrderId(orderId);
-
-
-
-        return null;
-    }
-
-    private Loan convertToNewLoan(Order order, Trade trade, OrderCustomer orderCustomer) {
-        Loan loan = new Loan();
-        loan.setOrderId(order.getOrderId());
-        loan.setPartnerBizNo(order.getPartnerBizNo());
-        loan.setPartnerLoanNo(order.getPartnerBizNo());
-        loan.setTradeId(trade.getTradeId());
-        loan.setLoanAmt(trade.getTradeAmount());
-        loan.setPrincipalReceivable(trade.getTradeAmount());
-        loan.setTotalTerms(order.getLoanPeriod()); // 期数
-        loan.setPeriodUnit(order.getPeriodUnit()); // 周期单位
-        loan.setCurrentTerm(1);
-        loan.setLoanStatus(LoanEnum.LoanStatus.GIVING_MONEY.getSnifCode());
-        loan.setRealName(orderCustomer.getRealName());
-        loan.setCertificateNo(orderCustomer.getCertificateNo());
-        loan.setApplyDate(order.getCreatedTime());
-        loan.setInterestRate(order.getInterestRate());
-        loan.setInterestRateUnit(order.getInterestRateUnit());
-        loan.setPenaltyRate(order.getPenaltyInterestRate());
-        loan.setProductCode(String.valueOf(order.getProductCode()));
-        loan.setProductName(order.getProductName());
-        loan.setTrustPlanCode(String.valueOf(order.getTrustPlanCode()));
-        loan.setTrustPlanName(order.getTrustPlanName());
-        // 合同编号新加字段用信时已传过来落order
-        loan.setContractNo(order.getPartnerBizNo());
-        // 还款方式取order的
-        loan.setRepaymentWay(order.getRepaymentWay());
-        // 贴息金额
-        return null;
-    }
-
-    private static Trade convertToNewTrade(Order order, OrderBankCard orderBankCard) {
-        String tradeNo = ProNoUtil.generateTradeNo();
-        Trade trade = new Trade();
-        trade.setOrderId(order.getOrderId());
-        trade.setPartnerBizNo(order.getPartnerBizNo());
-        trade.setTradeNo(tradeNo);
-        trade.setRepayType(order.getRepaymentWay());
-        trade.setTradeStatus(TradeStatusEnum.CREATE.getCode());
-        trade.setTradeAmount(order.getApplyAmount());
-        trade.setTradeAccountBank(orderBankCard.getBankName());
-        trade.setTradeAccount(orderBankCard.getAccountNo());
-        trade.setTradeAccountType(orderBankCard.getAccountType().toString());
-        trade.setTradeAccountName(orderBankCard.getAccountName());
-        trade.setPayChannel("99");
-        trade.setPayPlatformId("99");
-        trade.setPayPlatformMerchantId("99");
-        trade.setPayPlatformUserName("99");
-        trade.setPayPlatformBusinessCode("99");
-        trade.setTradeTime(LocalDateTime.now());
-        trade.setLoanPurpose(LoanEnum.LoanPurpose.LOAN.getVal());
-        return trade;
-    }
-
-    public void loanConfirm(Long orderId) {
-        Order order = orderService.getById(orderId);
-        Assert.notNull(order,"订单信息不能为空");
-        Long receiveCardId = order.getReceiveCardId();
-        //获取收款卡
-        OrderBankCard orderBankCard = orderBankCardService.getById(receiveCardId);
         OrderCustomer orderCustomer = orderCustomerService.getByOrderId(orderId);
-        Trade trade = convertToNewTrade(order,orderBankCard);
-        tradeService.save(trade);
-        Loan loan =convertToNewLoan(order,trade,orderCustomer);
-        loanService.save(loan);
-        //调用放款
+        Audit audit = new Audit();
+        audit.setCreditId(0L);
+        audit.setOrderId(orderId);
+        audit.setProductCode(order.getProductCode()+"");
+        audit.setProductName(order.getProductName());
+        audit.setStrategyCode(order.getProductCode()+"02");
+        audit.setName(orderCustomer.getRealName());
+        audit.setIdNo(orderCustomer.getCertificateNo());
+        audit.setMobileNo(orderCustomer.getMobileNo());
+        audit.setAuditStatus(AuditStatusEnum.WAITING_EXAM.getCode());
+        audit.setResTime(LocalDateTime.now());
+        audit.setResultTime(LocalDateTime.now());
+        auditService.save(audit);
+        order.setOrderStage(OrderEnum.OrderStatus.CREDITING.getVal());
+        orderService.updateById(order);
+
+        SaveOrderResult saveOrderResult = new SaveOrderResult();
+        saveOrderResult.setOrderId(orderId);
+        saveOrderResult.setPartnerBizNo(partnerBizNo);
+        return saveOrderResult;
     }
+
+
+
+
+
+
 }

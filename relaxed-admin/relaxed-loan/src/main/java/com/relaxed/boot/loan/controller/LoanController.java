@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.controller;
 
+import com.relaxed.boot.loan.manage.LoanManage;
 import com.relaxed.boot.loan.model.entity.Loan;
 import com.relaxed.boot.loan.model.qo.LoanQO;
 import com.relaxed.boot.loan.model.vo.LoanDetailVO;
@@ -41,6 +42,7 @@ public class LoanController {
 
     private final  LoanService loanService;
 
+    private final LoanManage loanManage;
     /**
      * 分页查询
      * @param pageParam 分页参数
@@ -57,6 +59,12 @@ public class LoanController {
     @GetMapping("/detail" )
     public R<LoanDetailVO> getOrderDetail(@RequestParam Long loanId) {
         return R.ok(loanService.getLoanDetail(loanId));
+    }
+    @Operation(summary = "订单结清申请")
+    @GetMapping("/repay" )
+    public R<Void> repayLoan(@RequestParam Long loanId) {
+        loanManage.repayLoan(loanId);
+        return R.ok();
     }
     /**
      * 新增借款合同表

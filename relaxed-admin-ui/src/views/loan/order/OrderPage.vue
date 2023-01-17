@@ -15,19 +15,21 @@
         <el-button size="mini" type="text"
                    @click="handleViewClick(scope.row)">查看
         </el-button>
-        <el-button size="mini" type="text"
+        <el-button v-if="scope.row.orderStage===0" size="mini" type="text"
                    @click="showEditModal(scope.row)">编辑
         </el-button>
-
+<!--        <el-button v-if="scope.row.orderStage===14" size="mini" type="text"-->
+<!--                   @click="loanConfirm(scope.row)">确认放款-->
+<!--        </el-button>-->
       </template>
 
     </pro-table>
     <!--模态表单组件-->
 
-    <order-detail-model ref="orderDetailRef"></order-detail-model>
+    <order-detail-model  ref="orderDetailRef"></order-detail-model>
 
 
-    <order-form-modal ref="orderFormRef"></order-form-modal>
+    <order-form-modal @beforeClose="handleResetClick" ref="orderFormRef"></order-form-modal>
 
 
   </div>
@@ -39,7 +41,7 @@
   import {contentTableConfig} from "./config/content.table.config";
   import {searchFormConfig} from "./config/search.form.config";
    //页面相关请求方法
-  import {getPage, addObj, putObj, delObj} from "@/api/loan/order";
+  import { getPage, addObj, putObj, delObj, loanConfirm } from '@/api/loan/order'
 
   import OrderDetailModel from '@/views/loan/order-detail/OrderDetailModel.vue'
   import OrderFormModal from '@/views/loan/order/OrderFormModal.vue'
@@ -60,6 +62,7 @@
       }
     },
     methods: {
+
       //表格相关
       showNewModal() {
         this.$refs.orderFormRef.add({title: '新增订单'})
@@ -88,7 +91,12 @@
       handleViewClick(row){
         this.$refs.orderDetailRef.update({ title:'订单信息',item:row })
       },
-
+      // loanConfirm(row){
+      //   loanConfirm(row.orderId).then(res=>{
+      //     this.$message.success("放款成功")
+      //     this.$refs.pageContentRef.resetTable()
+      //   })
+      // }
     }
 
   }

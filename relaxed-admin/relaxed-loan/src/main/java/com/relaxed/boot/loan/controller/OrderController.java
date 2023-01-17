@@ -85,16 +85,10 @@ public class OrderController {
     @Operation(summary = "提交进件")
     @CreateLog(msg = "提交进件" )
     @PostMapping("/submit")
-    public R<SaveOrderResult> submitOrder(Long orderId) {
+    public R<SaveOrderResult> submitOrder(@RequestParam Long orderId) {
         return R.ok(orderManage.submitOrder(orderId));
     }
-    @Operation(summary = "确认放款")
-    @CreateLog(msg = "确认放款" )
-    @PostMapping("/loan/confirm")
-    public R<Void> loanConfirm(Long orderId) {
-        orderManage.loanConfirm(orderId);
-        return R.ok();
-    }
+
 
     /**
      * 修改

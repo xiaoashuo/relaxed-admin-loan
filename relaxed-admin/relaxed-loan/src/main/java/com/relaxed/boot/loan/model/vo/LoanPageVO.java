@@ -124,11 +124,7 @@ public class LoanPageVO {
     @Schema(title = "结清日期", description = "结清日期")
     private LocalDateTime clearDate;
     
-    /**
-     * 还款日
-     */
-    @Schema(title = "还款日", description = "还款日")
-    private Integer repayDay;
+
     
     /**
      * 放款交易编号

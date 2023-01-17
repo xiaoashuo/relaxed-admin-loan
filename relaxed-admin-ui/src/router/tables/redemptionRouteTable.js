@@ -11,12 +11,7 @@ export default [
     //指定组件存放路径
     component: () => import('@/views/loan/order-annex/OrderAnnexPage'),
   },
-  {
-    //组件访问路径 与 实际访问路径保持一致
-    path:'/loan/bill-item-filler',
-    //指定组件存放路径
-    component: () => import('@/views/loan/bill-item-filler/BillItemFillerPage'),
-  },
+
 
   {
     //组件访问路径 与 实际访问路径保持一致
@@ -39,18 +34,7 @@ export default [
 
 
 
-  {
-    //组件访问路径 与 实际访问路径保持一致
-    path:'/loan/bill-item',
-    //指定组件存放路径
-    component: () => import('@/views/loan/bill-item/BillItemPage'),
-  },
-  {
-    //组件访问路径 与 实际访问路径保持一致
-    path:'/loan/bill',
-    //指定组件存放路径
-    component: () => import('@/views/loan/bill/BillPage'),
-  },
+
 
   {
     //组件访问路径 与 实际访问路径保持一致

@@ -22,4 +22,5 @@ public interface BillService extends ExtendService<Bill> {
     */
     PageResult<BillPageVO> queryPage(PageParam pageParam, BillQO qo);
 
+    Bill getByLoanId(Long loanId);
 }

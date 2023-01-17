@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.relaxed.boot.loan.model.entity.Bill;
 import com.relaxed.boot.loan.model.vo.BillPageVO;
 import com.relaxed.boot.loan.model.qo.BillQO;
@@ -29,4 +30,9 @@ public class BillServiceImpl extends ExtendServiceImpl<BillMapper, Bill> impleme
         return baseMapper.queryPage(pageParam, qo);
     }
 
+    @Override
+    public Bill getByLoanId(Long loanId) {
+        return getOne(Wrappers.lambdaQuery(Bill.class )
+                .eq(Bill::getLoanId,loanId));
+    }
 }

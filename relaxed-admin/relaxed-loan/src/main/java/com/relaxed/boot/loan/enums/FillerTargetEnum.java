@@ -5,23 +5,24 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * @author Yakir
- * @Topic LoanPurposeEnum
- * @Description
- * @date 2021/9/16 11:41
+ * @Topic FillerTargetEnum
+ * @Description ： 1- 应收 2- 实收 目前都是写死2实收
+ * @date 2021/10/13 11:16
  * @Version 1.0
  */
 @RequiredArgsConstructor
 @Getter
-public enum LoanPurposeEnum {
+public enum FillerTargetEnum {
 
 	/**
-	 * 放款
+	 * 应收
 	 */
-	REPAYMENT(1, "放款"),
+	RECEIVABLE(1, "应收"),
+
 	/**
-	 * 收款
+	 * 实收
 	 */
-	RECEIPT(2, "收款"),;
+	RECEIPTS(2, "实收"),;
 
 	private final Integer val;
 

@@ -34,11 +34,7 @@ public class BillItemPageVO {
     @Schema(title = "账单编号,用于关联t_bill表", description = "账单编号,用于关联t_bill表")
     private Long billId;
     
-    /**
-     * 科目名称
-     */
-    @Schema(title = "科目名称", description = "科目名称")
-    private String itemName;
+
     
     /**
      * 科目类型（1: 本金 11: 利息 21: 罚息）

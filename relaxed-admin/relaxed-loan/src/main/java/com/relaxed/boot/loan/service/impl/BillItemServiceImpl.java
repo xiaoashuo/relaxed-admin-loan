@@ -41,4 +41,10 @@ public class BillItemServiceImpl extends ExtendServiceImpl<BillItemMapper, BillI
                 .eq(BillItem::getBillId, billItemQO.getBillId()));
        return list.stream().map(BillItemConverter.INSTANCE::poToPageVo).collect(Collectors.toList());
     }
+
+    @Override
+    public BillItem getByBillIdAndItemType(Long billId, Integer itemType) {
+        return getOne(Wrappers.lambdaQuery(BillItem.class).eq(BillItem::getBillId,billId)
+                .eq(BillItem::getItemType,itemType));
+    }
 }

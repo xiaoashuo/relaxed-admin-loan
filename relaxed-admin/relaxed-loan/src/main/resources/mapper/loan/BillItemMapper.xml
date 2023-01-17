@@ -6,7 +6,6 @@
   		<id property="billItemId" column="bill_item_id"/>
     		<result property="loanId" column="loan_id"/>
     		<result property="billId" column="bill_id"/>
-    		<result property="itemName" column="item_name"/>
     		<result property="itemType" column="item_type"/>
     		<result property="receivableAmt" column="receivable_amt"/>
     		<result property="receiptsAmt" column="receipts_amt"/>
@@ -19,8 +18,7 @@
 	<sql id="Base_Column_List">
 		bill_item_id,        
 		loan_id,        
-		bill_id,        
-		item_name,        
+		bill_id,
 		item_type,        
 		receivable_amt,        
 		receipts_amt,        
@@ -33,8 +31,7 @@
 	<sql id="Base_Alias_Column_List">
 		bi.bill_item_id,        
 		bi.loan_id,        
-		bi.bill_id,        
-		bi.item_name,        
+		bi.bill_id,
 		bi.item_type,        
 		bi.receivable_amt,        
 		bi.receipts_amt,        

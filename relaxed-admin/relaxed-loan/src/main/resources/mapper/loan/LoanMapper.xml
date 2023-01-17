@@ -21,7 +21,7 @@
     		<result property="startDate" column="start_date"/>
     		<result property="endDate" column="end_date"/>
     		<result property="clearDate" column="clear_date"/>
-    		<result property="repayDay" column="repay_day"/>
+
     		<result property="tradeId" column="trade_id"/>
     		<result property="loanAmt" column="loan_amt"/>
     		<result property="currency" column="currency"/>
@@ -71,7 +71,7 @@
 		start_date,        
 		end_date,        
 		clear_date,        
-		repay_day,        
+
 		trade_id,        
 		loan_amt,        
 		currency,        
@@ -121,7 +121,7 @@
 		l.start_date,        
 		l.end_date,        
 		l.clear_date,        
-		l.repay_day,        
+
 		l.trade_id,        
 		l.loan_amt,        
 		l.currency,        

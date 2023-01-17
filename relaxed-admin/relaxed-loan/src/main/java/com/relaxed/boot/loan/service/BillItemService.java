@@ -26,4 +26,5 @@ public interface BillItemService extends ExtendService<BillItem> {
 
     List<BillItemPageVO> queryList(BillItemQO billItemQO);
 
+    BillItem getByBillIdAndItemType(Long billId, Integer itemType);
 }

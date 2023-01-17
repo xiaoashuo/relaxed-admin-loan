@@ -18,6 +18,18 @@ export function getDetail(query) {
     params: query
   })
 }
+export function submitOrder(orderId) {
+  return yiRequest.post({
+    url: '/loan/order/submit',
+    params: { orderId }
+  })
+}
+export function loanConfirm(orderId) {
+  return yiRequest.post({
+    url: '/loan/order/confirm',
+    params: { orderId }
+  })
+}
 export function addObj(obj) {
   return yiRequest.post({
     url: '/loan/order',

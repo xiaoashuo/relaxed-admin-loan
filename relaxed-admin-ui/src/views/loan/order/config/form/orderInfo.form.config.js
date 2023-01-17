@@ -1,6 +1,6 @@
 import CascaderTest from './test'
-import { getSelectData as getProductSelectData } from '@/api/loan/product'
-import { getSelectData as getTrustPlanSelectData } from '@/api/loan/trust-plan'
+import { getSelectData as getProjectSelectData } from '@/api/loan/project'
+
 export const  orderInfoFormConfig={
 
   rows:[
@@ -73,40 +73,21 @@ export const  orderInfoFormConfig={
           formItems:[
             {
               type:'select',
-              label: '信托产品',
-              field:'productCode',
-              placeholder:'请输入信托产品',
+              label: '信托项目',
+              field:'projectId',
+              placeholder:'请输入信托项目',
               config:{
                 nativeProps:{
                   clearable:true,
                 },
 
                 remoteLoad: true,
-                request: getProductSelectData
+                request: getProjectSelectData
               }
             },
           ]
         },
-        {
-          colLayout:{
-            span:6
-          },
-          formItems:[
-            {
-              type:'select',
-              label: '信托计划',
-              field:'trustPlanCode',
-              placeholder:'请输入信托计划',
-              config:{
-                nativeProps:{
-                  clearable:true,
-                },
-                remoteLoad: true,
-                request: getTrustPlanSelectData
-              }
-            },
-          ]
-        },
+
         {
           colLayout:{
             span:6

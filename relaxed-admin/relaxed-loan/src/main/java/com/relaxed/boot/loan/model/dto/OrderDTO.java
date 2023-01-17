@@ -21,6 +21,9 @@ import java.time.LocalDateTime;
 public class OrderDTO {
     @Schema(description = "订单id")
     private Long orderId;
+    @Schema(description = "项目id")
+    private Integer projectId;
+
     @Schema(title = "期数单位")
     private String periodUnit;
     @Schema(title = "利率单位", description = "利率单位")
@@ -50,17 +53,7 @@ public class OrderDTO {
     @Schema(title = "利率", description = "利率")
     private BigDecimal interestRate;
 
-    /**
-     * 信托产品编号t_config_product表
-     */
-    @Schema(title = "信托产品", description = "信托产品")
-    private Integer productCode;
 
-    /**
-     * 信托计划编号t_config_trust_plan表
-     */
-    @Schema(title = "信托计划编号", description = "信托计划编号")
-    private Integer trustPlanCode;
     /**
      * 证件类型
      */

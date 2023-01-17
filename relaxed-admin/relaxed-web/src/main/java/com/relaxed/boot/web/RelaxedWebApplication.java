@@ -7,6 +7,7 @@ import com.relaxed.oauth2.resource.annotation.EnableOauth2ResourceServer;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author Yakir
@@ -15,6 +16,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date 2022/11/11 10:17
  * @Version 1.0
  */
+@EnableScheduling
 @EnableOauth2AuthorizationServer
 @EnableOauth2ResourceServer
 @EnableAccessLog
