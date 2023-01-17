@@ -26,20 +26,21 @@ export const contentTableConfig={
               {
       prop: 'itemName',
       label:'科目名称',
-      minWidth:180,
+      minWidth:50,
+      slotName:'itemName'
 
     },
 
               {
       prop: 'receivableAmt',
       label:'应收金额',
-      minWidth:180,
+      minWidth:50,
 
     },
               {
       prop: 'receiptsAmt',
       label:'实收金额',
-      minWidth:180,
+      minWidth:50,
       slotName:'receiptsAmt'
     },
 

@@ -61,7 +61,7 @@ public class LoanController {
         return R.ok(loanService.getLoanDetail(loanId));
     }
     @Operation(summary = "订单结清申请")
-    @GetMapping("/repay" )
+    @PostMapping("/repay" )
     public R<Void> repayLoan(@RequestParam Long loanId) {
         loanManage.repayLoan(loanId);
         return R.ok();

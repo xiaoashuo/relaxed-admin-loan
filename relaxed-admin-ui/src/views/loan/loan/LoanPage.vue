@@ -8,10 +8,16 @@
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
     >
+      <template #loanStatus="scope">
+        <dict-text dict-code="loan_status" :value="scope.row.loanStatus"></dict-text>
+      </template>
       <template #customHandler="scope">
 
         <el-button size="mini" type="text"
                    @click="handleViewClick(scope.row)">查看
+        </el-button>
+        <el-button v-if="scope.row.loanStatus==21" size="mini" type="text"
+                   @click="handleClearClick(scope.row)">结清申请
         </el-button>
       </template>
     </pro-table>
@@ -33,7 +39,7 @@
   import {searchFormConfig} from "./config/search.form.config";
   import {modalFormConfig} from "./config/modal.form.config";
   //页面相关请求方法
-  import {getPage, addObj, putObj, delObj} from "@/api/loan/loan";
+  import {getPage, addObj, putObj, delObj,clearApply} from "@/api/loan/loan";
 
   import LoanDetailModel from '@/views/loan/loan-detail/LoanDetailModel.vue'
   export default {
@@ -84,6 +90,12 @@
       },
       handleViewClick(row){
         this.$refs.loanDetailRef.update({ title:'借据信息',item:row })
+      },
+      handleClearClick(row){
+        clearApply(row.loanId).then(res=>{
+          this.$message.success("结清申请成功")
+          this.handleResetClick()
+        })
       }
 
     }

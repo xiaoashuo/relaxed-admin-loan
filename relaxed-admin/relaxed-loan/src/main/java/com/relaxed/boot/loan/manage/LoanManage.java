@@ -132,14 +132,14 @@ public class LoanManage {
         String partnerBizNo = loan.getPartnerBizNo();
         Assert.notNull(loan,()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"合作方业务号(partner_biz_no) {} 借据不存在",partnerBizNo));
         Integer loanStatus = loan.getLoanStatus();
-        Assert.isTrue(!LoanEnum.LoanStatus.REPAYMENTING.getSnifCode().equals(loanStatus),()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"合作方业务号(partner_biz_no) {} 借据状态不正确", partnerBizNo));
+        Assert.isTrue(LoanEnum.LoanStatus.REPAYMENTING.getSnifCode().equals(loanStatus),()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"合作方业务号(partner_biz_no) {} 借据状态不正确", partnerBizNo));
         Bill bill= billService.getByLoanId(loanId);
         Assert.notNull(bill,()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"合作方业务号(partner_biz_no) {} 找不到有效账单",partnerBizNo) );
         Long billId = bill.getBillId();
         BillItem billItemPrin=billItemService.getByBillIdAndItemType(billId, BillItemSubjectEnum.PRINCIPAL.getCode());
         BillItem billItemInterest=billItemService.getByBillIdAndItemType(billId, BillItemSubjectEnum.INTEREST.getCode());
         BillItem billItemPenaltyInterest=billItemService.getByBillIdAndItemType(billId, BillItemSubjectEnum.INTEREST_PENALTY.getCode());
-        Assert.isTrue(null == billItemPrin || null == billItemInterest || null == billItemPenaltyInterest,
+        Assert.isTrue(null != billItemPrin && null != billItemInterest && null != billItemPenaltyInterest,
                 ()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"合作方业务号(partner_biz_no) {} 本利罚科目表有缺失",partnerBizNo)    );
         //创建还款明细
         Trade trade = convertToRepaymentTrade(loan);
@@ -165,7 +165,12 @@ public class LoanManage {
                 trade, FillerTypeEnum.A);
         billItemFillerService.save(bifInterest);
         //罚息科目 和filler填充
-
+        BigDecimal realRepayPintAmt = billItemPenaltyInterest.getReceivableAmt();
+        fillBillItem(billItemPenaltyInterest, nowData, realRepayPintAmt, realRepayPintAmt);
+        billItemService.updateById(billItemPenaltyInterest);
+        BillItemFiller bifPint = convertBillItemFiller(loan, billItemPenaltyInterest.getReceiptsAmt(), bill, billItemPenaltyInterest,
+                nowData, trade, FillerTypeEnum.A);
+        billItemFillerService.save(bifPint);
 
 
     }
@@ -177,7 +182,6 @@ public class LoanManage {
         bifInterest.setBillItemId(billItemInterest.getBillItemId());
         bifInterest.setLoanId(loan.getLoanId());
         bifInterest.setFillerType(a.getCode());
-        bifInterest.setFillerName(a.getDesc());
         bifInterest.setFillerAmount(repayIntAmt);
         bifInterest.setFillerTarget(FillerTargetEnum.RECEIPTS.getVal());
 //        bifInterest.setRepayType(trade.getRepayType());
@@ -196,7 +200,7 @@ public class LoanManage {
     }
     private void fillBillItem( BillItem billItemInterest) {
         // 实收本金
-        BigDecimal repayPrinAmt = billItemInterest.getReceiptsAmt();
+        BigDecimal repayPrinAmt = billItemInterest.getReceivableAmt();
 
         // billItemInterest.setReceivableAmt(repayPrinAmt);
         billItemInterest.setReceiptsAmt(repayPrinAmt);
@@ -228,7 +232,7 @@ public class LoanManage {
                 bill.getBillReceivableAmt());
         // 实收含减免
         bill.setBillReceiptsAmt(
-                bill.getBillReceiptsAmt());
+                bill.getBillReceivableAmt());
         // 减免
         bill.setBillMitigateAmt(bill.getBillMitigateAmt());
         bill.setLatestSyncTime(nowDate);
@@ -262,7 +266,7 @@ public class LoanManage {
         loan.setPenaltyReceipts(realPenaltyReceipts);
         // 应还总金额 已还总金额
 
-        BigDecimal realReceiptsAmt = loan.getReceiptsAmt();
+        BigDecimal realReceiptsAmt = loan.getLoanAmt();
         loan.setReceiptsAmt(realReceiptsAmt);
         loan.setReceivableAmt(realReceiptsAmt);
         if (LoanEnum.LoanStatus.CLEAR.getSnifCode().equals(clearFlag)) {

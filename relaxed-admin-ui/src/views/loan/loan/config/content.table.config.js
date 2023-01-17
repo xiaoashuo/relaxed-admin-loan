@@ -1,5 +1,5 @@
 export const contentTableConfig={
-  title: '借款合同表',
+  title: '借据列表',
   showSelectColumn:false,
   tableProps:{
     'row-style': {
@@ -57,7 +57,13 @@ export const contentTableConfig={
       minWidth:180,
 
     },
+    {
+      prop: 'loanStatus',
+      label:'借款状态',
+      minWidth:180,
+      slotName:'loanStatus'
 
+    },
     {
       prop: 'startDate',
       label:'贷款开始日期',

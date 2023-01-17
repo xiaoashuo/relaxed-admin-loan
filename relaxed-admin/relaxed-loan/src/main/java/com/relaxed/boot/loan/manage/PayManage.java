@@ -2,15 +2,24 @@ package com.relaxed.boot.loan.manage;
 
 import cn.hutool.core.date.DatePattern;
 import com.relaxed.boot.loan.enums.BillItemSubjectEnum;
+import com.relaxed.boot.loan.enums.FileTypeEnum;
 import com.relaxed.boot.loan.enums.LoanEnum;
 import com.relaxed.boot.loan.enums.TradeStatusEnum;
 import com.relaxed.boot.loan.model.entity.Bill;
 import com.relaxed.boot.loan.model.entity.BillItem;
+import com.relaxed.boot.loan.model.entity.Certificate;
 import com.relaxed.boot.loan.model.entity.Loan;
+import com.relaxed.boot.loan.model.entity.Order;
+import com.relaxed.boot.loan.model.entity.ProjectTemplate;
+import com.relaxed.boot.loan.model.entity.Template;
 import com.relaxed.boot.loan.model.entity.Trade;
 import com.relaxed.boot.loan.service.BillItemService;
 import com.relaxed.boot.loan.service.BillService;
+import com.relaxed.boot.loan.service.CertificateService;
 import com.relaxed.boot.loan.service.LoanService;
+import com.relaxed.boot.loan.service.OrderService;
+import com.relaxed.boot.loan.service.ProjectTemplateService;
+import com.relaxed.boot.loan.service.TemplateService;
 import com.relaxed.boot.loan.service.TradeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +48,14 @@ public class PayManage {
     private final BillService billService;
 
     private final BillItemService billItemService;
+
+    private final ProjectTemplateService projectTemplateService;
+
+    private final OrderService orderService;
+
+    private final TemplateService templateService;
+
+    private final CertificateService certificateService;
     public  void  loadSuccessHandle(Trade trade, Loan loan){
         //MOCK 成功
         LocalDateTime mockFintime = LocalDateTime.now();
@@ -77,7 +94,27 @@ public class PayManage {
         createBillItem(loan, bill, BillItemSubjectEnum.PRINCIPAL.getCode(), loan.getLoanAmt());
         createBillItem(loan, bill, BillItemSubjectEnum.INTEREST.getCode(), new BigDecimal("0"));
         createBillItem(loan, bill, BillItemSubjectEnum.INTEREST_PENALTY.getCode(), new BigDecimal("0"));
+        //生成借款合同
+        generateRelatedFile(loan);
+
     }
+
+    private void generateRelatedFile(Loan loan) {
+        Long orderId = loan.getOrderId();
+        Order order = orderService.getById(orderId);
+        ProjectTemplate projectTemplate=projectTemplateService.getByPidAndFileType(order.getProjectId(), FileTypeEnum.I.getCode());
+        Integer templateId = projectTemplate.getTemplateId();
+        Integer keystoreId = projectTemplate.getKeystoreId();
+        //模板
+        Template template = templateService.getById(templateId);
+        //证书
+        Certificate certificate = certificateService.getById(keystoreId);
+        //1.渲染原始模板odf
+
+        //2.渲染签章后pdf
+
+    }
+
     public void loanFailHandle( Trade trade, Loan loan) {
         String errMsg="mock异常错误";
         LocalDateTime mockFintime = LocalDateTime.now();

@@ -11,7 +11,7 @@
         <view-loan-detail :loan-info="loanInfo" ></view-loan-detail>
       </el-tab-pane>
       <el-tab-pane label="账单信息" name="billInfo">
-        <view-bill-info :loanId="item.loanId" :loan="loanInfo.loan"></view-bill-info>
+        <view-bill-info  ref="billInfoRef" :loanId="item.loanId" :loan="loanInfo.loan"></view-bill-info>
       </el-tab-pane>
 
       <el-tab-pane label="还款明细" name="repaymentDetail">
@@ -69,6 +69,9 @@ export default {
       switch (this.activeName){
         case "borrowInfo":
 
+          break
+        case "billInfo":
+          this.$refs.billInfoRef.handleResetClick()
           break
       }
     }

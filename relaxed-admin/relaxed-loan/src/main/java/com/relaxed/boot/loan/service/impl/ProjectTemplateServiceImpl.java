@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.relaxed.boot.biz.system.service.SysDictItemService;
 import com.relaxed.boot.common.system.enums.SysDictKey;
 import com.relaxed.boot.common.system.model.entity.SysDictItem;
@@ -81,5 +82,11 @@ public class ProjectTemplateServiceImpl extends ExtendServiceImpl<ProjectTemplat
     public boolean saveSignInfo(ProjectTemplateSignReqDTO projectTemplateSignReqDTO) {
         ProjectTemplate projectTemplate = ProjectTemplateConverter.INSTANCE.reqDtoToPo(projectTemplateSignReqDTO);
         return updateById(projectTemplate);
+    }
+
+    @Override
+    public ProjectTemplate getByPidAndFileType(Integer projectId, String fileType) {
+        return getOne(Wrappers.lambdaQuery(ProjectTemplate.class).eq(ProjectTemplate::getProjectId, projectId)
+                .eq(ProjectTemplate::getFileType,fileType));
     }
 }

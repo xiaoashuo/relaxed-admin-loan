@@ -11,6 +11,6 @@ import cn.hutool.core.util.IdUtil;
  */
 public class ProNoUtil {
     public static String generateTradeNo(){
-        return "trade:loan"+IdUtil.getSnowflakeNextIdStr();
+        return "trade:"+IdUtil.getSnowflakeNextIdStr();
     }
 }

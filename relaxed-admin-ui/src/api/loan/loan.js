@@ -12,6 +12,12 @@ export function getDetail(query) {
     params: query
   })
 }
+export function clearApply(loanId) {
+  return yiRequest.post({
+    url: '/loan/repay',
+    params: { loanId }
+  })
+}
 export function addObj(obj) {
   return yiRequest.post({
     url: '/loan',

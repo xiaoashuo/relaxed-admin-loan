@@ -23,9 +23,13 @@
       <template #expandHandle="scope">
         <pro-table style="width: 90%;margin: 0 auto" ref="billItemPageContentRef"
                    :content-table-config="billItemContentTableConfig"
+                   :lazy-load="true"
                    :request="tableBillItemRequest"
 
         >
+          <template #itemName="scope">
+            <dict-text dict-code="item_type" :value="scope.row.itemType"></dict-text>
+          </template>
           <template #receiptsAmt="scope">
             <div style="display: flex;justify-content: center">
               <span>{{scope.row.receiptsAmt}}</span>
@@ -42,7 +46,11 @@
 
                 <yi-table  :title="''" :header-props="billItemFillerConfig.headerProps"
                            :loading="billItemFillerLoading"
-                           :show-footer="billItemFillerConfig.showFooter" :prop-list="billItemFillerConfig.propList" :list-data="billItemFillerList"></yi-table>
+                           :show-footer="billItemFillerConfig.showFooter" :prop-list="billItemFillerConfig.propList" :list-data="billItemFillerList">
+                  <template #fillerName="scope">
+                    <dict-text dict-code="filler_type" :value="scope.row.fillerType"></dict-text>
+                  </template>
+                </yi-table>
               </el-popover>
             </div>
 
@@ -64,7 +72,7 @@ import YiTable from '@/components/table'
 //页面配置参数
 import {contentTableConfig} from "./config/bill.content.table.config";
 import {contentTableConfig as billItemContentTableConfig} from "./config/billItem.content.table.config";
-
+import {contentTableConfig as billItemFillerContentTableConfig} from './config/billItemFiller.content.table.config'
 //页面相关请求方法
 import {getPage} from "@/api/loan/bill";
 import {getList as getBillItemList} from "@/api/loan/bill-item";
@@ -96,57 +104,14 @@ export default {
       tableBillItemRequest: getBillItemList,
       billItemFillerLoading: false,
       billItemFillerList:[],
-      billItemFillerConfig:{
-        headerProps:{
-          visible:false
-        },
-         showFooter:false,
-         propList:[
-
-          {
-            prop: 'fillerName',
-            label:'填充名称',
-            minWidth:180,
-            slotName: 'fillerName'
-          },
-          {
-            prop: 'fillerType',
-            label:'填充类型',
-            minWidth:180,
-            slotName: 'fillerType'
-          },
-          {
-            prop: 'fillerAmount',
-            label:'填充金额',
-            minWidth:180,
-            slotName: 'fillerAmount'
-          },
-          {
-            prop: 'fillerTarget',
-            label:'填充目标',
-            minWidth:180,
-            slotName: 'fillerTarget'
-          },
-
-
-
-
-          {
-            prop: 'partnerFillerTime',
-            label:'账单填充时间',
-            minWidth:180,
-            slotName: 'partnerFillerTime'
-          },
-
-
-
-        ]
-      }
+      billItemFillerConfig:billItemFillerContentTableConfig
 
 
     }
   },
+
   created() {
+    console.log("进入账单信息")
     this.$nextTick(()=>{
       this.$refs.pageContentRef.searchTable({loanId:this.loanId})
     })

@@ -40,11 +40,7 @@ public class BillItemFillerPageVO {
     @Schema(title = "账单科目id,用于关联t_bill_item表", description = "账单科目id,用于关联t_bill_item表")
     private Long billItemId;
     
-    /**
-     * 填充名称（可自定义）
-     */
-    @Schema(title = "填充名称（可自定义）", description = "填充名称（可自定义）")
-    private String fillerName;
+
     
     /**
      * 填充类型：2- 减免 11- 实收
@@ -64,11 +60,7 @@ public class BillItemFillerPageVO {
     @Schema(title = "填充目标：1- 应收2- 实收", description = "填充目标：1- 应收2- 实收")
     private Integer fillerTarget;
     
-    /**
-     * 交易事件：11- 逾期还款12- 正常还款13- 提前还款14- 提前结清
-     */
-    @Schema(title = "交易事件：11- 逾期还款12- 正常还款13- 提前还款14- 提前结清", description = "交易事件：11- 逾期还款12- 正常还款13- 提前还款14- 提前结清")
-    private Integer repayEvent;
+
     
     /**
      * 交易编号，关联t_trade表
@@ -76,11 +68,7 @@ public class BillItemFillerPageVO {
     @Schema(title = "交易编号，关联t_trade表", description = "交易编号，关联t_trade表")
     private Long tradeId;
     
-    /**
-     * 操作者编号：0- 系统
-     */
-    @Schema(title = "操作者编号：0- 系统", description = "操作者编号：0- 系统")
-    private Integer operatorId;
+
     
     /**
      * 说明
@@ -94,11 +82,7 @@ public class BillItemFillerPageVO {
     @Schema(title = "账单填充时间", description = "账单填充时间")
     private LocalDateTime partnerFillerTime;
     
-    /**
-     * 保险报案号
-     */
-    @Schema(title = "保险报案号", description = "保险报案号")
-    private String reportNo;
+
     
     /**
      * 创建时间
