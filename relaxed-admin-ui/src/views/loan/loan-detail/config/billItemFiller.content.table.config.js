@@ -6,12 +6,7 @@ export const contentTableConfig={
   showFooter:false,
   propList:[
 
-    {
-      prop: 'fillerName',
-      label:'填充名称',
-      minWidth:180,
-      slotName: 'fillerName'
-    },
+
     {
       prop: 'fillerType',
       label:'填充类型',

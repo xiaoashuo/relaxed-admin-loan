@@ -47,8 +47,11 @@
                 <yi-table  :title="''" :header-props="billItemFillerConfig.headerProps"
                            :loading="billItemFillerLoading"
                            :show-footer="billItemFillerConfig.showFooter" :prop-list="billItemFillerConfig.propList" :list-data="billItemFillerList">
-                  <template #fillerName="scope">
+                  <template #fillerType="scope">
                     <dict-text dict-code="filler_type" :value="scope.row.fillerType"></dict-text>
+                  </template>
+                  <template #fillerTarget="scope">
+                    <dict-text dict-code="filler_target" :value="scope.row.fillerTarget"></dict-text>
                   </template>
                 </yi-table>
               </el-popover>
