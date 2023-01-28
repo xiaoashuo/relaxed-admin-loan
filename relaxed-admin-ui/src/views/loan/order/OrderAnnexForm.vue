@@ -101,7 +101,7 @@ export default {
         const firstData= uploadData[0]
         reqInfo.fileNo=firstData.fileId
         reqInfo.fileName=firstData.name
-        reqInfo.fileUrl=firstData.url
+        reqInfo.fileUrl=firstData.path
       }
       return reqInfo
     },

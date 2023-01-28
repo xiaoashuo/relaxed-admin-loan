@@ -10,7 +10,11 @@
                    @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                    @delBtnClick="handleDelClick"
                    @row-dblclick="handleRowDbClick"
-        ></pro-table>
+        >
+          <template #fileType="scope">
+            <dict-text dict-code="file_type" :value="parseInt(scope.row.fileType)"></dict-text>
+          </template>
+        </pro-table>
         <!--模态表单组件-->
         <form-modal ref="formModal" :modal-config="modalConfig"
                     :req-function="reqFunction"

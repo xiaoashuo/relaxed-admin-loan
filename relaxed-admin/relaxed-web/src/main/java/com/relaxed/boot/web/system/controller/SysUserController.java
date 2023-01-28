@@ -16,6 +16,7 @@ import com.relaxed.boot.common.system.model.vo.SysUserPageVO;
 import com.relaxed.boot.biz.system.service.SysUserService;
 import com.relaxed.boot.common.system.model.vo.SysUserProfileVO;
 import com.relaxed.boot.common.system.model.vo.SysUserRolePageDetailVO;
+import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.boot.web.system.domain.ExcelSysUserVO;
 import com.relaxed.boot.web.system.manage.SysUserManage;
 import com.relaxed.common.core.validation.group.GroupType;
@@ -216,7 +217,7 @@ public class SysUserController {
 
 		SysUserDetails sysUserDetails = SecurityHelper.getUser();
 		// 上传文件路径
-		String url = sysUserManage.uploadAvatar(sysUserDetails, file);
+		String url = RelaxedConfig.getUrl() +sysUserManage.uploadAvatar(sysUserDetails, file);
 
 		Map<String, String> data = new HashMap<>(2);
 		data.put("url", url);

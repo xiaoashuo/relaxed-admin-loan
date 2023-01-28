@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -44,19 +46,19 @@ public class TrustPlan {
 	 * 信托计划成立日期
 	 */
 	@Schema(title = "信托计划成立日期", description = "信托计划成立日期")
-	private LocalDateTime establishedTime;
+	private LocalDate establishedTime;
 
 	/**
 	 * 信托计划到期日期
 	 */
 	@Schema(title = "信托计划到期日期", description = "信托计划到期日期")
-	private LocalDateTime expireTime;
+	private LocalDate expireTime;
 
 	/**
 	 * 信托计划摊还期开始日期
 	 */
 	@Schema(title = "信托计划摊还期开始日期", description = "信托计划摊还期开始日期")
-	private LocalDateTime repayTime;
+	private LocalDate repayTime;
 
 	/**
 	 * 信托计划预期收益率

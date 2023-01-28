@@ -154,7 +154,7 @@ public class SysUserManage {
 		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/upload", file,
 				FileConfig.create().splitDate(true));
 		String relativeFilePath = fileMeta.getRelativeFilePath();
-		String url = RelaxedConfig.getUrl() + relativeFilePath;
+		String url =  relativeFilePath;
 		SysUser sysUser = new SysUser();
 		Integer userId = sysUserDetails.getUserId();
 		sysUser.setUserId(userId);

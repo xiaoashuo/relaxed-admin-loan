@@ -52,7 +52,7 @@ public class SealManage {
 			throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "模板不存在");
 		});
 		// 模板路径
-		String templatePath = template.getTemplatePath();
+		String templatePath = RelaxedConfig.getProfile()+template.getTemplateUrl();
 		File templateWordFile = new File(templatePath);
 
 		try {
@@ -63,7 +63,7 @@ public class SealManage {
 			Seal seal = sealService.getById(sealId);
 
 			// 签章路径
-			String sealPath = seal.getSealPath();
+			String sealPath = RelaxedConfig.getProfile()+seal.getSealAddress();
 			String keyword = previewInfoDTO.getKeyword();
 
 			String fileName = IdUtil.simpleUUID() + ".pdf";
@@ -105,7 +105,7 @@ public class SealManage {
 			throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "模板不存在");
 		});
 		// 模板路径
-		String templatePath = template.getTemplatePath();
+		String templatePath = RelaxedConfig.getProfile()+template.getTemplateUrl();
 		File templateWordFile = new File(templatePath);
 
 		try {

@@ -2,6 +2,7 @@ package com.relaxed.boot.loan.config.word;
 
 import cn.hutool.core.collection.CollectionUtil;
 
+import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.boot.loan.model.entity.Template;
 import com.relaxed.boot.loan.service.TemplateService;
 import com.relaxed.boot.loan.util.word.provider.WordTemplateProvider;
@@ -22,7 +23,8 @@ public class RemoteWordTemplateProvider implements WordTemplateProvider<String> 
 
 	@Override
 	public String get(String templateCode) {
-		return templateService.getByTemplateCode(templateCode);
+		String templatePath = RelaxedConfig.getProfile()+templateService.getByTemplateCode(templateCode);
+		return templatePath;
 	}
 
 	@SneakyThrows

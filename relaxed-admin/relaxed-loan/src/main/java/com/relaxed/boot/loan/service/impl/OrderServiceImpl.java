@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 
@@ -126,27 +127,30 @@ public class OrderServiceImpl extends ExtendServiceImpl<OrderMapper, Order> impl
         orderDetailVO.setOrderCustomer(orderCustomer);
         orderDetailVO.setOrderBankCardList(orderBankCardList);
         OrderDetailVO.AuditInfo auditInfo = new OrderDetailVO.AuditInfo();
-        auditInfo.setAuditId(audit.getAuditId());
-        auditInfo.setAuditStatus(audit.getAuditStatus());
-        auditInfo.setResultTime(audit.getResultTime());
-        String reasonCode = audit.getReasonCode();
-        String reasonDesc = audit.getReasonDesc();
-        List<OrderDetailVO.AuditDetail> auditDetailList=new ArrayList<>();
-        if (StrUtil.isNotEmpty(reasonCode)){
-            String[] reasonCodeArr = reasonCode.split(",");
-            String[] reasonDescArr = StrUtil.isEmpty(reasonDesc) ? new String[]{} : reasonDesc.split(",");
-            int descLength = reasonDescArr.length;
-            for (int i = 0; i <reasonCodeArr.length; i++) {
-                String code = reasonCodeArr[i];
-                OrderDetailVO.AuditDetail auditDetail = new OrderDetailVO.AuditDetail();
-                auditDetail.setReasonCode(code);
-                if (i+1>=descLength&&descLength>0){
-                    auditDetail.setReasonDesc(reasonDescArr[i]);
+        Optional.ofNullable(audit).ifPresent(orderDetail->{
+            auditInfo.setAuditId(audit.getAuditId());
+            auditInfo.setAuditStatus(audit.getAuditStatus());
+            auditInfo.setResultTime(audit.getResultTime());
+            String reasonCode = audit.getReasonCode();
+            String reasonDesc = audit.getReasonDesc();
+            List<OrderDetailVO.AuditDetail> auditDetailList=new ArrayList<>();
+            if (StrUtil.isNotEmpty(reasonCode)){
+                String[] reasonCodeArr = reasonCode.split(",");
+                String[] reasonDescArr = StrUtil.isEmpty(reasonDesc) ? new String[]{} : reasonDesc.split(",");
+                int descLength = reasonDescArr.length;
+                for (int i = 0; i <reasonCodeArr.length; i++) {
+                    String code = reasonCodeArr[i];
+                    OrderDetailVO.AuditDetail auditDetail = new OrderDetailVO.AuditDetail();
+                    auditDetail.setReasonCode(code);
+                    if (i+1>=descLength&&descLength>0){
+                        auditDetail.setReasonDesc(reasonDescArr[i]);
+                    }
+                    auditDetailList.add(auditDetail);
                 }
-                auditDetailList.add(auditDetail);
             }
-        }
-        auditInfo.setAuditDetails(auditDetailList);
+            auditInfo.setAuditDetails(auditDetailList);
+
+        });
         orderDetailVO.setAuditInfo(auditInfo);
         return orderDetailVO;
     }

@@ -40,7 +40,7 @@ public class ProductServiceImpl extends ExtendServiceImpl<ProductMapper, Product
 		List<SelectData> productSelectData = productList.stream().map(e -> {
 			SelectData<Void> selectData = new SelectData<>();
 			selectData.setLabel(e.getProductName());
-			selectData.setValue(e.getProductCode());
+			selectData.setValue(e.getProductId());
 			return selectData;
 		}).collect(Collectors.toList());
 		return productSelectData;

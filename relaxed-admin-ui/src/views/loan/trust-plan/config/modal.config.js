@@ -44,7 +44,8 @@ export const modalConfig= {
       ],
            config:{
           type:'date',
-             placeholder:'请选择信托计划成立日期'
+             placeholder:'请选择信托计划成立日期',
+             'value-format':'yyyy-MM-dd',
            }
       },
 
@@ -59,7 +60,8 @@ export const modalConfig= {
       ],
            config:{
              type:'date',
-             placeholder:'请选择信托计划到期日期'
+             placeholder:'请选择信托计划到期日期',
+             'value-format':'yyyy-MM-dd',
            }
       },
 
@@ -73,7 +75,8 @@ export const modalConfig= {
       ],
            config:{
              type:'date',
-             placeholder:'请选择信托计划摊还期开始日期'
+             placeholder:'请选择信托计划摊还期开始日期',
+             'value-format':'yyyy-MM-dd',
            }
       },
 

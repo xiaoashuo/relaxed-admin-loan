@@ -216,7 +216,13 @@
       handleUploadSuccess(res, file) {
         if (res.code === 200) {
           const data = res.data
-          this.uploadList.push({ uid:file.uid,name: data.oldFilename, url: data.url, fileId: data.fileId })
+          this.uploadList.push({
+            uid:file.uid,
+            name: data.oldFilename,
+            url: data.url,
+            path: data.path,
+            fileId: data.fileId
+          })
           this.uploadedSuccessfully()
         } else {
           this.number--

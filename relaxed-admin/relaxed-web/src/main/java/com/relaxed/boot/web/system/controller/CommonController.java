@@ -43,6 +43,7 @@ public class CommonController {
 		String fullUrl = RelaxedConfig.getUrl() + fullFilePath;
 
 		data.put("url", fullUrl);
+		data.put("path", fullFilePath);
 		data.put("fileId", fileMeta.getFileId());
 		data.put("oldFilename", originalFilename);
 		data.put("filename", fileMeta.getFilename());

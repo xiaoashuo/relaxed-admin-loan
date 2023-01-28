@@ -52,11 +52,7 @@ public class Template {
 	@Schema(title = "模板名称", description = "模板名称")
 	private String templateName;
 
-	/**
-	 * 模板文件(填充模板)存放路径
-	 */
-	@Schema(title = "模板文件(填充模板)存放路径", description = "模板文件(填充模板)存放路径")
-	private String templatePath;
+
 
 	/**
 	 * 数据文件(导入模板)存放路径(如有)

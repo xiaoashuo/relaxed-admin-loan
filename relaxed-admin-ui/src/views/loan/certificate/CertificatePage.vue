@@ -7,7 +7,11 @@
     <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
-    ></pro-table>
+    >
+      <template #subjectType="scope">
+        <dict-text dict-code="subject_type" :value="scope.row.subjectType"></dict-text>
+      </template>
+    </pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :req-function="reqFunction"
@@ -131,8 +135,9 @@
       handleBeforeRequest(payload){
        const authorizeType= payload.authorizeType
        if (authorizeType==2){
+
          let paramArray = this.uploadData[0]
-         payload.certificateAddress=paramArray.url
+         payload.certificateAddress=paramArray.path
          payload.certificateFilename=paramArray.name
         }
         return payload

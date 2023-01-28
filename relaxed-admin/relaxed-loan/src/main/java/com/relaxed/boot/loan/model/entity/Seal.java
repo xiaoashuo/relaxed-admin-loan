@@ -52,11 +52,7 @@ public class Seal {
 	@Schema(title = "图片文件名称", description = "图片文件名称")
 	private String sealFilename;
 
-	/**
-	 * 图片本地路径
-	 */
-	@Schema(title = "图片本地路径", description = "图片本地路径")
-	private String sealPath;
+
 
 	/**
 	 * 签章来源

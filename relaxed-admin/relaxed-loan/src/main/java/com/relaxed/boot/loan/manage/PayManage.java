@@ -1,6 +1,11 @@
 package com.relaxed.boot.loan.manage;
 
 import cn.hutool.core.date.DatePattern;
+import com.relaxed.boot.common.system.utils.file.ByteArrayMultipartFile;
+import com.relaxed.boot.common.system.utils.file.FileConfig;
+import com.relaxed.boot.common.system.utils.file.FileMeta;
+import com.relaxed.boot.common.system.utils.file.FileUtils;
+import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.boot.loan.enums.BillItemSubjectEnum;
 import com.relaxed.boot.loan.enums.FileTypeEnum;
 import com.relaxed.boot.loan.enums.LoanEnum;
@@ -21,13 +26,20 @@ import com.relaxed.boot.loan.service.OrderService;
 import com.relaxed.boot.loan.service.ProjectTemplateService;
 import com.relaxed.boot.loan.service.TemplateService;
 import com.relaxed.boot.loan.service.TradeService;
+import com.relaxed.boot.loan.util.word.IWordTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Yakir
@@ -56,6 +68,8 @@ public class PayManage {
     private final TemplateService templateService;
 
     private final CertificateService certificateService;
+
+    private final IWordTemplate wordTemplate;
     public  void  loadSuccessHandle(Trade trade, Loan loan){
         //MOCK 成功
         LocalDateTime mockFintime = LocalDateTime.now();
@@ -107,10 +121,24 @@ public class PayManage {
         Integer keystoreId = projectTemplate.getKeystoreId();
         //模板
         Template template = templateService.getById(templateId);
-        //证书
-        Certificate certificate = certificateService.getById(keystoreId);
-        //1.渲染原始模板odf
+        String templateFilename = template.getTemplateFilename();
+     	String templatePath = RelaxedConfig.getProfile()+template.getTemplateUrl();;
+        //模板文件
+        File templateFile = new File(templatePath);
+        //原始数据
+        Map<String,Object> data=new HashMap<>();
+        //1.渲染原始模板pdf
+        try {
+            FileInputStream templateFileStream = new FileInputStream(templateFile);
+            ByteArrayOutputStream originPdf=new ByteArrayOutputStream();
+            wordTemplate.renderPdf(templateFileStream,originPdf,data);
+            ByteArrayMultipartFile uploadFile = new ByteArrayMultipartFile(originPdf.toByteArray(), templateFilename);
+            FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/contract", uploadFile,
+                    FileConfig.create().splitDate(true));
 
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         //2.渲染签章后pdf
 
     }

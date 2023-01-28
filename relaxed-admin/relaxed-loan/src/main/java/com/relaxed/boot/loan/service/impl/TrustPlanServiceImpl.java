@@ -40,7 +40,7 @@ public class TrustPlanServiceImpl extends ExtendServiceImpl<TrustPlanMapper, Tru
 		List<SelectData> selectDataList = trustPlanList.stream().map(e -> {
 			SelectData<Void> selectData = new SelectData<>();
 			selectData.setLabel(e.getTrustPlanName());
-			selectData.setValue(e.getTrustPlanNo());
+			selectData.setValue(e.getTrustPlanId());
 			return selectData;
 		}).collect(Collectors.toList());
 		return selectDataList;

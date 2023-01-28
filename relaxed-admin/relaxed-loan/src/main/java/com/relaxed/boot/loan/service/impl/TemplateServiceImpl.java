@@ -67,7 +67,7 @@ public class TemplateServiceImpl extends ExtendServiceImpl<TemplateMapper, Templ
 	@Override
 	public String getByTemplateCode(String templateCode) {
 		return getOne(Wrappers.lambdaQuery(Template.class).eq(Template::getTemplateCode, templateCode))
-				.getTemplatePath();
+				.getTemplateUrl();
 	}
 
 	@Override

@@ -46,12 +46,15 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 	 */
 	@Override
 	public PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo) {
-		return baseMapper.queryPage(pageParam, qo);
+		PageResult<SealPageVO> sealPageVOPageResult = baseMapper.queryPage(pageParam, qo);
+		sealPageVOPageResult.getRecords().forEach(seal -> seal.setSealAddress(RelaxedConfig.getRequestFullUrl(seal.getSealAddress())));
+		return sealPageVOPageResult;
 	}
 
 	@Override
 	public List<SealPageVO> queryList() {
 		List<Seal> list = list();
+		list.forEach(seal -> seal.setSealAddress(RelaxedConfig.getRequestFullUrl(seal.getSealAddress())));
 		return SealConverter.INSTANCE.poToPageVos(list);
 	}
 
@@ -59,7 +62,7 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 	public List<SelectData> querySealList() {
 		return list().stream().map(item -> {
 			Map<String, Object> additionalInfo = new HashMap<>();
-			additionalInfo.put("url", item.getSealAddress());
+			additionalInfo.put("url", RelaxedConfig.getRequestFullUrl(item.getSealAddress()));
 			additionalInfo.put("name", item.getSealFilename());
 			SelectData<Map<String, Object>> selectItem = new SelectData<>();
 			selectItem.setLabel(item.getSealSubject());
@@ -91,21 +94,17 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 				ByteArrayMultipartFile file = new ByteArrayMultipartFile(outputStream.toByteArray(), filename);
 				FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/seal", file,
 						FileConfig.create().splitDate(false));
-				String address = RelaxedConfig.getUrl() + fileMeta.getRelativeFilePath();
+				String address =  fileMeta.getRelativeFilePath();
 				seal.setSealFilename(filename);
 				seal.setSealAddress(address);
-				seal.setSealPath(fileMeta.getLocalFullFilePath());
+
 			}
 			else {
 
 			}
 
 		}
-		else {
-			String sealAddress = seal.getSealAddress();
-			String path = StrUtil.removePrefix(sealAddress, RelaxedConfig.getUrl());
-			seal.setSealPath(RelaxedConfig.getProfile() + path);
-		}
+
 
 		boolean result = save(seal);
 		return result;

@@ -40,14 +40,18 @@ public class CertificateServiceImpl extends ExtendServiceImpl<CertificateMapper,
 	 */
 	@Override
 	public PageResult<CertificatePageVO> queryPage(PageParam pageParam, CertificateQO qo) {
-		return baseMapper.queryPage(pageParam, qo);
+		PageResult<CertificatePageVO> certificatePageVOPageResult = baseMapper.queryPage(pageParam, qo);
+		for (CertificatePageVO record : certificatePageVOPageResult.getRecords()) {
+			record.setCertificateAddress(RelaxedConfig.getRequestFullUrl(record.getCertificateAddress()));
+		}
+		return certificatePageVOPageResult;
 	}
 
 	@Override
 	public List<SelectData> queryCertificateList() {
 		return list().stream().map(item -> {
 			Map<String, Object> additionalInfo = new HashMap<>();
-			additionalInfo.put("url", item.getCertificateAddress());
+			additionalInfo.put("url", RelaxedConfig.getRequestFullUrl(item.getCertificateAddress()));
 			additionalInfo.put("name", item.getCertificateFilename());
 			SelectData<Map<String, Object>> selectItem = new SelectData<>();
 			selectItem.setLabel(item.getCertificateSubject());
@@ -78,7 +82,7 @@ public class CertificateServiceImpl extends ExtendServiceImpl<CertificateMapper,
 			ByteArrayMultipartFile file = new ByteArrayMultipartFile(byteArrayOutputStream.toByteArray(), filename);
 			FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/keystore", file,
 					FileConfig.create().splitDate(false));
-			String address = RelaxedConfig.getUrl() + fileMeta.getRelativeFilePath();
+			String address =  fileMeta.getRelativeFilePath();
 			certificate.setCertificateFilename(filename);
 			certificate.setCertificateAddress(address);
 		}

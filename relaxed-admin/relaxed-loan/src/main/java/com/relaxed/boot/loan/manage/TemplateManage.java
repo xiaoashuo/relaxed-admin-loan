@@ -60,7 +60,7 @@ public class TemplateManage {
 		String profile = RelaxedConfig.getProfile();
 		FileMeta fileMeta = FileUtils.upload(profile, "profile/word", file, FileConfig.create().splitDate(false));
 		String docFile = fileMeta.getLocalFullFilePath();
-		String docUrl = RelaxedConfig.getUrl() + fileMeta.getRelativeFilePath();
+		String docUrl = fileMeta.getRelativeFilePath();
 		// 2.生成数据文件
 		File docfilePath = new File(docFile);
 		List<ElementMeta> elementMetas = wordTemplate.templateElement(new FileInputStream(docfilePath));
@@ -71,13 +71,12 @@ public class TemplateManage {
 			names.add(tagName);
 			return names;
 		}).collect(Collectors.toList()));
-		String dir = profile + "/profile/excel/";
-		FileUtil.mkdir(dir);
-		String excelPath = dir + excelFilename;
+		String excelDir =  "/profile/excel/";
+		FileUtil.mkdir(excelDir);
+		String excelPath = excelDir + excelFilename;
 		EasyExcel.write(excelPath).head(headList).inMemory(true).sheet().doWrite(ListUtil.empty());
 		template.setTemplateFilename(originalFilename);
 		template.setTemplateUrl(docUrl);
-		template.setTemplatePath(docFile);
 		template.setDatafilePath(excelPath);
 		template.setTemplateCode(IdUtil.getSnowflakeNextIdStr() + "");
 		// 模板填充域

@@ -7,7 +7,16 @@
     <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
-    ></pro-table>
+    >
+      <template #sealAddress="scope">
+        <yi-image
+          :src="scope.row.sealAddress"
+          :image-style="{width: '40px' ,height:'40px'}"
+          :preview-src-list="[scope.row.sealAddress]"
+        />
+      </template>
+
+    </pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :req-function="reqFunction"
@@ -59,11 +68,13 @@
 
   import {YiRadioGroup} from '@/components/radio'
   import {YiUpload} from '@/components/upload'
+  import YiImage from '@/components/image'
   export default {
     name: "seal",
     components:{
       YiRadioGroup,
-      YiUpload
+      YiUpload,
+      YiImage
     },
     data() {
       return {
@@ -118,7 +129,7 @@
         const sealSource= payload.sealSource
         if (sealSource==2){
           let paramArray = this.uploadData[0]
-          payload.sealAddress=paramArray.url
+          payload.sealAddress=paramArray.path
           payload.sealFilename=paramArray.name
         }
         return payload

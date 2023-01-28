@@ -19,7 +19,7 @@ export const contentTableConfig={
            {
       prop: 'certificateId',
       label:'id',
-      minWidth:180,
+      minWidth:100,
       slotName: 'certificateId'
     },
               {
