@@ -47,15 +47,16 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 	@Override
 	public PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo) {
 		PageResult<SealPageVO> sealPageVOPageResult = baseMapper.queryPage(pageParam, qo);
-		sealPageVOPageResult.getRecords().forEach(seal -> seal.setSealAddress(RelaxedConfig.getRequestFullUrl(seal.getSealAddress())));
+		sealPageVOPageResult.getRecords().forEach(seal -> seal.setPreviewSealAddress(RelaxedConfig.getRequestFullUrl(seal.getSealAddress())));
 		return sealPageVOPageResult;
 	}
 
 	@Override
 	public List<SealPageVO> queryList() {
 		List<Seal> list = list();
-		list.forEach(seal -> seal.setSealAddress(RelaxedConfig.getRequestFullUrl(seal.getSealAddress())));
-		return SealConverter.INSTANCE.poToPageVos(list);
+		List<SealPageVO> sealPageVOS = SealConverter.INSTANCE.poToPageVos(list);
+		sealPageVOS.forEach(seal -> seal.setPreviewSealAddress(RelaxedConfig.getRequestFullUrl(seal.getSealAddress())));
+		return sealPageVOS;
 	}
 
 	@Override

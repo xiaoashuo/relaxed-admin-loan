@@ -9,7 +9,7 @@
                @delBtnClick="handleDelClick"
     >
       <template #fileType="scope">
-        <dict-text v-model="scope.row.fileType"     dict-code="file_type" ></dict-text>
+        <dict-text :value="parseInt(scope.row.fileType)"     dict-code="file_type" ></dict-text>
       </template>
       <template #extHandler="scope">
 
@@ -27,6 +27,7 @@
                 :req-function="reqFunction"
                 @submitSuccess="handleSubmit"
     >
+
       <template #templateId="scope">
 
         <el-form-item label="模板">

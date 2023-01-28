@@ -22,4 +22,7 @@ public class LogFormatUtil {
     public static String format(String subject, String action, LocalDateTime taskTime, String extra){
         return StrUtil.format(logTemplate, subject, action, taskTime, extra);
     }
+    public static String format(String subject, String action, LocalDateTime taskTime, String messageTemplate,Object... args){
+        return StrUtil.format(logTemplate, subject, action, taskTime, StrUtil.format(messageTemplate,args));
+    }
 }

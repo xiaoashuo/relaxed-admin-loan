@@ -1,6 +1,7 @@
 package com.relaxed.boot.loan.manage;
 
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.util.IdUtil;
 import com.relaxed.boot.common.system.utils.file.ByteArrayMultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
@@ -15,6 +16,7 @@ import com.relaxed.boot.loan.model.entity.BillItem;
 import com.relaxed.boot.loan.model.entity.Certificate;
 import com.relaxed.boot.loan.model.entity.Loan;
 import com.relaxed.boot.loan.model.entity.Order;
+import com.relaxed.boot.loan.model.entity.OrderAnnex;
 import com.relaxed.boot.loan.model.entity.ProjectTemplate;
 import com.relaxed.boot.loan.model.entity.Template;
 import com.relaxed.boot.loan.model.entity.Trade;
@@ -22,10 +24,13 @@ import com.relaxed.boot.loan.service.BillItemService;
 import com.relaxed.boot.loan.service.BillService;
 import com.relaxed.boot.loan.service.CertificateService;
 import com.relaxed.boot.loan.service.LoanService;
+import com.relaxed.boot.loan.service.OrderAnnexService;
 import com.relaxed.boot.loan.service.OrderService;
 import com.relaxed.boot.loan.service.ProjectTemplateService;
 import com.relaxed.boot.loan.service.TemplateService;
 import com.relaxed.boot.loan.service.TradeService;
+import com.relaxed.boot.loan.util.LogFormatUtil;
+import com.relaxed.boot.loan.util.ProNoUtil;
 import com.relaxed.boot.loan.util.word.IWordTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +70,7 @@ public class PayManage {
 
     private final OrderService orderService;
 
+    private final OrderAnnexService orderAnnexService;
     private final TemplateService templateService;
 
     private final CertificateService certificateService;
@@ -113,32 +119,50 @@ public class PayManage {
 
     }
 
-    private void generateRelatedFile(Loan loan) {
+    public void generateRelatedFile(Loan loan) {
+
         Long orderId = loan.getOrderId();
+        log.info(LogFormatUtil.format("借款协议生成","开始",LocalDateTime.now(),"订单Id{}",orderId));
         Order order = orderService.getById(orderId);
         ProjectTemplate projectTemplate=projectTemplateService.getByPidAndFileType(order.getProjectId(), FileTypeEnum.I.getCode());
         Integer templateId = projectTemplate.getTemplateId();
         Integer keystoreId = projectTemplate.getKeystoreId();
         //模板
         Template template = templateService.getById(templateId);
-        String templateFilename = template.getTemplateFilename();
+        String templateName = template.getTemplateName();
+        String pdfFileName=templateName+".pdf";
      	String templatePath = RelaxedConfig.getProfile()+template.getTemplateUrl();;
         //模板文件
         File templateFile = new File(templatePath);
         //原始数据
         Map<String,Object> data=new HashMap<>();
+        data.put("contractNo",order.getPartnerContractNo());
         //1.渲染原始模板pdf
         try {
             FileInputStream templateFileStream = new FileInputStream(templateFile);
+            templateFileStream.mark(0);
             ByteArrayOutputStream originPdf=new ByteArrayOutputStream();
             wordTemplate.renderPdf(templateFileStream,originPdf,data);
-            ByteArrayMultipartFile uploadFile = new ByteArrayMultipartFile(originPdf.toByteArray(), templateFilename);
+            ByteArrayMultipartFile uploadFile = new ByteArrayMultipartFile(originPdf.toByteArray(), pdfFileName);
             FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/contract", uploadFile,
                     FileConfig.create().splitDate(true));
+            String relativeFilePath = fileMeta.getRelativeFilePath();
+            String fileNo = IdUtil.getSnowflakeNextIdStr();
+            OrderAnnex orderAnnex = new OrderAnnex();
+            orderAnnex.setOrderId(orderId);
+            orderAnnex.setFileNo(fileNo);
+            orderAnnex.setFileName(FileTypeEnum.I.getDesc());
+            orderAnnex.setFileType(Integer.valueOf(FileTypeEnum.I.getCode()));
+            orderAnnex.setFileUrl(relativeFilePath);
+            orderAnnex.setRemark("");
+            orderAnnexService.save(orderAnnex);
+
 
         } catch (Exception e) {
+            log.info(LogFormatUtil.format("借款协议生成","异常",LocalDateTime.now(),"订单Id{}",orderId),e);
             throw new RuntimeException(e);
         }
+        log.info(LogFormatUtil.format("借款协议生成","结束",LocalDateTime.now(),"订单Id{}",orderId));
         //2.渲染签章后pdf
 
     }

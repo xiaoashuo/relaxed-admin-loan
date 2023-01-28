@@ -29,7 +29,7 @@ public class ProjectTemplatePageVO {
      * 文件类型
      */
     @Schema(title = "文件类型", description = "文件类型")
-    private String fileType;
+    private Integer fileType;
     
     /**
      * 模板id

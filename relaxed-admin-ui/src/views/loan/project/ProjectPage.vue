@@ -83,7 +83,7 @@
       },
       showTemplateConfigList(row){
         this.$router.push({
-          path:'/loan/project-template',
+          path:'/loanConfig/project-template',
           query:{
             projectId: row.projectId
           }

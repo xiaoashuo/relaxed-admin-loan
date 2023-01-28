@@ -10,7 +10,11 @@ export const contentTableConfig={
     },
 
   },
-
+  permissions: {
+    create: 'loan:certificate:add',
+    // update: 'loan:certificate:edit',
+    // delete: 'loan:certificate:delete'
+  },
   propList:[
 
 

@@ -26,7 +26,7 @@
             <draggable v-model="sealImageList" :group="{ name: 'itext', pull: 'clone' }" :sort="false" @end="end">
               <transition-group type="transition">
                 <li v-for="item in sealImageList" :key="item.sealId" class="item" style="text-align:center;">
-                  <img :src="item.sealAddress" width="100%;" height="100%" class="imgstyle" />
+                  <img :src="item.previewSealAddress" width="100%;" height="100%" class="imgstyle" />
                 </li>
               </transition-group>
             </draggable>
@@ -39,7 +39,7 @@
           </div>
           <div class="sealSelect">
             <div>印章列表</div>
-            <yi-select  :other-props="{  clearable: true}" :options="sealSelectData" v-model="sealId"  ref="sealListRef"></yi-select>
+            <yi-select  :nativeProps="{  clearable: true}" :options="sealSelectData" v-model="sealId"  ref="sealListRef"></yi-select>
 
             <div class="item-preview">
               <img :src="sealPreviewUrl" style="margin-top: 10px" width="100%;" height="100%" class="imgstyle"/>
@@ -172,7 +172,7 @@
         handler(val){
           const findItem=  this.sealImageList.find(item=>item.sealId===val)
           if (findItem){
-            this.sealPreviewUrl=findItem.sealAddress
+            this.sealPreviewUrl=findItem.previewSealAddress
           }
         },
       },
