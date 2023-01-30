@@ -114,7 +114,7 @@ public class FileUtils {
 	 * @return
 	 * @throws FileSizeLimitExceededException 如果超出最大大小
 	 */
-	public static final void assertAllowed(MultipartFile file, FileConfig fileConfig)
+	private   void assertAllowed(MultipartFile file, FileConfig fileConfig)
 			throws FileSizeLimitExceededException {
 		long size = file.getSize();
 
@@ -122,4 +122,8 @@ public class FileUtils {
 
 	}
 
+	public static File download(String basePath,String fileUrl) {
+		return new File(basePath, fileUrl);
+
+	}
 }

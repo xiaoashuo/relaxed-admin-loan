@@ -36,8 +36,10 @@ public class ProjectTemplate {
 	 * 文件类型
 	 */
     @Schema(title = "文件类型", description = "文件类型")
-	private String fileType;
-    
+	private Integer fileType;
+	@Schema(title = "目标文件类型", description = "目标文件类型")
+	private Integer destFileType;
+
 	/**
 	 * 模板id
 	 */

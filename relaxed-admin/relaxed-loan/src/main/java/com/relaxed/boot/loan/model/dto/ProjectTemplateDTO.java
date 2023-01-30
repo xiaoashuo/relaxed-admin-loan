@@ -31,7 +31,7 @@ public class ProjectTemplateDTO {
      * 文件类型
      */
     @Schema(title = "文件类型", description = "文件类型")
-    private String fileType;
+    private Integer fileType;
     @Schema(title = "文件名称", description = "文件名称")
     private String fileName;
     /**

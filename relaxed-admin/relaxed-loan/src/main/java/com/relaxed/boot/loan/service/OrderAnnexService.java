@@ -22,4 +22,5 @@ public interface OrderAnnexService extends ExtendService<OrderAnnex> {
     */
     PageResult<OrderAnnexPageVO> queryPage(PageParam pageParam, OrderAnnexQO qo);
 
+    OrderAnnex getByOrderIdAndFileType(Long orderId, Integer fileType);
 }

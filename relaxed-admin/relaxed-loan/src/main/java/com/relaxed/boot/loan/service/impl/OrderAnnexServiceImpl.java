@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.relaxed.boot.loan.model.entity.OrderAnnex;
 import com.relaxed.boot.loan.model.vo.OrderAnnexPageVO;
 import com.relaxed.boot.loan.model.qo.OrderAnnexQO;
@@ -29,4 +30,9 @@ public class OrderAnnexServiceImpl extends ExtendServiceImpl<OrderAnnexMapper, O
         return baseMapper.queryPage(pageParam, qo);
     }
 
+    @Override
+    public OrderAnnex getByOrderIdAndFileType(Long orderId, Integer fileType) {
+        return getOne(Wrappers.lambdaQuery(OrderAnnex.class).eq(OrderAnnex::getOrderId, orderId)
+                .eq(OrderAnnex::getFileType,fileType));
+    }
 }

@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.manage;
 
+import com.relaxed.boot.loan.job.StampHandleJob;
 import com.relaxed.boot.loan.model.entity.Loan;
 import com.relaxed.boot.loan.service.LoanService;
 import com.relaxed.boot.web.RelaxedWebApplication;
@@ -23,9 +24,17 @@ class PayManageTest {
     private PayManage payManage;
     @Autowired
     private LoanService loanService;
+
+    @Autowired
+    private StampHandleJob stampHandleJob;
     @Test
     void generateRelatedFile() {
-        Loan loan = loanService.getById(9);
+        Loan loan = loanService.getById(13);
         payManage.generateRelatedFile(loan);
+    }
+
+    @Test
+    void generateSettleFile() {
+        stampHandleJob.stampHandleJob();
     }
 }

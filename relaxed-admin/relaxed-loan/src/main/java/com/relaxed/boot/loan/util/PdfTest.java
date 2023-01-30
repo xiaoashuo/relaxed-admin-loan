@@ -73,7 +73,7 @@ public class PdfTest {
 		previewSignInfo.setImgPath("D:\\other\\100000\\itext\\image\\test.png");
 		previewSignInfo.setContentBefore(true);
 		previewSignInfo.setKeywordLocationList(wordsLocation1);
-
+        //加签章图片 不生成证书
 		PdfUtil.addImage(sourceFile, targetFile, previewSignInfo);
 		// BouncyCastleProvider provider = new BouncyCastleProvider();
 		// Security.addProvider(provider);

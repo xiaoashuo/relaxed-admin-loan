@@ -52,7 +52,7 @@ public class ProjectTemplateServiceImpl extends ExtendServiceImpl<ProjectTemplat
     @Override
     public ProjectTemplateDTO detail(Integer projectTemplateId) {
         ProjectTemplate projectTemplate = getById(projectTemplateId);
-        String fileType = projectTemplate.getFileType();
+        Integer fileType = projectTemplate.getFileType();
 
         SysDictItem sysDictItem= sysDictItemService.getByDictKeyAndValue(SysDictKey.FILE_TYPE_KEY.getKey(),fileType);
         Integer projectId = projectTemplate.getProjectId();
@@ -85,7 +85,7 @@ public class ProjectTemplateServiceImpl extends ExtendServiceImpl<ProjectTemplat
     }
 
     @Override
-    public ProjectTemplate getByPidAndFileType(Integer projectId, String fileType) {
+    public ProjectTemplate getByPidAndFileType(Integer projectId, Integer  fileType) {
         return getOne(Wrappers.lambdaQuery(ProjectTemplate.class).eq(ProjectTemplate::getProjectId, projectId)
                 .eq(ProjectTemplate::getFileType,fileType));
     }

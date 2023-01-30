@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.StampRecordMapper">
+
+	<resultMap id="stampRecordMap" type="com.relaxed.boot.loan.model.entity.StampRecord">
+  		<id property="stampRecordId" column="stamp_record_id"/>
+    		<result property="projectCode" column="project_code"/>
+    		<result property="productCode" column="product_code"/>
+    		<result property="trustPlanCode" column="trust_plan_code"/>
+    		<result property="fileType" column="file_type"/>
+    		<result property="contractName" column="contract_name"/>
+    		<result property="status" column="status"/>
+    		<result property="partnerBusinessId" column="partner_business_id"/>
+    		<result property="signWay" column="sign_way"/>
+    		<result property="remark" column="remark"/>
+    		<result property="extJson" column="ext_json"/>
+    		<result property="valid" column="valid"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		stamp_record_id,        
+		project_code,        
+		product_code,        
+		trust_plan_code,        
+		file_type,        
+		contract_name,        
+		status,        
+		partner_business_id,        
+		sign_way,        
+		remark,        
+		ext_json,        
+		valid,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		sr.stamp_record_id,        
+		sr.project_code,        
+		sr.product_code,        
+		sr.trust_plan_code,        
+		sr.file_type,        
+		sr.contract_name,        
+		sr.status,        
+		sr.partner_business_id,        
+		sr.sign_way,        
+		sr.remark,        
+		sr.ext_json,        
+		sr.valid,        
+		sr.created_time,        
+		sr.updated_time        
+	</sql>
+</mapper>

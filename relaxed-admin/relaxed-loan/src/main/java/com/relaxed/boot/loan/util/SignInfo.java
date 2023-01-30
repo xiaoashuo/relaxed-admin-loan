@@ -108,9 +108,16 @@ public class SignInfo {
 	 * 签名区域 位置属性 x 左下角x y 左下角y width 宽 height 高
 	 */
 	private float x;
+	/**
+	 * x偏移量   正 像右便宜 负 像左
+	 */
+	private float offsetX;
 
 	private float y;
-
+	/**
+	 * y 偏移量 正 向上  负向下
+	 */
+	private float offsetY;
 	private float width;
 
 	private float height;

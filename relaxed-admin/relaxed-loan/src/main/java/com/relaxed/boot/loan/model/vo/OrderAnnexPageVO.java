@@ -68,24 +68,7 @@ public class OrderAnnexPageVO {
     @Schema(title = "逻辑删除标识，未删除为 0，已删除为删除时间", description = "逻辑删除标识，未删除为 0，已删除为删除时间")
     private Integer valid;
     
-    /**
-     * 当前影像资料是否可以修改 0可修改,1不可修改
-     */
-    @Schema(title = "当前影像资料是否可以修改 0可修改,1不可修改", description = "当前影像资料是否可以修改 0可修改,1不可修改")
-    private Integer updStatus;
-    
-    /**
-     * 是否推送给云融0未推送,1已推送
-     */
-    @Schema(title = "是否推送给云融0未推送,1已推送", description = "是否推送给云融0未推送,1已推送")
-    private Integer isPush;
-    
-    /**
-     * 通知批次号
-     */
-    @Schema(title = "通知批次号", description = "通知批次号")
-    private String noticeBatchNo;
-    
+
     /**
      * 创建时间
      */
@@ -98,17 +81,6 @@ public class OrderAnnexPageVO {
     @Schema(title = "更新时间", description = "更新时间")
     private LocalDateTime updatedTime;
     
-    /**
-     * 审核记录
-     */
-    @Schema(title = "审核记录", description = "审核记录")
-    private String auditRecord;
-    
-    /**
-     * 审核标记1.红色2.橙色3.黄色4.绿色5.蓝色6:√,7:×
-     */
-    @Schema(title = "审核标记1.红色2.橙色3.黄色4.绿色5.蓝色6:√,7:×", description = "审核标记1.红色2.橙色3.黄色4.绿色5.蓝色6:√,7:×")
-    private Integer auditFlag;
-    
+
 
 }

@@ -12,13 +12,10 @@
     		<result property="remark" column="remark"/>
     		<result property="uploadTime" column="upload_time"/>
     		<result property="valid" column="valid"/>
-    		<result property="updStatus" column="upd_status"/>
-    		<result property="isPush" column="is_push"/>
-    		<result property="noticeBatchNo" column="notice_batch_no"/>
+
     		<result property="createdTime" column="created_time"/>
     		<result property="updatedTime" column="updated_time"/>
-    		<result property="auditRecord" column="audit_record"/>
-    		<result property="auditFlag" column="audit_flag"/>
+
       </resultMap>
 
 	<sql id="Base_Column_List">
@@ -31,13 +28,10 @@
 		remark,        
 		upload_time,        
 		valid,        
-		upd_status,        
-		is_push,        
-		notice_batch_no,        
+
 		created_time,        
-		updated_time,        
-		audit_record,        
-		audit_flag        
+		updated_time
+
 	</sql>
 
 	<sql id="Base_Alias_Column_List">
@@ -50,12 +44,9 @@
 		oa.remark,        
 		oa.upload_time,        
 		oa.valid,        
-		oa.upd_status,        
-		oa.is_push,        
-		oa.notice_batch_no,        
+
 		oa.created_time,        
-		oa.updated_time,        
-		oa.audit_record,        
-		oa.audit_flag        
+		oa.updated_time
+
 	</sql>
 </mapper>

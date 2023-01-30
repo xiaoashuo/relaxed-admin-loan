@@ -1,6 +1,5 @@
 package com.relaxed.boot.loan.manage;
 
-import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.util.IdUtil;
 import com.relaxed.boot.common.system.utils.file.ByteArrayMultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
@@ -10,27 +9,11 @@ import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.boot.loan.enums.BillItemSubjectEnum;
 import com.relaxed.boot.loan.enums.FileTypeEnum;
 import com.relaxed.boot.loan.enums.LoanEnum;
+import com.relaxed.boot.loan.enums.StampEnum;
 import com.relaxed.boot.loan.enums.TradeStatusEnum;
-import com.relaxed.boot.loan.model.entity.Bill;
-import com.relaxed.boot.loan.model.entity.BillItem;
-import com.relaxed.boot.loan.model.entity.Certificate;
-import com.relaxed.boot.loan.model.entity.Loan;
-import com.relaxed.boot.loan.model.entity.Order;
-import com.relaxed.boot.loan.model.entity.OrderAnnex;
-import com.relaxed.boot.loan.model.entity.ProjectTemplate;
-import com.relaxed.boot.loan.model.entity.Template;
-import com.relaxed.boot.loan.model.entity.Trade;
-import com.relaxed.boot.loan.service.BillItemService;
-import com.relaxed.boot.loan.service.BillService;
-import com.relaxed.boot.loan.service.CertificateService;
-import com.relaxed.boot.loan.service.LoanService;
-import com.relaxed.boot.loan.service.OrderAnnexService;
-import com.relaxed.boot.loan.service.OrderService;
-import com.relaxed.boot.loan.service.ProjectTemplateService;
-import com.relaxed.boot.loan.service.TemplateService;
-import com.relaxed.boot.loan.service.TradeService;
+import com.relaxed.boot.loan.model.entity.*;
+import com.relaxed.boot.loan.service.*;
 import com.relaxed.boot.loan.util.LogFormatUtil;
-import com.relaxed.boot.loan.util.ProNoUtil;
 import com.relaxed.boot.loan.util.word.IWordTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,10 +22,8 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,6 +57,8 @@ public class PayManage {
     private final CertificateService certificateService;
 
     private final IWordTemplate wordTemplate;
+
+    private final StampRecordService stampRecordService;
     public  void  loadSuccessHandle(Trade trade, Loan loan){
         //MOCK 成功
         LocalDateTime mockFintime = LocalDateTime.now();
@@ -117,6 +100,7 @@ public class PayManage {
         //生成借款合同
         generateRelatedFile(loan);
 
+
     }
 
     public void generateRelatedFile(Loan loan) {
@@ -124,7 +108,7 @@ public class PayManage {
         Long orderId = loan.getOrderId();
         log.info(LogFormatUtil.format("借款协议生成","开始",LocalDateTime.now(),"订单Id{}",orderId));
         Order order = orderService.getById(orderId);
-        ProjectTemplate projectTemplate=projectTemplateService.getByPidAndFileType(order.getProjectId(), FileTypeEnum.I.getCode());
+        ProjectTemplate projectTemplate=projectTemplateService.getByPidAndFileType(order.getProjectId(), Integer.valueOf(FileTypeEnum.A9.getCode()));
         Integer templateId = projectTemplate.getTemplateId();
         Integer keystoreId = projectTemplate.getKeystoreId();
         //模板
@@ -151,11 +135,24 @@ public class PayManage {
             OrderAnnex orderAnnex = new OrderAnnex();
             orderAnnex.setOrderId(orderId);
             orderAnnex.setFileNo(fileNo);
-            orderAnnex.setFileName(FileTypeEnum.I.getDesc());
-            orderAnnex.setFileType(Integer.valueOf(FileTypeEnum.I.getCode()));
+            orderAnnex.setFileName(FileTypeEnum.A9.getDesc());
+            orderAnnex.setFileType(Integer.valueOf(FileTypeEnum.A9.getCode()));
             orderAnnex.setFileUrl(relativeFilePath);
             orderAnnex.setRemark("");
             orderAnnexService.save(orderAnnex);
+
+            //插入一条待签章记录
+            StampRecord stampRecord = new StampRecord();
+            stampRecord.setProjectId(order.getProjectId());
+            stampRecord.setProductCode(order.getProductCode());
+            stampRecord.setTrustPlanCode(order.getTrustPlanCode());
+            stampRecord.setFileType(Integer.valueOf(FileTypeEnum.A9.getCode()));
+            stampRecord.setContractName(FileTypeEnum.A9.getDesc()+"原始文件.pdf");
+            stampRecord.setStatus(StampEnum.Status.WAIT_START.getVal());
+            stampRecord.setPartnerBusinessId(order.getPartnerBizNo());
+            stampRecord.setSignWay(0);
+            stampRecordService.save(stampRecord);
+
 
 
         } catch (Exception e) {

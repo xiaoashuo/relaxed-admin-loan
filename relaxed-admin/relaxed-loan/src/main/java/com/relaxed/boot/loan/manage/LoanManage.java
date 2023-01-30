@@ -5,6 +5,7 @@ import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.NumberUtil;
 import com.relaxed.boot.loan.enums.BillEnum;
 import com.relaxed.boot.loan.enums.BillItemSubjectEnum;
+import com.relaxed.boot.loan.enums.FileTypeEnum;
 import com.relaxed.boot.loan.enums.FillerTargetEnum;
 import com.relaxed.boot.loan.enums.FillerTypeEnum;
 import com.relaxed.boot.loan.enums.LoanEnum;
@@ -17,6 +18,7 @@ import com.relaxed.boot.loan.model.entity.Loan;
 import com.relaxed.boot.loan.model.entity.Order;
 import com.relaxed.boot.loan.model.entity.OrderBankCard;
 import com.relaxed.boot.loan.model.entity.OrderCustomer;
+import com.relaxed.boot.loan.model.entity.StampRecord;
 import com.relaxed.boot.loan.model.entity.Trade;
 import com.relaxed.boot.loan.service.BillItemFillerService;
 import com.relaxed.boot.loan.service.BillItemService;
@@ -171,7 +173,6 @@ public class LoanManage {
         BillItemFiller bifPint = convertBillItemFiller(loan, billItemPenaltyInterest.getReceiptsAmt(), bill, billItemPenaltyInterest,
                 nowData, trade, FillerTypeEnum.A);
         billItemFillerService.save(bifPint);
-
 
     }
     private BillItemFiller convertBillItemFiller(Loan loan, BigDecimal repayIntAmt, Bill bill,

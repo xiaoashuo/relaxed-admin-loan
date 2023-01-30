@@ -28,5 +28,5 @@ public interface ProjectTemplateService extends ExtendService<ProjectTemplate> {
 
     boolean saveSignInfo(ProjectTemplateSignReqDTO projectTemplateSignReqDTO);
 
-    ProjectTemplate getByPidAndFileType(Integer projectId, String fileType);
+    ProjectTemplate getByPidAndFileType(Integer projectId, Integer fileType);
 }
