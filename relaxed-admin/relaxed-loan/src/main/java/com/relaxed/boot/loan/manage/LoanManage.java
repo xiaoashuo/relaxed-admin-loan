@@ -65,6 +65,7 @@ public class LoanManage {
     private final OrderBankCardService orderBankCardService;
     private final OrderCustomerService orderCustomerService;
 
+    private final StampManage stampManage;
     public void loanConfirm(Long orderId) {
         Order order = orderService.getById(orderId);
         Assert.notNull(order,"订单信息不能为空");
@@ -173,6 +174,8 @@ public class LoanManage {
         BillItemFiller bifPint = convertBillItemFiller(loan, billItemPenaltyInterest.getReceiptsAmt(), bill, billItemPenaltyInterest,
                 nowData, trade, FillerTypeEnum.A);
         billItemFillerService.save(bifPint);
+        //生成结清证明
+        stampManage.generateRelatedFile(loan.getPartnerBizNo(),FileTypeEnum.A5301);
 
     }
     private BillItemFiller convertBillItemFiller(Loan loan, BigDecimal repayIntAmt, Bill bill,

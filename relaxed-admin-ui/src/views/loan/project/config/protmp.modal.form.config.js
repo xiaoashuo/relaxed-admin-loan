@@ -22,6 +22,19 @@ export const modalFormConfig= {
         { required: true, message: '请选择文件类型', trigger: 'blur' },
       ]
     },
+    {
+      type:'dict-select',
+      label: '生成文件类型',
+      field:'destFileType',
+      config:{
+        dictCode: 'file_type',
+        clearable: true
+      },
+      rules:[
+        { required: true, message: '请选择生成文件类型', trigger: 'blur' },
+      ]
+    },
+
          {
       type:'slot',
       label: '模板id',

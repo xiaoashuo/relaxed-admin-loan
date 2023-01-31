@@ -50,6 +50,8 @@ public class TemplateManage {
 
 	private final StoreWordTemplate wordTemplate;
 
+
+
 	@SneakyThrows
 	public boolean saveTemplate(Template template, MultipartFile file) {
 		String originalFilename = file.getOriginalFilename();

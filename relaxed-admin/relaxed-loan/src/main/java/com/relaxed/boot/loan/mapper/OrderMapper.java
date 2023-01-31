@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.mapper;
 
+import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
@@ -34,6 +35,9 @@ public interface OrderMapper extends ExtendMapper<Order> {
 		IPage<OrderPageVO> page = this.prodPage(pageParam);
 		LambdaAliasQueryWrapperX<Order> wrapper = WrappersX.lambdaAliasQueryX(Order.class);
 		wrapper.eqIfPresent(Order::getPartnerBizNo,qo.getPartnerBizNo());
+		if (MapUtil.isEmpty(pageParam.getSort())){
+			wrapper.orderByDesc(Order::getCreatedTime);
+		}
 		this.selectByPage(page, wrapper);
 		return new PageResult<>(page.getRecords(), page.getTotal());
    }

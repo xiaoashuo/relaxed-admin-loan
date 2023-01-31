@@ -15,6 +15,8 @@ import com.relaxed.boot.loan.util.FileConvert;
 import com.relaxed.boot.loan.util.KeywordLocation;
 import com.relaxed.boot.loan.util.PdfUtil;
 import com.relaxed.boot.loan.util.PreviewSignInfo;
+import com.relaxed.boot.loan.util.pdf.ImageSignMeta;
+import com.relaxed.boot.loan.util.pdf.PdfTemplate;
 import com.relaxed.common.core.exception.BusinessException;
 import com.relaxed.common.model.result.SysResultCode;
 import com.relaxed.starter.download.domain.DownloadModel;
@@ -27,6 +29,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.List;
 
 /**
@@ -74,13 +77,16 @@ public class SealManage {
 
 			byte[] pdfContent = templatePdfFileByte.toByteArray();
 			ByteArrayInputStream pdfByteInputStream = new ByteArrayInputStream(pdfContent);
-			List<KeywordLocation> keywordLocations = PdfUtil.extractKeywordLocation(pdfByteInputStream, null, keyword);
+
+			List<KeywordLocation> keywordLocations = PdfTemplate.extractKeywordLocation(pdfByteInputStream,  keyword);
 			pdfByteInputStream.reset();
-			PreviewSignInfo previewSignInfo = new PreviewSignInfo();
-			previewSignInfo.setImgPath(sealPath);
-			previewSignInfo.setContentBefore(false);
-			previewSignInfo.setKeywordLocationList(keywordLocations);
-			PdfUtil.addImage(pdfByteInputStream, targetFile, previewSignInfo);
+			ImageSignMeta signMeta=new ImageSignMeta();
+			signMeta.setImgPath(sealPath);
+			signMeta.setContentBefore(false);
+			signMeta.setOffsetX(0);
+			signMeta.setOffsetY(50);
+			signMeta.setKeywordLocationList(keywordLocations);
+			PdfTemplate.addImage(pdfByteInputStream, new FileOutputStream(targetFile), signMeta);
 			DownloadModel downloadModel = new DownloadModel(dirFile.getAbsolutePath(), fileName, "pdf", StrPool.SLASH);
 			DownloadCallback downloadCallback = () -> {
 				// 清理工作

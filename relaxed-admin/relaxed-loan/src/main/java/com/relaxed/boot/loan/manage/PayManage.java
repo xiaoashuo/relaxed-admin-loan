@@ -39,6 +39,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PayManage {
 
+    private final StampManage stampManage;
     private final TradeService tradeService;
 
     private final LoanService loanService;
@@ -47,18 +48,7 @@ public class PayManage {
 
     private final BillItemService billItemService;
 
-    private final ProjectTemplateService projectTemplateService;
 
-    private final OrderService orderService;
-
-    private final OrderAnnexService orderAnnexService;
-    private final TemplateService templateService;
-
-    private final CertificateService certificateService;
-
-    private final IWordTemplate wordTemplate;
-
-    private final StampRecordService stampRecordService;
     public  void  loadSuccessHandle(Trade trade, Loan loan){
         //MOCK 成功
         LocalDateTime mockFintime = LocalDateTime.now();
@@ -98,71 +88,13 @@ public class PayManage {
         createBillItem(loan, bill, BillItemSubjectEnum.INTEREST.getCode(), new BigDecimal("0"));
         createBillItem(loan, bill, BillItemSubjectEnum.INTEREST_PENALTY.getCode(), new BigDecimal("0"));
         //生成借款合同
-        generateRelatedFile(loan);
+        stampManage.generateRelatedFile(loan.getPartnerBizNo(),FileTypeEnum.A9);
+
 
 
     }
 
-    public void generateRelatedFile(Loan loan) {
 
-        Long orderId = loan.getOrderId();
-        log.info(LogFormatUtil.format("借款协议生成","开始",LocalDateTime.now(),"订单Id{}",orderId));
-        Order order = orderService.getById(orderId);
-        ProjectTemplate projectTemplate=projectTemplateService.getByPidAndFileType(order.getProjectId(), Integer.valueOf(FileTypeEnum.A9.getCode()));
-        Integer templateId = projectTemplate.getTemplateId();
-        Integer keystoreId = projectTemplate.getKeystoreId();
-        //模板
-        Template template = templateService.getById(templateId);
-        String templateName = template.getTemplateName();
-        String pdfFileName=templateName+".pdf";
-     	String templatePath = RelaxedConfig.getProfile()+template.getTemplateUrl();;
-        //模板文件
-        File templateFile = new File(templatePath);
-        //原始数据
-        Map<String,Object> data=new HashMap<>();
-        data.put("contractNo",order.getPartnerContractNo());
-        //1.渲染原始模板pdf
-        try {
-            FileInputStream templateFileStream = new FileInputStream(templateFile);
-            templateFileStream.mark(0);
-            ByteArrayOutputStream originPdf=new ByteArrayOutputStream();
-            wordTemplate.renderPdf(templateFileStream,originPdf,data);
-            ByteArrayMultipartFile uploadFile = new ByteArrayMultipartFile(originPdf.toByteArray(), pdfFileName);
-            FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/contract", uploadFile,
-                    FileConfig.create().splitDate(true));
-            String relativeFilePath = fileMeta.getRelativeFilePath();
-            String fileNo = IdUtil.getSnowflakeNextIdStr();
-            OrderAnnex orderAnnex = new OrderAnnex();
-            orderAnnex.setOrderId(orderId);
-            orderAnnex.setFileNo(fileNo);
-            orderAnnex.setFileName(FileTypeEnum.A9.getDesc());
-            orderAnnex.setFileType(Integer.valueOf(FileTypeEnum.A9.getCode()));
-            orderAnnex.setFileUrl(relativeFilePath);
-            orderAnnex.setRemark("");
-            orderAnnexService.save(orderAnnex);
-
-            //插入一条待签章记录
-            StampRecord stampRecord = new StampRecord();
-            stampRecord.setProjectId(order.getProjectId());
-            stampRecord.setProductCode(order.getProductCode());
-            stampRecord.setTrustPlanCode(order.getTrustPlanCode());
-            stampRecord.setFileType(Integer.valueOf(FileTypeEnum.A9.getCode()));
-            stampRecord.setContractName(FileTypeEnum.A9.getDesc()+"原始文件.pdf");
-            stampRecord.setStatus(StampEnum.Status.WAIT_START.getVal());
-            stampRecord.setPartnerBusinessId(order.getPartnerBizNo());
-            stampRecord.setSignWay(0);
-            stampRecordService.save(stampRecord);
-
-
-
-        } catch (Exception e) {
-            log.info(LogFormatUtil.format("借款协议生成","异常",LocalDateTime.now(),"订单Id{}",orderId),e);
-            throw new RuntimeException(e);
-        }
-        log.info(LogFormatUtil.format("借款协议生成","结束",LocalDateTime.now(),"订单Id{}",orderId));
-        //2.渲染签章后pdf
-
-    }
 
     public void loanFailHandle( Trade trade, Loan loan) {
         String errMsg="mock异常错误";

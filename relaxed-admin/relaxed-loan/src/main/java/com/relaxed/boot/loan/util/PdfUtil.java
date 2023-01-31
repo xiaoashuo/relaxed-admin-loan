@@ -53,7 +53,9 @@ import java.util.List;
 /**
  * @author Yakir
  * @Topic PdfUtil
- * @Description 骑缝章 参考 当前不实现
+ * @Description
+ * https://juejin.cn/post/6844903519124717581
+ * 骑缝章 参考 当前不实现
  * https://blog.csdn.net/weixin_41576903/article/details/108833567
  * @date 2022/12/12 16:14
  * @Version 1.0

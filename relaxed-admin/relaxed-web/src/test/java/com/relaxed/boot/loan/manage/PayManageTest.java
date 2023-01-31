@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.manage;
 
+import com.relaxed.boot.loan.enums.FileTypeEnum;
 import com.relaxed.boot.loan.job.StampHandleJob;
 import com.relaxed.boot.loan.model.entity.Loan;
 import com.relaxed.boot.loan.service.LoanService;
@@ -27,10 +28,12 @@ class PayManageTest {
 
     @Autowired
     private StampHandleJob stampHandleJob;
+
+    private StampManage stampManage;
     @Test
     void generateRelatedFile() {
         Loan loan = loanService.getById(13);
-        payManage.generateRelatedFile(loan);
+        stampManage.generateRelatedFile(loan.getPartnerBizNo(), FileTypeEnum.A9);
     }
 
     @Test
