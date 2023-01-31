@@ -17,7 +17,10 @@
     </pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
+                :append-to-body="true"
                 :req-function="reqFunction"
+                :before-request="beforeRequestDataHandle"
+                :before-submit="beforeSubmitDataHandle"
                 @submitSuccess="handleSubmit"
     ></form-modal>
 
@@ -82,6 +85,26 @@
         delObj(item.id).then(res => {
           this.$refs.pageContentRef.refreshTable(false)
         })
+      },
+      beforeRequestDataHandle(formData){
+        const uploadData= formData.uploadData
+        let  reqInfo={orderId:this.orderId,fileType:formData.fileType}
+        if (uploadData){
+          const firstData= uploadData[0]
+          reqInfo.fileNo=firstData.fileId
+          reqInfo.fileName=firstData.name
+          reqInfo.fileUrl=firstData.path
+        }
+        return reqInfo
+      },
+      beforeSubmitDataHandle(formData){
+
+        console.log(formData)
+        if (!formData.fileUrl){
+          this.$message.error("上传文件不能为空")
+          return false
+        }
+        return  true
       },
       //模态框相关 提交成功后刷新表格
       handleSubmit(res) {

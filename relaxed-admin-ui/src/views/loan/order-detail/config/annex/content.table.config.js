@@ -11,7 +11,7 @@ export const contentTableConfig={
 
   },
   permissions: {
-    create: 'loan:order-annex:add',
+    // create: 'loan:order-annex:add',
     update: 'loan:order-annex:edit',
     delete: 'loan:order-annex:delete'
   },
