@@ -218,7 +218,7 @@
       },
       end(e){
         let sealListElement = this.sealImageList[e.newDraggableIndex]
-        const sealInfo={url: sealListElement.sealAddress,
+        const sealInfo={url: sealListElement.previewSealAddress,
           uid:new Date().getTime(),
           left: e.originalEvent.layerX,
           top: e.originalEvent.layerY,

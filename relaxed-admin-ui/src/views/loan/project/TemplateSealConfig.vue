@@ -173,7 +173,7 @@
             scaleX: val.scaleX,
             scaleY: val.scaleY,
             pageNum: pageNum,
-            url: this.sealList[val.index].sealAddress,
+            url: this.sealList[val.index].previewSealAddress,
             index:val.index,
             uid: val.uid
           }

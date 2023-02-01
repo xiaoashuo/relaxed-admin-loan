@@ -1,6 +1,7 @@
 package com.relaxed.boot.common.system.utils.file;
 
 import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.IdUtil;
 import com.relaxed.boot.common.system.exception.FileNameLengthLimitExceededException;
@@ -66,7 +67,7 @@ public class FileUtils {
 		}
 
 		assertAllowed(file, fileConfig);
-		// 文件名称
+		// 转换后 文件名称
 		String fileName = extractFileName(file);
 		boolean splitDate = fileConfig.isSplitDate();
 		String relativeFilePath;
@@ -81,7 +82,7 @@ public class FileUtils {
 		File desc = getAbsoluteFile(absolutePath, fileName);
 		file.transferTo(desc);
 		String fileId = IdUtil.getSnowflakeNextId() + "";
-		FileMeta fileMeta = new FileMeta().setFilename(fileName).setFileId(fileId).setBasePath(basePath)
+		FileMeta fileMeta = new FileMeta().setOriginalFilename(originalFilename).setFilename(fileName).setFileId(fileId).setBasePath(basePath)
 				.setFilepath(relativeFilePath);
 		return fileMeta;
 	}
@@ -101,10 +102,15 @@ public class FileUtils {
 		return desc;
 	}
 
+
+	/**
+	 * 编码文件名
+	 */
 	private String extractFileName(MultipartFile file) {
 		String originalFilename = file.getOriginalFilename();
 		String extName = FileNameUtil.getSuffix(originalFilename);
-		String filename = IdUtil.fastUUID() + "." + extName;
+		String mainName = FileNameUtil.getPrefix(originalFilename);
+		String filename =mainName+"_"+IdUtil.nanoId()+"."+extName;
 		return filename;
 	}
 
@@ -122,8 +128,11 @@ public class FileUtils {
 
 	}
 
-	public static File download(String basePath,String fileUrl) {
-		return new File(basePath, fileUrl);
+	public static File download(String basePath,String relativePath) {
+		return new File(basePath, relativePath);
+	}
 
+	public static boolean delete(String basePath,String relativePath){
+		return FileUtil.del(basePath+relativePath);
 	}
 }

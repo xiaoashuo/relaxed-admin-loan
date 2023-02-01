@@ -1,14 +1,18 @@
 package com.relaxed.boot.loan.service.impl;
 
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.StrUtil;
 import com.relaxed.boot.common.system.utils.file.ByteArrayMultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
 import com.relaxed.boot.framework.config.RelaxedConfig;
+import com.relaxed.boot.loan.constants.LoanUploadPath;
 import com.relaxed.boot.loan.converter.SealConverter;
 import com.relaxed.boot.loan.enums.SealEnum;
+import com.relaxed.boot.loan.model.entity.Certificate;
 import com.relaxed.boot.loan.model.entity.Seal;
 import com.relaxed.boot.loan.model.vo.SealPageVO;
 import com.relaxed.boot.loan.model.qo.SealQO;
@@ -17,9 +21,11 @@ import com.relaxed.boot.loan.service.SealService;
 import com.relaxed.boot.loan.util.seal.SealCircle;
 import com.relaxed.boot.loan.util.seal.SealFont;
 import com.relaxed.boot.loan.util.seal.SealGenerate;
+import com.relaxed.common.core.exception.BusinessException;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.common.model.domain.SelectData;
+import com.relaxed.common.model.result.SysResultCode;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -84,7 +90,7 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 			// 图片类型
 			String sealSubject = seal.getSealSubject();
 			Integer sealPictureType = seal.getSealPictureType();
-			String filename = "sys-" + IdUtil.simpleUUID() + ".png";
+			String filename = "sys_seal" + RandomUtil.randomNumbers(6) + ".png";
 			if (SealEnum.SEAL_TYPE.OFFICIAL.getVal().equals(sealPictureType)) {
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				SealGenerate.builder().size(200).borderCircle(SealCircle.builder().line(4).width(95).height(95).build())
@@ -93,7 +99,7 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 						.titleFont(SealFont.builder().text("Relaxed发布").size(16).space(8.0).margin(54).build()).build()
 						.drawToOutStream(outputStream);
 				ByteArrayMultipartFile file = new ByteArrayMultipartFile(outputStream.toByteArray(), filename);
-				FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/seal", file,
+				FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.SEAL_RELATIVE_PATH, file,
 						FileConfig.create().splitDate(false));
 				String address =  fileMeta.getRelativeFilePath();
 				seal.setSealFilename(filename);
@@ -111,4 +117,14 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 		return result;
 	}
 
+	@Override
+	public boolean removeSealById(Integer sealId) {
+		Seal seal = getById(sealId);
+		Assert.notNull(seal,()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"签章图片不存在"));
+		String sealAddress = seal.getSealAddress();
+		Assert.isTrue(StrUtil.isNotEmpty(sealAddress),()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"签章图片地址不存在"));
+		boolean deleteSuccess = FileUtils.delete(RelaxedConfig.getProfile(), sealAddress);
+		Assert.isTrue(deleteSuccess,()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"签章图片删除失败"));
+		return removeById(sealId);
+	}
 }

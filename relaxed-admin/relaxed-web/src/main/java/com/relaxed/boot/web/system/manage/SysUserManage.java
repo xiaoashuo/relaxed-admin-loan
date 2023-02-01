@@ -1,6 +1,7 @@
 package com.relaxed.boot.web.system.manage;
 
 import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.relaxed.boot.auth.component.PasswordHelper;
@@ -21,6 +22,7 @@ import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
 import com.relaxed.boot.framework.config.RelaxedConfig;
+import com.relaxed.boot.loan.constants.LoanUploadPath;
 import com.relaxed.common.core.exception.BusinessException;
 import com.relaxed.common.model.result.BaseResultCode;
 import lombok.RequiredArgsConstructor;
@@ -150,20 +152,21 @@ public class SysUserManage {
 		return success;
 	}
 
-	public String uploadAvatar(SysUserDetails sysUserDetails, MultipartFile file) {
-		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/upload", file,
-				FileConfig.create().splitDate(true));
-		String relativeFilePath = fileMeta.getRelativeFilePath();
-		String url =  relativeFilePath;
-		SysUser sysUser = new SysUser();
+	public FileMeta uploadAvatar(SysUserDetails sysUserDetails, MultipartFile file) {
 		Integer userId = sysUserDetails.getUserId();
-		sysUser.setUserId(userId);
-		sysUser.setAvatar(url);
-		Assert.isTrue(sysUserService.updateById(sysUser), () -> {
+		String avatar = sysUserDetails.getAvatar();
+		FileUtils.delete(RelaxedConfig.getProfile(),avatar);
+		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.USER_AVATAR_RELATIVE_PATH, file,
+				FileConfig.create().splitDate(false));
+		String relativeFilePath = fileMeta.getRelativeFilePath();
+		SysUser updateUser=new SysUser();
+		updateUser.setUserId(userId);
+		updateUser.setAvatar(relativeFilePath);
+		Assert.isTrue(sysUserService.updateById(updateUser), () -> {
 			log.error("[uploadAvatar] 上传头像失败，userId：{}", userId);
 			return new BusinessException(BaseResultCode.UPDATE_DATABASE_ERROR.getCode(), "上传头像失败");
 		});
-		return url;
+		return fileMeta;
 
 	}
 

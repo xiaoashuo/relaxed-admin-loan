@@ -94,6 +94,16 @@ export const modalConfig= {
         ]
       }
     },
+    {
+      type:'text',
+      label: '有效期(时)',
+      field:'validityTime',
+      placeholder:'请输入有效期',
+      rules:[
+        { required: true, message: '请输入有效期', trigger: 'blur' },
+      ]
+    },
+
 
 
   ],

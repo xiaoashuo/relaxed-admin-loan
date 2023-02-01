@@ -64,7 +64,7 @@ public class Template {
 	 * 文件类型1.服务信托2.财富端确认书
 	 */
 	@Schema(title = "文件类型1.服务信托2.财富端确认书", description = "文件类型1.服务信托2.财富端确认书")
-	private String fileType;
+	private Integer fileType;
 
 	/**
 	 * 模板描述

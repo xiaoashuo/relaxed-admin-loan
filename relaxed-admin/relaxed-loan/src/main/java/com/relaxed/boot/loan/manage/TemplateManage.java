@@ -9,6 +9,7 @@ import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
 import com.relaxed.boot.framework.config.RelaxedConfig;
+import com.relaxed.boot.loan.constants.LoanUploadPath;
 import com.relaxed.boot.loan.model.entity.Template;
 import com.relaxed.boot.loan.model.entity.TemplateArea;
 import com.relaxed.boot.loan.service.TemplateAreaService;
@@ -57,10 +58,9 @@ public class TemplateManage {
 		String originalFilename = file.getOriginalFilename();
 		String extName = FileUtil.extName(originalFilename);
 		Assert.isTrue(StrUtil.equalsIgnoreCase("docx", extName), "模板文件仅支持后缀docx");
-		String wordFileName = IdUtil.getSnowflakeNextIdStr() + ".docx";
 		String excelFilename = IdUtil.getSnowflakeNextIdStr() + ".xlsx";
 		String profile = RelaxedConfig.getProfile();
-		FileMeta fileMeta = FileUtils.upload(profile, "profile/word", file, FileConfig.create().splitDate(false));
+		FileMeta fileMeta = FileUtils.upload(profile, LoanUploadPath.TEMPLATE_WORD_RELATIVE_PATH, file, FileConfig.create().splitDate(false));
 		String docFile = fileMeta.getLocalFullFilePath();
 		String docUrl = fileMeta.getRelativeFilePath();
 		// 2.生成数据文件
@@ -73,10 +73,11 @@ public class TemplateManage {
 			names.add(tagName);
 			return names;
 		}).collect(Collectors.toList()));
-		String excelDir =  "/profile/excel/";
+		String excelDir = "/"+ LoanUploadPath.TEMPLATE_EXCEL_RELATIVE_PATH;
 		FileUtil.mkdir(excelDir);
-		String excelPath = excelDir + excelFilename;
-		EasyExcel.write(excelPath).head(headList).inMemory(true).sheet().doWrite(ListUtil.empty());
+		String excelPath = excelDir +"/"+ excelFilename;
+
+		EasyExcel.write(RelaxedConfig.getProfile()+excelPath).head(headList).inMemory(true).sheet().doWrite(ListUtil.empty());
 		template.setTemplateFilename(originalFilename);
 		template.setTemplateUrl(docUrl);
 		template.setDatafilePath(excelPath);

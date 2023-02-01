@@ -75,18 +75,7 @@ public class CertificateController {
 				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增签章证书表失败");
 	}
 
-	/**
-	 * 修改签章证书表
-	 * @param certificate 签章证书表
-	 * @return R 通用返回体
-	 */
-	@Operation(summary = "修改签章证书表")
-	@UpdateLog(msg = "修改签章证书表")
-	@PutMapping
-	public R<Void> updateById(@RequestBody Certificate certificate) {
-		return certificateService.updateById(certificate) ? R.ok()
-				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改签章证书表失败");
-	}
+
 
 	/**
 	 * 通过id删除签章证书表
@@ -97,7 +86,7 @@ public class CertificateController {
 	@DeleteLog(msg = "通过id删除签章证书表")
 	@DeleteMapping("/{certificateId}")
 	public R<Void> removeById(@PathVariable("certificateId") Integer certificateId) {
-		return certificateService.removeById(certificateId) ? R.ok()
+		return certificateService.removeCertificateById(certificateId) ? R.ok()
 				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除签章证书表失败");
 	}
 

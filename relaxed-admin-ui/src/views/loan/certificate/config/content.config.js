@@ -10,11 +10,11 @@ export const contentTableConfig={
     },
 
   },
-  // permissions: {
+   permissions: {
   //   create: 'loan:certificate:add',
-  //   update: 'loan:certificate:edit',
+    update: 'loan:certificate:edit',
   //   delete: 'loan:certificate:delete'
-  // },
+   },
   propList:[
            {
       prop: 'certificateId',
@@ -65,15 +65,11 @@ export const contentTableConfig={
       label:'创建时间',
       minWidth: 180,
     },
-              {
-      prop: 'updatedTime',
-      label:'更新时间',
-      minWidth: 180,
-    },
+
           {
 
       label:'操作',
-      minWidth:250,
+      minWidth:100,
       slotName:'handler'
     }
   ]

@@ -34,4 +34,6 @@ public interface CertificateService extends ExtendService<Certificate> {
 
 	List<SelectData> queryCertificateList();
 
+	boolean removeCertificateById(Integer certificateId);
+
 }

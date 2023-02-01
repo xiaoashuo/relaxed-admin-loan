@@ -26,3 +26,10 @@ export function putObj(obj) {
     data: obj
   })
 }
+
+export function download(fileId) {
+  return yiRequest.post({
+    url: '/loan/order-annex/download/'+fileId,
+    responseType: 'blob'
+  })
+}

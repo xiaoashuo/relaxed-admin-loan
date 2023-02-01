@@ -111,15 +111,15 @@ public class StampHandleJob {
             File destFile =new File(destFilePath);
             FileUtil.mkdir(destFile.getParentFile());
             Integer destFileType = projectTemplate.getDestFileType();
+            Integer keystoreId = projectTemplate.getKeystoreId();
+            Certificate keystore = certificateService.getById(keystoreId);
+            Integer keystoreType = keystore.getKeystoreType();
+            CertificateEnum.KEYSTORE_TYPE keystoreEnum = CertificateEnum.KEYSTORE_TYPE.getByVal(keystoreType);
             Integer sealWay = projectTemplate.getSealWay();
             if (StampEnum.SealWay.KEYWORD.getVal().equals(sealWay)){
                 String sealKeyword = projectTemplate.getSealKeyword();
                 Integer sealId = projectTemplate.getSealId();
-                Integer keystoreId = projectTemplate.getKeystoreId();
                 Seal seal = sealService.getById(sealId);
-                Certificate keystore = certificateService.getById(keystoreId);
-                Integer keystoreType = keystore.getKeystoreType();
-                CertificateEnum.KEYSTORE_TYPE keystoreEnum = CertificateEnum.KEYSTORE_TYPE.getByVal(keystoreType);
                 String keystorePath=RelaxedConfig.getProfile()+keystore.getCertificateAddress();
                 String certificatePwd = keystore.getCertificatePwd();
                 char[] pwdCharArray = certificatePwd.toCharArray();
@@ -148,12 +148,6 @@ public class StampHandleJob {
                     signInfo.setWidth(100);
                     signInfo.setHeight(100);
                     PdfUtil.multiSign(originFile,destFile,keywordLocations,signInfo);
-//                    FileMultipartFile destMultipartFile = new FileMultipartFile("file", destFile);
-//                    FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/stamp/contract", destMultipartFile,
-//                            FileConfig.create().splitDate(true));
-//                    String relativeFilePath = fileMeta.getRelativeFilePath();
-//                    String fileId = fileMeta.getFileId();
-//                    String filename = fileMeta.getFilename();
                     String fileId=IdUtil.getSnowflakeNextIdStr();
                     String filename=destFile.getName();
                     OrderAnnex stampOrderAnnex = new OrderAnnex();
@@ -169,6 +163,8 @@ public class StampHandleJob {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
+            }else if (StampEnum.SealWay.TEMPLATE.getVal().equals(sealWay)){
+
             }
 
         }

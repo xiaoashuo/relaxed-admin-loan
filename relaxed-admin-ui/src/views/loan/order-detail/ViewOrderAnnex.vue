@@ -14,6 +14,12 @@
          <dict-text dict-code="file_type" :value="scope.row.fileType"></dict-text>
          <span>-文件标识:{{scope.row.fileType}}</span>
       </template>
+      <template #customHandler="scope">
+
+        <el-button size="mini" type="text"  icon="el-icon-download"
+                   @click="handleDownloadClick(scope.row)">下载
+        </el-button>
+      </template>
     </pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
@@ -35,7 +41,8 @@
   import {searchFormConfig} from "./config/annex/search.form.config";
   import {modalFormConfig} from "./config/annex/modal.form.config";
   //页面相关请求方法
-  import {getPage, addObj, putObj, delObj} from "@/api/loan/order-annex";
+  import {getPage, addObj, putObj, delObj,download} from "@/api/loan/order-annex";
+  import { remoteFileDownload } from '@/utils/fileUtil'
 
   export default {
     name: "ViewOrderAnnexPage",
@@ -119,6 +126,11 @@
       handleResetClick() {
         this.$refs.pageContentRef.searchTable({orderId:this.orderId})
       },
+      handleDownloadClick(row){
+        download(row.fileId).then(res=>{
+          remoteFileDownload(res)
+        })
+      }
 
     }
 

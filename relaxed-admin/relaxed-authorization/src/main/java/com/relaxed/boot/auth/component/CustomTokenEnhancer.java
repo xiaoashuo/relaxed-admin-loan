@@ -3,6 +3,7 @@ package com.relaxed.boot.auth.component;
 import com.relaxed.boot.auth.constants.UserConstant;
 import com.relaxed.boot.auth.domain.SysUserDetails;
 import com.relaxed.boot.common.system.model.entity.SysUser;
+import com.relaxed.boot.framework.config.RelaxedConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
@@ -63,7 +64,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 		sysUserInfo.setUsername(sysUserDetails.getUsername());
 		sysUserInfo.setNickname(sysUserDetails.getNickname());
 		sysUserInfo.setStatus(sysUserDetails.getStatus());
-		sysUserInfo.setAvatar(sysUserDetails.getAvatar());
+		sysUserInfo.setAvatar(RelaxedConfig.getUrl()+sysUserDetails.getAvatar());
 		sysUserInfo.setEmail(sysUserDetails.getEmail());
 		sysUserInfo.setPhone(sysUserDetails.getPhone());
 		sysUserInfo.setCreatedTime(sysUserDetails.getCreatedTime());

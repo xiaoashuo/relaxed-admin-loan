@@ -7,6 +7,7 @@ import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
 import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.boot.web.system.domain.FileDeleteReq;
+import com.relaxed.boot.web.system.domain.FileUploadReq;
 import com.relaxed.common.model.result.R;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Yakir
@@ -33,19 +35,18 @@ import java.util.Map;
 public class CommonController {
 
 	@PostMapping("/file/upload")
-	public R<?> uploadFile(MultipartFile file) {
-		String originalFilename = file.getOriginalFilename();
+	public R<?> uploadFile(MultipartFile file, FileUploadReq fileUploadReq) {
+		String relatedPath= Optional.ofNullable(fileUploadReq.getRelatedPath()).orElse("profile/upload");
 		// 上传文件路径
-		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/upload", file,
-				FileConfig.create().splitDate(true));
+		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), relatedPath, file,
+				FileConfig.create().splitDate(fileUploadReq.isSplitDate()));
 		String fullFilePath = fileMeta.getRelativeFilePath();
 		Map<String, String> data = new HashMap<>();
 		String fullUrl = RelaxedConfig.getUrl() + fullFilePath;
-
 		data.put("url", fullUrl);
 		data.put("path", fullFilePath);
 		data.put("fileId", fileMeta.getFileId());
-		data.put("oldFilename", originalFilename);
+		data.put("oldFilename", fileMeta.getOriginalFilename());
 		data.put("filename", fileMeta.getFilename());
 		return R.ok(data);
 

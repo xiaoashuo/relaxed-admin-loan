@@ -6,6 +6,7 @@ import com.relaxed.boot.loan.model.qo.OrderAnnexQO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
+import com.relaxed.starter.download.domain.DownloadModel;
 
 /**
  * 
@@ -23,4 +24,6 @@ public interface OrderAnnexService extends ExtendService<OrderAnnex> {
     PageResult<OrderAnnexPageVO> queryPage(PageParam pageParam, OrderAnnexQO qo);
 
     OrderAnnex getByOrderIdAndFileType(Long orderId, Integer fileType);
+
+    DownloadModel download(Long fileId);
 }

@@ -1,6 +1,8 @@
 package com.relaxed.boot.loan.service.impl;
 
+import cn.hutool.core.text.StrPool;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.boot.loan.model.entity.OrderAnnex;
 import com.relaxed.boot.loan.model.vo.OrderAnnexPageVO;
 import com.relaxed.boot.loan.model.qo.OrderAnnexQO;
@@ -9,6 +11,7 @@ import com.relaxed.boot.loan.service.OrderAnnexService;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
+import com.relaxed.starter.download.domain.DownloadModel;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,5 +37,13 @@ public class OrderAnnexServiceImpl extends ExtendServiceImpl<OrderAnnexMapper, O
     public OrderAnnex getByOrderIdAndFileType(Long orderId, Integer fileType) {
         return getOne(Wrappers.lambdaQuery(OrderAnnex.class).eq(OrderAnnex::getOrderId, orderId)
                 .eq(OrderAnnex::getFileType,fileType));
+    }
+
+    @Override
+    public DownloadModel download(Long fileId) {
+        OrderAnnex orderAnnex = getById(fileId);
+        String fileUrl = orderAnnex.getFileUrl();
+        String fullPath = RelaxedConfig.getProfile()+fileUrl;
+        return new DownloadModel(fullPath, StrPool.SLASH);
     }
 }

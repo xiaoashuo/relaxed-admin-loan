@@ -14,9 +14,12 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class FileMeta {
-
 	/**
-	 * 文件名称
+	 * 原始文件名称
+	 */
+	private String originalFilename;
+	/**
+	 * 存储文件名称
 	 */
 	private String filename;
 

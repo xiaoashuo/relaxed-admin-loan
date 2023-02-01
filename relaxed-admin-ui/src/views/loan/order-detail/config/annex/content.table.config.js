@@ -44,7 +44,12 @@ export const contentTableConfig={
     },
 
 
+    {
 
+      label:'操作',
+      minWidth:100,
+      slotName:'customHandler'
+    }
 
 
   ]

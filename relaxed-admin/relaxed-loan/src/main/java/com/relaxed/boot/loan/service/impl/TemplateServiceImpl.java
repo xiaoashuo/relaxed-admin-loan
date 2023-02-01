@@ -86,6 +86,10 @@ public class TemplateServiceImpl extends ExtendServiceImpl<TemplateMapper, Templ
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public boolean removeTemplate(Integer templateId) {
+		Template template = getById(templateId);
+		Assert.notNull(template,()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"模板文件不存在"));
+		String templateUrl = template.getTemplateUrl();
+		String datafilePath = template.getDatafilePath();
 		Assert.isTrue(templateAreaService.removeByTemplateId(templateId),()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"删除模板参数异常"));
 		boolean success = removeById(templateId);
 		return success;

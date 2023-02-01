@@ -11,6 +11,8 @@ import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
+import com.relaxed.starter.download.annotation.ResponseDownload;
+import com.relaxed.starter.download.domain.DownloadModel;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -88,6 +92,15 @@ public class OrderAnnexController {
     public R<Void> removeById(@PathVariable("fileId") Long fileId) {
         return orderAnnexService.removeById(fileId) ?
                 R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除失败");
+    }
+    @Operation(summary = "下载附件")
+    @PostMapping("/download/{fileId}" )
+    @ResponseDownload
+    public DownloadModel download(@PathVariable("fileId") Long fileId, HttpServletResponse response) {
+        response.setHeader("Access-Control-Expose-Headers","Content-Disposition");
+
+
+        return orderAnnexService.download(fileId) ;
     }
 
 }

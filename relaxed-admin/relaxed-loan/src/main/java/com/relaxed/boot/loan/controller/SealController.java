@@ -127,7 +127,7 @@ public class SealController {
 	@DeleteLog(msg = "通过id删除签章图片表")
 	@DeleteMapping("/{sealId}")
 	public R<Void> removeById(@PathVariable("sealId") Integer sealId) {
-		return sealService.removeById(sealId) ? R.ok()
+		return sealService.removeSealById(sealId) ? R.ok()
 				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除签章图片表失败");
 	}
 

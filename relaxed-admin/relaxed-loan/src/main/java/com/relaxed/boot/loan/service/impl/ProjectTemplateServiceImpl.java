@@ -89,4 +89,9 @@ public class ProjectTemplateServiceImpl extends ExtendServiceImpl<ProjectTemplat
         return getOne(Wrappers.lambdaQuery(ProjectTemplate.class).eq(ProjectTemplate::getProjectId, projectId)
                 .eq(ProjectTemplate::getFileType,fileType));
     }
+
+    @Override
+    public long countByKeystoreId(Integer keystoreId) {
+        return count(Wrappers.lambdaQuery(ProjectTemplate.class).eq(ProjectTemplate::getKeystoreId, keystoreId));
+    }
 }

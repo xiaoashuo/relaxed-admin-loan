@@ -74,7 +74,8 @@ public class CertificatePageVO {
 	 */
 	@Schema(title = "证书授权类型", description = "证书授权类型")
 	private Integer authorizeType;
-
+	@Schema(title = "证书有效时间(单位时)", description = "证书有效时间(单位时)")
+	private Integer validityTime;
 	/**
 	 * 证书地址
 	 */

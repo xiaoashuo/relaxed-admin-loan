@@ -14,6 +14,7 @@
     		<result property="certificateFilename" column="certificate_filename"/>
     		<result property="keystoreType" column="keystore_type"/>
     		<result property="authorizeType" column="authorize_type"/>
+    		<result property="validityTime" column="validity_time"/>
     		<result property="createBy" column="create_by"/>
     		<result property="updateBy" column="update_by"/>
     		<result property="deleted" column="deleted"/>
@@ -33,6 +34,7 @@ certificate_address,
 keystore_type,
 authorize_type,
 certificate_filename,
+		    validity_time,
 		create_by,        
 		update_by,        
 		deleted,        
@@ -52,6 +54,7 @@ c.certificate_address,
 c.keystore_type,
 c.authorize_type,
 c.certificate_filename,
+		    c.validity_time,
 		c.create_by,        
 		c.update_by,        
 		c.deleted,        
