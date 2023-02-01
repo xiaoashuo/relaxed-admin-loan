@@ -26,7 +26,6 @@
           <template #fileUpload="scope">
             <el-form-item label="模板文件">
               <yi-upload class="upload-file"
-
                          :limit="uploadConfig.limit"
                          :auto-upload="false"
                          :fileType="uploadConfig.fileType"
@@ -69,6 +68,7 @@
   import {getPage as getItemPage} from '@/api/loan/template-area'
 
   import {YiUpload} from '@/components/upload'
+  import { deleteFile } from '@/api/common'
 
   export default {
     name: "templatePage",

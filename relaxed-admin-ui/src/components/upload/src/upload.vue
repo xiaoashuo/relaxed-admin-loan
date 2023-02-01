@@ -6,6 +6,7 @@
 
       class="upload-file-uploader"
       :drag="drag"
+      :data="data"
       :limit="limit"
       :list-type="listType"
       :file-list="fileList"
@@ -73,6 +74,10 @@
       fieldName: {
         type: String,
         default: 'file'
+      },
+      data:{
+        type:Object,
+        default:()=>({})
       },
       multiple: {
         type: Boolean,

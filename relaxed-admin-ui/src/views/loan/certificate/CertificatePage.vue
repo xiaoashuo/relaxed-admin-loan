@@ -35,6 +35,7 @@
                          :delete-request="uploadConfig.deleteFileRequest"
                          :limit="uploadConfig.limit"
                          :fileType="uploadConfig.fileType"
+                         :data="uploadConfig.uploadExtraData"
                          drag
                          v-model="uploadData"></yi-upload>
             </el-form-item>
@@ -90,7 +91,11 @@
           uploadUrl: FILE_UPLOAD_URL,
           deleteFileRequest:deleteFile,
           limit: 1,
-          fileType:['jks','p12']
+          fileType:['jks','p12'],
+          uploadExtraData:{
+            relatedPath:"profile/keystore",
+            splitDate:false
+          }
 
         }
       }

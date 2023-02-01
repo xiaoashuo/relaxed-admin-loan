@@ -10,9 +10,9 @@
     >
       <template #sealAddress="scope">
         <yi-image
-          :src="scope.row.sealAddress"
+          :src="scope.row.previewSealAddress"
           :image-style="{width: '40px' ,height:'40px'}"
-          :preview-src-list="[scope.row.sealAddress]"
+          :preview-src-list="[scope.row.previewSealAddress]"
         />
       </template>
 
@@ -41,6 +41,7 @@
                          :fileType="uploadConfig.fileType"
                          list-type="picture-card"
 
+                         :data="uploadConfig.uploadExtraData"
                          v-model="uploadData"></yi-upload>
             </el-form-item>
           </template>
@@ -95,7 +96,11 @@
           uploadUrl: FILE_UPLOAD_URL,
           deleteFileRequest:deleteFile,
           limit: 1,
-          fileType:['png','jpg','jpeg']
+          fileType:['png','jpg','jpeg'],
+          uploadExtraData:{
+            relatedPath:"profile/seal",
+            splitDate:false
+          }
 
         }
       }
@@ -110,7 +115,7 @@
 
         console.log(item)
         if(item.sealSource==2){
-          let uploadData = item.sealAddress
+          let uploadData = item.previewSealAddress
           const filename=item.sealFilename
           const uid= new Date().getTime()
 
