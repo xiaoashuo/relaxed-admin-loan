@@ -2,13 +2,17 @@ package com.relaxed.boot.loan.job;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
 import com.itextpdf.signatures.PdfSignatureAppearance;
+import com.relaxed.boot.common.system.utils.file.ByteArrayMultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileMultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
 import com.relaxed.boot.framework.config.RelaxedConfig;
+import com.relaxed.boot.loan.constants.LoanUploadPath;
 import com.relaxed.boot.loan.enums.CertificateEnum;
 import com.relaxed.boot.loan.enums.StampEnum;
 import com.relaxed.boot.loan.model.entity.Certificate;
@@ -28,11 +32,14 @@ import com.relaxed.boot.loan.util.KeywordLocation;
 import com.relaxed.boot.loan.util.LogFormatUtil;
 import com.relaxed.boot.loan.util.PdfUtil;
 import com.relaxed.boot.loan.util.SignInfo;
+import com.relaxed.boot.loan.util.pdf.MultiSignMeta;
+import com.relaxed.boot.loan.util.pdf.PdfTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.security.KeyStore;
@@ -104,12 +111,6 @@ public class StampHandleJob {
             String fileUrl = orderAnnex.getFileUrl();
 
             File originFile = FileUtils.download(RelaxedConfig.getProfile(),fileUrl);
-            String profile = RelaxedConfig.getProfile();
-            String relativePath = "/stamp/contract/" + IdUtil.getSnowflakeNextIdStr() + ".pdf";
-            String destFilePath = profile + relativePath;
-
-            File destFile =new File(destFilePath);
-            FileUtil.mkdir(destFile.getParentFile());
             Integer destFileType = projectTemplate.getDestFileType();
             Integer keystoreId = projectTemplate.getKeystoreId();
             Certificate keystore = certificateService.getById(keystoreId);
@@ -124,6 +125,7 @@ public class StampHandleJob {
                 String certificatePwd = keystore.getCertificatePwd();
                 char[] pwdCharArray = certificatePwd.toCharArray();
                 try {
+                    ByteArrayOutputStream signedStream=new ByteArrayOutputStream();
                     KeyStore ks = KeyStore.getInstance(keystoreEnum.getDesc());
                     ks.load(new FileInputStream(keystorePath), pwdCharArray);
                     String alias = ks.aliases().nextElement();
@@ -133,7 +135,7 @@ public class StampHandleJob {
                     String sealImagePath=RelaxedConfig.getProfile()+seal.getSealAddress();
                     //关键字坐标
                     List<KeywordLocation> keywordLocations = PdfUtil.extractKeywordLocation(originFile, sealKeyword);
-                    SignInfo signInfo=new SignInfo();
+                    MultiSignMeta signInfo=new MultiSignMeta();
                     signInfo.setReason("测试");
                     signInfo.setLocation("北京市");
                     signInfo.setContact("xxx@qq.com");
@@ -147,15 +149,25 @@ public class StampHandleJob {
                     signInfo.setOffsetY(-50);
                     signInfo.setWidth(100);
                     signInfo.setHeight(100);
-                    PdfUtil.multiSign(originFile,destFile,keywordLocations,signInfo);
-                    String fileId=IdUtil.getSnowflakeNextIdStr();
-                    String filename=destFile.getName();
+                    signInfo.setKeywordLocationList(keywordLocations);
+                    PdfTemplate.multiSign(new FileInputStream(originFile),signedStream,signInfo);
+                    String originalMainFileName = FileNameUtil.mainName(originFile);
+                    String originalextName = FileNameUtil.extName(originFile);
+                    String signedFileName = originalMainFileName + "_已签署."+originalextName;
+
+                    ByteArrayMultipartFile uploadFile = new ByteArrayMultipartFile(signedStream.toByteArray(), signedFileName);
+
+                    FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.ANNEX_RELATIVE_PATH, uploadFile,
+                            FileConfig.create().splitDate(true));
+                    String relativeFilePath = fileMeta.getRelativeFilePath();
+                    String fileId=fileMeta.getFileId();
+                    String filename = fileMeta.getFilename();
                     OrderAnnex stampOrderAnnex = new OrderAnnex();
                     stampOrderAnnex.setOrderId(orderId);
                     stampOrderAnnex.setFileNo(fileId);
                     stampOrderAnnex.setFileName(filename);
                     stampOrderAnnex.setFileType(destFileType);
-                    stampOrderAnnex.setFileUrl(relativePath);
+                    stampOrderAnnex.setFileUrl(relativeFilePath);
                     orderAnnexService.save(stampOrderAnnex);
 
                     stampRecord.setStatus(StampEnum.Status.SUCCESS.getVal());

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 /**
  * @author Yakir
@@ -68,7 +69,8 @@ public class FileUtils {
 
 		assertAllowed(file, fileConfig);
 		// 转换后 文件名称
-		String fileName = extractFileName(file);
+		FileNameConverter fileNameConverter = Optional.ofNullable(fileConfig.getFileNameConverter()).orElse(FileUtils::extractFileName);
+		String fileName = fileNameConverter.extractFileName(originalFilename);
 		boolean splitDate = fileConfig.isSplitDate();
 		String relativeFilePath;
 		if (splitDate) {
@@ -106,11 +108,9 @@ public class FileUtils {
 	/**
 	 * 编码文件名
 	 */
-	private String extractFileName(MultipartFile file) {
-		String originalFilename = file.getOriginalFilename();
+	private String extractFileName(String originalFilename) {
 		String extName = FileNameUtil.getSuffix(originalFilename);
-		String mainName = FileNameUtil.getPrefix(originalFilename);
-		String filename =mainName+"_"+IdUtil.nanoId()+"."+extName;
+		String filename =IdUtil.nanoId()+"."+extName;
 		return filename;
 	}
 

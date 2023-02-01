@@ -73,14 +73,19 @@ public class TemplateManage {
 			names.add(tagName);
 			return names;
 		}).collect(Collectors.toList()));
+		//相对路径
 		String excelDir = "/"+ LoanUploadPath.TEMPLATE_EXCEL_RELATIVE_PATH;
-		FileUtil.mkdir(excelDir);
-		String excelPath = excelDir +"/"+ excelFilename;
+		//根路径+相对路径 =excel存储目录
+		String excelParentDir=RelaxedConfig.getProfile()+excelDir;
+		//目录检查
+		FileUtil.mkdir(excelParentDir);
+		//相对文件路径
+		String relativePath = excelDir +"/"+ excelFilename;
 
-		EasyExcel.write(RelaxedConfig.getProfile()+excelPath).head(headList).inMemory(true).sheet().doWrite(ListUtil.empty());
+		EasyExcel.write(RelaxedConfig.getProfile()+relativePath).head(headList).inMemory(true).sheet().doWrite(ListUtil.empty());
 		template.setTemplateFilename(originalFilename);
 		template.setTemplateUrl(docUrl);
-		template.setDatafilePath(excelPath);
+		template.setDatafilePath(relativePath);
 		template.setTemplateCode(IdUtil.getSnowflakeNextIdStr() + "");
 		// 模板填充域
 		List<TemplateArea> templateAreas = new ArrayList<>();

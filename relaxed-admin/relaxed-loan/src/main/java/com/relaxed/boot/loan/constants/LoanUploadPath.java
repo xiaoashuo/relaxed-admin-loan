@@ -17,4 +17,5 @@ public class LoanUploadPath {
     public static final String TEMPLATE_WORD_RELATIVE_PATH="profile/template/word";
     public static final String TEMPLATE_EXCEL_RELATIVE_PATH="profile/template/excel";
     public static final String USER_AVATAR_RELATIVE_PATH="profile/user/avatar";
+    public static final String ANNEX_RELATIVE_PATH="profile/annex";
 }

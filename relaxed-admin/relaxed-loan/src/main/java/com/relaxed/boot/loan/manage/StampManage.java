@@ -1,11 +1,13 @@
 package com.relaxed.boot.loan.manage;
 
+import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.IdUtil;
 import com.relaxed.boot.common.system.utils.file.ByteArrayMultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
 import com.relaxed.boot.framework.config.RelaxedConfig;
+import com.relaxed.boot.loan.constants.LoanUploadPath;
 import com.relaxed.boot.loan.enums.FileTypeEnum;
 import com.relaxed.boot.loan.enums.StampEnum;
 import com.relaxed.boot.loan.model.entity.Loan;
@@ -84,8 +86,13 @@ public class StampManage {
             ByteArrayOutputStream originPdf=new ByteArrayOutputStream();
             wordTemplate.renderPdf(templateFileStream,originPdf,data);
             ByteArrayMultipartFile uploadFile = new ByteArrayMultipartFile(originPdf.toByteArray(), pdfFileName);
-            FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), "profile/contract", uploadFile,
-                    FileConfig.create().splitDate(true));
+            FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.ANNEX_RELATIVE_PATH, uploadFile,
+                    FileConfig.create().splitDate(true)
+                            .fileNameConverter((originalFilename -> {
+                                String mainName = FileNameUtil.mainName(originalFilename);
+                                String extName = FileNameUtil.extName(originalFilename);
+                                return mainName + "_" + partnerBizNo + "." + extName;
+                            })));
             String relativeFilePath = fileMeta.getRelativeFilePath();
             String fileNo = IdUtil.getSnowflakeNextIdStr();
             OrderAnnex orderAnnex = new OrderAnnex();
