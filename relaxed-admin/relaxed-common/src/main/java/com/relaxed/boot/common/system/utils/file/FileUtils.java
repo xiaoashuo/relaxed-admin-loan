@@ -3,6 +3,7 @@ package com.relaxed.boot.common.system.utils.file;
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
+import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.IdUtil;
 import com.relaxed.boot.common.system.exception.FileNameLengthLimitExceededException;
 import com.relaxed.boot.common.system.exception.FileSizeLimitExceededException;
@@ -31,10 +32,7 @@ public class FileUtils {
 	 */
 	public static final long DEFAULT_MAX_SIZE = 50 * 1024 * 1024;
 
-	/**
-	 * 默认的文件名最大长度 100
-	 */
-	public static final int DEFAULT_FILE_NAME_LENGTH = 100;
+
 
 	public static final String[] DEFAULT_ALLOWED_EXTENSION = {
 			// 图片
@@ -62,9 +60,9 @@ public class FileUtils {
 	public FileMeta upload(String basePath, String relativePath, MultipartFile file, FileConfig fileConfig) {
 		String originalFilename = file.getOriginalFilename();
 		int fileNameLength = originalFilename.length();
-		if (fileNameLength > FileUtils.DEFAULT_FILE_NAME_LENGTH) {
+		if (fileNameLength > fileConfig.getMaxFilenameLength()) {
 			throw new FileNameLengthLimitExceededException(SysResultCode.BAD_REQUEST.getCode(),
-					FileUtils.DEFAULT_FILE_NAME_LENGTH);
+					fileConfig.getMaxFilenameLength());
 		}
 
 		assertAllowed(file, fileConfig);
@@ -89,9 +87,6 @@ public class FileUtils {
 		return fileMeta;
 	}
 
-	private String getPathFileName(String dirPath, String filename) {
-		return dirPath + "/" + filename;
-	}
 
 	private File getAbsoluteFile(String dirPath, String fileName) {
 		File desc = new File(dirPath + File.separator + fileName);
@@ -123,7 +118,7 @@ public class FileUtils {
 	private   void assertAllowed(MultipartFile file, FileConfig fileConfig)
 			throws FileSizeLimitExceededException {
 		long size = file.getSize();
-
+		Assert.isTrue(size <= fileConfig.getMaxSize(),()->new FileSizeLimitExceededException(SysResultCode.BAD_REQUEST.getCode(),fileConfig.getMaxSize() / 1024 / 1024));
 		String fileName = file.getOriginalFilename();
 
 	}

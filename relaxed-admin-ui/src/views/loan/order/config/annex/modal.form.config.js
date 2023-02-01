@@ -30,10 +30,15 @@ export const modalFormConfig= {
         { required: true, message: '请选择文件', trigger: 'blur' },
       ],
            config: {
+
              limit:1,
              drag:true,
              uploadUrl:FILE_UPLOAD_URL,
-             fileType:['txt','docx','xlsx']
+             fileType:['txt','docx','xlsx'],
+             data:{
+               relatedPath:"profile/annex",
+               splitDate:false
+             },
            }
       },
 
