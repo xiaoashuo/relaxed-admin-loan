@@ -33,7 +33,11 @@ export const modalFormConfig= {
         limit:1,
         drag:true,
         uploadUrl:FILE_UPLOAD_URL,
-        fileType:['txt','docx','xlsx']
+        fileType:['txt','docx','xlsx'],
+        data:{
+          relatedPath:"profile/annex",
+          splitDate:false
+        },
       }
     },
 
