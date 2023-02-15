@@ -1,15 +1,11 @@
 package com.relaxed.boot.loan.job;
 
 import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.RandomUtil;
 import com.itextpdf.signatures.PdfSignatureAppearance;
 import com.relaxed.boot.common.system.utils.file.ByteArrayMultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileConfig;
 import com.relaxed.boot.common.system.utils.file.FileMeta;
-import com.relaxed.boot.common.system.utils.file.FileMultipartFile;
 import com.relaxed.boot.common.system.utils.file.FileUtils;
 import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.boot.loan.constants.LoanUploadPath;
@@ -29,9 +25,8 @@ import com.relaxed.boot.loan.service.ProjectTemplateService;
 import com.relaxed.boot.loan.service.SealService;
 import com.relaxed.boot.loan.service.StampRecordService;
 import com.relaxed.boot.loan.util.KeywordLocation;
-import com.relaxed.boot.loan.util.LogFormatUtil;
+import com.relaxed.boot.common.system.utils.LogFormatUtil;
 import com.relaxed.boot.loan.util.PdfUtil;
-import com.relaxed.boot.loan.util.SignInfo;
 import com.relaxed.boot.loan.util.pdf.MultiSignMeta;
 import com.relaxed.boot.loan.util.pdf.PdfTemplate;
 import lombok.RequiredArgsConstructor;

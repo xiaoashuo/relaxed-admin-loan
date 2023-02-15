@@ -64,6 +64,11 @@
             <artifactId>relaxed-loan</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.lovecyy</groupId>
+            <artifactId>relaxed-risk</artifactId>
+            <version>1.0.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.lovecyy</groupId>

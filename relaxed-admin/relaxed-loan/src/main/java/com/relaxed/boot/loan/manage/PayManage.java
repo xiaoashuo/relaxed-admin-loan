@@ -1,31 +1,17 @@
 package com.relaxed.boot.loan.manage;
 
-import cn.hutool.core.util.IdUtil;
-import com.relaxed.boot.common.system.utils.file.ByteArrayMultipartFile;
-import com.relaxed.boot.common.system.utils.file.FileConfig;
-import com.relaxed.boot.common.system.utils.file.FileMeta;
-import com.relaxed.boot.common.system.utils.file.FileUtils;
-import com.relaxed.boot.framework.config.RelaxedConfig;
 import com.relaxed.boot.loan.enums.BillItemSubjectEnum;
 import com.relaxed.boot.loan.enums.FileTypeEnum;
 import com.relaxed.boot.loan.enums.LoanEnum;
-import com.relaxed.boot.loan.enums.StampEnum;
 import com.relaxed.boot.loan.enums.TradeStatusEnum;
 import com.relaxed.boot.loan.model.entity.*;
 import com.relaxed.boot.loan.service.*;
-import com.relaxed.boot.loan.util.LogFormatUtil;
-import com.relaxed.boot.loan.util.word.IWordTemplate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Yakir

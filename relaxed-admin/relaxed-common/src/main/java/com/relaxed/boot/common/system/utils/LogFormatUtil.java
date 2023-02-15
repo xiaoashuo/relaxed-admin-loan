@@ -1,4 +1,4 @@
-package com.relaxed.boot.loan.util;
+package com.relaxed.boot.common.system.utils;
 
 import cn.hutool.core.util.StrUtil;
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.risk.mapper.RiskRuleHistoryMapper">
+  <resultMap id="ruleHistoryMap" type="com.relaxed.boot.risk.model.entity.RiskRuleHistory">
+                  <id property="id" column="id"/>
+                        <result property="ruleId" column="rule_id"/>
+                        <result property="merchantCode" column="merchant_code"/>
+                        <result property="label" column="label"/>
+                        <result property="initScore" column="init_score"/>
+                        <result property="baseNum" column="base_num"/>
+                        <result property="operator" column="operator"/>
+                        <result property="abstractionName" column="abstraction_name"/>
+                        <result property="rate" column="rate"/>
+                        <result property="ruleDefinition" column="rule_definition"/>
+                        <result property="createdTime" column="created_time"/>
+                        <result property="updatedTime" column="updated_time"/>
+            </resultMap>
+ 
+	<sql id="Base_Column_List">
+		id,
+		rule_id,
+		merchant_code,
+		label,
+		init_score,
+		base_num,
+		operator,
+		abstraction_name,
+		rate,
+		rule_definition,
+		    created_time,
+		updated_time
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		rh.id,
+		rh.rule_id,
+		rh.merchant_code,
+		rh.label,
+		rh.init_score,
+		rh.base_num,
+		rh.operator,
+		rh.abstraction_name,
+		rh.rate,
+		rh.rule_definition,
+		rh.created_time,
+		rh.updated_time
+	</sql>
+</mapper>

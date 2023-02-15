@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.risk.mapper.RiskModelMapper">
+  <resultMap id="modelMap" type="com.relaxed.boot.risk.model.entity.RiskModel">
+                  <id property="id" column="id"/>
+                        <result property="guid" column="guid"/>
+                        <result property="modelName" column="model_name"/>
+                        <result property="label" column="label"/>
+                        <result property="entityName" column="entity_name"/>
+                        <result property="entryName" column="entry_name"/>
+                        <result property="referenceDate" column="reference_date"/>
+                        <result property="fieldValidate" column="field_validate"/>
+                        <result property="status" column="status"/>
+                        <result property="createdTime" column="created_time"/>
+                        <result property="updatedTime" column="updated_time"/>
+            </resultMap>
+ 
+	<sql id="Base_Column_List">
+		id,
+		guid,
+		model_name,
+		label,
+		entity_name,
+		entry_name,
+		reference_date,
+		field_validate,
+		status,
+		created_time,
+		updated_time
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		m.id,
+		m.guid,
+		m.model_name,
+		m.label,
+		m.entity_name,
+		m.entry_name,
+		m.reference_date,
+		m.field_validate,
+		m.status,
+		m.created_time,
+		m.updated_time
+	</sql>
+</mapper>

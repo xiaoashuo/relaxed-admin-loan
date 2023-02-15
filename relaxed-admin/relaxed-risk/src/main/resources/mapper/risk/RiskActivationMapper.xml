@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.risk.mapper.RiskActivationMapper">
+  <resultMap id="activationMap" type="com.relaxed.boot.risk.model.entity.RiskActivation">
+                  <id property="id" column="id"/>
+                        <result property="activationName" column="activation_name"/>
+                        <result property="label" column="label"/>
+                        <result property="modelId" column="model_id"/>
+                        <result property="comment" column="comment"/>
+                        <result property="bottom" column="bottom"/>
+                        <result property="median" column="median"/>
+                        <result property="high" column="high"/>
+                        <result property="status" column="status"/>
+                        <result property="createdTime" column="created_time"/>
+                        <result property="updatedTime" column="updated_time"/>
+            </resultMap>
+ 
+	<sql id="Base_Column_List">
+		id,
+		activation_name,
+		label,
+		model_id,
+		comment,
+		bottom,
+		median,
+		high,
+		status,
+		created_time,
+		updated_time
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		a.id,
+		a.activation_name,
+		a.label,
+		a.model_id,
+		a.comment,
+		a.bottom,
+		a.median,
+		a.high,
+		a.status,
+		a.created_time,
+		a.updated_time
+	</sql>
+</mapper>
