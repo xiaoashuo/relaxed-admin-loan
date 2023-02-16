@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.risk.mapper.RiskPluginMapper">
+  <resultMap id="pluginMap" type="com.relaxed.boot.risk.model.entity.RiskPlugin">
+                  <id property="id" column="id"/>
+                        <result property="pluginName" column="plugin_name"/>
+                        <result property="pluginDesc" column="plugin_desc"/>
+                        <result property="pluginMeta" column="plugin_meta"/>
+                        <result property="status" column="status"/>
+                        <result property="createdTime" column="created_time"/>
+                        <result property="updatedTime" column="updated_time"/>
+            </resultMap>
+ 
+	<sql id="Base_Column_List">
+		id,        
+		plugin_name,        
+		plugin_desc,        
+		plugin_meta,
+status,
+		created_time,
+		updated_time
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		p.id,
+		p.plugin_name,
+		p.plugin_desc,
+		p.plugin_meta,
+p.status,
+		p.created_time,
+		p.updated_time
+	</sql>
+</mapper>
