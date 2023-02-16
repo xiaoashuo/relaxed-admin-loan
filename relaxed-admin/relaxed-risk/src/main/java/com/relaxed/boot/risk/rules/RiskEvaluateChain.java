@@ -1,5 +1,7 @@
 package com.relaxed.boot.risk.rules;
 
+import cn.hutool.core.util.IdUtil;
+import com.relaxed.boot.common.system.utils.LogFormatUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,11 +43,20 @@ public class RiskEvaluateChain {
 	 */
 	public boolean eval(EvaluateContext evaluateContext, EvaluateReport evaluateReport) {
 
+		String reqId = evaluateContext.getReqId();
 		evaluateReport.setStartTime(LocalDateTime.now());
-		log.info("风控评估开始执行,执行参数{}", evaluateContext);
-		boolean result = doEval(evaluateContext, evaluateReport);
-		evaluateReport.setEndTime(LocalDateTime.now());
-		log.info("风控评估结束执行,执行参数{},执行结果{}", evaluateContext, evaluateReport);
+		log.info(LogFormatUtil.format("风控评估","开始",LocalDateTime.now(),"请求id{}",reqId));
+		boolean result;
+		try {
+			result = doEval(evaluateContext, evaluateReport);
+		}catch (Exception e){
+			log.error(LogFormatUtil.format("风控评估","异常",LocalDateTime.now(),"请求id{},执行参数{}",reqId,evaluateContext),e);
+			throw e;
+		}
+		finally {
+			evaluateReport.setEndTime(LocalDateTime.now());
+		}
+		log.info(LogFormatUtil.format("风控评估","结束",LocalDateTime.now(),"请求id{},执行参数{},执行结果{}",reqId,evaluateContext,evaluateReport));
 		return result;
 
 	}
@@ -59,15 +70,16 @@ public class RiskEvaluateChain {
 	 * @return boolean true 评估通过 false 评估未通过
 	 */
 	private boolean doEval(EvaluateContext evaluateContext, EvaluateReport evaluateReport) {
+		String reqId = evaluateContext.getReqId();
 		for (int i = 0; i < this.riskEvaluates.size(); i++) {
 			RiskEvaluate riskEvaluate = this.riskEvaluates.get(i);
 			String name = riskEvaluate.getName();
 			long start = System.currentTimeMillis();
-			log.info("{}风险评估,开始时间{}", name, start);
+			log.info(LogFormatUtil.format("风控评估","阶段"+i+"开始",LocalDateTime.now(),"请求id{},阶段名称{}",reqId,name));
 			boolean result = riskEvaluate.doEval(evaluateContext, evaluateReport);
 			long end = System.currentTimeMillis();
 			long time = end - start;
-			log.info("{}风险评估,结束时间{},耗时{} ms", name, end, time);
+			log.info(LogFormatUtil.format("风控评估","阶段"+i+"结束",LocalDateTime.now(),"请求id{},阶段名称{},耗时{} ms",reqId,name,time));
 			evaluateReport.putPhaseTime(name, time);
 			if (!result) {
 				return false;

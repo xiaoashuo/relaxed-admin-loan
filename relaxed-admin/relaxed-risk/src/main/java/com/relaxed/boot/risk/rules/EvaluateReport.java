@@ -19,14 +19,9 @@ import java.util.Map;
 public class EvaluateReport implements Serializable {
 
 	/**
-	 * 信息描述
-	 */
-	private String errorMsg;
-
-	/**
 	 * 评估报告 扩展参数 记录各接阶段评估数据
 	 */
-	private Map<String, Map<String, ?>> evaluateData = new HashMap<>();
+	private Map<String, Map<String, ?>> evaluateReport = new HashMap<>();
 
 	/**
 	 * 执行开始时间
@@ -49,7 +44,7 @@ public class EvaluateReport implements Serializable {
 	 * @param evaluateMap
 	 */
 	public void putEvaluateMap(String key, Map<String, Object> evaluateMap) {
-		evaluateData.put(key, evaluateMap);
+		evaluateReport.put(key, evaluateMap);
 	}
 
 	/**
@@ -63,12 +58,6 @@ public class EvaluateReport implements Serializable {
 		phaseTime.put(name, time);
 	}
 
-	public void setErrorMsg(String errorMsg) {
-		this.errorMsg = errorMsg;
-	}
 
-	public void setErrorMsg(String msgTemplate, Object... params) {
-		this.errorMsg = StrUtil.format(msgTemplate, params);
-	}
 
 }

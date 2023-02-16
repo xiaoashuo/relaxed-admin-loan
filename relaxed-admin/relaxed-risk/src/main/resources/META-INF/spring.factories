@@ -1,0 +1,11 @@
+com.relaxed.boot.risk.core.plugins.PluginService=\
+    com.relaxed.boot.risk.core.plugins.handler.DateFormatPlugin,\
+    com.relaxed.boot.risk.core.plugins.handler.FieldMergePlugin,\
+    com.relaxed.boot.risk.core.plugins.handler.GpsLocationPlugin,\
+    com.relaxed.boot.risk.core.plugins.handler.SensitiveTimePlugin,\
+    com.relaxed.boot.risk.core.plugins.handler.SubStringPlugin,\
+    com.relaxed.boot.risk.core.plugins.handler.HttpUtilPlugin
+
+
+
+

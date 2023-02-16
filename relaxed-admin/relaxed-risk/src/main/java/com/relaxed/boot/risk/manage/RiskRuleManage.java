@@ -15,6 +15,7 @@ import com.relaxed.boot.risk.model.qo.RiskRuleQO;
 import com.relaxed.boot.risk.model.vo.RiskFieldVO;
 import com.relaxed.boot.risk.model.vo.RiskPreItemVO;
 import com.relaxed.boot.risk.model.vo.RiskRuleVO;
+import com.relaxed.boot.risk.rules.script.RuleScriptHandler;
 import com.relaxed.boot.risk.service.RiskFieldService;
 import com.relaxed.boot.risk.service.RiskPreItemService;
 import com.relaxed.boot.risk.service.RiskRuleHistoryService;
@@ -53,6 +54,8 @@ public class RiskRuleManage  {
 	private final RiskFieldService fieldService;
 
 	private final RiskPreItemService preItemService;
+
+	private final  RuleScriptHandler ruleScriptHandler;
 
 
 
@@ -173,4 +176,7 @@ public class RiskRuleManage  {
 		return dataColumns;
 	}
 
+	public List<RiskRuleVO> listRule(Long activationId) {
+		return ruleService.listByActivationId(activationId);
+	}
 }

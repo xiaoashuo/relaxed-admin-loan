@@ -8,6 +8,7 @@
                         <result property="name" column="name"/>
                         <result property="label" column="label"/>
                         <result property="scripts" column="scripts"/>
+                        <result property="ruleScriptEntry" column="rule_script_entry"/>
                         <result property="initScore" column="init_score"/>
                         <result property="baseNum" column="base_num"/>
                         <result property="operator" column="operator"/>
@@ -28,6 +29,7 @@
 		name,
 		label,
 		scripts,
+		rule_script_entry,
 		init_score,
 		base_num,
 		operator,
@@ -48,6 +50,7 @@
 		re.name,
 		re.label,
 		re.scripts,
+		re.rule_script_entry,
 		re.init_score,
 		re.base_num,
 		re.operator,

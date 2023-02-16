@@ -56,7 +56,6 @@ public class RiskAnalysisEngine  {
 
 
 	public R evaluateRisk(String modelGuid, String reqId, Map jsonInfo) {
-		log.info(LogFormatUtil.format("风控审核[同步]","开始", LocalDateTime.now(),"req info:{},{},{}",modelGuid, reqId, jsonInfo) );
 		RiskModelVO modelVO = riskModelManage.getByGuid(modelGuid);
 		// 1.基础规则效验
 		if (modelVO == null) {
@@ -87,13 +86,19 @@ public class RiskAnalysisEngine  {
 			evaluateContext.setModelVo(modelVO);
 			evaluateContext.setEventJson(jsonInfo);
 			evaluateContext.setPreItemMap(prepare);
-			boolean result = riskEvaluateChain.eval(evaluateContext, evaluateReport);
+			boolean result ;
+			try {
+				result = riskEvaluateChain.eval(evaluateContext, evaluateReport);
+			} catch (Exception e) {
+				return R.failed(RiskCode.RISK_EVAL_NOT_PASSED).setMessage(e.getMessage())
+						.setData(evaluateReport);
+			}
 			if (!result) {
-				return R.failed(RiskCode.RISK_EVAL_NOT_PASSED).setMessage(evaluateReport.getErrorMsg())
+				return R.failed(RiskCode.RISK_EVAL_NOT_PASSED).setMessage("风控分析不通过")
 						.setData(evaluateReport);
 			}
 			// 5.for elastic analysis
-			Long eventTimeMillis = (Long) jsonInfo.get(modelVO.getReferenceDate());
+			Long eventTimeMillis =Long.parseLong((String) jsonInfo.get(modelVO.getReferenceDate()));
 			String timeStr = DateUtil.format(new Date(eventTimeMillis), "yyyy-MM-dd'T'HH:mm:ssZ");
 			prepare.put("risk_ref_datetime", timeStr);
 		}

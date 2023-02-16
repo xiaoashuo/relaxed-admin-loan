@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/services/risk/v1")
+@RequestMapping("/risk/services/v1")
 @Tag(name = "RiskApi", description = "风险分析API(引擎端)")
 public class RiskEngineController {
 

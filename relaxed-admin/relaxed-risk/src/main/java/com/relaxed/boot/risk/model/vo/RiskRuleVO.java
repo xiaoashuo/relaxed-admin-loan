@@ -54,7 +54,8 @@ public class RiskRuleVO implements Serializable {
 	@Schema(title = "检验脚本", description = "检验脚本")
 	private String scripts;
 
-
+	@Schema(title = "规则脚本入口", description = "规则脚本入口")
+	private String ruleScriptEntry;
 
 	/**
 	 * 初始分数

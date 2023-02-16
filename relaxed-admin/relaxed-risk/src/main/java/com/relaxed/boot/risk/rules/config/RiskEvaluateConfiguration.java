@@ -3,6 +3,10 @@ package com.relaxed.boot.risk.rules.config;
 
 import com.relaxed.boot.risk.rules.RiskEvaluate;
 import com.relaxed.boot.risk.rules.RiskEvaluateChain;
+import com.relaxed.boot.risk.rules.extractor.FieldExtractor;
+import com.relaxed.boot.risk.rules.extractor.SimpleFieldExtractor;
+import com.relaxed.boot.risk.rules.score.DefaultRiskScoreHandle;
+import com.relaxed.boot.risk.rules.score.RiskScoreHandler;
 import com.relaxed.boot.risk.rules.script.RuleScriptHandler;
 import com.relaxed.boot.risk.rules.script.groovy.GroovyScriptHandler;
 import org.springframework.beans.factory.ObjectProvider;
@@ -56,7 +60,30 @@ public class RiskEvaluateConfiguration {
 	}
 
 
+	/**
+	 * 字段提取器
+	 * @author yakir
+	 * @date 2021/8/30 13:37
+	 * @return com.relaxed.common.risk.engine.rules.extractor.FieldExtractor
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public FieldExtractor fieldExtractor() {
+		return new SimpleFieldExtractor();
+	}
 
+	/**
+	 * 风控评分处理器
+	 * @author yakir
+	 * @date 2021/9/9 16:54
+	 * @param fieldExtractor
+	 * @return com.relaxed.common.risk.engine.rules.score.RiskScoreHandler
+	 */
+	@Bean
+	@ConditionalOnMissingBean
+	public RiskScoreHandler riskScoreHandler(FieldExtractor fieldExtractor) {
+		return new DefaultRiskScoreHandle(fieldExtractor);
+	}
 
 
 

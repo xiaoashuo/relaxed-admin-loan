@@ -1,5 +1,6 @@
 package com.relaxed.boot.loan.util;
 
+import com.itextpdf.kernel.utils.CompareTool;
 import com.relaxed.boot.loan.util.KeywordLocation;
 import java.util.ArrayList;
 
@@ -62,19 +63,26 @@ public class PdfTest {
 	public static final String IMG = "D:\\other\\100000\\itext\\keystore\\seal.png";// 印章图片路径
 
 	public static void main(String[] args) throws Exception {
-		String sourceFile = "D:\\other\\100000\\itext\\test.pdf";
-		String targetFile = "D:\\other\\100000\\itext\\" + IdUtil.getSnowflakeNextId() + ".pdf";
-		// 通过指定pdf文件名，指定关键字，和指定的pdf文件的待处理页数做参数
-		// getKeyWordsLocation(sourceFile, targetFile,"国民信托有限公司", 14);
-		// generateSealImage("D:\\other\\100000\\seal.png");
-
-		List<KeywordLocation> wordsLocation1 = getKeyWordsLocation1(sourceFile, "国民信托有限公司");
-		PreviewSignInfo previewSignInfo = new PreviewSignInfo();
-		previewSignInfo.setImgPath("D:\\other\\100000\\itext\\image\\test.png");
-		previewSignInfo.setContentBefore(true);
-		previewSignInfo.setKeywordLocationList(wordsLocation1);
-        //加签章图片 不生成证书
-		PdfUtil.addImage(sourceFile, targetFile, previewSignInfo);
+		String sourceFile = "D:\\tools\\100000\\2.pdf";
+		String targetFile =   "D:\\tools\\100000\\1602192493997211648.pdf";
+		String targeatFile =   "D:\\tools\\100000\\16021924939972116481111.pdf";
+		PdfDocument pdfDoc1 = new PdfDocument(new PdfReader(sourceFile));
+		PdfDocument pdfDoc2 = new PdfDocument(new PdfReader(targetFile));
+		CompareTool compareTool = new CompareTool();
+		String report = compareTool.compareByContent(sourceFile, targetFile,targeatFile);
+		pdfDoc1.close();
+		pdfDoc2.close();
+//		// 通过指定pdf文件名，指定关键字，和指定的pdf文件的待处理页数做参数
+//		// getKeyWordsLocation(sourceFile, targetFile,"国民信托有限公司", 14);
+//		// generateSealImage("D:\\other\\100000\\seal.png");
+//
+//		List<KeywordLocation> wordsLocation1 = getKeyWordsLocation1(sourceFile, "国民信托有限公司");
+//		PreviewSignInfo previewSignInfo = new PreviewSignInfo();
+//		previewSignInfo.setImgPath("D:\\other\\100000\\itext\\image\\test.png");
+//		previewSignInfo.setContentBefore(true);
+//		previewSignInfo.setKeywordLocationList(wordsLocation1);
+//        //加签章图片 不生成证书
+//		PdfUtil.addImage(sourceFile, targetFile, previewSignInfo);
 		// BouncyCastleProvider provider = new BouncyCastleProvider();
 		// Security.addProvider(provider);
 		// //读取keystore ，获得私钥和证书链 jks
