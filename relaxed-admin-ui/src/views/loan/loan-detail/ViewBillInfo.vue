@@ -14,14 +14,14 @@
     <h2>账单信息</h2>
 
     <!--表格组件-->
-    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig"
+    <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig"
                :lazy-load="true"
                :request="tableRequest"
                @expand-change="handleExpandChange"
 
     >
       <template #expandHandle="scope">
-        <pro-table style="width: 90%;margin: 0 auto" ref="billItemPageContentRef"
+        <yi-pro-table style="width: 90%;margin: 0 auto" ref="billItemPageContentRef"
                    :content-table-config="billItemContentTableConfig"
                    :lazy-load="true"
                    :request="tableBillItemRequest"
@@ -60,10 +60,10 @@
 
 
           </template>
-        </pro-table>
+        </yi-pro-table>
 
       </template>
-    </pro-table>
+    </yi-pro-table>
 
 
   </div>
@@ -71,7 +71,7 @@
 
 <script>
 
-import YiTable from '@/components/table'
+
 //页面配置参数
 import {contentTableConfig} from "./config/bill.content.table.config";
 import {contentTableConfig as billItemContentTableConfig} from "./config/billItem.content.table.config";
@@ -82,9 +82,7 @@ import {getList as getBillItemList} from "@/api/loan/bill-item";
 import {getList as getBillItemFillerList} from "@/api/loan/bill-item-filler";
 export default {
   name: "ViewBillPage",
-  components:{
-    YiTable
-  },
+
   props:{
     loanId:{
       type: Number,

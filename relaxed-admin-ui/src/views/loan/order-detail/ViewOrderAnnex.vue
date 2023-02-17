@@ -4,9 +4,9 @@
     <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
-    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+    <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                lazy-load
-               @newBtnClick="showNewModal" @editBtnClick="showEditModal"
+               @addBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
     >
       <template #fileTypeSlot="scope">
@@ -20,7 +20,7 @@
                    @click="handleDownloadClick(scope.row)">下载
         </el-button>
       </template>
-    </pro-table>
+    </yi-pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :append-to-body="true"

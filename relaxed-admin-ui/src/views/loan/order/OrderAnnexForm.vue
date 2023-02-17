@@ -4,7 +4,7 @@
     <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
-    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+    <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                :lazy-load="true"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
@@ -14,7 +14,7 @@
         <dict-text dict-code="file_type" :value="scope.row.fileType"></dict-text>
         <span>-文件标识:{{scope.row.fileType}}</span>
       </template>
-    </pro-table>
+    </yi-pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :append-to-body="true"

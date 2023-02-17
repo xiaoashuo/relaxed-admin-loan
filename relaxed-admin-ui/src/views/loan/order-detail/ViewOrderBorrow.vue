@@ -4,11 +4,11 @@
     <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
-    <pro-table ref="pageContentRef"
+    <yi-pro-table ref="pageContentRef"
                lazy-load
                :content-table-config="contentTableConfig" :request="tableRequest"
 
-    ></pro-table>
+    ></yi-pro-table>
 
 
 

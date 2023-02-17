@@ -5,6 +5,18 @@ import { usePermission } from '@/utils/usePermission'
 export default {
   mixins: [tableMixin, screenfullMixin],
   props: {
+    showTitle: {
+      type: Boolean,
+      default: true
+    },
+    showTools: {
+      type: Boolean,
+      default: true
+    },
+    showUserTools:{
+      type:Boolean,
+      default: true
+    },
     //  多列排序
     multiSort: {
       type: Boolean,

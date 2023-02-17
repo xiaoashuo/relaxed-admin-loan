@@ -9,11 +9,11 @@
     ></page-search>
     <!--      内容区域-->
     <!--表格组件-->
-    <pro-table
+    <yi-pro-table
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
       :request="tableRequest"
-      @newBtnClick="showNewModal({ sort: 0 })"
+      @addBtnClick="showNewModal({ sort: 0 })"
       @editBtnClick="handleEditModal"
       @delBtnClick="handleDelData"
     >
@@ -43,7 +43,7 @@
 
         </div>
       </template>
-    </pro-table>
+    </yi-pro-table>
 
     <menu-modal-form
       ref="formModal"

@@ -3,12 +3,14 @@
       <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
                    @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
 
-      <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest">
+      <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig"
+                    :show-user-tools="false"
+                    :request="tableRequest">
         <template #extStatus="scope">
           <el-button plain size="small" :type="scope.row.status==1?'success':'danger'">{{scope.row.status==1? '成功': '失败'}}
           </el-button>
         </template>
-      </pro-table>
+      </yi-pro-table>
     </div>
 </template>
 

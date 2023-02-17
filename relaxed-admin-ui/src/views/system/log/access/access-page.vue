@@ -7,10 +7,11 @@
       @queryBtnClick="handleSearchClick"
     ></page-search>
     <!--表格组件-->
-    <pro-table
+    <yi-pro-table
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
       :request="tableRequest"
+      :show-user-tools="false"
     >
       <template #expandHandle="scope">
         <div class="reqParam">
@@ -27,7 +28,7 @@
           <span>{{ scope.row.result }}</span>
         </div>
       </template>
-    </pro-table>
+    </yi-pro-table>
   </div>
 </template>
 

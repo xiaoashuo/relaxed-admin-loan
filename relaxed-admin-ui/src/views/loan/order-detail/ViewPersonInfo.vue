@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import YiTable from '@/components/table'
+
 export default {
   name: 'ViewPersonInfo',
   props:{
@@ -111,9 +111,7 @@ export default {
       default:()=>([])
     }
   },
-  components:{
-    YiTable
-  },
+
   data(){
     return{
       contentTableConfig:{

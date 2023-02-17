@@ -4,13 +4,13 @@
     <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
-    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+    <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                :lazy-load="true"
     >
       <template #repayType="scope">
         <dict-text dict-code="repay_type" :value="scope.row.repayType"></dict-text>
       </template>
-    </pro-table>
+    </yi-pro-table>
 
 
 

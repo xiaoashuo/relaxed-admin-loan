@@ -9,11 +9,11 @@
       @queryBtnClick="handleSearchClick"
     />
     <!--表格组件-->
-    <pro-table
+    <yi-pro-table
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
       :request="tableRequest"
-      @newBtnClick="showNewModal({sort:0})"
+      @addBtnClick="showNewModal({sort:0})"
       @editBtnClick="showEditModal"
       @delBtnClick="handleDelClick"
     >
@@ -35,7 +35,7 @@
         >新增
         </el-button>
       </template>
-    </pro-table>
+    </yi-pro-table>
     <!--模态表单组件-->
     <form-modal
       ref="formModal"

@@ -4,8 +4,8 @@
     <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
-    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
-               @newBtnClick="showNewModal" @editBtnClick="showEditModal"
+    <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+               @addBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
     >
       <template #sealAddress="scope">
@@ -16,7 +16,7 @@
         />
       </template>
 
-    </pro-table>
+    </yi-pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :req-function="reqFunction"

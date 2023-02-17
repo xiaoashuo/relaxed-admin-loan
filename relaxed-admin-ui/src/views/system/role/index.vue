@@ -7,11 +7,11 @@
       @queryBtnClick="handleSearchClick"
     ></page-search>
     <!--表格组件-->
-    <pro-table
+    <yi-pro-table
       ref="pageContentRef"
       :content-table-config="contentTableConfig"
       :request="tableRequest"
-      @newBtnClick="showNewModal"
+      @addBtnClick="showNewModal"
       @editBtnClick="showEditModal"
       @delBtnClick="handleDelClick"
     >
@@ -29,7 +29,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </template>
-    </pro-table>
+    </yi-pro-table>
     <!--模态表单组件-->
     <form-modal
       ref="formModal"

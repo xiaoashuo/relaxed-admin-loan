@@ -6,7 +6,7 @@
         <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
                      @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
         <!--表格组件-->
-        <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+        <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                    @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                    @delBtnClick="handleDelClick"
                    @row-dblclick="handleRowDbClick"
@@ -14,7 +14,7 @@
           <template #fileType="scope">
             <dict-text dict-code="file_type" :value="parseInt(scope.row.fileType)"></dict-text>
           </template>
-        </pro-table>
+        </yi-pro-table>
         <!--模态表单组件-->
         <form-modal ref="formModal" :modal-config="modalConfig"
                     :req-function="reqFunction"
@@ -42,10 +42,10 @@
         <page-search ref="pageItemSearchRef" :searchFormConfig="searchItemFormConfig"
                      @resetBtnClick="handleItemResetClick" @queryBtnClick="handleItemSearchClick"></page-search>
         <!--表格组件-->
-        <pro-table ref="pageItemContentRef" :content-table-config="contentItemTableConfig"
+        <yi-pro-table ref="pageItemContentRef" :content-table-config="contentItemTableConfig"
                    :lazy-load="true"
                    :request="itemRequest"
-        ></pro-table>
+        ></yi-pro-table>
 
       </el-col>
     </el-row>

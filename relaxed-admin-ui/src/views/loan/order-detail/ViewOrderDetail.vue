@@ -73,12 +73,9 @@
 </template>
 
 <script>
-import YiTable from '@/components/table'
+
 export default {
   name: 'ViewOrderDetail',
-  components:{
-    YiTable
-  },
   props:{
     order:{
       type: Object,

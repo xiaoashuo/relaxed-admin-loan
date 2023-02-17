@@ -18,6 +18,12 @@ export function addObj(obj) {
     data: obj
   })
 }
+export function putObj(obj) {
+  return yiRequest.put({
+    url: '/loan/certificate',
+    data: obj
+  })
+}
 
 export function delObj(id) {
   return yiRequest.delete({

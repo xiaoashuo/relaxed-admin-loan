@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <!--表格组件-->
-    <pro-table ref="pageContentRef"
+    <yi-pro-table ref="pageContentRef"
                lazy-load
                :content-table-config="contentTableConfig" :request="tableRequest"
                @newBtnClick="showNewModal"
-    ></pro-table>
+    ></yi-pro-table>
 
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalFormConfig"

@@ -1,11 +1,6 @@
 export const contentTableConfig={
   title: '访问日志',
   showSelectColumn:false,
-  headerProps:{
-    visible: true,
-    leftVisible: true,
-    rightVisible: false
-  },
   propList:[
 
     {

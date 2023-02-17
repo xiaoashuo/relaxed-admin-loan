@@ -2,7 +2,7 @@
   <div class="app-container">
 
     <!--表格组件-->
-    <pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+    <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
                :lazy-load="true"
                @newBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
@@ -13,7 +13,7 @@
       <template #cardPurpose="scope">
         <dict-text dict-code="bank_card_purpose" :value="scope.row.cardPurpose"></dict-text>
       </template>
-    </pro-table>
+    </yi-pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
                 :append-to-body="true"
