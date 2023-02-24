@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -14,13 +15,14 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-@Schema(title = "")
+@Schema(title = "风控字段")
 public class RiskFieldQO implements Serializable {
 
 	/**
 	 * 主键
 	 */
-	@Schema(title = "主键", description = "主键")
-	private Long id;
+	@NotNull(message = "模型ID不存在")
+	@Schema(title = "模型ID不存在", description = "模型ID不存在")
+	private Long modelId;
 
 }

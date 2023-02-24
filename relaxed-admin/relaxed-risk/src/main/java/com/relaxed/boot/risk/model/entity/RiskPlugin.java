@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("engine_plugin")
-@Schema(title = "")
+@TableName("risk_plugin")
+@Schema(title = "风控插件")
 public class RiskPlugin extends Model<RiskPlugin> {
 
 	/**

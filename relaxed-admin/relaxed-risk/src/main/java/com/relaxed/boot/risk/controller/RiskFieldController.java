@@ -5,6 +5,12 @@ import com.relaxed.boot.risk.enums.ValidTypeEnum;
 import com.relaxed.boot.risk.manage.RiskFieldManage;
 import com.relaxed.boot.risk.model.entity.RiskField;
 import com.relaxed.boot.risk.model.entity.RiskPreItem;
+import com.relaxed.boot.risk.model.qo.RiskFieldQO;
+import com.relaxed.boot.risk.model.qo.RiskPreItemQO;
+import com.relaxed.boot.risk.model.vo.RiskFieldVO;
+import com.relaxed.boot.risk.model.vo.RiskModelVO;
+import com.relaxed.common.model.domain.PageParam;
+import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
 
@@ -20,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +41,7 @@ import java.util.Map;
  */
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/risk/field")
+@RequestMapping("/risk")
 @Tag(name = "字段管理")
 public class RiskFieldController {
 
@@ -83,12 +90,12 @@ public class RiskFieldController {
 	 * 根据模型id查询字段列表
 	 * @author yakir
 	 * @date 2021/9/28 16:23
-	 * @param modelId
+	 * @param riskFieldQO
 	 * @return com.relaxed.common.model.result.R<?>
 	 */
-	@GetMapping("/list/{modelId}")
-	public R<?> fieldListByModelId(@PathVariable Long modelId) {
-		return R.ok(fieldManageService.fieldListByModelId(modelId));
+	@GetMapping("/field/list")
+	public R<PageResult<RiskFieldVO>> fieldList(PageParam pageParam,@Valid RiskFieldQO riskFieldQO) {
+		return R.ok(fieldManageService.fieldList(pageParam,riskFieldQO));
 	}
 
 	/**
@@ -96,7 +103,7 @@ public class RiskFieldController {
 	 * @param field {@link RiskField} 数据参数
 	 * @return {@code R<?>} 通用返回体
 	 */
-	@PostMapping
+	@PostMapping("/field")
 	@Operation(summary = "原始字段新增数据", description = "原始字段新增数据")
 	public R<?> fieldAdd(@RequestBody RiskField field) {
 		return fieldManageService.fieldAdd(field) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增数据失败");
@@ -107,7 +114,7 @@ public class RiskFieldController {
 	 * @param field {@link RiskField} 更新数据
 	 * @return {@code R<?>}通用返回体
 	 */
-	@PutMapping
+	@PutMapping("/field")
 	@Operation(summary = "原始字段更新数据", description = "原始字段更新数据")
 	public R<?> fieldEdit(@RequestBody RiskField field) {
 		return fieldManageService.fieldEdit(field) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "更新数据失败");
@@ -118,7 +125,7 @@ public class RiskFieldController {
 	 * @param id {@code id} id
 	 * @return {@code R<?>} 通用返回体
 	 */
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/field/{id}")
 	@Operation(summary = "原始字段根据id删除数据", description = "原始字段根据id删除数据")
 	public R<?> fieldDel(@PathVariable Long id) {
 		return fieldManageService.fieldDel(id) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "根据id删除数据失败");
@@ -128,12 +135,12 @@ public class RiskFieldController {
 	 * 根据模型id查询预字段列表
 	 * @author yakir
 	 * @date 2021/9/28 16:23
-	 * @param modelId
+	 * @param riskPreItemQO
 	 * @return com.relaxed.common.model.result.R<?>
 	 */
-	@GetMapping("/pre/list/{modelId}")
-	public R<?> preItemListByModelId(@PathVariable Long modelId) {
-		return R.ok(fieldManageService.preItemListByModelId(modelId));
+	@GetMapping("/pre/item/page")
+	public R<?> preItemPage(PageParam pageParam, @Valid RiskPreItemQO riskPreItemQO) {
+		return R.ok(fieldManageService.preFieldList(pageParam,riskPreItemQO));
 	}
 
 	/**

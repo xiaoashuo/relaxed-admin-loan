@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -22,5 +23,6 @@ public class RiskPreItemQO implements Serializable {
 	 */
 	@Schema(title = "ID", description = "ID")
 	private Long id;
-
+	@NotNull(message = "模型id不能为空")
+	private Long modelId;
 }

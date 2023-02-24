@@ -16,12 +16,16 @@ import com.relaxed.boot.risk.model.converter.RiskPreItemConverter;
 import com.relaxed.boot.risk.model.entity.RiskField;
 import com.relaxed.boot.risk.model.entity.RiskModel;
 import com.relaxed.boot.risk.model.entity.RiskPreItem;
+import com.relaxed.boot.risk.model.qo.RiskFieldQO;
+import com.relaxed.boot.risk.model.qo.RiskPreItemQO;
 import com.relaxed.boot.risk.model.vo.RiskFieldVO;
 import com.relaxed.boot.risk.model.vo.RiskPreItemVO;
 import com.relaxed.boot.risk.service.RiskFieldService;
 import com.relaxed.boot.risk.service.RiskModelService;
 import com.relaxed.boot.risk.service.RiskPreItemService;
 
+import com.relaxed.common.model.domain.PageParam;
+import com.relaxed.common.model.domain.PageResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -53,10 +57,10 @@ public class RiskFieldManage  {
 
 	private final FieldValidateHandler fieldValidateHandler;
 
-	public List<RiskFieldVO> fieldListByModelId(Long modelId) {
-		return fieldService.listByModelId(modelId);
-	}
 
+	public PageResult<RiskFieldVO> fieldList(PageParam pageParam, RiskFieldQO riskFieldQO) {
+		return fieldService.selectByPage(pageParam,riskFieldQO);
+	}
 
 	public boolean fieldAdd(RiskField field) {
 		Long modelId = field.getModelId();
@@ -187,5 +191,10 @@ public class RiskFieldManage  {
 			result.put(preItemVO.getDestField(), transfer);
 		}
 		return result;
+	}
+
+
+	public PageResult<RiskPreItemVO> preFieldList(PageParam pageParam,RiskPreItemQO riskPreItemQO) {
+		return preItemService.selectByPage(pageParam,riskPreItemQO);
 	}
 }

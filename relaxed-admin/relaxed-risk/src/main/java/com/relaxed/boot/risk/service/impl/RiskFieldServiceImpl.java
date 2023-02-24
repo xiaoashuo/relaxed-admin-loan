@@ -35,8 +35,8 @@ public class RiskFieldServiceImpl extends ExtendServiceImpl<RiskFieldMapper, Ris
 	@Override
 	public PageResult<RiskFieldVO> selectByPage(PageParam pageParam, RiskFieldQO fieldQO) {
 		IPage<RiskField> page = PageUtil.prodPage(pageParam);
-		LambdaQueryWrapper<RiskField> wrapper = Wrappers.lambdaQuery(RiskField.class).eq(ObjectUtil.isNotNull(fieldQO.getId()),
-				RiskField::getId, fieldQO.getId());
+		LambdaQueryWrapper<RiskField> wrapper = Wrappers.lambdaQuery(RiskField.class).eq(ObjectUtil.isNotNull(fieldQO.getModelId()),
+				RiskField::getModelId, fieldQO.getModelId());
 		this.baseMapper.selectPage(page, wrapper);
 		IPage<RiskFieldVO> voPage = page.convert(RiskFieldConverter.INSTANCE::poToVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
@@ -47,6 +47,8 @@ public class RiskFieldServiceImpl extends ExtendServiceImpl<RiskFieldMapper, Ris
 		List<RiskField> list = baseMapper.listByModelId(modelId);
 		return list != null ? RiskFieldConverter.INSTANCE.poToVOs(list) : null;
 	}
+
+
 
 	@Override
 	public RiskField selectOne(Long modelId, String fieldName) {

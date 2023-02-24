@@ -156,7 +156,7 @@ export default [
 
 ```
 
-#### content.config.js
+#### content.table.config.js
 
 ```js
 export const contentConfig={

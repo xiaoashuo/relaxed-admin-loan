@@ -29,7 +29,7 @@
             <div slot="header" class="clearfix">
               <span>角色关联用户</span>
             </div>
-            <pro-table ref="pageContentRef"
+            <yi-pro-table ref="pageContentRef"
                        :content-table-config="userContentTableConfig"
                        :request="tableRequest"
                        :lazy-load="true"
@@ -43,7 +43,7 @@
                 </el-popconfirm>
               </template>
 
-            </pro-table>
+            </yi-pro-table>
 
 
           </el-card>

@@ -47,4 +47,5 @@ public interface RiskFieldService extends ExtendService<RiskField> {
 	 */
 	RiskField selectOne(Long modelId, String fieldName);
 
+
 }

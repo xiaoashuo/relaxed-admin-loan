@@ -36,7 +36,7 @@ public class RiskPreItemServiceImpl extends ExtendServiceImpl<RiskPreItemMapper,
 	public PageResult<RiskPreItemVO> selectByPage(PageParam pageParam, RiskPreItemQO preItemQO) {
 		IPage<RiskPreItem> page = PageUtil.prodPage(pageParam);
 		LambdaQueryWrapper<RiskPreItem> wrapper = Wrappers.lambdaQuery(RiskPreItem.class)
-				.eq(ObjectUtil.isNotNull(preItemQO.getId()), RiskPreItem::getId, preItemQO.getId());
+				.eq( RiskPreItem::getModelId, preItemQO.getModelId());
 		this.baseMapper.selectPage(page, wrapper);
 		IPage<RiskPreItemVO> voPage = page.convert(RiskPreItemConverter.INSTANCE::poToVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
