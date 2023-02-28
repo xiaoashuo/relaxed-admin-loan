@@ -26,6 +26,7 @@ import com.relaxed.boot.risk.service.RiskPreItemService;
 
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ import org.springframework.util.Assert;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Yakir
@@ -58,7 +60,7 @@ public class RiskFieldManage  {
 	private final FieldValidateHandler fieldValidateHandler;
 
 
-	public PageResult<RiskFieldVO> fieldList(PageParam pageParam, RiskFieldQO riskFieldQO) {
+	public PageResult<RiskFieldVO> fieldPage(PageParam pageParam, RiskFieldQO riskFieldQO) {
 		return fieldService.selectByPage(pageParam,riskFieldQO);
 	}
 
@@ -196,5 +198,16 @@ public class RiskFieldManage  {
 
 	public PageResult<RiskPreItemVO> preFieldList(PageParam pageParam,RiskPreItemQO riskPreItemQO) {
 		return preItemService.selectByPage(pageParam,riskPreItemQO);
+	}
+
+	public List<SelectData<RiskFieldVO>> fieldListByModelId(Long modelId) {
+		List<RiskFieldVO> riskFieldVOS = fieldService.listByModelId(modelId);
+		return riskFieldVOS.stream().map(item -> {
+			SelectData<RiskFieldVO> selectData = new SelectData<>();
+			selectData.setLabel(item.getLabel());
+			selectData.setValue(item.getFieldName());
+			selectData.setExtendObj(item);
+			return selectData;
+		}).collect(Collectors.toList());
 	}
 }

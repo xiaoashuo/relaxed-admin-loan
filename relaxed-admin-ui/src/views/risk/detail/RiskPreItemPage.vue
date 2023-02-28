@@ -10,10 +10,11 @@
                @delBtnClick="handleDelClick"
     ></yi-pro-table>
     <!--模态表单组件-->
-    <form-modal ref="formModal" :modal-config="modalConfig"
-                :req-function="reqFunction"
-                @submitSuccess="handleSubmit"
-    ></form-modal>
+    <risk-pre-item-form-model  ref="formModal" :req-function="reqFunction"
+                               @submitSuccess="handleSubmit">
+
+    </risk-pre-item-form-model>
+
 
 
   </div>
@@ -27,9 +28,12 @@ import {searchFormConfig} from "./config/preItem/search.form.config";
 import {modalFormConfig} from "./config/preItem/modal.form.config";
 //页面相关请求方法
 import {getPage, addObj, putObj, delObj} from "@/api/risk/risk-pre-item";
+import YiSelect from '@/components/select/src/YiSelect.vue'
+import RiskPreItemFormModel from '@/views/risk/detail/RiskPreItemFormModel.vue'
 
 export default {
   name: "RiskPreItemPage",
+  components: { RiskPreItemFormModel, YiSelect },
   props:{
     modelId:{
       type: String,
@@ -49,24 +53,28 @@ export default {
         create: addObj,
         update: putObj
       },
+
     }
   },
   created(){
     this.$nextTick(()=>{
       this.$refs.pageContentRef.searchTable({modelId:this.modelId},false)
+
     })
   },
   methods: {
+
+
     //表格相关
     showNewModal() {
-      this.$refs.formModal.add({title: '新增'})
+      this.$refs.formModal.add({title: '新增',item:{modelId:this.modelId}})
     },
     showEditModal(item) {
       this.$refs.formModal.update({title: '编辑', item})
     },
     //删除数据
     handleDelClick(item) {
-      delObj(item.id).then(res => {
+      delObj(item.modelId,item.id).then(res => {
         this.$refs.pageContentRef.refreshTable(false)
       })
     },

@@ -9,7 +9,9 @@
      <el-tab-pane label="预处理管理" name="second">
        <risk-pre-item-page :model-id="modelId"></risk-pre-item-page>
      </el-tab-pane>
-     <el-tab-pane label="策略管理" name="third">策略管理</el-tab-pane>
+     <el-tab-pane label="策略管理" name="third">
+       <risk-activation-page :model-id="modelId"></risk-activation-page>
+     </el-tab-pane>
    </el-tabs>
  </div>
 </template>
@@ -17,9 +19,11 @@
 <script>
 import RiskFieldPage from '@/views/risk/detail/RiskFieldPage.vue'
 import RiskPreItemPage from '@/views/risk/detail/RiskPreItemPage.vue'
+import RiskActivationPage from '@/views/risk/detail/RiskActivationPage.vue'
 export default {
   name: 'RiskModelDetail',
   components:{
+    RiskActivationPage,
     RiskPreItemPage,
     RiskFieldPage
   },

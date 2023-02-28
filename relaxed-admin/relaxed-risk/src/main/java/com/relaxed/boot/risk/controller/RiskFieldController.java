@@ -8,9 +8,9 @@ import com.relaxed.boot.risk.model.entity.RiskPreItem;
 import com.relaxed.boot.risk.model.qo.RiskFieldQO;
 import com.relaxed.boot.risk.model.qo.RiskPreItemQO;
 import com.relaxed.boot.risk.model.vo.RiskFieldVO;
-import com.relaxed.boot.risk.model.vo.RiskModelVO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
 
@@ -93,11 +93,14 @@ public class RiskFieldController {
 	 * @param riskFieldQO
 	 * @return com.relaxed.common.model.result.R<?>
 	 */
-	@GetMapping("/field/list")
-	public R<PageResult<RiskFieldVO>> fieldList(PageParam pageParam,@Valid RiskFieldQO riskFieldQO) {
-		return R.ok(fieldManageService.fieldList(pageParam,riskFieldQO));
+	@GetMapping("/field/page")
+	public R<PageResult<RiskFieldVO>> fieldPage(PageParam pageParam,@Valid RiskFieldQO riskFieldQO) {
+		return R.ok(fieldManageService.fieldPage(pageParam,riskFieldQO));
 	}
-
+	@GetMapping("/field/list/{modelId}")
+	public R<List<SelectData<RiskFieldVO>>> fieldList(@PathVariable Long modelId) {
+		return R.ok(fieldManageService.fieldListByModelId(modelId));
+	}
 	/**
 	 * 新增数据
 	 * @param field {@link RiskField} 数据参数

@@ -7,13 +7,9 @@ export const modalFormConfig= {
   formItems:[
 
     {
-      type:'text',
+      type:'slot',
       label: '来源字段',
-      field:'sourceField',
-      placeholder:'请输入来源字段',
-      rules:[
-        { required: true, message: '请输入来源字段', trigger: 'blur' },
-      ]
+      slotName:'sourceFieldSlot'
     },
 
 
@@ -37,20 +33,14 @@ export const modalFormConfig= {
         { required: true, message: '请输入目标字段', trigger: 'blur' },
       ]
     },
-
-
     {
-      type:'dict-select',
-      label: '目标字段类型',
-      field:'destFieldType',
-      placeholder:'请输入目标字段类型',
+      type:'text',
+      label: '目标标签',
+      field:'destLabel',
+      placeholder:'请输入目标字段',
       rules:[
-        { required: true, message: '请输入目标字段类型', trigger: 'blur' },
-      ],
-      config:{
-        dictCode: 'field_type',
-        clearable: true
-      }
+        { required: true, message: '请输入目标字段', trigger: 'blur' },
+      ]
     },
     {
       type:'select',
@@ -63,9 +53,7 @@ export const modalFormConfig= {
       config:{
         remoteLoad: true,
         request: getPluginList,
-        nativeProps:{
-          multiple: true,
-        }
+
       }
     },
     {

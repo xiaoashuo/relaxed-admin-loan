@@ -7,8 +7,7 @@
 		<result property="sourceField" column="source_field"/>
 		<result property="sourceLabel" column="source_label"/>
 		<result property="destField" column="dest_field"/>
-		<result property="destFieldType" column="dest_field_type"/>
-		<result property="label" column="label"/>
+ 		<result property="destLabel" column="dest_label"/>
 		<result property="args" column="args"/>
 		<result property="plugin" column="plugin"/>
 		<result property="configJson" column="config_json"/>
@@ -24,8 +23,8 @@
 		source_field,
 		source_label,
 		dest_field,
-dest_field_type,
-		label,
+
+		dest_label,
 		args,
 		plugin,
 		config_json,
@@ -41,8 +40,8 @@ dest_field_type,
 		pi.source_field,
 		pi.source_label,
 		pi.dest_field,
-pi.dest_field_type,
-		pi.label,
+
+		pi.dest_label,
 		pi.args,
 		pi.plugin,
 		pi.config_json,

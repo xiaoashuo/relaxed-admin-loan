@@ -149,9 +149,8 @@ public class RiskRuleManage  {
 			List<DataColumn> preItemChildren = new ArrayList<>();
 			preItemVOS.forEach(preItem -> {
 				DataColumn dataColumn = new DataColumn();
-				dataColumn.setLabel(preItem.getLabel());
+				dataColumn.setLabel(preItem.getDestLabel());
 				dataColumn.setValue(preItem.getDestField());
-				dataColumn.setType(preItem.getDestFieldType());
 				preItemChildren.add(dataColumn);
 			});
 

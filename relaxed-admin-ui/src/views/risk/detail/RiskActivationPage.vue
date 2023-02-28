@@ -5,6 +5,7 @@
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
     <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+                  :lazy-load="true"
                @addBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
     ></yi-pro-table>
@@ -29,6 +30,12 @@ import {getPage, addObj, putObj, delObj} from "@/api/risk/risk-activation";
 
 export default {
   name: "RiskActivationPage",
+  props:{
+    modelId:{
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       //页面相关配置
@@ -43,6 +50,11 @@ export default {
         update: putObj
       },
     }
+  },
+  created(){
+    this.$nextTick(()=>{
+      this.$refs.pageContentRef.searchTable({modelId:this.modelId},false)
+    })
   },
   methods: {
     //表格相关

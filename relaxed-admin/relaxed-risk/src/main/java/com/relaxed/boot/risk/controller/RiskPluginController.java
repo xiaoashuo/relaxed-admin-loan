@@ -6,6 +6,7 @@ import com.relaxed.boot.risk.model.qo.RiskPluginQO;
 import com.relaxed.boot.risk.model.vo.RiskPluginVO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
 
@@ -59,7 +60,7 @@ public class RiskPluginController {
 	 */
 	@GetMapping("/list/enabled")
 	@Operation(summary = "获取所有启用插件", description = "获取所有启用插件")
-	public R<List<RiskPluginVO>> listEnabledPlugins() {
+	public R<List<SelectData>> listEnabledPlugins() {
 		return R.ok(riskPluginManage.listEnabledPlugins());
 	}
 

@@ -13,20 +13,20 @@ export function getPluginList() {
 }
 export function addObj(obj) {
   return yiRequest.post({
-    url: '/risk/risk-pre-item',
+    url: '/risk/pre',
     data: obj
   })
 }
 
-export function delObj(id) {
+export function delObj(modelId,id) {
   return yiRequest.delete({
-    url: '/risk/risk-pre-item/' + id
+    url: `/risk/pre/${modelId}/${id}`
   })
 }
 
 export function putObj(obj) {
   return yiRequest.put({
-    url: '/risk/risk-pre-item',
+    url: '/risk/pre',
     data: obj
   })
 }

@@ -48,17 +48,12 @@ public class RiskPreItemVO implements Serializable {
 	@Schema(title = "目标字段", description = "目标字段")
 	private String destField;
 
-	/**
-	 * 目标字段类型
-	 */
-	@Schema(title = "目标字段类型", description = "目标字段类型")
-	private String destFieldType;
 
 	/**
-	 *
+	 * 目标标签 描述
 	 */
-	@Schema(title = "", description = "")
-	private String label;
+	@Schema(title = "目标标签", description = "目标标签")
+	private String destLabel;
 
 	/**
 	 * 参数

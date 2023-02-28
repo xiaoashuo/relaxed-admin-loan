@@ -2,7 +2,7 @@ import yiRequest from "@/utils/request";
 
 export function getPage(query) {
   return yiRequest.get({
-    url: '/risk/risk-activation/page',
+    url: '/risk/activation/page',
     params: query
   })
 }

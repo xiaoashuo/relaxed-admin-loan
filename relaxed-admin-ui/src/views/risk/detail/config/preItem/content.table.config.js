@@ -42,14 +42,10 @@ export const contentTableConfig={
       label:'目标字段',
       minWidth:180,
     },
+
     {
-      prop: 'destFieldType',
-      label:'目标字段类型',
-      minWidth:180,
-    },
-    {
-      prop: 'label',
-      label:'',
+      prop: 'destLabel',
+      label:'目标标签',
       minWidth:180,
     },
     {
@@ -67,15 +63,12 @@ export const contentTableConfig={
       label:'响应字段配置信息',
       minWidth:180,
     },
-    {
-      prop: 'reqType',
-      label:'请求方式',
-      minWidth:180,
-    },
+
     {
       prop: 'status',
-      label:'',
+      label:'状态',
       minWidth:180,
+      slotName:'status'
     },
     {
       prop: 'createdTime',
@@ -83,12 +76,7 @@ export const contentTableConfig={
       minWidth: 180,
       slotName: 'createdTime'
     },
-    {
-      prop: 'updatedTime',
-      label:'修改时间',
-      minWidth: 180,
-      slotName: 'updatedTime'
-    },
+
     {
 
       label:'操作',

@@ -10,11 +10,13 @@ import com.relaxed.boot.risk.service.RiskPluginService;
 import com.relaxed.common.model.domain.PageParam;
 
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Yakir
@@ -31,10 +33,16 @@ public class RiskPluginManage  {
 	private final RiskPluginService pluginService;
 
 
-	public List<RiskPluginVO> listEnabledPlugins() {
+	public List<SelectData> listEnabledPlugins() {
 		List<RiskPlugin> list = pluginService.list(
 				Wrappers.lambdaQuery(RiskPlugin.class).eq(RiskPlugin::getStatus, RiskPluginEnum.StatusEnum.ENABLE.getStatus()));
-		return RiskPluginConverter.INSTANCE.poToVOs(list);
+		return list.stream().map(riskPlugin -> {
+			SelectData selectData = new SelectData();
+			selectData.setLabel(riskPlugin.getPluginDesc());
+			selectData.setValue(riskPlugin.getPluginName());
+			return selectData;
+
+		}).collect(Collectors.toList());
 	}
 
 
