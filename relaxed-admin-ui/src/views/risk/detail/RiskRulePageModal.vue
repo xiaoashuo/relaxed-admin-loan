@@ -1,28 +1,25 @@
 <template>
   <div class="app-container">
+    <el-dialog
+      :title="title"
+      :visible.sync="visible"
+
+      fullscreen
+      :before-close="dialogClose"
+    >
     <!--搜索组件-->
     <page-search ref="pageSearchRef" :searchFormConfig="searchFormConfig"
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
     <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
-                  :lazy-load="true"
                @addBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
-    >
-      <template #extHandler="scope">
-        <el-button size="mini" type="text"  icon="el-icon-edit"
-                   @click="handleRuleClick(scope.row)">管理规则
-        </el-button>
-      </template>
-
-    </yi-pro-table>
+    ></yi-pro-table>
     <!--模态表单组件-->
-    <form-modal ref="formModal" :modal-config="modalConfig"
-                :req-function="reqFunction"
-                @submitSuccess="handleSubmit"
-    ></form-modal>
+      <risk-rule-form-modal ref="formModal" :req-function="reqFunction"></risk-rule-form-modal>
+    </el-dialog>
 
-    <risk-rule-page-modal ref="riskRulePageModalRef"></risk-rule-page-modal>
+
 
   </div>
 </template>
@@ -30,28 +27,23 @@
 <script>
 
 //页面配置参数
-import {contentTableConfig} from "./config/activation/content.table.config";
-import {searchFormConfig} from "./config/activation/search.form.config";
-import {modalFormConfig} from "./config/activation/modal.form.config";
+import {contentTableConfig} from "./config/rule/content.table.config";
+import {searchFormConfig} from "./config/rule/search.form.config";
 //页面相关请求方法
-import {getPage, addObj, putObj, delObj} from "@/api/risk/risk-activation";
-import RiskRulePageModal from '@/views/risk/detail/RiskRulePageModal.vue'
+import {getPage, addObj, putObj, delObj} from "@/api/risk/risk-rule";
+import formModalActionMixin from '@/mixins/form/formModalActionMixin'
+import RiskRuleFormModal from '@/views/risk/detail/RiskRuleFormModal.vue'
+import formModalMixin from '@/mixins/form/formModalMixin'
 
 export default {
-  name: "RiskActivationPage",
-  components: { RiskRulePageModal },
-  props:{
-    modelId:{
-      type: String,
-      required: true
-    }
-  },
+  name: "RiskRulePageModal",
+  components: { RiskRuleFormModal },
+  mixins:[formModalMixin],
   data() {
     return {
       //页面相关配置
       contentTableConfig: contentTableConfig,
       searchFormConfig: searchFormConfig,
-      modalConfig: modalFormConfig,
       //表格请求
       tableRequest: getPage,
       //表单请求
@@ -61,18 +53,17 @@ export default {
       },
     }
   },
-  created(){
-    this.$nextTick(()=>{
-      this.$refs.pageContentRef.searchTable({modelId:this.modelId},false)
-    })
-  },
   methods: {
+    dialogClose(done){
+      this.close()
+      done()
+    },
     //表格相关
     showNewModal() {
-      this.$refs.formModal.add({title: '新增'})
+      this.$refs.formModal.add({title: '新增规则'})
     },
     showEditModal(item) {
-      this.$refs.formModal.update({title: '编辑', item})
+      this.$refs.formModal.update({title: '编辑规则', item})
     },
     //删除数据
     handleDelClick(item) {
@@ -92,10 +83,7 @@ export default {
     handleResetClick() {
       this.$refs.pageContentRef.resetTable()
     },
-    handleRuleClick(row){
-      console.log("规则点击了",row)
-      this.$refs.riskRulePageModalRef.add({title:'规则页',item:row})
-    }
+
   }
 
 }

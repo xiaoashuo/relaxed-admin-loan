@@ -11,9 +11,9 @@ export const contentTableConfig={
 
   },
   permissions: {
-    // create: 'risk:risk-activation:add',
-    // update: 'risk:risk-activation:edit',
-    // delete: 'risk:risk-activation:delete'
+    // create: 'risk:risk-rule:add',
+    // update: 'risk:risk-rule:edit',
+    // delete: 'risk:risk-rule:delete'
   },
   propList:[
     {
@@ -22,31 +22,41 @@ export const contentTableConfig={
       minWidth: 100,
       hidden: true
     },
+
     {
-      prop: 'activationName',
-      label:'名称',
+      prop: 'name',
+      label:'规则编号',
       minWidth:180,
     },
     {
       prop: 'label',
-      label:'策略标签',
+      label:'规则名称',
       minWidth:180,
     },
 
-
     {
-      prop: 'bottom',
-      label:'底部阀值',
+      prop: 'initScore',
+      label:'初始分数',
       minWidth:180,
     },
     {
-      prop: 'median',
-      label:'中间阀值',
+      prop: 'baseNum',
+      label:'基数',
       minWidth:180,
     },
     {
-      prop: 'high',
-      label:'顶部阀值',
+      prop: 'operator',
+      label:'运算符',
+      minWidth:180,
+    },
+    {
+      prop: 'rate',
+      label:'比例',
+      minWidth:180,
+    },
+    {
+      prop: 'max',
+      label:'最大得分值',
       minWidth:180,
     },
     {
@@ -55,11 +65,7 @@ export const contentTableConfig={
       minWidth:180,
       slotName:'status'
     },
-    {
-      prop: 'comment',
-      label:'注释',
-      minWidth:180,
-    },
+
     {
       prop: 'createdTime',
       label:'创建时间',
