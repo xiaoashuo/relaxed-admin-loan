@@ -63,7 +63,7 @@ export const contentTableConfig={
       prop: 'status',
       label:'状态',
       minWidth:180,
-      slotName:'status'
+      slotName:'customStatus'
     },
 
     {

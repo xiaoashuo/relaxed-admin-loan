@@ -30,3 +30,10 @@ export function putObj(obj) {
     data: obj
   })
 }
+
+
+export function switchStatus(ruleId,status) {
+  return yiRequest.put({
+    url: `/risk/rule/switch/${ruleId}/${status}`,
+  })
+}

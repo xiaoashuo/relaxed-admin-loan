@@ -101,6 +101,17 @@ public class RiskRuleController {
 	public R<?> updateById(@RequestBody RiskRule rule) {
 		return riskRuleManage.edit(rule) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "更新数据失败");
 	}
+	/**
+	 * switch 切换状态
+	 * @param  ruleId 激活id
+	 * @param  status 新状态
+	 * @return {@code R<?>}通用返回体
+	 */
+	@PutMapping("/switch/{ruleId}/{status}")
+	@Operation(summary = "更新数据", description = "更新数据")
+	public R<?> switchStatus(@PathVariable Long ruleId,@PathVariable Integer status) {
+		return riskRuleManage.switchStatus(ruleId,status) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "状态切换失败");
+	}
 
 	/**
 	 * 根据id删除数据

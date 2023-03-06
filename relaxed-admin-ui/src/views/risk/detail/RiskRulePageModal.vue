@@ -15,7 +15,22 @@
                   :lazy-load="true"
                @addBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
-    ></yi-pro-table>
+    >
+      <template #customStatus="scope">
+        <el-switch
+          v-model="scope.row.status"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="1"
+          :inactive-value="0"
+          @change="(val)=>handleStatusTagClick(scope.row,val)"
+        >
+        </el-switch>
+
+
+      </template>
+
+    </yi-pro-table>
     <!--模态表单组件-->
       <risk-rule-form-modal ref="formModal" :req-function="reqFunction" @submitSuccess="handleSubmit"></risk-rule-form-modal>
     </el-dialog>
@@ -31,7 +46,7 @@
 import {contentTableConfig} from "./config/rule/content.table.config";
 import {searchFormConfig} from "./config/rule/search.form.config";
 //页面相关请求方法
-import { getPage, addObj, putObj, delObj, getRuleFieldList } from '@/api/risk/risk-rule'
+import { getPage, addObj, putObj, delObj, getRuleFieldList, switchStatus } from '@/api/risk/risk-rule'
 import formModalActionMixin from '@/mixins/form/formModalActionMixin'
 import RiskRuleFormModal from '@/views/risk/detail/RiskRuleFormModal.vue'
 import formModalMixin from '@/mixins/form/formModalMixin'
@@ -122,6 +137,14 @@ export default {
     handleResetClick() {
       this.$refs.pageContentRef.searchTable({modelId:this.activationData.modelId,activationId:this.activationData.id })
     },
+    handleStatusTagClick(row,val){
+      switchStatus(row.id,val).then(res=>{
+        this.$message.success("切换状态成功")
+        this.$refs.pageContentRef.refreshTable(false)
+
+
+      })
+    }
 
   }
 

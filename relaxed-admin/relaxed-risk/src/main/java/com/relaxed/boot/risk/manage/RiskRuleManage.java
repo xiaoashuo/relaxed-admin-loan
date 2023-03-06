@@ -212,4 +212,10 @@ public class RiskRuleManage  {
 		}
 		return selectDataList;
 	}
+
+	public boolean switchStatus(Long ruleId, Integer status) {
+		RiskRule riskRule = ruleService.getById(ruleId);
+		riskRule.setStatus(status);
+		return ruleService.updateById(riskRule);
+	}
 }
