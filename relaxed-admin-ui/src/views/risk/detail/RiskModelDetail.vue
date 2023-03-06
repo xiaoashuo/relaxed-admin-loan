@@ -1,5 +1,5 @@
 <template>
- <div class="modelDetail">
+ <div class="app-container">
    <el-tabs v-model="activeName" @tab-click="handleClick">
      <el-tab-pane label="字段管理" name="first">
 
@@ -29,7 +29,7 @@ export default {
   },
   data(){
     return{
-      activeName: 'second',
+      activeName: 'first',
       modelId:this.$route.query.modelId
     }
   },
