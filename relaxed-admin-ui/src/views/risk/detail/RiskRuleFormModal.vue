@@ -77,27 +77,25 @@ export default {
 
       form: {},
       rules:{
-        nickname:[
-          { required: true, message: '请输入用户昵称', trigger: 'blur' },
+        label:[
+          { required: true, message: '显示昵称不能为空', trigger: 'blur' },
         ],
-        password:[
-          { required: true, message: '请输入用户密码', trigger: 'blur' },
+        initScore:[
+          { required: true, message: '初始得分不能为空', trigger: 'blur' },
         ],
-        organizationId:[
-          { required: true, message: '请输入组织部门', trigger: 'blur' },
+        baseNum:[
+          { required: true, message: '命中基数不能为空', trigger: 'blur' },
         ],
-        username:[
-          { required: true, message: '请输入用户名', trigger: 'blur' },
+        operator:[
+          { required: true, message: '操作符不能为空', trigger: 'blur' },
         ],
-        phone:[
-          { required: true, message: '请输入手机号', trigger: 'blur' },
+        rate:[
+          { required: true, message: '比率不能为空', trigger: 'blur' },
         ],
-        email:[
-          { required: true, message: '请输入邮箱', trigger: 'blur' },
+        max:[
+          { required: true, message: '最大值不能为空', trigger: 'blur' },
         ],
-        status:[
-          { required: true, message: '请选择状态', trigger: 'blur' },
-        ],
+
       },
 
 
@@ -238,7 +236,9 @@ export default {
     },
     defaultForm(){
       return {
-
+         initScore:0,
+         baseNum: 1,
+         rate: 1
       }
     },
     dialogClose(done){
