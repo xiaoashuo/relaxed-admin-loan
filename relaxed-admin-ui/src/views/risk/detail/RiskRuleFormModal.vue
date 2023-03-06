@@ -188,21 +188,38 @@ export default {
           }
         }
 
-        if (childrens&&childrens.length>0){
-          if (conditions&&conditionLength>0){
-            script.push( " "+relationSymbol+"  ( ")
-          }else{
-            script.push("  ( ")
+        let childrenLength = childrens.length
+        if (childrens&&childrenLength>0){
+          for (let i = 0; i < childrenLength; i++) {
+            const children= childrens[i]
+            //取出当前孩子
+            let childConcat=""
+            if (conditions&&conditionLength>0){
+              childConcat=` ${relationSymbol} ( `
+            }else{
+              childConcat=" ( "
+            }
+            script.push(childConcat)
+            _selfCall(script,children)
+            const lastElement=script[script.length-1]
+            if (lastElement==childConcat){
+              script.slice(script.length-1,1)
+            }else{
+              if (i==childrenLength-1){
+                script.push(") ")
+              }else{
+                script.push(") "+relationSymbol)
+              }
+            }
           }
 
-          for (const children of childrens){
-            _selfCall(script,children)
-          }
-          script.push(")")
+
+
         }
       }
       _selfCall(scripts,datas)
        let scriptStr=scripts.join(" ")
+      console.log("当前Data",scriptStr)
       return scriptStr;
 
     },

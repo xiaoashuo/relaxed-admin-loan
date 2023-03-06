@@ -65,7 +65,7 @@
       },
       //删除数据
       handleDelClick(item) {
-        delObj(item.id).then(res => {
+        delObj(item.projectId).then(res => {
           this.$refs.pageContentRef.refreshTable(false)
         })
       },
