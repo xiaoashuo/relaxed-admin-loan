@@ -16,7 +16,7 @@
                @delBtnClick="handleDelClick"
     ></yi-pro-table>
     <!--模态表单组件-->
-      <risk-rule-form-modal ref="formModal" :req-function="reqFunction"></risk-rule-form-modal>
+      <risk-rule-form-modal ref="formModal" :req-function="reqFunction" @submitSuccess="handleSubmit"></risk-rule-form-modal>
     </el-dialog>
 
 
@@ -30,10 +30,11 @@
 import {contentTableConfig} from "./config/rule/content.table.config";
 import {searchFormConfig} from "./config/rule/search.form.config";
 //页面相关请求方法
-import {getPage, addObj, putObj, delObj} from "@/api/risk/risk-rule";
+import { getPage, addObj, putObj, delObj, getRuleFieldList } from '@/api/risk/risk-rule'
 import formModalActionMixin from '@/mixins/form/formModalActionMixin'
 import RiskRuleFormModal from '@/views/risk/detail/RiskRuleFormModal.vue'
 import formModalMixin from '@/mixins/form/formModalMixin'
+import { getFieldList } from '@/api/risk/risk-field'
 
 export default {
   name: "RiskRulePageModal",
@@ -51,6 +52,10 @@ export default {
         create: addObj,
         update: putObj
       },
+      activationData:{
+
+      },
+      allFields:[]
     }
   },
   methods: {
@@ -58,12 +63,32 @@ export default {
       this.close()
       done()
     },
+    /**
+     * 构建创建表单成功后的回调
+     * @param payload
+     */
+    createdFormCallback(payload){
+      const {title,item}=payload
+      this.activationData=item
+      getRuleFieldList(item.modelId).then(res=>{
+        const {data}=res
+        for (const item of data){
+          const type=item.type
+          const label=item.label
+          const value=item.value
+          const modifiedLabel=`${type=='1'?'基础字段':'预处理字段'}/${label}`
+          const modifiedValue=`context.${type=='1'?'eventJson':'preItemMap'}.${value}`
+          this.allFields.push({label:modifiedLabel,value:modifiedValue})
+        }
+      })
+
+    },
     //表格相关
     showNewModal() {
-      this.$refs.formModal.add({title: '新增规则'})
+      this.$refs.formModal.add({title: '新增规则',item:{activationData:this.activationData,allFields:this.allFields}})
     },
     showEditModal(item) {
-      this.$refs.formModal.update({title: '编辑规则', item})
+      this.$refs.formModal.update({title: '编辑规则', item:{activationData:this.activationData,ruleData:item,allFields:this.allFields}})
     },
     //删除数据
     handleDelClick(item) {

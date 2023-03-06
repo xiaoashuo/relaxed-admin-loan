@@ -71,23 +71,9 @@ export default {
   },
   data(){
     return{
-
-      formDatas:[
-        {
-          label:"条件名1",
-          value:"one"
-        },
-        {
-          label:"条件名2",
-          value:"two"
-        }
-      ],
+      formDatas:[],
       //初始化条件对象或者，已保存的条件对象
-      rulesData:{
-        relation:"and",
-        conditions:[],
-        children:[]
-      },
+      rulesData:{},
 
       form: {},
       rules:{
@@ -113,12 +99,9 @@ export default {
           { required: true, message: '请选择状态', trigger: 'blur' },
         ],
       },
-      fieldProps:{
-        placeholder:'请选择角色',
-        options: [],
-      },
-      pluginOptions:[],
-      orgReq: listOrganization,
+
+
+
 
 
     }
@@ -135,7 +118,7 @@ export default {
   methods:{
     rulesChange(datas){
       console.log("数据改变",datas)//输出的条件对象
-      this.form.rulesData=datas
+      this.rulesData=datas
     },
     /**
      * 检查规则是否存在错误  只要存在 则抛出
@@ -222,32 +205,35 @@ export default {
       }
       _selfCall(scripts,datas)
        let scriptStr=scripts.join(" ")
-      console.log("当前Data",datas)
-      console.log("当前Data",scripts)
       return scriptStr;
 
     },
 
 
-    getAllFields(modelId,callback){
-      getFieldList(modelId).then(res=>{
-        this.fieldProps.options = res.data
-        callback()
-      })
-    },
+
     createdFormCallback(payload){
       this.form=this.defaultForm()
-      // this.form.modelId=payload.item.modelId
-      // this.getAllFields(this.form.modelId)
+
+      const {activationData,allFields}=payload.item
+      this.form.modelId=activationData.modelId
+      this.form.activationId=activationData.id
+      console.log(payload)
+      this.rulesData={
+        relation:"and",
+        conditions:[],
+        children:[]
+      }
+      this.formDatas=allFields
+
     },
     updatedFormCallback(payload){
+      const {activationData,ruleData,allFields}=payload.item
+      this.rulesData=JSON.parse(ruleData.ruleDefinition)
+      this.form={...ruleData}
+      this.form.modelId=activationData.modelId
+      this.form.activationId=activationData.id
+      this.formDatas=allFields
 
-      const item= payload.item
-
-      console.log("当前",this.form)
-      this.getAllFields(item.modelId,()=>{
-        this.form={...item}
-      })
 
     },
     defaultForm(){
@@ -269,19 +255,21 @@ export default {
           return
         }else{
           //通过效验提交数据
-          if (!this.form.rulesData){
+
+          if (!this.rulesData){
             this.$message.error("规则定义不能为空")
             return
           }
 
-          const errArr=this.checkRuleData(this.form.rulesData)
+          const errArr=this.checkRuleData(this.rulesData)
           console.log("错误",errArr)
           if (errArr.length>0){
             this.$message.error("请检查参数完整性")
             return
           }
-          const script=this.buildScriptFromDefinition(this.form.rulesData)
-          this.form.ruleScript=`
+          const script=this.buildScriptFromDefinition(this.rulesData)
+          this.form.ruleDefinition=JSON.stringify(this.rulesData)
+          this.form.scripts=`
       class ActivationCheckScript {
           public boolean check(def context, def report) {
              if (${script})
@@ -292,7 +280,7 @@ export default {
        }
       `
           console.log(this.form)
-         // this.handleSubmit({...this.form})
+          this.handleSubmit({...this.form})
         }
       })
     },

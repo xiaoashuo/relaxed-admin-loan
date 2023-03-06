@@ -59,6 +59,7 @@ export default {
         create: addObj,
         update: putObj
       },
+
     }
   },
   created(){
@@ -93,7 +94,6 @@ export default {
       this.$refs.pageContentRef.resetTable()
     },
     handleRuleClick(row){
-      console.log("规则点击了",row)
       this.$refs.riskRulePageModalRef.add({title:'规则页',item:row})
     }
   }

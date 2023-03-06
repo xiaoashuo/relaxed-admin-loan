@@ -6,23 +6,27 @@ export function getPage(query) {
     params: query
   })
 }
-
+export function getRuleFieldList(modelId) {
+  return yiRequest.get({
+    url: '/risk/rule/fields/'+modelId,
+  })
+}
 export function addObj(obj) {
   return yiRequest.post({
-    url: '/risk/risk-rule',
+    url: '/risk/rule',
     data: obj
   })
 }
 
 export function delObj(id) {
   return yiRequest.delete({
-    url: '/risk/risk-rule/' + id
+    url: '/risk/rule/' + id
   })
 }
 
 export function putObj(obj) {
   return yiRequest.put({
-    url: '/risk/risk-rule',
+    url: '/risk/rule',
     data: obj
   })
 }

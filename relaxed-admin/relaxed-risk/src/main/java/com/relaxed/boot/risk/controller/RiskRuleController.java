@@ -4,9 +4,11 @@ import com.relaxed.boot.risk.manage.RiskRuleManage;
 import com.relaxed.boot.risk.model.dto.DataColumn;
 import com.relaxed.boot.risk.model.entity.RiskRule;
 import com.relaxed.boot.risk.model.qo.RiskRuleQO;
+import com.relaxed.boot.risk.model.vo.RiskFieldVO;
 import com.relaxed.boot.risk.model.vo.RiskRuleVO;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
+import com.relaxed.common.model.domain.SelectData;
 import com.relaxed.common.model.result.BaseResultCode;
 import com.relaxed.common.model.result.R;
 
@@ -64,7 +66,10 @@ public class RiskRuleController {
 	public R<List<RiskRuleVO>> listByActivationId(@PathVariable Long activationId) {
 		return R.ok(riskRuleManage.listByActivationId(activationId));
 	}
-
+	@GetMapping("/fields/{modelId}")
+	public R<List<SelectData<?>>> fieldList(@PathVariable Long modelId) {
+		return R.ok(riskRuleManage.getAllFieldList(modelId));
+	}
 	/**
 	 * 特征提取列
 	 * @param modelId {@link PageParam} 分页参数

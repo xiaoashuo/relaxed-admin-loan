@@ -24,8 +24,10 @@ import com.relaxed.common.core.util.SpringUtils;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 
+import com.relaxed.common.model.domain.SelectData;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -70,7 +72,12 @@ public class RiskRuleManage  {
 		RiskRule sqlRule = ruleService.getByName(ruleName);
 		Assert.isNull(sqlRule, "rule has already exists.");
 		rule.setStatus(RiskModelEnum.StatusEnum.INIT.getStatus());
+		rule.setRuleScriptEntry("check");
 		if (ruleService.save(rule)) {
+			if(StringUtils.isEmpty(ruleName)){
+				rule.setName("rule_"+rule.getId());
+				ruleService.updateById(rule);
+			}
 			SpringUtils.getContext().publishEvent(new RiskRuleChangeEvent(convertToRuleHistory(rule)));
 			// 发布订阅
 			eventDistributor.distribute(SubscribeEnum.PUB_SUB_RULE_CHANNEL.getChannel(),
@@ -177,5 +184,32 @@ public class RiskRuleManage  {
 
 	public List<RiskRuleVO> listRule(Long activationId) {
 		return ruleService.listByActivationId(activationId);
+	}
+
+	public List<SelectData<?>> getAllFieldList(Long modelId) {
+		List<RiskFieldVO> riskFieldVOS = fieldService.listByModelId(modelId);
+		List<RiskPreItemVO> riskPreItemVOS = preItemService.listByModelId(modelId);
+		List<SelectData<?>> selectDataList=new ArrayList<>();
+		for (RiskFieldVO riskFieldVO : riskFieldVOS) {
+			String fieldName = riskFieldVO.getFieldName();
+			String label = riskFieldVO.getLabel();
+			SelectData selectData = new SelectData();
+			selectData.setLabel(label);
+			selectData.setValue(fieldName);
+			//字段
+			selectData.setType("1");
+			selectDataList.add(selectData);
+		}
+		for (RiskPreItemVO riskPreItemVO : riskPreItemVOS) {
+			String destField = riskPreItemVO.getDestField();
+			String destLabel = riskPreItemVO.getDestLabel();
+			SelectData selectData = new SelectData();
+			selectData.setLabel(destLabel);
+			selectData.setValue(destField);
+			//预处理字段
+			selectData.setType("2");
+			selectDataList.add(selectData);
+		}
+		return selectDataList;
 	}
 }
