@@ -247,6 +247,8 @@ export default {
     },
     beforeClose(){
       this.$refs.pageForm.clearValidate()
+      this.rulesData={}
+      this.formDatas=[]
     },
     handleConfirmClick(){
       //处理表单提交

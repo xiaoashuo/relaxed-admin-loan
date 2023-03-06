@@ -12,6 +12,7 @@
                  @resetBtnClick="handleResetClick" @queryBtnClick="handleSearchClick"></page-search>
     <!--表格组件-->
     <yi-pro-table ref="pageContentRef" :content-table-config="contentTableConfig" :request="tableRequest"
+                  :lazy-load="true"
                @addBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
     ></yi-pro-table>
@@ -58,10 +59,19 @@ export default {
       allFields:[]
     }
   },
+
+
   methods: {
     dialogClose(done){
       this.close()
       done()
+    },
+    show(payload){
+      this.title=payload.title
+      this.visible=true
+      this.$nextTick(()=>{
+        this.$refs.pageContentRef.searchTable({modelId:this.activationData.modelId,activationId:this.activationData.id })
+      })
     },
     /**
      * 构建创建表单成功后的回调
@@ -70,6 +80,7 @@ export default {
     createdFormCallback(payload){
       const {title,item}=payload
       this.activationData=item
+
       getRuleFieldList(item.modelId).then(res=>{
         const {data}=res
         for (const item of data){
@@ -81,6 +92,7 @@ export default {
           this.allFields.push({label:modifiedLabel,value:modifiedValue})
         }
       })
+
 
     },
     //表格相关
@@ -102,11 +114,13 @@ export default {
     },
     //搜索框相关 搜索数据
     handleSearchClick(formData) {
+      formData.modelId=this.activationData.modelId
+      formData.activationId=this.activationData.id
       this.$refs.pageContentRef.searchTable(formData)
     },
     //重置搜索
     handleResetClick() {
-      this.$refs.pageContentRef.resetTable()
+      this.$refs.pageContentRef.searchTable({modelId:this.activationData.modelId,activationId:this.activationData.id })
     },
 
   }
