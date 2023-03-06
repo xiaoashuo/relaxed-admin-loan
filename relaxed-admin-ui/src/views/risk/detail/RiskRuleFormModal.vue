@@ -20,20 +20,23 @@
           <el-input-number   v-model="form.baseNum" placeholder="请输入命中基数"></el-input-number>
         </el-form-item>
         <el-form-item label="操作符" prop="operator"  >
-          <el-input   v-model="form.operator" placeholder="请输入操作符"></el-input>
+          <dict-select dict-code="operator_symbol" placeholder="请选择操作符" v-model="form.operator"></dict-select>
         </el-form-item>
-        <el-form-item label="指标字段" prop="indicator "  >
-          <el-input   v-model="form.indicator" placeholder="请输入指标字段"></el-input>
-        </el-form-item>
+<!--        <el-form-item label="指标字段" prop="indicator "  >-->
+<!--          <el-input   v-model="form.indicator" placeholder="请输入指标字段"></el-input>-->
+<!--        </el-form-item>-->
         <el-form-item label="比率" prop="rate"  >
           <el-input   v-model="form.rate" placeholder="请输入比率"></el-input>
         </el-form-item>
         <el-form-item label="最大值" prop="max"  >
           <el-input   v-model="form.max" placeholder="请输入最大值"></el-input>
         </el-form-item>
-        <el-row>
-          规则定义
-          <risk-condition :formDatas="formDatas" :rulesData="rulesData" @rulesChange="rulesChange" />
+        <el-row style="padding-left: 15px">
+
+          <el-form-item label="规则定义"  >
+            <risk-condition :formDatas="formDatas" :rulesData="rulesData" @rulesChange="rulesChange" />
+          </el-form-item>
+
         </el-row>
         <el-row  style="text-align: right" >
           <el-button @click="close">取 消</el-button>
@@ -142,9 +145,7 @@ export default {
       const _selfCall=(errArr,datas)=>{
         const conditions=datas.conditions
         const childrens=datas.children
-
         if (conditions&&conditions.length>0){
-
           for (let i = 0; i < conditions.length; i++) {
             const condition=conditions[i]
             if (condition.operate=="NULL"||condition.operate=="NOT_NULL"){
@@ -183,6 +184,7 @@ export default {
         const relationSymbol= RelationMap[datas.relation]
         const conditions=datas.conditions
         const childrens=datas.children
+
         //同级别 关联
         let conditionLength = conditions.length
         if (conditions&&conditionLength>0){
@@ -220,7 +222,8 @@ export default {
       }
       _selfCall(scripts,datas)
        let scriptStr=scripts.join(" ")
-      console.log("当前Data",scriptStr)
+      console.log("当前Data",datas)
+      console.log("当前Data",scripts)
       return scriptStr;
 
     },
@@ -266,6 +269,10 @@ export default {
           return
         }else{
           //通过效验提交数据
+          if (!this.form.rulesData){
+            this.$message.error("规则定义不能为空")
+            return
+          }
 
           const errArr=this.checkRuleData(this.form.rulesData)
           console.log("错误",errArr)
@@ -284,7 +291,7 @@ export default {
           }
        }
       `
-          console.log(this.form.ruleScript)
+          console.log(this.form)
          // this.handleSubmit({...this.form})
         }
       })
