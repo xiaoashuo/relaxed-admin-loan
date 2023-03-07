@@ -62,10 +62,10 @@ export default {
   methods: {
     //表格相关
     showNewModal() {
-      this.$refs.formModal.add({title: '新增'})
+      this.$refs.formModal.add({title: '新增字段'})
     },
     showEditModal(item) {
-      this.$refs.formModal.update({title: '编辑', item})
+      this.$refs.formModal.update({title: '编辑字段', item})
     },
     //删除数据
     handleDelClick(item) {

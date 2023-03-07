@@ -6,6 +6,11 @@ export function getPage(query) {
     params: query
   })
 }
+export function getByModelId(modelId) {
+  return yiRequest.get({
+    url: '/risk/model/'+modelId,
+  })
+}
 
 export function addObj(obj) {
   return yiRequest.post({

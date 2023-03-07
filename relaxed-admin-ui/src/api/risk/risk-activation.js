@@ -9,20 +9,28 @@ export function getPage(query) {
 
 export function addObj(obj) {
   return yiRequest.post({
-    url: '/risk/risk-activation',
+    url: '/risk/activation',
     data: obj
   })
 }
 
 export function delObj(id) {
   return yiRequest.delete({
-    url: '/risk/risk-activation/' + id
+    url: '/risk/activation/' + id
   })
 }
 
 export function putObj(obj) {
   return yiRequest.put({
-    url: '/risk/risk-activation',
+    url: '/risk/activation',
     data: obj
+  })
+}
+
+
+export function switchActivationStatus(obj) {
+  return yiRequest.put({
+    url: '/risk/activation/switch/status',
+    params: obj
   })
 }

@@ -25,28 +25,28 @@ export const contentTableConfig={
     {
       prop: 'modelId',
       label:'模型ID',
-      minWidth:180,
+      minWidth:100,
     },
     {
       prop: 'sourceField',
       label:'来源字段',
-      minWidth:180,
+      minWidth:100,
     },
     {
       prop: 'sourceLabel',
       label:'来源标签',
-      minWidth:180,
+      minWidth:120,
     },
     {
       prop: 'destField',
       label:'目标字段',
-      minWidth:180,
+      minWidth:100,
     },
 
     {
       prop: 'destLabel',
       label:'目标标签',
-      minWidth:180,
+      minWidth:120,
     },
     {
       prop: 'args',
@@ -68,7 +68,7 @@ export const contentTableConfig={
       prop: 'status',
       label:'状态',
       minWidth:180,
-      slotName:'status'
+      slotName:'customStatus'
     },
     {
       prop: 'createdTime',

@@ -8,7 +8,21 @@
                   :lazy-load="true"
                @addBtnClick="showNewModal" @editBtnClick="showEditModal"
                @delBtnClick="handleDelClick"
-    ></yi-pro-table>
+    >
+      <template #customStatus="scope">
+        <el-switch
+          v-model="scope.row.status"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="1"
+          :inactive-value="0"
+          @change="(val)=>handleStatusTagClick(scope.row,val)"
+        >
+        </el-switch>
+
+
+      </template>
+    </yi-pro-table>
     <!--模态表单组件-->
     <risk-pre-item-form-model  ref="formModal" :req-function="reqFunction"
                                @submitSuccess="handleSubmit">
@@ -27,7 +41,7 @@ import {contentTableConfig} from "./config/preItem/content.table.config";
 import {searchFormConfig} from "./config/preItem/search.form.config";
 import {modalFormConfig} from "./config/preItem/modal.form.config";
 //页面相关请求方法
-import {getPage, addObj, putObj, delObj} from "@/api/risk/risk-pre-item";
+import {getPage, addObj, putObj, delObj,switchStatus} from "@/api/risk/risk-pre-item";
 import YiSelect from '@/components/select/src/YiSelect.vue'
 import RiskPreItemFormModel from '@/views/risk/detail/RiskPreItemFormModel.vue'
 
@@ -67,10 +81,10 @@ export default {
 
     //表格相关
     showNewModal() {
-      this.$refs.formModal.add({title: '新增',item:{modelId:this.modelId}})
+      this.$refs.formModal.add({title: '新增预处理字段',item:{modelId:this.modelId}})
     },
     showEditModal(item) {
-      this.$refs.formModal.update({title: '编辑', item})
+      this.$refs.formModal.update({title: '编辑预处理字段', item})
     },
     //删除数据
     handleDelClick(item) {
@@ -91,6 +105,12 @@ export default {
     handleResetClick() {
       this.$refs.pageContentRef.searchTable({modelId:this.modelId})
     },
+    handleStatusTagClick(row,val){
+      switchStatus({preItemId:row.id,status:val}).then(res=>{
+        this.$message.success("切换状态成功")
+        this.$refs.pageContentRef.refreshTable(false)
+      })
+    }
 
   }
 

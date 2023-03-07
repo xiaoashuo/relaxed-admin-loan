@@ -19,7 +19,7 @@ export const contentTableConfig={
     {
       prop: 'id',
       label:'主键',
-      minWidth: 100,
+      minWidth: 80,
     },
 
     {
@@ -29,20 +29,20 @@ export const contentTableConfig={
     },
     {
       prop: 'label',
-      label:'显示名称',
-      minWidth:180,
+      label:'名称',
+      minWidth:150,
     },
     {
       prop: 'fieldType',
       label:'字段类型',
-      minWidth:180,
+      minWidth:120,
     },
 
 
     {
       prop: 'indexed',
       label:'索引',
-      minWidth:180,
+      minWidth:80,
     },
     {
       prop: 'createdTime',

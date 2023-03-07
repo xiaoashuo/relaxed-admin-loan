@@ -6,45 +6,55 @@ export const modalFormConfig= {
 
     {
       type:'text',
-      label: '主键',
-      field:'id',
-      isHidden: true
-    },
-
-
-    {
-      type:'text',
-      label: '名称',
+      label: '策略名称',
       field:'activationName',
-      placeholder:'请输入名称',
+      placeholder:'请输入策略名称',
       rules:[
-        { required: true, message: '请输入名称', trigger: 'blur' },
+        { required: true, message: '请输入策略名称', trigger: 'blur' },
       ]
     },
 
 
     {
       type:'text',
-      label: '',
+      label: '标签',
       field:'label',
-      placeholder:'请输入',
+      placeholder:'请输入标签',
       rules:[
-        { required: true, message: '请输入', trigger: 'blur' },
+        { required: true, message: '请输入标签', trigger: 'blur' },
       ]
     },
+
+
 
 
     {
       type:'text',
-      label: 'model id',
-      field:'modelId',
-      placeholder:'请输入model id',
+      label: '底部阈值',
+      field:'bottom',
+      placeholder:'请输入底部阈值',
       rules:[
-        { required: true, message: '请输入model id', trigger: 'blur' },
+        { required: true, message: '请输入底部阈值', trigger: 'blur' },
       ]
     },
-
-
+    {
+      type:'text',
+      label: '中部阀值',
+      field:'median',
+      placeholder:'请输入中部阀值',
+      rules:[
+        { required: true, message: '请输入中部阀值', trigger: 'blur' },
+      ]
+    },
+    {
+      type:'text',
+      label: '顶部阀值',
+      field:'high',
+      placeholder:'请输入顶部阀值',
+      rules:[
+        { required: true, message: '请输入顶部阀值', trigger: 'blur' },
+      ]
+    },
     {
       type:'text',
       label: '注释',
@@ -55,16 +65,6 @@ export const modalFormConfig= {
       ]
     },
 
-
-    {
-      type:'text',
-      label: '底部阀值',
-      field:'bottom',
-      placeholder:'请输入底部阀值',
-      rules:[
-        { required: true, message: '请输入底部阀值', trigger: 'blur' },
-      ]
-    },
 
 
   ],

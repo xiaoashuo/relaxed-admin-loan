@@ -17,8 +17,8 @@
 
 
           </el-col>
-          <el-col :span="12">
-             <span>  {{form.sourceLabel}}/{{form.sourceField}}</span>
+          <el-col :span="12" >
+             <span class="sourceLabel">  {{form.sourceLabel}}/{{form.sourceField}}</span>
           </el-col>
         </el-row>
         <el-row :gutter="10">
@@ -75,27 +75,19 @@ export default {
     return{
       form: {},
       rules:{
-        nickname:[
-          { required: true, message: '请输入用户昵称', trigger: 'blur' },
+        sourceField:[
+          { required: true, message: '来源字段不能为空', trigger: 'blur' },
         ],
-        password:[
-          { required: true, message: '请输入用户密码', trigger: 'blur' },
+        destField:[
+          { required: true, message: '目标字段不能为空', trigger: 'blur' },
         ],
-        organizationId:[
-          { required: true, message: '请输入组织部门', trigger: 'blur' },
+        destLabel:[
+          { required: true, message: '目标标签不能为空', trigger: 'blur' },
         ],
-        username:[
-          { required: true, message: '请输入用户名', trigger: 'blur' },
+        plugin:[
+          { required: true, message: '插件不能为空', trigger: 'blur' },
         ],
-        phone:[
-          { required: true, message: '请输入手机号', trigger: 'blur' },
-        ],
-        email:[
-          { required: true, message: '请输入邮箱', trigger: 'blur' },
-        ],
-        status:[
-          { required: true, message: '请选择状态', trigger: 'blur' },
-        ],
+
       },
       fieldProps:{
         placeholder:'请选择角色',
@@ -179,5 +171,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.sourceLabel{
+  height: 20px;
+  line-height: 40px;
+  text-align: center;
+}
 </style>

@@ -30,3 +30,9 @@ export function putObj(obj) {
     data: obj
   })
 }
+export function switchStatus(obj) {
+  return yiRequest.put({
+    url: '/risk/pre/item/switch/status',
+    params: obj
+  })
+}

@@ -4,9 +4,15 @@ export const searchFormConfig={
   formItems:[
     {
       type:'text',
-      label: '主键',
-      field:'id',
-      placeholder:'请输入主键'
+      label: '模型名称',
+      field:'modelName',
+      placeholder:'请输入模型名称'
+    },
+    {
+      type:'text',
+      label: 'guid',
+      field:'guid',
+      placeholder:'请输入guid'
     }
 
   ],
