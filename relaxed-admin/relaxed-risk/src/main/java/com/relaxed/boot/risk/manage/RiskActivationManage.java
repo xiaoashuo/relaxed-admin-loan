@@ -1,6 +1,7 @@
 package com.relaxed.boot.risk.manage;
 
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.relaxed.boot.risk.core.distributor.EventDistributor;
 import com.relaxed.boot.risk.core.distributor.subscribe.SubscribeEnum;
@@ -15,11 +16,13 @@ import com.relaxed.boot.risk.service.RiskActivationService;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 
+import com.relaxed.common.model.result.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -47,8 +50,12 @@ public class RiskActivationManage  {
 
 	public RiskActivationDTO add(RiskActivation activation) {
 		Assert.isTrue(activationService.save(activation), () -> new RiskException(RiskCode.RISK_ACTIVATION_INFO_EXCEPTION));
-		activation.setActivationName("activation_"+activation.getId());
-		activationService.updateById(activation);
+		if (StrUtil.isEmpty(activation.getActivationName())){
+			activation.setActivationName("activation_"+activation.getId());
+			activation.setUpdatedTime(LocalDateTime.now());
+			activationService.updateById(activation);
+		}
+
 		eventDistributor.distribute(SubscribeEnum.PUB_SUB_ACTIVATION_CHANNEL.getChannel(),
 					JSONUtil.toJsonStr(RiskActivationConverter.INSTANCE.poToVo(activation)));
 		return RiskActivationConverter.INSTANCE.poToDto(activation);
@@ -81,5 +88,12 @@ public class RiskActivationManage  {
 
 	public List<RiskActivationVO> listByModelId(Long modelId) {
 		return activationService.listByModelId(modelId);
+	}
+
+	public boolean switchActivationStatus(Long activationId, Integer status) {
+		RiskActivation riskActivation = activationService.getById(activationId);
+		Assert.notNull(riskActivation, "风险策略不能为空");
+		riskActivation.setStatus(status);
+		return activationService.updateById(riskActivation);
 	}
 }

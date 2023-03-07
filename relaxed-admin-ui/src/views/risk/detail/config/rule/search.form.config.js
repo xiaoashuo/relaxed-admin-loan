@@ -3,9 +3,9 @@ export const searchFormConfig={
   formItems:[
     {
       type:'text',
-      label: '主键',
-      field:'id',
-      placeholder:'请输入主键'
+      label: '规则名称',
+      field:'label',
+      placeholder:'请输入规则名称'
     }
 
   ],

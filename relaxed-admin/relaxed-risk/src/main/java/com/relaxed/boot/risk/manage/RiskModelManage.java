@@ -77,4 +77,9 @@ public class RiskModelManage  {
 	public RiskModelVO getByGuid(String modelGuid) {
 		return modelService.getByGuid(modelGuid);
 	}
+
+	public RiskModelVO getByModelId(Long modelId) {
+		RiskModel riskModel = modelService.getById(modelId);
+		return RiskModelConverter.INSTANCE.poToVo(riskModel);
+	}
 }

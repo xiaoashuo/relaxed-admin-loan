@@ -25,4 +25,8 @@ public class RiskPreItemQO implements Serializable {
 	private Long id;
 	@NotNull(message = "模型id不能为空")
 	private Long modelId;
+	@Schema(title = "来源字段", description = "来源字段")
+	private String sourceField;
+	@Schema(title = "目标字段", description = "目标字段")
+	private String destField;
 }

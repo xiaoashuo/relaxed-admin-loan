@@ -25,7 +25,7 @@ export const contentTableConfig={
     {
       prop: 'activationName',
       label:'名称',
-      minWidth:180,
+      minWidth:120,
     },
     {
       prop: 'label',
@@ -37,23 +37,23 @@ export const contentTableConfig={
     {
       prop: 'bottom',
       label:'底部阀值',
-      minWidth:180,
+      minWidth:80,
     },
     {
       prop: 'median',
       label:'中间阀值',
-      minWidth:180,
+      minWidth:80,
     },
     {
       prop: 'high',
       label:'顶部阀值',
-      minWidth:180,
+      minWidth:80,
     },
     {
       prop: 'status',
       label:'状态',
-      minWidth:180,
-      slotName:'status'
+      minWidth:80,
+      slotName:'customStatus'
     },
     {
       prop: 'comment',

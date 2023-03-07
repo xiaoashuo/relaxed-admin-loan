@@ -22,5 +22,9 @@ public class RiskModelQO implements Serializable {
 	 */
 	@Schema(title = "主键", description = "主键")
 	private Long id;
+	@Schema(title = "模型名称", description = "模型名称")
+	private String modelName;
+	@Schema(title = "guid", description = "guid")
+	private String guid;
 
 }

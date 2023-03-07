@@ -13,8 +13,10 @@ import com.relaxed.boot.risk.service.RiskActivationService;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 
+import com.relaxed.extend.mybatis.plus.conditions.query.LambdaQueryWrapperX;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import com.relaxed.extend.mybatis.plus.toolkit.PageUtil;
+import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,8 +38,11 @@ public class RiskActivationServiceImpl extends ExtendServiceImpl<RiskActivationM
 	@Override
 	public PageResult<RiskActivationVO> selectByPage(PageParam pageParam, RiskActivationQO activationQO) {
 		IPage<RiskActivation> page = PageUtil.prodPage(pageParam);
-		LambdaQueryWrapper<RiskActivation> wrapper = Wrappers.lambdaQuery(RiskActivation.class)
+		LambdaQueryWrapperX<RiskActivation> wrapper = WrappersX.lambdaQueryX(RiskActivation.class);
+		 wrapper
 				.eq(ObjectUtil.isNotNull(activationQO.getId()), RiskActivation::getId, activationQO.getId());
+		wrapper.eqIfPresent(RiskActivation::getLabel,activationQO.getLabel());
+		wrapper.orderByDesc(RiskActivation::getId);
 		this.baseMapper.selectPage(page, wrapper);
 		IPage<RiskActivationVO> voPage = page.convert(RiskActivationConverter.INSTANCE::poToVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

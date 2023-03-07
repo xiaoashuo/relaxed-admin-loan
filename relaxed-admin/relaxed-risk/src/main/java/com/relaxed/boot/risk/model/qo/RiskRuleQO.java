@@ -37,5 +37,7 @@ public class RiskRuleQO implements Serializable {
 	@NotNull(message = "策略ID不能为空")
 	@Schema(title = "策略ID", description = "策略ID")
 	private Long activationId;
+	@Schema(title = "规则标签", description = "规则标签")
+	private String label;
 
 }

@@ -22,5 +22,6 @@ public class RiskActivationQO implements Serializable {
 	 */
 	@Schema(title = "主键", description = "主键")
 	private Long id;
-
+	@Schema(title = "标签", description = "标签")
+	private String label;
 }

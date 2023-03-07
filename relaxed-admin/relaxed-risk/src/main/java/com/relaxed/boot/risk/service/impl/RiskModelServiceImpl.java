@@ -13,8 +13,10 @@ import com.relaxed.boot.risk.service.RiskModelService;
 import com.relaxed.common.model.domain.PageParam;
 import com.relaxed.common.model.domain.PageResult;
 
+import com.relaxed.extend.mybatis.plus.conditions.query.LambdaQueryWrapperX;
 import com.relaxed.extend.mybatis.plus.service.impl.ExtendServiceImpl;
 import com.relaxed.extend.mybatis.plus.toolkit.PageUtil;
+import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -42,8 +44,12 @@ public class RiskModelServiceImpl extends ExtendServiceImpl<RiskModelMapper, Ris
 	@Override
 	public PageResult<RiskModelVO> selectByPage(PageParam pageParam, RiskModelQO modelQO) {
 		IPage<RiskModel> page = PageUtil.prodPage(pageParam);
-		LambdaQueryWrapper<RiskModel> wrapper = Wrappers.lambdaQuery(RiskModel.class).eq(ObjectUtil.isNotNull(modelQO.getId()),
-				RiskModel::getId, modelQO.getId());
+		LambdaQueryWrapperX<RiskModel> wrapper = WrappersX.lambdaQueryX(RiskModel.class);
+		 wrapper.eq(ObjectUtil.isNotNull(modelQO.getId()),
+				RiskModel::getId, modelQO.getId())
+				 .eqIfPresent(RiskModel::getModelName,modelQO.getModelName())
+				 .eqIfPresent(RiskModel::getGuid,modelQO.getGuid())
+				 .orderByDesc(RiskModel::getId);
 		this.baseMapper.selectPage(page, wrapper);
 		IPage<RiskModelVO> voPage = page.convert(RiskModelConverter.INSTANCE::poToVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

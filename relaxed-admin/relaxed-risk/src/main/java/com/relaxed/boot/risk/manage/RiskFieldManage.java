@@ -210,4 +210,11 @@ public class RiskFieldManage  {
 			return selectData;
 		}).collect(Collectors.toList());
 	}
+
+	public boolean preFieldSwitchStatus(Long preItemId, Integer status) {
+		RiskPreItem riskPreItem = preItemService.getById(preItemId);
+		Assert.notNull(riskPreItem, "预处理字段不存在");
+		riskPreItem.setStatus(status);
+		return preItemService.updateById(riskPreItem);
+	}
 }

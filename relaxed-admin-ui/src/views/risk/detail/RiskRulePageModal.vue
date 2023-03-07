@@ -78,6 +78,7 @@ export default {
 
   methods: {
     dialogClose(done){
+      this.$refs.pageSearchRef.initFormData()
       this.close()
       done()
     },

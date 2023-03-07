@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -73,6 +74,17 @@ public class RiskActivationController {
 				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "更新数据失败");
 	}
 
+	/**
+	 * 切换策略状态开关
+	 * @param activationId 策略id
+	 * @param status 状态
+	 * @return {@code R<?>}通用返回体
+	 */
+	@PutMapping("/switch/status")
+	@Operation(summary = "切换状态", description = "更新数据")
+	public R<?> switchStatus(@RequestParam Long activationId,@RequestParam Integer status) {
+		return R.ok(riskActivationManage.switchActivationStatus(activationId,status)) ;
+	}
 	/**
 	 * 根据id删除数据
 	 * @param id {@code id} id

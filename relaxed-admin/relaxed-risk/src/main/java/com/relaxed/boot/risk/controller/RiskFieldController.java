@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -145,7 +146,10 @@ public class RiskFieldController {
 	public R<?> preItemPage(PageParam pageParam, @Valid RiskPreItemQO riskPreItemQO) {
 		return R.ok(fieldManageService.preFieldList(pageParam,riskPreItemQO));
 	}
-
+	@PutMapping("/pre/item/switch/status")
+	public R<?> preItemSwitchStatus(@RequestParam Long preItemId, @RequestParam Integer status) {
+		return R.ok(fieldManageService.preFieldSwitchStatus(preItemId,status));
+	}
 	/**
 	 * 新增数据
 	 * @param preItem {@link RiskPreItem} 数据参数
