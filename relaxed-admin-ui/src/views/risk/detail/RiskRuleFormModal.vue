@@ -178,6 +178,14 @@ export default {
               case "NOT_NULL":
                 script.push(`${condition.name}`)
                 break
+              case "⊇":
+                //包含
+                script.push(`${condition.name}.split(",").toList().containsAll(${condition.value}.split(",").toList())`)
+                break
+              case "⊆":
+                //包含于
+                script.push(`'${condition.value}'.split(",").toList().containsAll(${condition.name}.split(",").toList())`)
+                break
               default:
                 script.push(`${condition.name} ${condition.operate} ${condition.value??''}`)
                 break

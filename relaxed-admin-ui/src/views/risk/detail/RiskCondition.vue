@@ -50,7 +50,7 @@
                 v-for="form in formDatas"
                 :label="form.label"
                 :value="form.value"
-                :key="form.value"
+                :key="'condition'+index+form.value"
               ></el-option>
             </el-select>
             <!--操作符号-->
@@ -197,6 +197,14 @@ export default {
         {
           label:"不为空",
           value:"NOT_NULL"
+        },
+        {
+          label:"包含",
+          value:"⊇"
+        },
+        {
+          label:"包含于",
+          value:"⊆"
         },
         ]
 
