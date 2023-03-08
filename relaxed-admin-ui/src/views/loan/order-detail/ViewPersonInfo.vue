@@ -37,13 +37,13 @@
         <el-col :span="8"><span>居住状态 </span><b>{{customerInfo.residenceStatus}}</b></el-col>
       </el-row>
       <el-row :gutter="10" type="flex" justify="space-between">
-        <el-col :span="8"><span>居住地区域 </span><b>{{customerInfo.residenceCode}}</b></el-col>
+        <el-col :span="8"><span>居住地区域 </span><b>{{customerInfo.residenceCodeText}}</b></el-col>
         <el-col :span="8"><span>居住地地址</span><b>{{customerInfo.residenceAddress}}</b></el-col>
         <el-col :span="8"><span>现居住地邮编</span><b>{{customerInfo.residencePostCode}}</b></el-col>
       </el-row>
 
       <el-row :gutter="10" type="flex" justify="space-between">
-        <el-col :span="8"><span>通讯地区域 </span><b>{{customerInfo.mailingCode}}</b></el-col>
+        <el-col :span="8"><span>通讯地区域 </span><b>{{customerInfo.mailingCodeText}}</b></el-col>
         <el-col :span="8"><span>通讯地址</span><b>{{customerInfo.mailingAddress}}</b></el-col>
         <el-col :span="8"><span>通讯地址邮编</span><b>{{customerInfo.mailingPostCode}}</b></el-col>
       </el-row>

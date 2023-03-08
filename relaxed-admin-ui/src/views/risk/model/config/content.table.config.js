@@ -46,7 +46,12 @@ export const contentTableConfig={
       label:'事件时间',
       minWidth:180,
     },
-
+    {
+      prop: 'status',
+      label:'状态',
+      minWidth:180,
+      slotName:'customStatus'
+    },
     {
       prop: 'createdTime',
       label:'创建时间',

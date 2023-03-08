@@ -14,6 +14,20 @@
                    @click="handleModelConfig(scope.row)">进入模型
         </el-button>
       </template>
+      <template #customStatus="scope">
+        <el-switch
+          v-model="scope.row.status"
+          active-color="#13ce66"
+          inactive-color="#ff4949"
+          :active-value="1"
+          :inactive-value="0"
+          @change="(val)=>handleStatusTagClick(scope.row,val)"
+        >
+        </el-switch>
+
+
+      </template>
+
     </yi-pro-table>
     <!--模态表单组件-->
     <form-modal ref="formModal" :modal-config="modalConfig"
@@ -32,7 +46,7 @@ import {contentTableConfig} from "./config/content.table.config";
 import {searchFormConfig} from "./config/search.form.config";
 import {modalFormConfig} from "./config/modal.form.config";
 //页面相关请求方法
-import {getPage, addObj, putObj, delObj} from "@/api/risk/risk-model";
+import {getPage, addObj, putObj, delObj,switchModelStatus} from "@/api/risk/risk-model";
 
 export default {
   name: "RiskModelPage",
@@ -80,6 +94,12 @@ export default {
     handleModelConfig(row){
       this.$router.push({
         path:'/risk/model/config?modelId='+row.id
+      })
+    },
+    handleStatusTagClick(row,val){
+      switchModelStatus(row.id,val).then(res=>{
+        this.$message.success("切换状态成功")
+        this.$refs.pageContentRef.refreshTable(false)
       })
     }
 

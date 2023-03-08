@@ -4,7 +4,7 @@
     <yi-pro-table ref="pageContentRef"
                lazy-load
                :content-table-config="contentTableConfig" :request="tableRequest"
-               @newBtnClick="showNewModal"
+               @addBtnClick="showNewModal"
     ></yi-pro-table>
 
     <!--模态表单组件-->
