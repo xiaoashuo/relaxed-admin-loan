@@ -1,12 +1,41 @@
 <template>
  <div class="orderInfoForm">
-       <pro-form :width="'60%'" ref="proForm" v-bind="orderInfoFormConfig" v-model="formData" ></pro-form>
+       <pro-form :width="'60%'" ref="proForm" v-bind="orderInfoFormConfig" v-model="formData" >
+         <template #residenCeCode="scope">
+           <el-form-item
+             class="yi-form-item"
+             :label="scope.row.item.label"
+             :prop="scope.row.item.field"
+             :rules="scope.row.item.rules"
+             v-bind="scope.row.item.itemProps"
+           >
+             <el-cascader v-model="scope.row.data[scope.row.item.field]" :props="props"></el-cascader>
+
+           </el-form-item>
+         </template>
+         <template #mailingCodeArr="scope">
+           <el-form-item
+             class="yi-form-item"
+             :label="scope.row.item.label"
+             :prop="scope.row.item.field"
+             :rules="scope.row.item.rules"
+             v-bind="scope.row.item.itemProps"
+           >
+           <el-cascader v-model="scope.row.data[scope.row.item.field]" :props="props"></el-cascader>
+           </el-form-item>
+         </template>
+       </pro-form>
  </div>
 </template>
 
 <script>
+
+
+let id = 0;
 import {orderInfoFormConfig} from './config/form/orderInfo.form.config'
 import { getFormDetail, addObj } from '@/api/loan/order'
+import { listByParentCode } from '@/api/loan/province'
+
 export default {
   name: 'OrderInfoForm',
   props:{
@@ -22,11 +51,34 @@ export default {
   data(){
     return{
       formData:this.getDefaultForm(),
-      orderInfoFormConfig:orderInfoFormConfig
-
+      orderInfoFormConfig:orderInfoFormConfig,
+      props: {
+        lazy: true,
+        lazyLoad (node, resolve) {
+          const { level,root } = node;
+          const parentCode=root?0:node.value
+          listByParentCode(parentCode).then(res=>{
+            res.data.forEach(e=>{
+              e.leaf=level>=2
+            })
+            resolve(res.data);
+          })
+          // setTimeout(() => {
+          //   const nodes = Array.from({ length: level + 1 })
+          //     .map(item => ({
+          //       value: ++id,
+          //       label: `选项${id}`,
+          //       leaf: level >= 2
+          //     }));
+          //   // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+          //   resolve(nodes);
+          // }, 1000);
+        }
+      }
     }
   },
   created() {
+
     console.log("从新渲染",this.orderId)
     if (this.orderId){
       this.loadDetail()
@@ -51,11 +103,11 @@ export default {
         "certificateStartDate": "2023-01-05",
         "certificateEndDate": "2023-01-03",
         "birthDate": "2023-01-03",
-        "residenceCodeArr": ["zujian", "form", "checkbox"],
+        "residenceCodeArr": ["110000", "110100", "110101"],
         "residenceAddress": "11",
         "mailingAddress": "11",
         "mailingDetail": "11",
-        "mailingCodeArr": ["zhinan", "shejiyuanze", "yizhi"],
+        "mailingCodeArr": ["110000", "110100", "110101"],
         "employmentStatus": 24,
         "professionCode": "6",
         "jobYears": "1",
@@ -70,8 +122,8 @@ export default {
         "annualEarnings": 4,
         "investIndustry": 112205,
         "certificateType": "8",
-        "residenceCode": "zujian,form,checkbox",
-        "mailingCode": "zhinan,shejiyuanze,yizhi",
+        "residenceCode": "110000,110100,110101",
+        "mailingCode": "110000,110100,110101",
         "loanPeriod": "1",
         "interestRate": "0.0002",
         "repaymentWay": 116104,

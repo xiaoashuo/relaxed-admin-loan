@@ -23,4 +23,5 @@ public interface OrderCustomerService extends ExtendService<OrderCustomer> {
     PageResult<OrderCustomerPageVO> queryPage(PageParam pageParam, OrderCustomerQO qo);
 
     OrderCustomer getByOrderId(Long orderId);
+    OrderCustomerPageVO getPageVoByOrderId(Long orderId);
 }

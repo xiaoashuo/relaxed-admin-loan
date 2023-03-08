@@ -99,8 +99,10 @@ public class OrderDTO {
     private String mailingAddress;
     @NotEmpty(message = "现居住地址Code不能为空")
     private String residenceCode;
+
     @NotEmpty(message = "通讯地址Code不能为空")
     private String mailingCode;
+
     private Integer jobYears;
     @NotNull(message = "年收入不能为空")
     private Integer annualIncome;

@@ -256,17 +256,28 @@ export const  orderInfoFormConfig={
             span:8
           },
           formItems:[
+            // {
+            //   type:'cascader-select',
+            //   label: '现住地址',
+            //   field:'residenceCodeArr',
+            //   placeholder:'请输入现住地址',
+            //
+            //   config:{
+            //     style:{width:'200px'},
+            //     options:CascaderTest
+            //   }
+            // },
             {
-              type:'cascader-select',
+              type:'slot',
               label: '现住地址',
               field:'residenceCodeArr',
               placeholder:'请输入现住地址',
+              slotName:'residenCeCode',
               config:{
                 style:{width:'200px'},
                 options:CascaderTest
               }
             },
-
           ]
         },
         {
@@ -297,14 +308,25 @@ export const  orderInfoFormConfig={
             span:8
           },
           formItems:[
+            // {
+            //   type:'cascader-select',
+            //   label: '通讯地址',
+            //   field:'mailingCodeArr',
+            //   placeholder:'请输入通讯地址',
+            //   config:{
+            //     style:{width:'200px'},
+            //     options:CascaderTest
+            //   }
+            // },
             {
-              type:'cascader-select',
+              type:'slot',
               label: '通讯地址',
               field:'mailingCodeArr',
               placeholder:'请输入通讯地址',
+              slotName:'mailingCodeArr',
               config:{
                 style:{width:'200px'},
-                options:CascaderTest
+
               }
             },
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -77,6 +78,12 @@ public class RiskModelController {
 	@Operation(summary = "更新数据", description = "更新数据")
 	public R<?> updateById(@RequestBody RiskModel model) {
 		return riskModelManage.edit(model) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "更新数据失败");
+	}
+
+	@PutMapping("/switch/status")
+	@Operation(summary = "切换模型启用状态", description = "切换模型启用状态")
+	public R<?> switchStatus(@RequestParam Long modelId,@RequestParam Integer status) {
+		return R.ok(riskModelManage.switchStatus(modelId,status));
 	}
 
 	/**

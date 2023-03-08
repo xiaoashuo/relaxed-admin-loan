@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.relaxed.boot.loan.mapper.ProvinceMapper">
+
+	<resultMap id="provinceMap" type="com.relaxed.boot.loan.model.entity.Province">
+  		<id property="provinceId" column="province_id"/>
+    		<result property="regionCode" column="region_code"/>
+    		<result property="regionName" column="region_name"/>
+    		<result property="regionLevel" column="region_level"/>
+    		<result property="parentCode" column="parent_code"/>
+    		<result property="valid" column="valid"/>
+    		<result property="createdTime" column="created_time"/>
+    		<result property="updatedTime" column="updated_time"/>
+      </resultMap>
+
+	<sql id="Base_Column_List">
+		province_id,        
+		region_code,        
+		region_name,        
+		region_level,        
+		parent_code,        
+		valid,        
+		created_time,        
+		updated_time        
+	</sql>
+
+	<sql id="Base_Alias_Column_List">
+		p.province_id,        
+		p.region_code,        
+		p.region_name,        
+		p.region_level,        
+		p.parent_code,        
+		p.valid,        
+		p.created_time,        
+		p.updated_time        
+	</sql>
+</mapper>

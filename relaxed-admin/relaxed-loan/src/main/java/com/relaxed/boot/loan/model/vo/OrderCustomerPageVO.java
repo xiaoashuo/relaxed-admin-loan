@@ -132,7 +132,7 @@ public class OrderCustomerPageVO {
      */
     @Schema(title = "现居住地址省市区编码", description = "现居住地址省市区编码")
     private String residenceCode;
-    
+    private String residenceCodeText;
     /**
      * 现居住地址邮政编码
      */
@@ -308,7 +308,7 @@ E-建筑业F-批发和零售业G-交通运输、仓储和邮储业H-住宿和餐
      */
     @Schema(title = "通讯地址省市区编码", description = "通讯地址省市区编码")
     private String mailingCode;
-    
+    private String mailingCodeText;
     /**
      * 通讯地址邮政编码
      */

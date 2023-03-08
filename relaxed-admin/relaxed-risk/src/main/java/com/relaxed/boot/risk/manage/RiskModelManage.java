@@ -82,4 +82,11 @@ public class RiskModelManage  {
 		RiskModel riskModel = modelService.getById(modelId);
 		return RiskModelConverter.INSTANCE.poToVo(riskModel);
 	}
+
+	public boolean switchStatus(Long modelId, Integer status) {
+		RiskModel riskModel = modelService.getById(modelId);
+		Assert.notNull(riskModel, "模型信息不存在");
+		riskModel.setStatus(status);
+		return modelService.updateById(riskModel);
+	}
 }

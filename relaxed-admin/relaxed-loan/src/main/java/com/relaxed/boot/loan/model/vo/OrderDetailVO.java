@@ -21,7 +21,7 @@ public class OrderDetailVO {
     @Schema(description = "订单信息")
     private Order order;
     @Schema(description = "联系人信息")
-    private OrderCustomer orderCustomer;
+    private OrderCustomerPageVO orderCustomer;
 
 
 

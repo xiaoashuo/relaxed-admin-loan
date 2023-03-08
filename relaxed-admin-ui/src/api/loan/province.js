@@ -2,38 +2,32 @@ import yiRequest from "@/utils/request";
 
 export function getPage(query) {
   return yiRequest.get({
-    url: '/risk/model/page',
+    url: '/loan/-province/page',
     params: query
   })
 }
-export function getByModelId(modelId) {
+export function listByParentCode(parentCode) {
   return yiRequest.get({
-    url: '/risk/model/'+modelId,
+    url: '/loan/province/parentCode',
+    params: { parentCode }
   })
 }
-
 export function addObj(obj) {
   return yiRequest.post({
-    url: '/risk/model',
+    url: '/loan/-province',
     data: obj
   })
 }
 
 export function delObj(id) {
   return yiRequest.delete({
-    url: '/risk/model/' + id
+    url: '/loan/-province/' + id
   })
 }
 
 export function putObj(obj) {
   return yiRequest.put({
-    url: '/risk/model',
+    url: '/loan/-province',
     data: obj
-  })
-}
-export function switchModelStatus(modelId,status) {
-  return yiRequest.put({
-    url: '/risk/model/switch/status',
-    params: {modelId:modelId,status:status}
   })
 }
