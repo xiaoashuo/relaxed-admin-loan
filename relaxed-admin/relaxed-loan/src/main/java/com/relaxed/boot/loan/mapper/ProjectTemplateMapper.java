@@ -34,6 +34,7 @@ public interface ProjectTemplateMapper extends ExtendMapper<ProjectTemplate> {
 		IPage<ProjectTemplatePageVO> page = this.prodPage(pageParam);
 		LambdaAliasQueryWrapperX<ProjectTemplate> wrapper = WrappersX.lambdaAliasQueryX(ProjectTemplate.class);
 		wrapper.eq(ProjectTemplate::getProjectId,qo.getProjectId());
+	   wrapper.eqIfPresent(ProjectTemplate::getProjectTemplateId,qo.getProjectTemplateId());
 		this.selectByPage(page, wrapper);
 		return new PageResult<>(page.getRecords(), page.getTotal());
    }

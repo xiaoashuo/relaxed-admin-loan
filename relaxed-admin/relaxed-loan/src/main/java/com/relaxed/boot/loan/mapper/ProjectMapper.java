@@ -31,6 +31,7 @@ public interface ProjectMapper extends ExtendMapper<Project> {
 	default PageResult<ProjectPageVO> queryPage(PageParam pageParam, ProjectQO qo) {
 		IPage<ProjectPageVO> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<Project> wrapper = WrappersX.lambdaQueryX(Project.class);
+		wrapper.eqIfPresent(Project::getProjectId,qo.getProjectId());
 		this.selectByPage(page, wrapper);
 
 		return new PageResult<>(page.getRecords(), page.getTotal());
