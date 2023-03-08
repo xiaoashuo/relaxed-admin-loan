@@ -21,4 +21,8 @@ public class TradeQO  {
 	private Long tradeId;
 	@Schema(title = "订单id", description = "订单id")
 	private Long orderId;
+	@Schema(title = "合作方订单号", description = "合作方订单号")
+	private String partnerBizNo;
+	@Schema(title = "交易流水号", description = "交易流水号")
+	private String tradeNo;
 }

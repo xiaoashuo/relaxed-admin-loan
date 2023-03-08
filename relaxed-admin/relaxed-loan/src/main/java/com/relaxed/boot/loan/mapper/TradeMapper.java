@@ -33,6 +33,8 @@ public interface TradeMapper extends ExtendMapper<Trade> {
 	   LambdaAliasQueryWrapperX<Trade> wrapper = WrappersX.lambdaAliasQueryX(Trade.class);
 	   wrapper.eq(Trade::getLoanPurpose, LoanEnum.LoanPurpose.REPAYMENT.getVal());
 	   wrapper.eqIfPresent(Trade::getOrderId,qo.getOrderId());
+	   wrapper.eqIfPresent(Trade::getPartnerBizNo,qo.getPartnerBizNo());
+	   wrapper.eqIfPresent(Trade::getTradeNo,qo.getTradeNo());
 	   this.selectByPage(page, wrapper);
 	   return new PageResult<>(page.getRecords(), page.getTotal());
    }
@@ -41,6 +43,8 @@ public interface TradeMapper extends ExtendMapper<Trade> {
 		LambdaAliasQueryWrapperX<Trade> wrapper = WrappersX.lambdaAliasQueryX(Trade.class);
 		wrapper.eq(Trade::getLoanPurpose, LoanEnum.LoanPurpose.LOAN.getVal());
 		wrapper.eqIfPresent(Trade::getOrderId,qo.getOrderId());
+		wrapper.eqIfPresent(Trade::getPartnerBizNo,qo.getPartnerBizNo());
+		wrapper.eqIfPresent(Trade::getTradeNo,qo.getTradeNo());
 		this.selectByPage(page, wrapper);
 		return new PageResult<>(page.getRecords(), page.getTotal());
 	}
