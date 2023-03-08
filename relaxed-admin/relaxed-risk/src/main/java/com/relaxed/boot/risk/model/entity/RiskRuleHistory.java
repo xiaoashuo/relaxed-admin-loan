@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
-@TableName("engine_rule_history")
+@TableName("risk_rule_history")
 @Schema(title = "")
 public class RiskRuleHistory extends Model<RiskRuleHistory> {
 
