@@ -1,5 +1,7 @@
 package com.relaxed.boot.loan.model.vo;
 
+import com.relaxed.common.desensitize.enums.SlideDesensitizationTypeEnum;
+import com.relaxed.common.desensitize.json.annotation.JsonSlideDesensitize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -91,6 +93,8 @@ public class LoanPageVO {
     /**
      * 证件号码
      */
+    @JsonSlideDesensitize(type = SlideDesensitizationTypeEnum.ID_CARD_NO)
+
     @Schema(title = "证件号码", description = "证件号码")
     private String certificateNo;
     

@@ -4,7 +4,7 @@
       <h2>个人基本信息</h2>
       <el-row :gutter="10" type="flex" justify="left">
         <el-col :span="8"><span>姓名 </span><b>{{customerInfo.realName}}</b></el-col>
-        <el-col :span="8"><span>身份证号码</span><b>{{customerInfo.idNo}}</b></el-col>
+        <el-col :span="8"><span>身份证号码</span><b>{{customerInfo.certificateNo}}</b></el-col>
       </el-row>
 
       <el-row :gutter="10" type="flex" justify="space-between">

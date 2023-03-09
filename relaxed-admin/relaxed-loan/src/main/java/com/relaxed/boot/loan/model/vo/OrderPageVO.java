@@ -3,6 +3,8 @@ package com.relaxed.boot.loan.model.vo;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.relaxed.common.desensitize.enums.SlideDesensitizationTypeEnum;
+import com.relaxed.common.desensitize.json.annotation.JsonSlideDesensitize;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -369,6 +371,7 @@ public class OrderPageVO {
 
     @Schema(title = "用户姓名", description = "用户姓名")
     private String realName;
+    @JsonSlideDesensitize(type = SlideDesensitizationTypeEnum.ID_CARD_NO)
     @Schema(title = "证件号码", description = "证件号码")
     private String certificateNo;
     @Schema(title = "手机号码", description = "手机号码")
