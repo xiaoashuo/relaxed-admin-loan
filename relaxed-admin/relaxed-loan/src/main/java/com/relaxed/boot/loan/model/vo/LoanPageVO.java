@@ -94,7 +94,6 @@ public class LoanPageVO {
      * 证件号码
      */
     @JsonSlideDesensitize(type = SlideDesensitizationTypeEnum.ID_CARD_NO)
-
     @Schema(title = "证件号码", description = "证件号码")
     private String certificateNo;
     
