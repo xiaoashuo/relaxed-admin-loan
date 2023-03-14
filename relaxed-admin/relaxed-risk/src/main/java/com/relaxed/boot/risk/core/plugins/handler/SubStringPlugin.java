@@ -29,8 +29,15 @@ public class SubStringPlugin implements PluginService {
 
 	@Override
 	public Object handle(RiskPreItemVO preItemVO, Map<String, Object> jsonInfo, String[] sourceFields) {
+		String sourceField = sourceFields[0];
+
 		String[] args = preItemVO.getArgs().split(",");
-		String field = jsonInfo.get(sourceFields[0]).toString();
+
+		Object value = jsonInfo.get(sourceField);
+		if (value==null){
+			return "";
+		}
+		String field = value.toString();
 		int start = Integer.parseInt(args[0]);
 		int end = Integer.parseInt(args[1]);
 		return StrUtil.sub(field, start, end);

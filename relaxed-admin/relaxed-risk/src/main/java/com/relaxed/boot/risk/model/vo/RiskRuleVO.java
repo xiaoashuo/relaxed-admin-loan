@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 
 /**
  * 视图层
- *
+ *  计算规则 运算符 和比列  基础分  运算符 （额外分*比列） 小于等于 最大分
  * @author Yakir
  * @since 2021-08-31T11:30:23.273
  */
 @Data
 @Accessors(chain = true)
-@Schema(title = "")
+@Schema(title = "风控规则视图")
 public class RiskRuleVO implements Serializable {
 
 	/**

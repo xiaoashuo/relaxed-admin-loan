@@ -57,7 +57,7 @@ public class ActivationRiskEvaluate extends AbstractRiskEvaluate {
 	@Override
 	public boolean doEval(EvaluateContext evaluateContext, EvaluateReport evaluateReport) {
 		Map<String, Object> extParam = new HashMap<>(8);
-		// 具体击中规则列表 所有的击中规则
+		// 具体击中规则列表 所有的击中规则 策略1 -> list rule
 		Map<String, List<Hit>> hitRuleList = new HashMap<>();
 		// 具体击中规则map 详细记录每条 key 规则
 		Map<String, Map<String, Hit>> hitRulesMap = new HashMap<>();
@@ -91,7 +91,7 @@ public class ActivationRiskEvaluate extends AbstractRiskEvaluate {
 				String scriptEntry = ruleVO.getRuleScriptEntry();
 				boolean match = super.checkScript(scripts, scriptEntry, evaluateContext, evaluateReport);
 				// 不通过检查脚本规则 则当前规则不进行计算
-				if (!match) {
+				if (match) {
 					continue;
 				}
 				// 规则匹配 计算score

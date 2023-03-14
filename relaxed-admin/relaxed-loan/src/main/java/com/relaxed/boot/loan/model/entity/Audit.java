@@ -144,23 +144,7 @@ E:系统内部异常
     @Schema(title = "黑名单标记 B类、C类、逗号分隔", description = "黑名单标记 B类、C类、逗号分隔")
 	private String approvalMark;
     
-	/**
-	 * 百行征信报告id(如果风控规则有的话)
-	 */
-    @Schema(title = "百行征信报告id(如果风控规则有的话)", description = "百行征信报告id(如果风控规则有的话)")
-	private String bhCreditRptId;
-    
-	/**
-	 * 百融特殊名单报告id(如果风控规则有的话)
-	 */
-    @Schema(title = "百融特殊名单报告id(如果风控规则有的话)", description = "百融特殊名单报告id(如果风控规则有的话)")
-	private String brSpeclistRptId;
-    
-	/**
-	 * 百融借贷意向报告id(如果风控规则有的话)
-	 */
-    @Schema(title = "百融借贷意向报告id(如果风控规则有的话)", description = "百融借贷意向报告id(如果风控规则有的话)")
-	private String brIntentionRptId;
+
     
 	/**
 	 * 创建时间

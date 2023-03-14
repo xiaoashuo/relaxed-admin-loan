@@ -22,9 +22,7 @@
     		<result property="resultTime" column="result_time"/>
     		<result property="peopleResultTime" column="people_result_time"/>
     		<result property="approvalMark" column="approval_mark"/>
-    		<result property="bhCreditRptId" column="bh_credit_rpt_id"/>
-    		<result property="brSpeclistRptId" column="br_speclist_rpt_id"/>
-    		<result property="brIntentionRptId" column="br_intention_rpt_id"/>
+
     		<result property="createdTime" column="created_time"/>
     		<result property="updatedTime" column="updated_time"/>
       </resultMap>
@@ -49,9 +47,7 @@
 		result_time,        
 		people_result_time,        
 		approval_mark,        
-		bh_credit_rpt_id,        
-		br_speclist_rpt_id,        
-		br_intention_rpt_id,        
+
 		created_time,        
 		updated_time        
 	</sql>
@@ -76,9 +72,7 @@
 		a.result_time,        
 		a.people_result_time,        
 		a.approval_mark,        
-		a.bh_credit_rpt_id,        
-		a.br_speclist_rpt_id,        
-		a.br_intention_rpt_id,        
+
 		a.created_time,        
 		a.updated_time        
 	</sql>
