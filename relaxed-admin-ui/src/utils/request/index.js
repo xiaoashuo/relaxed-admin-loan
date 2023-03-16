@@ -22,9 +22,10 @@ const authRequest = new YiRequest({
       return res.data
     },
     responseInterceptorCatch: (error) => {
-      console.log('err', error) // for debug
+      console.log('err', error,error.code) // for debug
+      let errorMessage = ((error.response || {}).data || {}).message || '请求出现错误，请稍后再试'
       Message({
-        message: error.message,
+        message: errorMessage,
         type: 'error',
         duration: 5 * 1000
       })
@@ -99,43 +100,47 @@ const yiRequest = new YiRequest({
     },
     responseInterceptorCatch: (error) => {
       console.log('err', error) // for debug
-      if (error.response) {
-        console.log(error.response)
-        const data = error.response.data
-        if (error.response.status === 403) {
-          Notification.error({
-            title: 'Forbidden',
-            message: data.message,
-            duration: 5 * 1000
-          })
-        }
-        if (error.response.status === 400) {
-          Notification.error({
-            title: '参数错误',
-            message: data.message,
-            duration: 5 * 1000
-          })
-        }
-        if (error.response.status === 401) {
-          //
-          Notification.error({
-            title: 'Unauthorized',
-            message: 'Authorization verification failed',
-            duration: 5 * 1000
-          })
-          store.dispatch('auth/logout')
-        }
-        if (error.response.status === 500) {
-          Notification.error({
-            title: 'Error',
-            message: data.message,
-            duration: 1 * 1000
-          })
-        }
-      }
+      handlerResponseError(error)
       return Promise.reject(error)
     }
   }
 })
+
+function handlerResponseError(error){
+  if (error.response) {
+    console.log(error.response)
+    const data = error.response.data
+    if (error.response.status === 403) {
+      Notification.error({
+        title: 'Forbidden',
+        message: data.message,
+        duration: 5 * 1000
+      })
+    }
+    if (error.response.status === 400) {
+      Notification.error({
+        title: '参数错误',
+        message: data.message,
+        duration: 5 * 1000
+      })
+    }
+    if (error.response.status === 401) {
+      //
+      Notification.error({
+        title: 'Unauthorized',
+        message: 'Authorization verification failed',
+        duration: 5 * 1000
+      })
+      store.dispatch('auth/logout')
+    }
+    if (error.response.status === 500) {
+      Notification.error({
+        title: 'Error',
+        message: data.message,
+        duration: 1 * 1000
+      })
+    }
+  }
+}
 export { authRequest }
 export default yiRequest

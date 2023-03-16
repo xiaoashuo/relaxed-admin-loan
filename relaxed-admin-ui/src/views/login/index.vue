@@ -114,7 +114,7 @@ export default {
             this.$store.dispatch('dict/checkDictStatus')
             this.$storage.session.setCache("lastTime", new Date().getTime())
             this.loading = false
-          }).catch(() => {
+          }).catch((err) => {
             this.loading = false
           })
         } else {

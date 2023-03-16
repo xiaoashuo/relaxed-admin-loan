@@ -6,22 +6,21 @@ import com.relaxed.boot.auth.component.CustomTokenEnhancer;
 import com.relaxed.boot.auth.config.filter.IgnoreUrlCheckFilter;
 import com.relaxed.boot.auth.config.mobile.CustomCaptchaValidator;
 import com.relaxed.boot.auth.config.mobile.CustomSmsCodeValidator;
+import com.relaxed.boot.auth.config.provider.CustomDaoAuthenticationProvider;
 import com.relaxed.boot.auth.constants.UserConstant;
 import com.relaxed.boot.auth.service.AuthService;
 import com.relaxed.boot.auth.service.SysUserDetailsServiceImpl;
 import com.relaxed.boot.auth.service.Tees2UserService;
-import com.relaxed.boot.biz.system.service.SysUserService;
-import com.relaxed.oauth2.auth.configurer.OAuth2ClientConfigurer;
 import com.relaxed.oauth2.auth.extension.ExtendUserDetailsService;
 
 import com.relaxed.oauth2.auth.extension.PreValidator;
 import com.relaxed.oauth2.auth.functions.RetriveUserFunction;
 import com.relaxed.oauth2.auth.handler.AuthorizationInfoHandle;
 import com.relaxed.oauth2.auth.util.PreMethodInterceptor;
-import com.relaxed.oauth2.auth.util.ProxyFactory;
 
 import com.relaxed.oauth2.resource.properties.ExtendResourceServerProperties;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.cglib.proxy.Enhancer;
@@ -29,11 +28,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.web.configurers.oauth2.client.OAuth2LoginConfigurer;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -54,8 +58,11 @@ import java.util.stream.Collectors;
 @Configuration
 public class AuthConfig {
 
+	@Value("${security.oauth2.extension.aesSecretKey:==Relaxed-Auth==}")
+	private  String  aesSecret;
+
 	/**
-	 * password 模式下，密码入参要求 AES 加密。 在进入令牌端点前，通过过滤器进行解密处理。
+	 *忽略url，需要认证
 	 * @param extendProperties 安全配置相关
 	 * @return FilterRegistrationBean<LoginPasswordDecoderFilter>
 	 */
@@ -73,6 +80,21 @@ public class AuthConfig {
 		return bean;
 	}
 
+	/**
+	 * 自定义dao 增加用户解密key
+	 * @param passwordEncoder
+	 * @param userDetailsService
+	 * @return
+	 */
+	@Bean
+	public CustomDaoAuthenticationProvider daoAuthenticationProvider(PasswordEncoder passwordEncoder,
+																	 UserDetailsService userDetailsService){
+		CustomDaoAuthenticationProvider provider = new CustomDaoAuthenticationProvider();
+		provider.setUserDetailsService(userDetailsService);
+		provider.setPasswordEncoder(passwordEncoder);
+		provider.setSecretKey(aesSecret);
+		return provider;
+	}
 	/**
 	 * redis 令牌存储
 	 * @return

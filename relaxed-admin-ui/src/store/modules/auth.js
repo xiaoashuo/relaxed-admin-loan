@@ -4,6 +4,7 @@ import { removeToken } from '@/utils/auth'
 import CACHE from '@/utils/cache'
 import { resetRouter } from '@/router'
 import {putObj, uploadAvatar} from "@/api/user";
+import {passEncrypt} from "@/utils/password"
 import store from "@/store";
 
 const getDefaultState = () => {
@@ -41,7 +42,7 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      login({ username: username.trim(), password: passEncrypt(password) }).then(response => {
         const { access_token, expires_in,info: userInfo ,attributes:{permissions,roleCodes}} = response
         const ttl = expires_in * 1000
       //  console.log('-------',attributes, permissions,roleCodes)
