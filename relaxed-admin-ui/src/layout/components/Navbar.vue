@@ -154,10 +154,10 @@ export default {
           })
         })
         .catch((err) => {
-          this.$message.error({
-            title: '错误',
-            description: err.message
-          })
+          // this.$message.error({
+          //   title: '错误',
+          //   description: err.message
+          // })
         })
     }
   }
