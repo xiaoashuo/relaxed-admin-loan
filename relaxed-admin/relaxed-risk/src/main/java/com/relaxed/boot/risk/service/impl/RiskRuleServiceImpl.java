@@ -39,11 +39,8 @@ public class RiskRuleServiceImpl extends ExtendServiceImpl<RiskRuleMapper, RiskR
 		IPage<RiskRule> page = PageUtil.prodPage(pageParam);
 		LambdaQueryWrapperX<RiskRule> wrapper = WrappersX.lambdaQueryX(RiskRule.class);
 
-		wrapper.eq(ObjectUtil.isNotNull(ruleQO.getId()),
-				RiskRule::getId, ruleQO.getId())
-				.likeIfPresent(RiskRule::getLabel,ruleQO.getLabel())
-				.orderByDesc(RiskRule::getId)
-				;
+		wrapper.eq(ObjectUtil.isNotNull(ruleQO.getId()), RiskRule::getId, ruleQO.getId())
+				.likeIfPresent(RiskRule::getLabel, ruleQO.getLabel()).orderByDesc(RiskRule::getId);
 		this.baseMapper.selectPage(page, wrapper);
 		IPage<RiskRuleVO> voPage = page.convert(RiskRuleConverter.INSTANCE::poToVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

@@ -1,7 +1,5 @@
 package com.relaxed.boot.risk.core.plugins.handler;
 
-
-
 import com.relaxed.boot.risk.core.plugins.PluginEnum;
 import com.relaxed.boot.risk.core.plugins.PluginMeta;
 import com.relaxed.boot.risk.core.plugins.PluginService;

@@ -34,65 +34,65 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = RelaxedWebApplication.class)
 class PayManageTest {
 
-    @Autowired
-    private PayManage payManage;
-    @Autowired
-    private LoanService loanService;
+	@Autowired
+	private PayManage payManage;
 
-    @Autowired
-    private StampHandleJob stampHandleJob;
+	@Autowired
+	private LoanService loanService;
 
-    private StampManage stampManage;
-    @Test
-    void generateRelatedFile() {
-        Loan loan = loanService.getById(13);
-        stampManage.generateRelatedFile(loan.getPartnerBizNo(), FileTypeEnum.A9);
-    }
+	@Autowired
+	private StampHandleJob stampHandleJob;
 
-    @Test
-    void generateSettleFile() {
-        stampHandleJob.stampHandleJob();
-    }
+	private StampManage stampManage;
 
+	@Test
+	void generateRelatedFile() {
+		Loan loan = loanService.getById(13);
+		stampManage.generateRelatedFile(loan.getPartnerBizNo(), FileTypeEnum.A9);
+	}
 
-    @Test
-    void testRisk(){
+	@Test
+	void generateSettleFile() {
+		stampHandleJob.stampHandleJob();
+	}
 
-        String body=  new RiskReqBO().setGuid("D8A0B53B276E4071AF73145212DDE940")
-                .setReqId(IdUtil.getSnowflakeNextIdStr())
-                .put("partnerBizNo","123456888")
-                .put("applyAmount",1200)
-                .put("createdTime", System.currentTimeMillis())
-                .put("realName","张三丰")
-                .put("idCard","1234555555844")
-                .put("created_time", "1605339018000")
-                .put("user_id", 4)
-               // .put("mobile_no", "13939395454")
-                .put("event_id", "13")
+	@Test
+	void testRisk() {
 
-                .toJson();
-        String response = HttpUtil.post("http://localhost:9401/risk/services/v1/upload", body);
-        RiskResBO riskResBO = JSONUtil.toBean(response, RiskResBO.class);
-        Integer code = riskResBO.getCode();
-        JSONObject data = riskResBO.getData();
+		String body = new RiskReqBO().setGuid("D8A0B53B276E4071AF73145212DDE940")
+				.setReqId(IdUtil.getSnowflakeNextIdStr()).put("partnerBizNo", "123456888").put("applyAmount", 1200)
+				.put("createdTime", System.currentTimeMillis()).put("realName", "张三丰").put("idCard", "1234555555844")
+				.put("created_time", "1605339018000").put("user_id", 4)
+				// .put("mobile_no", "13939395454")
+				.put("event_id", "13")
 
-        if (code==200){
-            RiskResBO.Risk risk = data.getByPath("report.activations.login_rule", RiskResBO.Risk.class);
-            Map<String, Object> riskRuleMap = data.getByPath("report.activations.hitRuleMap.login_rule", Map.class);
-            String ruleList = data.getByPath("report.activations.hitRuleList.login_rule", String.class);
-            List<RiskResBO.RiskRule> riskRuleList = JSONUtil.toBean(ruleList, new TypeReference<List<RiskResBO.RiskRule>>() {
-                @Override
-                public Type getType() {
-                    return super.getType();
-                }
-            },false) ;
-            System.out.println(riskResBO);
-        }else if (code==20003){
-               //错误map
+				.toJson();
+		String response = HttpUtil.post("http://localhost:9401/risk/services/v1/upload", body);
+		RiskResBO riskResBO = JSONUtil.toBean(response, RiskResBO.class);
+		Integer code = riskResBO.getCode();
+		JSONObject data = riskResBO.getData();
 
-        }else{
-           //异常message
-        }
-        System.out.println(riskResBO);
-    }
+		if (code == 200) {
+			RiskResBO.Risk risk = data.getByPath("report.activations.login_rule", RiskResBO.Risk.class);
+			Map<String, Object> riskRuleMap = data.getByPath("report.activations.hitRuleMap.login_rule", Map.class);
+			String ruleList = data.getByPath("report.activations.hitRuleList.login_rule", String.class);
+			List<RiskResBO.RiskRule> riskRuleList = JSONUtil.toBean(ruleList,
+					new TypeReference<List<RiskResBO.RiskRule>>() {
+						@Override
+						public Type getType() {
+							return super.getType();
+						}
+					}, false);
+			System.out.println(riskResBO);
+		}
+		else if (code == 20003) {
+			// 错误map
+
+		}
+		else {
+			// 异常message
+		}
+		System.out.println(riskResBO);
+	}
+
 }

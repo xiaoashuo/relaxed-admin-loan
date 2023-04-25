@@ -50,8 +50,8 @@ public interface RiskPreItemMapper extends ExtendMapper<RiskPreItem> {
 	 * @return com.relaxed.common.risk.model.entity.PreItem
 	 */
 	default RiskPreItem selectOne(Long modelId, Long id) {
-		return this
-				.selectOne(Wrappers.lambdaQuery(RiskPreItem.class).eq(RiskPreItem::getModelId, modelId).eq(RiskPreItem::getId, id));
+		return this.selectOne(Wrappers.lambdaQuery(RiskPreItem.class).eq(RiskPreItem::getModelId, modelId)
+				.eq(RiskPreItem::getId, id));
 	}
 
 	/**

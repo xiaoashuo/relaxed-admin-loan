@@ -10,8 +10,9 @@ import lombok.Data;
  * @author yakir 2023-01-29 09:31:45
  */
 @Data
-@Schema(title = "签章记录")  
-public class StampRecordQO  {
+@Schema(title = "签章记录")
+public class StampRecordQO {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

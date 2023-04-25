@@ -17,34 +17,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:31
  */
 @Service
 public class BillItemServiceImpl extends ExtendServiceImpl<BillItemMapper, BillItem> implements BillItemService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<BillItemPageVO> 分页数据
-    */
-    @Override
-    public PageResult<BillItemPageVO> queryPage(PageParam pageParam, BillItemQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<BillItemPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<BillItemPageVO> queryPage(PageParam pageParam, BillItemQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    @Override
-    public List<BillItemPageVO> queryList(BillItemQO billItemQO) {
-        List<BillItem> list = list(Wrappers.lambdaQuery(BillItem.class)
-                .eq(BillItem::getBillId, billItemQO.getBillId()));
-       return list.stream().map(BillItemConverter.INSTANCE::poToPageVo).collect(Collectors.toList());
-    }
+	@Override
+	public List<BillItemPageVO> queryList(BillItemQO billItemQO) {
+		List<BillItem> list = list(
+				Wrappers.lambdaQuery(BillItem.class).eq(BillItem::getBillId, billItemQO.getBillId()));
+		return list.stream().map(BillItemConverter.INSTANCE::poToPageVo).collect(Collectors.toList());
+	}
 
-    @Override
-    public BillItem getByBillIdAndItemType(Long billId, Integer itemType) {
-        return getOne(Wrappers.lambdaQuery(BillItem.class).eq(BillItem::getBillId,billId)
-                .eq(BillItem::getItemType,itemType));
-    }
+	@Override
+	public BillItem getByBillIdAndItemType(Long billId, Integer itemType) {
+		return getOne(Wrappers.lambdaQuery(BillItem.class).eq(BillItem::getBillId, billId).eq(BillItem::getItemType,
+				itemType));
+	}
+
 }

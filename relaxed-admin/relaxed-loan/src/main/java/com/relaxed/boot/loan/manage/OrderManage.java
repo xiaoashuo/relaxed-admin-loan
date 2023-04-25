@@ -34,165 +34,169 @@ import java.util.stream.Collectors;
 @Service
 public class OrderManage {
 
-    private final TrustPlanService trustPlanService;
-    private final ProductService productService;
-    private final OrderCustomerService orderCustomerService;
-    private final OrderService orderService;
+	private final TrustPlanService trustPlanService;
 
-    private final AuditService auditService;
-    private final OrderBankCardService orderBankCardService;
+	private final ProductService productService;
 
-    private final TradeService tradeService;
-    private final ProjectService projectService;
+	private final OrderCustomerService orderCustomerService;
 
-    private final PartnerService partnerService;
-    private final LoanService loanService;
-    public SaveOrderResult saveOrder(OrderDTO orderDTO) {
-        Integer projectId = orderDTO.getProjectId();
-        Project project = projectService.getById(projectId);
-        Integer productId = project.getProductId();
-        Integer trustPlanId = project.getTrustPlanId();
-        Integer partnerId = project.getPartnerId();
-        Partner partner = partnerService.getById(partnerId);
-        Product product=productService.getById(productId);
-        TrustPlan trustPlan=trustPlanService.getById(trustPlanId);
+	private final OrderService orderService;
 
-        String partnerBizNo = IdUtil.getSnowflakeNextIdStr();
-        orderDTO.setPartnerBizNo(partnerBizNo);
-        Order order = convertToNewOrder(orderDTO,project,partner ,product, trustPlan);
-        OrderCustomer orderCustomer = convertToNewOrderCustomer(orderDTO);
-        Long orderId = order.getOrderId();
-        if (orderId == null){
-            boolean saveOrderSuccess = orderService.save(order);
-            orderId = order.getOrderId();
-            orderCustomer.setOrderId(orderId);
-            boolean saveOrderCustomerSuccess = orderCustomerService.save(orderCustomer);
+	private final AuditService auditService;
 
-        }else{
-            //存在订单
-            orderService.updateById(order);
-            OrderCustomer sqlOrderCustomer = orderCustomerService.getByOrderId(orderId);
-            orderCustomer.setOrderId(orderId);
-            orderCustomer.setCustomerId(sqlOrderCustomer.getCustomerId());
-            BeanUtil.copyProperties(orderCustomer, sqlOrderCustomer);
+	private final OrderBankCardService orderBankCardService;
 
-            orderCustomerService.updateById(sqlOrderCustomer);
-        }
+	private final TradeService tradeService;
 
+	private final ProjectService projectService;
 
+	private final PartnerService partnerService;
 
+	private final LoanService loanService;
 
-        SaveOrderResult saveOrderResult = new SaveOrderResult();
-        saveOrderResult.setOrderId(order.getOrderId());
-        saveOrderResult.setPartnerBizNo(order.getPartnerBizNo());
+	public SaveOrderResult saveOrder(OrderDTO orderDTO) {
+		Integer projectId = orderDTO.getProjectId();
+		Project project = projectService.getById(projectId);
+		Integer productId = project.getProductId();
+		Integer trustPlanId = project.getTrustPlanId();
+		Integer partnerId = project.getPartnerId();
+		Partner partner = partnerService.getById(partnerId);
+		Product product = productService.getById(productId);
+		TrustPlan trustPlan = trustPlanService.getById(trustPlanId);
 
-        return saveOrderResult;
-    }
+		String partnerBizNo = IdUtil.getSnowflakeNextIdStr();
+		orderDTO.setPartnerBizNo(partnerBizNo);
+		Order order = convertToNewOrder(orderDTO, project, partner, product, trustPlan);
+		OrderCustomer orderCustomer = convertToNewOrderCustomer(orderDTO);
+		Long orderId = order.getOrderId();
+		if (orderId == null) {
+			boolean saveOrderSuccess = orderService.save(order);
+			orderId = order.getOrderId();
+			orderCustomer.setOrderId(orderId);
+			boolean saveOrderCustomerSuccess = orderCustomerService.save(orderCustomer);
 
-    private  OrderCustomer convertToNewOrderCustomer(OrderDTO orderDTO) {
-        OrderCustomer orderCustomer = new OrderCustomer();
-        orderCustomer.setCreditId(0L);
-        orderCustomer.setRealName(orderDTO.getRealName());
-        orderCustomer.setCertificateType(orderDTO.getCertificateType());
-        orderCustomer.setCertificateNo(orderDTO.getCertificateNo());
-        orderCustomer.setCustomType(orderDTO.getCustomType());
-        orderCustomer.setMobileNo(orderDTO.getMobileNo());
-        orderCustomer.setEducationCode(99);
-        orderCustomer.setDegreeCode(9);
-        orderCustomer.setGender(orderDTO.getGender());
-        orderCustomer.setAge(orderDTO.getAge());
-        orderCustomer.setBirthDate(orderDTO.getBirthDate());
-        orderCustomer.setResidenceAddress(orderDTO.getResidenceAddress());
-        orderCustomer.setResidenceCode(orderDTO.getResidenceCode());
-        orderCustomer.setEMail(orderDTO.getEmail());
-        orderCustomer.setEmploymentStatus(orderDTO.getEmploymentStatus());
-        orderCustomer.setProfessionCode(orderDTO.getProfessionCode());
-        orderCustomer.setCompanyName(orderDTO.getCompanyName());
-        orderCustomer.setCompanyTrade("99");
-        orderCustomer.setMailingAddress(orderDTO.getMailingAddress());
-        orderCustomer.setMailingCode(orderDTO.getMailingCode());
-        orderCustomer.setJobYears(orderDTO.getJobYears());
-        orderCustomer.setAnnualIncome(orderDTO.getAnnualIncome());
-        orderCustomer.setCertificateValidityDate(orderDTO.getCertificateStartDate());
-        orderCustomer.setCertificateExpiryDate(orderDTO.getCertificateEndDate());
-        return orderCustomer;
-    }
+		}
+		else {
+			// 存在订单
+			orderService.updateById(order);
+			OrderCustomer sqlOrderCustomer = orderCustomerService.getByOrderId(orderId);
+			orderCustomer.setOrderId(orderId);
+			orderCustomer.setCustomerId(sqlOrderCustomer.getCustomerId());
+			BeanUtil.copyProperties(orderCustomer, sqlOrderCustomer);
 
-    private static Order convertToNewOrder(OrderDTO orderDTO, Project project,Partner partner,Product product, TrustPlan trustPlan) {
-        Order order = new Order();
-        order.setOrderId(orderDTO.getOrderId());
-        order.setCreditId(0L);
-        order.setPartnerBizNo(orderDTO.getPartnerBizNo());
-        order.setApplyAmount(orderDTO.getApplyAmount());
-        order.setRepaymentWay(orderDTO.getRepaymentWay());
-        order.setPeriodUnit(orderDTO.getPeriodUnit());
-        order.setLoanPeriod(orderDTO.getLoanPeriod());
-        order.setInterestRateUnit(orderDTO.getInterestRateUnit());
-        order.setInterestRate(orderDTO.getInterestRate());
-        order.setPenaltyInterestRate(orderDTO.getPenaltyRate());
-        order.setLoanType(orderDTO.getLoanType());
-        order.setInvestIndustry(orderDTO.getInvestIndustry());
-        order.setLoanPurpose(orderDTO.getLoanPurpose());
-        order.setRepaymentSource(orderDTO.getRepaymentSource());
-        order.setIndustryDetail(orderDTO.getIndustryDetail());
-        order.setInvestType(orderDTO.getInvestType());
-        order.setBusinessDetail(orderDTO.getBusinessDetail());
-        order.setGuaranteeWay(orderDTO.getGuaranteeWay());
-        order.setPartnerContractNo(orderDTO.getContractNo());
-        order.setReceiveCardId(0L);
-        order.setRepaymentCardId(0L);
-        order.setGraceDays(order.getGraceDays());
-        order.setPartnerId(partner.getPartnerId());
-        order.setPartnerName(partner.getPartnerAlias());
-        order.setTrustPlanCode(Integer.valueOf(trustPlan.getTrustPlanNo()));
-        order.setTrustPlanName(trustPlan.getTrustPlanName());
-        order.setProductCode(Integer.valueOf(product.getProductCode()));
-        order.setProductName(product.getProductName());
-        order.setProjectId(project.getProjectId());
-        return order;
-    }
+			orderCustomerService.updateById(sqlOrderCustomer);
+		}
 
-    public SaveOrderResult submitOrder(Long orderId) {
-        Order order = orderService.getById(orderId);
-        Assert.notNull(order,"订单信息不能为空");
-        String partnerBizNo = order.getPartnerBizNo();
-        //提取收款卡
-        List<OrderBankCard> orderBankCardList = orderBankCardService.listByOrderId(orderId);
-        List<OrderBankCard> loanBankCards = orderBankCardList.stream().filter(item -> LoanEnum.LoanPurpose.LOAN.getVal().equals(item.getCardPurpose())).collect(Collectors.toList());
-        Assert.notEmpty(loanBankCards,()->new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"订单号{},放款卡不能为空",partnerBizNo));
-        OrderBankCard orderBankCard = loanBankCards.get(0);
-        Long receiveBankCardId = orderBankCard.getBankCardId();
-        order.setReceiveCardId(receiveBankCardId);
-        orderService.updateById(order);
-        //开始调用风控
-        //获取风控结果
-        //执行放款信息
-        OrderCustomer orderCustomer = orderCustomerService.getByOrderId(orderId);
-        Audit audit = new Audit();
-        audit.setCreditId(0L);
-        audit.setOrderId(orderId);
-        audit.setProductCode(order.getProductCode()+"");
-        audit.setProductName(order.getProductName());
-        audit.setStrategyCode(order.getProductCode()+"02");
-        audit.setName(orderCustomer.getRealName());
-        audit.setIdNo(orderCustomer.getCertificateNo());
-        audit.setMobileNo(orderCustomer.getMobileNo());
-        audit.setAuditStatus(AuditStatusEnum.WAITING_EXAM.getCode());
-        audit.setResTime(LocalDateTime.now());
-        audit.setResultTime(LocalDateTime.now());
-        auditService.save(audit);
-        order.setOrderStage(OrderEnum.OrderStatus.CREDITING.getVal());
-        orderService.updateById(order);
+		SaveOrderResult saveOrderResult = new SaveOrderResult();
+		saveOrderResult.setOrderId(order.getOrderId());
+		saveOrderResult.setPartnerBizNo(order.getPartnerBizNo());
 
-        SaveOrderResult saveOrderResult = new SaveOrderResult();
-        saveOrderResult.setOrderId(orderId);
-        saveOrderResult.setPartnerBizNo(partnerBizNo);
-        return saveOrderResult;
-    }
+		return saveOrderResult;
+	}
 
+	private OrderCustomer convertToNewOrderCustomer(OrderDTO orderDTO) {
+		OrderCustomer orderCustomer = new OrderCustomer();
+		orderCustomer.setCreditId(0L);
+		orderCustomer.setRealName(orderDTO.getRealName());
+		orderCustomer.setCertificateType(orderDTO.getCertificateType());
+		orderCustomer.setCertificateNo(orderDTO.getCertificateNo());
+		orderCustomer.setCustomType(orderDTO.getCustomType());
+		orderCustomer.setMobileNo(orderDTO.getMobileNo());
+		orderCustomer.setEducationCode(99);
+		orderCustomer.setDegreeCode(9);
+		orderCustomer.setGender(orderDTO.getGender());
+		orderCustomer.setAge(orderDTO.getAge());
+		orderCustomer.setBirthDate(orderDTO.getBirthDate());
+		orderCustomer.setResidenceAddress(orderDTO.getResidenceAddress());
+		orderCustomer.setResidenceCode(orderDTO.getResidenceCode());
+		orderCustomer.setEMail(orderDTO.getEmail());
+		orderCustomer.setEmploymentStatus(orderDTO.getEmploymentStatus());
+		orderCustomer.setProfessionCode(orderDTO.getProfessionCode());
+		orderCustomer.setCompanyName(orderDTO.getCompanyName());
+		orderCustomer.setCompanyTrade("99");
+		orderCustomer.setMailingAddress(orderDTO.getMailingAddress());
+		orderCustomer.setMailingCode(orderDTO.getMailingCode());
+		orderCustomer.setJobYears(orderDTO.getJobYears());
+		orderCustomer.setAnnualIncome(orderDTO.getAnnualIncome());
+		orderCustomer.setCertificateValidityDate(orderDTO.getCertificateStartDate());
+		orderCustomer.setCertificateExpiryDate(orderDTO.getCertificateEndDate());
+		return orderCustomer;
+	}
 
+	private static Order convertToNewOrder(OrderDTO orderDTO, Project project, Partner partner, Product product,
+			TrustPlan trustPlan) {
+		Order order = new Order();
+		order.setOrderId(orderDTO.getOrderId());
+		order.setCreditId(0L);
+		order.setPartnerBizNo(orderDTO.getPartnerBizNo());
+		order.setApplyAmount(orderDTO.getApplyAmount());
+		order.setRepaymentWay(orderDTO.getRepaymentWay());
+		order.setPeriodUnit(orderDTO.getPeriodUnit());
+		order.setLoanPeriod(orderDTO.getLoanPeriod());
+		order.setInterestRateUnit(orderDTO.getInterestRateUnit());
+		order.setInterestRate(orderDTO.getInterestRate());
+		order.setPenaltyInterestRate(orderDTO.getPenaltyRate());
+		order.setLoanType(orderDTO.getLoanType());
+		order.setInvestIndustry(orderDTO.getInvestIndustry());
+		order.setLoanPurpose(orderDTO.getLoanPurpose());
+		order.setRepaymentSource(orderDTO.getRepaymentSource());
+		order.setIndustryDetail(orderDTO.getIndustryDetail());
+		order.setInvestType(orderDTO.getInvestType());
+		order.setBusinessDetail(orderDTO.getBusinessDetail());
+		order.setGuaranteeWay(orderDTO.getGuaranteeWay());
+		order.setPartnerContractNo(orderDTO.getContractNo());
+		order.setReceiveCardId(0L);
+		order.setRepaymentCardId(0L);
+		order.setGraceDays(order.getGraceDays());
+		order.setPartnerId(partner.getPartnerId());
+		order.setPartnerName(partner.getPartnerAlias());
+		order.setTrustPlanCode(Integer.valueOf(trustPlan.getTrustPlanNo()));
+		order.setTrustPlanName(trustPlan.getTrustPlanName());
+		order.setProductCode(Integer.valueOf(product.getProductCode()));
+		order.setProductName(product.getProductName());
+		order.setProjectId(project.getProjectId());
+		return order;
+	}
 
+	public SaveOrderResult submitOrder(Long orderId) {
+		Order order = orderService.getById(orderId);
+		Assert.notNull(order, "订单信息不能为空");
+		String partnerBizNo = order.getPartnerBizNo();
+		// 提取收款卡
+		List<OrderBankCard> orderBankCardList = orderBankCardService.listByOrderId(orderId);
+		List<OrderBankCard> loanBankCards = orderBankCardList.stream()
+				.filter(item -> LoanEnum.LoanPurpose.LOAN.getVal().equals(item.getCardPurpose()))
+				.collect(Collectors.toList());
+		Assert.notEmpty(loanBankCards,
+				() -> new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "订单号{},放款卡不能为空", partnerBizNo));
+		OrderBankCard orderBankCard = loanBankCards.get(0);
+		Long receiveBankCardId = orderBankCard.getBankCardId();
+		order.setReceiveCardId(receiveBankCardId);
+		orderService.updateById(order);
+		// 开始调用风控
+		// 获取风控结果
+		// 执行放款信息
+		OrderCustomer orderCustomer = orderCustomerService.getByOrderId(orderId);
+		Audit audit = new Audit();
+		audit.setCreditId(0L);
+		audit.setOrderId(orderId);
+		audit.setProductCode(order.getProductCode() + "");
+		audit.setProductName(order.getProductName());
+		audit.setStrategyCode(order.getProductCode() + "02");
+		audit.setName(orderCustomer.getRealName());
+		audit.setIdNo(orderCustomer.getCertificateNo());
+		audit.setMobileNo(orderCustomer.getMobileNo());
+		audit.setAuditStatus(AuditStatusEnum.WAITING_EXAM.getCode());
+		audit.setResTime(LocalDateTime.now());
+		audit.setResultTime(LocalDateTime.now());
+		auditService.save(audit);
+		order.setOrderStage(OrderEnum.OrderStatus.CREDITING.getVal());
+		orderService.updateById(order);
 
-
+		SaveOrderResult saveOrderResult = new SaveOrderResult();
+		saveOrderResult.setOrderId(orderId);
+		saveOrderResult.setPartnerBizNo(partnerBizNo);
+		return saveOrderResult;
+	}
 
 }

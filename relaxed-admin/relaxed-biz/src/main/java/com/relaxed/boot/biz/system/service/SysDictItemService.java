@@ -45,5 +45,6 @@ public interface SysDictItemService extends ExtendService<SysDictItem> {
 	 * @param <V>
 	 * @return
 	 */
-    <V>SysDictItem getByDictKeyAndValue(String key, V value);
+	<V> SysDictItem getByDictKeyAndValue(String key, V value);
+
 }

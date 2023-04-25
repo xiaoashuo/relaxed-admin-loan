@@ -17,7 +17,7 @@ public interface BillConverter {
 
 	/**
 	 * PO 转 PageVO
-	 * @param bill 
+	 * @param bill
 	 * @return BillPageVO PageVO
 	 */
 	BillPageVO poToPageVo(Bill bill);

@@ -12,25 +12,24 @@ import com.relaxed.extend.mybatis.plus.service.ExtendService;
 import java.util.List;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:31
  */
 public interface OrderService extends ExtendService<Order> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;OrderPageVO&gt; 分页数据
-    */
-    PageResult<OrderPageVO> queryPage(PageParam pageParam, OrderQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;OrderPageVO&gt; 分页数据
+	 */
+	PageResult<OrderPageVO> queryPage(PageParam pageParam, OrderQO qo);
 
-    Order getByPartnerBizNo(String partnerBizNo);
+	Order getByPartnerBizNo(String partnerBizNo);
 
-    OrderDetailVO getOrderDetail(Long orderId);
+	OrderDetailVO getOrderDetail(Long orderId);
 
-    OrderDTO getOrderFormDetailDTO(Long orderId);
+	OrderDTO getOrderFormDetailDTO(Long orderId);
 
-    List<Order> listByStatus(Integer status);
+	List<Order> listByStatus(Integer status);
+
 }

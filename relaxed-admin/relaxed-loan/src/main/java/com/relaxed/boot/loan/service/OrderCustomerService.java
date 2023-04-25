@@ -8,20 +8,20 @@ import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:19
  */
 public interface OrderCustomerService extends ExtendService<OrderCustomer> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;OrderCustomerPageVO&gt; 分页数据
-    */
-    PageResult<OrderCustomerPageVO> queryPage(PageParam pageParam, OrderCustomerQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;OrderCustomerPageVO&gt; 分页数据
+	 */
+	PageResult<OrderCustomerPageVO> queryPage(PageParam pageParam, OrderCustomerQO qo);
 
-    OrderCustomer getByOrderId(Long orderId);
-    OrderCustomerPageVO getPageVoByOrderId(Long orderId);
+	OrderCustomer getByOrderId(Long orderId);
+
+	OrderCustomerPageVO getPageVoByOrderId(Long orderId);
+
 }

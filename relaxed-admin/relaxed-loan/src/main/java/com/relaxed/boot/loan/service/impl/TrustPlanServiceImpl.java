@@ -50,4 +50,5 @@ public class TrustPlanServiceImpl extends ExtendServiceImpl<TrustPlanMapper, Tru
 	public TrustPlan getByTrustPlanCode(Integer trustPlanCode) {
 		return getOne(Wrappers.lambdaQuery(TrustPlan.class).eq(TrustPlan::getTrustPlanNo, trustPlanCode));
 	}
+
 }

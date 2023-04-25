@@ -55,8 +55,8 @@ public class SysDictItemServiceImpl extends ExtendServiceImpl<SysDictItemMapper,
 
 	@Override
 	public <V> SysDictItem getByDictKeyAndValue(String key, V value) {
-		return baseMapper.selectOne(Wrappers.lambdaQuery(SysDictItem.class)
-				.eq(SysDictItem::getDictCode,key)
-				.eq(SysDictItem::getValue,value));
+		return baseMapper.selectOne(Wrappers.lambdaQuery(SysDictItem.class).eq(SysDictItem::getDictCode, key)
+				.eq(SysDictItem::getValue, value));
 	}
+
 }

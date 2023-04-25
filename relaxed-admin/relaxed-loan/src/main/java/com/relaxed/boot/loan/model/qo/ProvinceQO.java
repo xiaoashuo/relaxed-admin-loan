@@ -10,8 +10,9 @@ import lombok.Data;
  * @author Yakir 2023-03-08 10:44:09
  */
 @Data
-@Schema(title = "省市区码表")  
-public class ProvinceQO  {
+@Schema(title = "省市区码表")
+public class ProvinceQO {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

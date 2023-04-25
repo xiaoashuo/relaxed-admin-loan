@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.rules.score;
 
-
 import com.relaxed.boot.risk.model.vo.RiskRuleVO;
 import com.relaxed.boot.risk.rules.EvaluateContext;
 import com.relaxed.boot.risk.rules.EvaluateReport;

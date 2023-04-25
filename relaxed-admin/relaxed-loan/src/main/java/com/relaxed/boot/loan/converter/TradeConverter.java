@@ -17,7 +17,7 @@ public interface TradeConverter {
 
 	/**
 	 * PO 转 PageVO
-	 * @param trade 
+	 * @param trade
 	 * @return TradePageVO PageVO
 	 */
 	TradePageVO poToPageVo(Trade trade);

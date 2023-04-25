@@ -18,15 +18,16 @@ import java.util.Map;
  */
 public interface ProvinceService extends ExtendService<Province> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;ProvincePageVO&gt; 分页数据
-    */
-    PageResult<ProvincePageVO> queryPage(PageParam pageParam, ProvinceQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;ProvincePageVO&gt; 分页数据
+	 */
+	PageResult<ProvincePageVO> queryPage(PageParam pageParam, ProvinceQO qo);
 
-    List<SelectData> listByParentCode(Integer parentCode);
+	List<SelectData> listByParentCode(Integer parentCode);
 
-    Map<String, Province> mapByRegionCodes(List<String> regionCodes);
+	Map<String, Province> mapByRegionCodes(List<String> regionCodes);
+
 }

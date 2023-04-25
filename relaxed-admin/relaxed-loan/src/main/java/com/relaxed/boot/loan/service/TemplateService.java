@@ -30,6 +30,6 @@ public interface TemplateService extends ExtendService<Template> {
 
 	List<SelectData> querySelectData();
 
+	boolean removeTemplate(Integer templateId);
 
-    boolean removeTemplate(Integer templateId);
 }

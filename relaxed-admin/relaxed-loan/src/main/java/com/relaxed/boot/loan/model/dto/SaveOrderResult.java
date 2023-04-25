@@ -11,6 +11,9 @@ import lombok.Data;
  */
 @Data
 public class SaveOrderResult {
-    private Long orderId;
-    private String partnerBizNo;
+
+	private Long orderId;
+
+	private String partnerBizNo;
+
 }

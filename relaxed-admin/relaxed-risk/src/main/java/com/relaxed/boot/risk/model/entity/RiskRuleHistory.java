@@ -69,6 +69,7 @@ public class RiskRuleHistory extends Model<RiskRuleHistory> {
 	 */
 	@Schema(title = "抽象名称", description = "抽象名称")
 	private String abstractionName;
+
 	@Schema(title = "规则定义", description = "规则定义")
 	private String ruleDefinition;
 

@@ -51,6 +51,7 @@ public class ProjectController {
 	public R<PageResult<ProjectPageVO>> getProjectPage(PageParam pageParam, ProjectQO projectQO) {
 		return R.ok(projectService.queryPage(pageParam, projectQO));
 	}
+
 	/**
 	 * 信托项目下拉列表
 	 * @return R 通用返回体

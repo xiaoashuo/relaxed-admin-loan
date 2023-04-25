@@ -10,7 +10,9 @@ import cn.hutool.core.util.IdUtil;
  * @Version 1.0
  */
 public class ProNoUtil {
-    public static String generateTradeNo(){
-        return "trade:"+IdUtil.getSnowflakeNextIdStr();
-    }
+
+	public static String generateTradeNo() {
+		return "trade:" + IdUtil.getSnowflakeNextIdStr();
+	}
+
 }

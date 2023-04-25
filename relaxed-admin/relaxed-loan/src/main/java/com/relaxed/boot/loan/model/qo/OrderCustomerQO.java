@@ -5,13 +5,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
- *  查询对象
+ * 查询对象
  *
  * @author yakir 2023-01-10 10:32:19
  */
 @Data
-@Schema(title = "")  
-public class OrderCustomerQO  {
+@Schema(title = "")
+public class OrderCustomerQO {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

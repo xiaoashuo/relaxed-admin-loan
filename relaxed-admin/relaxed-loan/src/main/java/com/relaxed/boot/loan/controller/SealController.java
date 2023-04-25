@@ -73,13 +73,14 @@ public class SealController {
 	public DownloadModel preview(@RequestBody PreviewInfoDTO previewInfoDTO) {
 		return sealManage.preview(previewInfoDTO);
 	}
+
 	/**
 	 * 预览PDF
 	 * @return R 通用返回体
 	 */
 	@Operation(summary = "预览PDF")
 	@PostMapping("/preview/template")
-	@ResponseDownload(channel = DownTypeEnum.OTHER,customHandler = StreamDownloadHandler.class)
+	@ResponseDownload(channel = DownTypeEnum.OTHER, customHandler = StreamDownloadHandler.class)
 	public DownloadModel previewTemplate(@RequestParam Integer templateId) {
 		return sealManage.previewTemplate(templateId);
 	}

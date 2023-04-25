@@ -15,6 +15,9 @@ import lombok.Data;
 @Schema(title = "借据详情")
 @Data
 public class LoanDetailVO {
-    private Loan loan;
-    private OrderCustomer orderCustomer;
+
+	private Loan loan;
+
+	private OrderCustomer orderCustomer;
+
 }

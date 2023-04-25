@@ -18,33 +18,32 @@ import java.util.Map;
 @Accessors(chain = true)
 public class RiskReqBO {
 
-    /**
-     * 模板id
-     */
-    private String guid;
+	/**
+	 * 模板id
+	 */
+	private String guid;
 
-    /**
-     * 请求id 唯一标识
-     */
-    private String reqId;
+	/**
+	 * 请求id 唯一标识
+	 */
+	private String reqId;
 
-    /**
-     * 请求信息
-     */
-    private Map<String,Object> jsonInfo;
+	/**
+	 * 请求信息
+	 */
+	private Map<String, Object> jsonInfo;
 
+	public RiskReqBO put(String key, Object value) {
+		if (jsonInfo == null) {
+			jsonInfo = new HashMap<>(6);
+		}
+		jsonInfo.put(key, value);
 
-    public RiskReqBO put(String key,Object value){
-        if (jsonInfo == null){
-            jsonInfo=new HashMap<>(6);
-        }
-        jsonInfo.put(key,value);
+		return this;
+	}
 
-        return this;
-    }
+	public String toJson() {
+		return JSONUtil.toJsonStr(this);
+	}
 
-
-    public String toJson() {
-        return JSONUtil.toJsonStr(this);
-    }
 }

@@ -24,8 +24,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SubscribeFieldHandle implements SubscribeHandle {
 
-
-
 	@Override
 	public SubscribeType type() {
 		return SubscribeEnum.PUB_SUB_FIELD_CHANNEL;

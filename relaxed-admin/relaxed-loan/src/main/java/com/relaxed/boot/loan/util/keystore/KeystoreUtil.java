@@ -43,7 +43,6 @@ import java.util.*;
  */
 public class KeystoreUtil {
 
-
 	public static void createKeyStoreFile() throws Exception {
 		String filePath = "D:\\mnt\\itext7\\keystore\\home.keystore";
 		final int keySize = 2048;
@@ -274,7 +273,7 @@ public class KeystoreUtil {
 
 	@SneakyThrows
 	public static ByteArrayOutputStream generateKeyStoreV3(KeystoreMeta keystoreMeta) {
-		keystoreMeta.validity(keystoreMeta.getValidity()*60*60);
+		keystoreMeta.validity(keystoreMeta.getValidity() * 60 * 60);
 		// 密钥长度
 		final int keySize = 2048;
 		final long validity = keystoreMeta.getValidity(); // 10 years
@@ -387,7 +386,7 @@ public class KeystoreUtil {
 	}
 
 	public static void main(String[] args) throws Exception {
-		//createKeyStoreFile1();
+		// createKeyStoreFile1();
 		KeystoreMeta keystoreMeta = new KeystoreMeta().validity(8760).password("123456")
 				.certificateCRL("https://relaxed.cn").alias("xiaoxi").issuer().CN("Yakir").OU("relaxed研发部")
 				.O("relaxed有限公司").L("上海").E("relaxed@qq.com").ST("上海").C("CN").end().subject().CN("Yakir")

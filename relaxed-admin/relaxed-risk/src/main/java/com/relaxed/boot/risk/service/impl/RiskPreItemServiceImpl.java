@@ -32,14 +32,15 @@ import java.util.List;
  */
 @RequiredArgsConstructor
 @Service
-public class RiskPreItemServiceImpl extends ExtendServiceImpl<RiskPreItemMapper, RiskPreItem> implements RiskPreItemService {
+public class RiskPreItemServiceImpl extends ExtendServiceImpl<RiskPreItemMapper, RiskPreItem>
+		implements RiskPreItemService {
 
 	@Override
 	public PageResult<RiskPreItemVO> selectByPage(PageParam pageParam, RiskPreItemQO preItemQO) {
 		IPage<RiskPreItem> page = PageUtil.prodPage(pageParam);
 		LambdaQueryWrapperX<RiskPreItem> wrapper = WrappersX.lambdaQueryX(RiskPreItem.class);
-		wrapper.eqIfPresent(RiskPreItem::getSourceField,preItemQO.getSourceField());
-		wrapper.eqIfPresent(RiskPreItem::getDestField,preItemQO.getDestField());
+		wrapper.eqIfPresent(RiskPreItem::getSourceField, preItemQO.getSourceField());
+		wrapper.eqIfPresent(RiskPreItem::getDestField, preItemQO.getDestField());
 		wrapper.orderByDesc(RiskPreItem::getId);
 		this.baseMapper.selectPage(page, wrapper);
 		IPage<RiskPreItemVO> voPage = page.convert(RiskPreItemConverter.INSTANCE::poToVo);

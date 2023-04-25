@@ -17,7 +17,7 @@ public interface OrderConverter {
 
 	/**
 	 * PO 转 PageVO
-	 * @param order 
+	 * @param order
 	 * @return OrderPageVO PageVO
 	 */
 	OrderPageVO poToPageVo(Order order);

@@ -29,40 +29,41 @@ import java.util.Map;
 @Service
 public class ProvinceServiceImpl extends ExtendServiceImpl<ProvinceMapper, Province> implements ProvinceService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<ProvincePageVO> 分页数据
-    */
-    @Override
-    public PageResult<ProvincePageVO> queryPage(PageParam pageParam, ProvinceQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<ProvincePageVO> 分页数据
+	 */
+	@Override
+	public PageResult<ProvincePageVO> queryPage(PageParam pageParam, ProvinceQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    @Override
-    public List<SelectData> listByParentCode(Integer parentCode) {
-        List<Province> provinceList = baseMapper.selectList(WrappersX.lambdaQueryX(Province.class)
-                .eq(Province::getParentCode, parentCode));
-        List<SelectData> selectDataList=new ArrayList<>(provinceList.size());
-        for (Province province : provinceList) {
-            SelectData selectData = new SelectData();
-            selectData.setLabel(province.getRegionName());
-            selectData.setValue(province.getRegionCode());
-            selectData.setType(province.getRegionLevel()+"");
-            selectDataList.add(selectData);
-        }
-        return selectDataList ;
-    }
+	@Override
+	public List<SelectData> listByParentCode(Integer parentCode) {
+		List<Province> provinceList = baseMapper
+				.selectList(WrappersX.lambdaQueryX(Province.class).eq(Province::getParentCode, parentCode));
+		List<SelectData> selectDataList = new ArrayList<>(provinceList.size());
+		for (Province province : provinceList) {
+			SelectData selectData = new SelectData();
+			selectData.setLabel(province.getRegionName());
+			selectData.setValue(province.getRegionCode());
+			selectData.setType(province.getRegionLevel() + "");
+			selectDataList.add(selectData);
+		}
+		return selectDataList;
+	}
 
-    @Override
-    public Map<String, Province> mapByRegionCodes(List<String> regionCodes) {
-        List<Province> provinces = baseMapper.selectList(WrappersX.lambdaQueryX(Province.class)
-                .in(Province::getRegionCode, regionCodes));
-        Map<String,Province> provinceMap=new HashMap<>();
-        provinces.forEach(province -> {
-            provinceMap.put(province.getRegionCode(),province);
-        });
-        return provinceMap;
-    }
+	@Override
+	public Map<String, Province> mapByRegionCodes(List<String> regionCodes) {
+		List<Province> provinces = baseMapper
+				.selectList(WrappersX.lambdaQueryX(Province.class).in(Province::getRegionCode, regionCodes));
+		Map<String, Province> provinceMap = new HashMap<>();
+		provinces.forEach(province -> {
+			provinceMap.put(province.getRegionCode(), province);
+		});
+		return provinceMap;
+	}
+
 }

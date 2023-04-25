@@ -43,6 +43,7 @@ public class FileConfig {
 	 * 是否按日期切分 默认false
 	 */
 	private boolean splitDate = false;
+
 	/**
 	 *
 	 */
@@ -71,8 +72,10 @@ public class FileConfig {
 		this.allowedExtension = allowedExtension;
 		return this;
 	}
+
 	public FileConfig fileNameConverter(FileNameConverter fileNameConverter) {
 		this.fileNameConverter = fileNameConverter;
 		return this;
 	}
+
 }

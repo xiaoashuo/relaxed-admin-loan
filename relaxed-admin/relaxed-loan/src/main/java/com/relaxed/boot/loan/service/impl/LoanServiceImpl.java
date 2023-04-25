@@ -27,34 +27,35 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class LoanServiceImpl extends ExtendServiceImpl<LoanMapper, Loan> implements LoanService {
-    private final OrderCustomerService orderCustomerService;
 
+	private final OrderCustomerService orderCustomerService;
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<LoanPageVO> 分页数据
-    */
-    @Override
-    public PageResult<LoanPageVO> queryPage(PageParam pageParam, LoanQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<LoanPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<LoanPageVO> queryPage(PageParam pageParam, LoanQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    @Override
-    public LoanDetailVO getLoanDetail(Long loanId) {
-        Loan loan = getById(loanId);
-        Assert.notNull(loan, "借据信息不存在");
-        Long orderId = loan.getOrderId();
-        OrderCustomer orderCustomer = orderCustomerService.getByOrderId(orderId);
-        LoanDetailVO loanDetailVO = new LoanDetailVO();
-        loanDetailVO.setLoan(loan);
-        loanDetailVO.setOrderCustomer(orderCustomer);
-        return loanDetailVO;
-    }
+	@Override
+	public LoanDetailVO getLoanDetail(Long loanId) {
+		Loan loan = getById(loanId);
+		Assert.notNull(loan, "借据信息不存在");
+		Long orderId = loan.getOrderId();
+		OrderCustomer orderCustomer = orderCustomerService.getByOrderId(orderId);
+		LoanDetailVO loanDetailVO = new LoanDetailVO();
+		loanDetailVO.setLoan(loan);
+		loanDetailVO.setOrderCustomer(orderCustomer);
+		return loanDetailVO;
+	}
 
-    @Override
-    public List<Loan> listByStatus(Integer status) {
-        return list(Wrappers.<Loan>lambdaQuery().eq(Loan::getLoanStatus, status));
-    }
+	@Override
+	public List<Loan> listByStatus(Integer status) {
+		return list(Wrappers.<Loan>lambdaQuery().eq(Loan::getLoanStatus, status));
+	}
+
 }

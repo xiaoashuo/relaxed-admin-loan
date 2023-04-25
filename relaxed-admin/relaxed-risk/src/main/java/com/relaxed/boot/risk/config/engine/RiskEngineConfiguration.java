@@ -15,7 +15,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 /**
  * @author Yakir
  * @Topic RiskEngineConfiguration
@@ -38,8 +37,6 @@ public class RiskEngineConfiguration {
 	public CacheService cacheService() {
 		return new RedisCacheService();
 	}
-
-
 
 	/**
 	 * 异步风控评估分发器

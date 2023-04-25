@@ -1,7 +1,5 @@
 package com.relaxed.boot.risk.rules.extractor;
 
-
-
 import com.relaxed.boot.risk.enums.FieldType;
 import com.relaxed.boot.risk.rules.EvaluateContext;
 import com.relaxed.boot.risk.rules.EvaluateReport;

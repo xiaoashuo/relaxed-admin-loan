@@ -42,8 +42,7 @@ public enum RiskCode implements ResultCode {
 	/**
 	 * 风控策略异常
 	 */
-	RISK_ACTIVATION_INFO_EXCEPTION(20006, "风控策略异常"),
-	;
+	RISK_ACTIVATION_INFO_EXCEPTION(20006, "风控策略异常"),;
 
 	private final Integer code;
 

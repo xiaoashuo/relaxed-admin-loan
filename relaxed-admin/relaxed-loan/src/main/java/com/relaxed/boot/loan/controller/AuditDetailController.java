@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 审核拒绝原因表
  *
@@ -32,62 +31,61 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan/audit-detail" )
+@RequestMapping("/loan/audit-detail")
 @Tag(name = "审核拒绝原因表管理")
 public class AuditDetailController {
 
-    private final  AuditDetailService auditDetailService;
+	private final AuditDetailService auditDetailService;
 
-    /**
-     * 分页查询
-     * @param pageParam 分页参数
-     * @param auditDetailQO 审核拒绝原因表查询对象
-     * @return R 通用返回体
-     */
-    @Operation(summary = "分页查询")
-    @GetMapping("/page" )
-    public R<PageResult<AuditDetailPageVO>> getAuditDetailPage(
-            PageParam pageParam, AuditDetailQO auditDetailQO) {
-        return R.ok(auditDetailService.queryPage(pageParam, auditDetailQO));
-    }
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param auditDetailQO 审核拒绝原因表查询对象
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "分页查询")
+	@GetMapping("/page")
+	public R<PageResult<AuditDetailPageVO>> getAuditDetailPage(PageParam pageParam, AuditDetailQO auditDetailQO) {
+		return R.ok(auditDetailService.queryPage(pageParam, auditDetailQO));
+	}
 
-    /**
-     * 新增审核拒绝原因表
-     * @param auditDetail 审核拒绝原因表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "新增审核拒绝原因表")
-    @CreateLog(msg = "新增审核拒绝原因表" )
-    @PostMapping
-    public R<Void> save(@RequestBody AuditDetail auditDetail) {
-        return auditDetailService.save(auditDetail) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增审核拒绝原因表失败");
-    }
+	/**
+	 * 新增审核拒绝原因表
+	 * @param auditDetail 审核拒绝原因表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "新增审核拒绝原因表")
+	@CreateLog(msg = "新增审核拒绝原因表")
+	@PostMapping
+	public R<Void> save(@RequestBody AuditDetail auditDetail) {
+		return auditDetailService.save(auditDetail) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增审核拒绝原因表失败");
+	}
 
-    /**
-     * 修改审核拒绝原因表
-     * @param auditDetail 审核拒绝原因表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "修改审核拒绝原因表")
-    @UpdateLog(msg = "修改审核拒绝原因表" )
-    @PutMapping
-    public R<Void> updateById(@RequestBody AuditDetail auditDetail) {
-        return auditDetailService.updateById(auditDetail) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改审核拒绝原因表失败");
-    }
+	/**
+	 * 修改审核拒绝原因表
+	 * @param auditDetail 审核拒绝原因表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "修改审核拒绝原因表")
+	@UpdateLog(msg = "修改审核拒绝原因表")
+	@PutMapping
+	public R<Void> updateById(@RequestBody AuditDetail auditDetail) {
+		return auditDetailService.updateById(auditDetail) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改审核拒绝原因表失败");
+	}
 
-    /**
-     * 通过id删除审核拒绝原因表
-     * @param auditDetailId id
-     * @return R 通用返回体
-     */
-    @Operation(summary = "通过id删除审核拒绝原因表")
-    @DeleteLog(msg = "通过id删除审核拒绝原因表" )
-    @DeleteMapping("/{auditDetailId}" )
-    public R<Void> removeById(@PathVariable("auditDetailId") Long auditDetailId) {
-        return auditDetailService.removeById(auditDetailId) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除审核拒绝原因表失败");
-    }
+	/**
+	 * 通过id删除审核拒绝原因表
+	 * @param auditDetailId id
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "通过id删除审核拒绝原因表")
+	@DeleteLog(msg = "通过id删除审核拒绝原因表")
+	@DeleteMapping("/{auditDetailId}")
+	public R<Void> removeById(@PathVariable("auditDetailId") Long auditDetailId) {
+		return auditDetailService.removeById(auditDetailId) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除审核拒绝原因表失败");
+	}
 
 }

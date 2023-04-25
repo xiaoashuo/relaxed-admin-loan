@@ -16,17 +16,18 @@ import org.springframework.stereotype.Service;
  * @author yakir 2023-01-10 10:32:31
  */
 @Service
-public class AuditDetailServiceImpl extends ExtendServiceImpl<AuditDetailMapper, AuditDetail> implements AuditDetailService {
+public class AuditDetailServiceImpl extends ExtendServiceImpl<AuditDetailMapper, AuditDetail>
+		implements AuditDetailService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<AuditDetailPageVO> 分页数据
-    */
-    @Override
-    public PageResult<AuditDetailPageVO> queryPage(PageParam pageParam, AuditDetailQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<AuditDetailPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<AuditDetailPageVO> queryPage(PageParam pageParam, AuditDetailQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
 }

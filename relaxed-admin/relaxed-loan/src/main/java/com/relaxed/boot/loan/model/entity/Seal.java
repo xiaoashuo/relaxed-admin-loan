@@ -52,8 +52,6 @@ public class Seal {
 	@Schema(title = "图片文件名称", description = "图片文件名称")
 	private String sealFilename;
 
-
-
 	/**
 	 * 签章来源
 	 */

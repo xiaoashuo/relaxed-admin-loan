@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.rules.script.groovy;
 
-
 import com.relaxed.boot.risk.rules.script.ScriptContext;
 import groovy.lang.GroovyObject;
 import lombok.Data;

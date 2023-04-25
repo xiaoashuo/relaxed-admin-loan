@@ -24,21 +24,22 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ProjectTemplateMapper extends ExtendMapper<ProjectTemplate> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<ProjectTemplatePageVO> VO分页数据
-    */
-   default PageResult<ProjectTemplatePageVO> queryPage(PageParam pageParam, ProjectTemplateQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<ProjectTemplatePageVO> VO分页数据
+	 */
+	default PageResult<ProjectTemplatePageVO> queryPage(PageParam pageParam, ProjectTemplateQO qo) {
 		IPage<ProjectTemplatePageVO> page = this.prodPage(pageParam);
 		LambdaAliasQueryWrapperX<ProjectTemplate> wrapper = WrappersX.lambdaAliasQueryX(ProjectTemplate.class);
-		wrapper.eq(ProjectTemplate::getProjectId,qo.getProjectId());
-	   wrapper.eqIfPresent(ProjectTemplate::getProjectTemplateId,qo.getProjectTemplateId());
+		wrapper.eq(ProjectTemplate::getProjectId, qo.getProjectId());
+		wrapper.eqIfPresent(ProjectTemplate::getProjectTemplateId, qo.getProjectTemplateId());
 		this.selectByPage(page, wrapper);
 		return new PageResult<>(page.getRecords(), page.getTotal());
-   }
+	}
+
 	IPage<ProjectTemplatePageVO> selectByPage(IPage<ProjectTemplatePageVO> page,
-									  @Param(Constants.WRAPPER) Wrapper<ProjectTemplate> queryWrapper);
+			@Param(Constants.WRAPPER) Wrapper<ProjectTemplate> queryWrapper);
 
 }

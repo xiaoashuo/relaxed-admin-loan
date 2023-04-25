@@ -16,19 +16,20 @@ import com.relaxed.extend.mybatis.plus.service.ExtendService;
  */
 public interface ProjectTemplateService extends ExtendService<ProjectTemplate> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;ProjectTemplatePageVO&gt; 分页数据
-    */
-    PageResult<ProjectTemplatePageVO> queryPage(PageParam pageParam, ProjectTemplateQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;ProjectTemplatePageVO&gt; 分页数据
+	 */
+	PageResult<ProjectTemplatePageVO> queryPage(PageParam pageParam, ProjectTemplateQO qo);
 
-    ProjectTemplateDTO detail(Integer projectTemplateId);
+	ProjectTemplateDTO detail(Integer projectTemplateId);
 
-    boolean saveSignInfo(ProjectTemplateSignReqDTO projectTemplateSignReqDTO);
+	boolean saveSignInfo(ProjectTemplateSignReqDTO projectTemplateSignReqDTO);
 
-    ProjectTemplate getByPidAndFileType(Integer projectId, Integer fileType);
+	ProjectTemplate getByPidAndFileType(Integer projectId, Integer fileType);
 
-    long countByKeystoreId(Integer keystoreId);
+	long countByKeystoreId(Integer keystoreId);
+
 }

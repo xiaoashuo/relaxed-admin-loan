@@ -51,8 +51,6 @@ public class TemplateManage {
 
 	private final StoreWordTemplate wordTemplate;
 
-
-
 	@SneakyThrows
 	public boolean saveTemplate(Template template, MultipartFile file) {
 		String originalFilename = file.getOriginalFilename();
@@ -60,7 +58,8 @@ public class TemplateManage {
 		Assert.isTrue(StrUtil.equalsIgnoreCase("docx", extName), "模板文件仅支持后缀docx");
 		String excelFilename = IdUtil.getSnowflakeNextIdStr() + ".xlsx";
 		String profile = RelaxedConfig.getProfile();
-		FileMeta fileMeta = FileUtils.upload(profile, LoanUploadPath.TEMPLATE_WORD_RELATIVE_PATH, file, FileConfig.create().splitDate(false));
+		FileMeta fileMeta = FileUtils.upload(profile, LoanUploadPath.TEMPLATE_WORD_RELATIVE_PATH, file,
+				FileConfig.create().splitDate(false));
 		String docFile = fileMeta.getLocalFullFilePath();
 		String docUrl = fileMeta.getRelativeFilePath();
 		// 2.生成数据文件
@@ -73,16 +72,17 @@ public class TemplateManage {
 			names.add(tagName);
 			return names;
 		}).collect(Collectors.toList()));
-		//相对路径
-		String excelDir = "/"+ LoanUploadPath.TEMPLATE_EXCEL_RELATIVE_PATH;
-		//根路径+相对路径 =excel存储目录
-		String excelParentDir=RelaxedConfig.getProfile()+excelDir;
-		//目录检查
+		// 相对路径
+		String excelDir = "/" + LoanUploadPath.TEMPLATE_EXCEL_RELATIVE_PATH;
+		// 根路径+相对路径 =excel存储目录
+		String excelParentDir = RelaxedConfig.getProfile() + excelDir;
+		// 目录检查
 		FileUtil.mkdir(excelParentDir);
-		//相对文件路径
-		String relativePath = excelDir +"/"+ excelFilename;
+		// 相对文件路径
+		String relativePath = excelDir + "/" + excelFilename;
 
-		EasyExcel.write(RelaxedConfig.getProfile()+relativePath).head(headList).inMemory(true).sheet().doWrite(ListUtil.empty());
+		EasyExcel.write(RelaxedConfig.getProfile() + relativePath).head(headList).inMemory(true).sheet()
+				.doWrite(ListUtil.empty());
 		template.setTemplateFilename(originalFilename);
 		template.setTemplateUrl(docUrl);
 		template.setDatafilePath(relativePath);

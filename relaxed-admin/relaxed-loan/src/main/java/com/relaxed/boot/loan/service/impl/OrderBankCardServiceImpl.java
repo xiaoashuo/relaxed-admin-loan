@@ -18,39 +18,39 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:19
  */
 @Slf4j
 @RequiredArgsConstructor
 @Service
-public class OrderBankCardServiceImpl extends ExtendServiceImpl<OrderBankCardMapper, OrderBankCard> implements OrderBankCardService {
+public class OrderBankCardServiceImpl extends ExtendServiceImpl<OrderBankCardMapper, OrderBankCard>
+		implements OrderBankCardService {
 
-    private final BankCodeService bankCodeService;
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<OrderBankCardPageVO> 分页数据
-    */
-    @Override
-    public PageResult<OrderBankCardPageVO> queryPage(PageParam pageParam, OrderBankCardQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	private final BankCodeService bankCodeService;
 
-    @Override
-    public List<OrderBankCard> listByOrderId(Long orderId) {
-        return list(Wrappers.lambdaQuery(OrderBankCard.class )
-                .eq(OrderBankCard::getOrderId,orderId));
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<OrderBankCardPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<OrderBankCardPageVO> queryPage(PageParam pageParam, OrderBankCardQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    @Override
-    public boolean saveBankCard(OrderBankCard orderBankCard) {
-        String bankCode = orderBankCard.getBankCode();
-        BankCode bankCodeModal= bankCodeService.getByBankCode(bankCode);
-        orderBankCard.setBankName(bankCodeModal.getBankName());
-        boolean success = save(orderBankCard);
-        return success;
-    }
+	@Override
+	public List<OrderBankCard> listByOrderId(Long orderId) {
+		return list(Wrappers.lambdaQuery(OrderBankCard.class).eq(OrderBankCard::getOrderId, orderId));
+	}
+
+	@Override
+	public boolean saveBankCard(OrderBankCard orderBankCard) {
+		String bankCode = orderBankCard.getBankCode();
+		BankCode bankCodeModal = bankCodeService.getByBankCode(bankCode);
+		orderBankCard.setBankName(bankCodeModal.getBankName());
+		boolean success = save(orderBankCard);
+		return success;
+	}
+
 }

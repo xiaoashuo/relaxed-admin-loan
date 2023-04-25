@@ -25,9 +25,9 @@ public class RiskFieldQO implements Serializable {
 	@Schema(title = "模型ID", description = "模型ID")
 	private Long modelId;
 
-
 	@Schema(title = "字段名称", description = "字段名称")
 	private String fieldName;
+
 	@Schema(title = "字段标签", description = "字段标签")
 	private String label;
 

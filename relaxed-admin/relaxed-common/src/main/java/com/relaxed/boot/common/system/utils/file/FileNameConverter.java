@@ -9,10 +9,11 @@ package com.relaxed.boot.common.system.utils.file;
  */
 public interface FileNameConverter {
 
-    /**
-     * 转换生成文件名称
-     * @param originalFilename 原始文件名称
-     * @return 转换后文件名称
-     */
-    String extractFileName(String originalFilename);
+	/**
+	 * 转换生成文件名称
+	 * @param originalFilename 原始文件名称
+	 * @return 转换后文件名称
+	 */
+	String extractFileName(String originalFilename);
+
 }

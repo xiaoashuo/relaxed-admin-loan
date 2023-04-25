@@ -11,19 +11,18 @@ import com.relaxed.extend.mybatis.plus.service.ExtendService;
 import java.util.List;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:19
  */
 public interface BillItemFillerService extends ExtendService<BillItemFiller> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;BillItemFillerPageVO&gt; 分页数据
-    */
-    PageResult<BillItemFillerPageVO> queryPage(PageParam pageParam, BillItemFillerQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;BillItemFillerPageVO&gt; 分页数据
+	 */
+	PageResult<BillItemFillerPageVO> queryPage(PageParam pageParam, BillItemFillerQO qo);
 
-    List<BillItemFillerPageVO> queryList(BillItemFillerQO billItemQO);
+	List<BillItemFillerPageVO> queryList(BillItemFillerQO billItemQO);
+
 }

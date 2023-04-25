@@ -33,9 +33,9 @@ public class SubscribeDataListHandle implements SubscribeHandle {
 	@Override
 	public void onMessage(String channel, String message) {
 		log.info("data list update message:{}", message);
-//		DataListsVO vo = JSONUtil.toBean(message, DataListsVO.class);
-//		// 删除本地缓存的黑白名单数据
-//		cacheService.del(CacheKey.getDataListCacheKey(vo.getModelId()));
+		// DataListsVO vo = JSONUtil.toBean(message, DataListsVO.class);
+		// // 删除本地缓存的黑白名单数据
+		// cacheService.del(CacheKey.getDataListCacheKey(vo.getModelId()));
 	}
 
 }

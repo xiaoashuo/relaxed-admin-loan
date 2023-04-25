@@ -24,76 +24,69 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:31
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan/trade" )
+@RequestMapping("/loan/trade")
 @Tag(name = "管理")
 public class TradeController {
 
-    private final  TradeService tradeService;
+	private final TradeService tradeService;
 
-    /**
-     * 分页查询
-     * @param pageParam 分页参数
-     * @param tradeQO 查询对象
-     * @return R 通用返回体
-     */
-    @Operation(summary = "还款明细分页查询")
-    @GetMapping("/page/repayment" )
-    public R<PageResult<TradePageVO>> queryRepaymentPage(
-            PageParam pageParam, TradeQO tradeQO) {
-        return R.ok(tradeService.queryRepaymentPage(pageParam, tradeQO));
-    }
-    @Operation(summary = "放款明细分页查询")
-    @GetMapping("/page/loan" )
-    public R<PageResult<TradePageVO>> queryLoanPage(
-            PageParam pageParam, TradeQO tradeQO) {
-        return R.ok(tradeService.queryLoanPage(pageParam, tradeQO));
-    }
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param tradeQO 查询对象
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "还款明细分页查询")
+	@GetMapping("/page/repayment")
+	public R<PageResult<TradePageVO>> queryRepaymentPage(PageParam pageParam, TradeQO tradeQO) {
+		return R.ok(tradeService.queryRepaymentPage(pageParam, tradeQO));
+	}
 
-    /**
-     * 新增
-     * @param trade 
-     * @return R 通用返回体
-     */
-    @Operation(summary = "新增")
-    @CreateLog(msg = "新增" )
-    @PostMapping
-    public R<Void> save(@RequestBody Trade trade) {
-        return tradeService.save(trade) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增失败");
-    }
+	@Operation(summary = "放款明细分页查询")
+	@GetMapping("/page/loan")
+	public R<PageResult<TradePageVO>> queryLoanPage(PageParam pageParam, TradeQO tradeQO) {
+		return R.ok(tradeService.queryLoanPage(pageParam, tradeQO));
+	}
 
-    /**
-     * 修改
-     * @param trade 
-     * @return R 通用返回体
-     */
-    @Operation(summary = "修改")
-    @UpdateLog(msg = "修改" )
-    @PutMapping
-    public R<Void> updateById(@RequestBody Trade trade) {
-        return tradeService.updateById(trade) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改失败");
-    }
+	/**
+	 * 新增
+	 * @param trade
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "新增")
+	@CreateLog(msg = "新增")
+	@PostMapping
+	public R<Void> save(@RequestBody Trade trade) {
+		return tradeService.save(trade) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增失败");
+	}
 
-    /**
-     * 通过id删除
-     * @param tradeId id
-     * @return R 通用返回体
-     */
-    @Operation(summary = "通过id删除")
-    @DeleteLog(msg = "通过id删除" )
-    @DeleteMapping("/{tradeId}" )
-    public R<Void> removeById(@PathVariable("tradeId") Long tradeId) {
-        return tradeService.removeById(tradeId) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除失败");
-    }
+	/**
+	 * 修改
+	 * @param trade
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "修改")
+	@UpdateLog(msg = "修改")
+	@PutMapping
+	public R<Void> updateById(@RequestBody Trade trade) {
+		return tradeService.updateById(trade) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改失败");
+	}
+
+	/**
+	 * 通过id删除
+	 * @param tradeId id
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "通过id删除")
+	@DeleteLog(msg = "通过id删除")
+	@DeleteMapping("/{tradeId}")
+	public R<Void> removeById(@PathVariable("tradeId") Long tradeId) {
+		return tradeService.removeById(tradeId) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除失败");
+	}
 
 }

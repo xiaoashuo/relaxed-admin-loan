@@ -71,6 +71,7 @@ public class RiskActivationVO implements Serializable {
 	 */
 	@Schema(title = "状态", description = "状态")
 	private Integer status;
+
 	@Schema(title = "创建时间", description = "创建时间")
 	private LocalDateTime createdTime;
 
@@ -79,4 +80,5 @@ public class RiskActivationVO implements Serializable {
 	 */
 	@Schema(title = "更新时间", description = "更新时间")
 	private LocalDateTime updatedTime;
+
 }

@@ -19,76 +19,83 @@ import java.util.List;
  */
 @Data
 public class MultiSignMeta {
-    /**
-     * 证书链
-     */
-    private Certificate[] chain;
 
-    /**
-     * 签名私钥
-     */
-    private PrivateKey pk;
+	/**
+	 * 证书链
+	 */
+	private Certificate[] chain;
 
-    private String fieldName;
-    /**
-     * 签名的原因，显示在pdf签名属性中
-     */
-    private String reason;
+	/**
+	 * 签名私钥
+	 */
+	private PrivateKey pk;
 
-    /**
-     * 签名的地点，显示在pdf签名属性中
-     */
-    private String location;
+	private String fieldName;
 
-    /**
-     * The contact name of the signer.
-     */
-    private String contact = "";
-    /**
-     * 文件是否存在签名域
-     */
-    private boolean existSignArea = false;
-    /**
-     * layer2 层 签名描述文本 渲染模式包含 RenderingMode.DESCRIPTION 显示
-     */
-    private String description;
+	/**
+	 * 签名的原因，显示在pdf签名属性中
+	 */
+	private String reason;
 
-    /**
-     * 图章路径 渲染模式包含 RenderingMode.GRAPHIC 显示 章图片最好用无背景图层的 否则会遮盖内容
-     */
-    private String imagePath;
+	/**
+	 * 签名的地点，显示在pdf签名属性中
+	 */
+	private String location;
 
-    /**
-     * 图片缩放比列 默认为0
-     */
-    private Integer imageScale = 0;
-    /**
-     * x偏移量   正 像右便宜 负 像左
-     */
-    private float offsetX;
-    /**
-     * y 偏移量 正 向上  负向下
-     */
-    private float offsetY;
-    private float width;
+	/**
+	 * The contact name of the signer.
+	 */
+	private String contact = "";
 
-    private float height;
+	/**
+	 * 文件是否存在签名域
+	 */
+	private boolean existSignArea = false;
 
+	/**
+	 * layer2 层 签名描述文本 渲染模式包含 RenderingMode.DESCRIPTION 显示
+	 */
+	private String description;
 
-    /**
-     * 批准签章
-     */
-    private int certificationLevel = PdfSigner.NOT_CERTIFIED;
+	/**
+	 * 图章路径 渲染模式包含 RenderingMode.GRAPHIC 显示 章图片最好用无背景图层的 否则会遮盖内容
+	 */
+	private String imagePath;
 
-    /**
-     * 表现形式：仅描述，仅图片，图片和描述，签章者和描述
-     */
-    private PdfSignatureAppearance.RenderingMode renderingMode = PdfSignatureAppearance.RenderingMode.DESCRIPTION;
-    /**
-     * 摘要算法名称，例如SHA-1
-     */
-    private String digestAlgorithm = DigestAlgorithms.SHA256;
-    List<KeywordLocation> keywordLocationList;
+	/**
+	 * 图片缩放比列 默认为0
+	 */
+	private Integer imageScale = 0;
 
+	/**
+	 * x偏移量 正 像右便宜 负 像左
+	 */
+	private float offsetX;
+
+	/**
+	 * y 偏移量 正 向上 负向下
+	 */
+	private float offsetY;
+
+	private float width;
+
+	private float height;
+
+	/**
+	 * 批准签章
+	 */
+	private int certificationLevel = PdfSigner.NOT_CERTIFIED;
+
+	/**
+	 * 表现形式：仅描述，仅图片，图片和描述，签章者和描述
+	 */
+	private PdfSignatureAppearance.RenderingMode renderingMode = PdfSignatureAppearance.RenderingMode.DESCRIPTION;
+
+	/**
+	 * 摘要算法名称，例如SHA-1
+	 */
+	private String digestAlgorithm = DigestAlgorithms.SHA256;
+
+	List<KeywordLocation> keywordLocationList;
 
 }

@@ -54,8 +54,6 @@ public class RiskPreItem extends Model<RiskPreItem> {
 	@Schema(title = "目标字段", description = "目标字段")
 	private String destField;
 
-
-
 	/**
 	 * 目标标签 描述
 	 */
@@ -79,6 +77,7 @@ public class RiskPreItem extends Model<RiskPreItem> {
 	 */
 	@Schema(title = "扩展配置信息", description = "扩展配置信息")
 	private String configJson;
+
 	@Schema(title = "请求类型", description = "请求类型")
 	private String reqType;
 

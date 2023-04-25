@@ -58,6 +58,4 @@ public class EvaluateReport implements Serializable {
 		phaseTime.put(name, time);
 	}
 
-
-
 }

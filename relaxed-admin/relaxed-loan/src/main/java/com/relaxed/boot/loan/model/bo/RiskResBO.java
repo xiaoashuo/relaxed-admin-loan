@@ -16,33 +16,44 @@ import java.util.Map;
  */
 @Data
 public class RiskResBO {
-    private Integer code;
-    private String message;
 
+	private Integer code;
 
-    private JSONObject data;
+	private String message;
 
+	private JSONObject data;
 
+	@Data
+	public class Risk {
 
-    @Data
-    public class Risk{
-        private String risk;
-        private Double score;
-    }
+		private String risk;
 
-    @Data
-    public class RiskRule{
-        private String key;
-        private BigDecimal value;
-        private String desc;
-    }
-    @Data
-    public class Content{
+		private Double score;
 
-        private LocalDateTime startTime;
-        private LocalDateTime endTime;
-        private Map<String,Object> phaseTime;
-        private Map<String,Object> report;
-    }
+	}
+
+	@Data
+	public class RiskRule {
+
+		private String key;
+
+		private BigDecimal value;
+
+		private String desc;
+
+	}
+
+	@Data
+	public class Content {
+
+		private LocalDateTime startTime;
+
+		private LocalDateTime endTime;
+
+		private Map<String, Object> phaseTime;
+
+		private Map<String, Object> report;
+
+	}
 
 }

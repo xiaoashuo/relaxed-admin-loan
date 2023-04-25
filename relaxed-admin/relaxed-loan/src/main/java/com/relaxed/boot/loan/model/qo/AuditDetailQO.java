@@ -10,8 +10,9 @@ import lombok.Data;
  * @author yakir 2023-01-10 10:32:31
  */
 @Data
-@Schema(title = "审核拒绝原因表")  
-public class AuditDetailQO  {
+@Schema(title = "审核拒绝原因表")
+public class AuditDetailQO {
+
 	private static final long serialVersionUID = 1L;
 
 	/**

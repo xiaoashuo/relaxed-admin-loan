@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.function.Supplier;
@@ -36,31 +35,29 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class RiskActivationManage  {
+public class RiskActivationManage {
 
 	private final RiskActivationService activationService;
 
 	private final EventDistributor eventDistributor;
 
-
 	public PageResult<RiskActivationVO> selectByPage(PageParam pageParam, RiskActivationQO activationQO) {
 		return activationService.selectByPage(pageParam, activationQO);
 	}
 
-
 	public RiskActivationDTO add(RiskActivation activation) {
-		Assert.isTrue(activationService.save(activation), () -> new RiskException(RiskCode.RISK_ACTIVATION_INFO_EXCEPTION));
-		if (StrUtil.isEmpty(activation.getActivationName())){
-			activation.setActivationName("activation_"+activation.getId());
+		Assert.isTrue(activationService.save(activation),
+				() -> new RiskException(RiskCode.RISK_ACTIVATION_INFO_EXCEPTION));
+		if (StrUtil.isEmpty(activation.getActivationName())) {
+			activation.setActivationName("activation_" + activation.getId());
 			activation.setUpdatedTime(LocalDateTime.now());
 			activationService.updateById(activation);
 		}
 
 		eventDistributor.distribute(SubscribeEnum.PUB_SUB_ACTIVATION_CHANNEL.getChannel(),
-					JSONUtil.toJsonStr(RiskActivationConverter.INSTANCE.poToVo(activation)));
+				JSONUtil.toJsonStr(RiskActivationConverter.INSTANCE.poToVo(activation)));
 		return RiskActivationConverter.INSTANCE.poToDto(activation);
 	}
-
 
 	public boolean edit(RiskActivation activation) {
 		Long activationId = activation.getId();
@@ -73,7 +70,6 @@ public class RiskActivationManage  {
 		}
 		return false;
 	}
-
 
 	public boolean del(Long id) {
 		RiskActivation sqlActivation = activationService.getById(id);
@@ -96,4 +92,5 @@ public class RiskActivationManage  {
 		riskActivation.setStatus(status);
 		return activationService.updateById(riskActivation);
 	}
+
 }

@@ -17,16 +17,16 @@ import java.util.List;
  */
 public interface BankCodeService extends ExtendService<BankCode> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;BankCodePageVO&gt; 分页数据
-    */
-    PageResult<BankCodePageVO> queryPage(PageParam pageParam, BankCodeQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;BankCodePageVO&gt; 分页数据
+	 */
+	PageResult<BankCodePageVO> queryPage(PageParam pageParam, BankCodeQO qo);
 
-    List<SelectData> querySelectData();
+	List<SelectData> querySelectData();
 
-    BankCode getByBankCode(String bankCode);
+	BankCode getByBankCode(String bankCode);
 
 }

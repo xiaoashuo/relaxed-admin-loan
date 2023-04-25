@@ -19,10 +19,11 @@ public interface BillItemFillerConverter {
 
 	/**
 	 * PO 转 PageVO
-	 * @param billItemFiller 
+	 * @param billItemFiller
 	 * @return BillItemFillerPageVO PageVO
 	 */
 	BillItemFillerPageVO poToPageVo(BillItemFiller billItemFiller);
+
 	List<BillItemFillerPageVO> poToPageVos(List<BillItemFiller> billItemFillers);
 
 }

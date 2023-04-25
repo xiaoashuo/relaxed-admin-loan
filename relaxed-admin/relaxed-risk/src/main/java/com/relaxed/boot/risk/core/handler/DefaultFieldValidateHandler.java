@@ -5,7 +5,6 @@ import com.relaxed.boot.risk.enums.FieldValidResult;
 import com.relaxed.boot.risk.enums.ValidTypeEnum;
 import com.relaxed.boot.risk.model.vo.RiskFieldVO;
 
-
 import java.util.Map;
 
 /**

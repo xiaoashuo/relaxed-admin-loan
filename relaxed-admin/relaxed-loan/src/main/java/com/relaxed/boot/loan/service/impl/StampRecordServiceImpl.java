@@ -19,22 +19,23 @@ import java.util.List;
  * @author yakir 2023-01-29 09:31:45
  */
 @Service
-public class StampRecordServiceImpl extends ExtendServiceImpl<StampRecordMapper, StampRecord> implements StampRecordService {
+public class StampRecordServiceImpl extends ExtendServiceImpl<StampRecordMapper, StampRecord>
+		implements StampRecordService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<StampRecordPageVO> 分页数据
-    */
-    @Override
-    public PageResult<StampRecordPageVO> queryPage(PageParam pageParam, StampRecordQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<StampRecordPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<StampRecordPageVO> queryPage(PageParam pageParam, StampRecordQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    @Override
-    public List<StampRecord> listByStatus(Integer status) {
-        return list(Wrappers.lambdaQuery(StampRecord.class)
-                .eq(StampRecord::getStatus,status));
-    }
+	@Override
+	public List<StampRecord> listByStatus(Integer status) {
+		return list(Wrappers.lambdaQuery(StampRecord.class).eq(StampRecord::getStatus, status));
+	}
+
 }

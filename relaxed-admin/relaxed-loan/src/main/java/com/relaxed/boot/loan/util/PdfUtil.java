@@ -53,9 +53,7 @@ import java.util.List;
 /**
  * @author Yakir
  * @Topic PdfUtil
- * @Description
- * https://juejin.cn/post/6844903519124717581
- * 骑缝章 参考 当前不实现
+ * @Description https://juejin.cn/post/6844903519124717581 骑缝章 参考 当前不实现
  * https://blog.csdn.net/weixin_41576903/article/details/108833567
  * @date 2022/12/12 16:14
  * @Version 1.0
@@ -175,15 +173,16 @@ public class PdfUtil {
 		// 获取证书链
 		Certificate[] chain = ks.getCertificateChain(alias);
 	}
+
 	@SneakyThrows
 	public static void multiSign(String source, String dest, List<KeywordLocation> keywordLocationList,
-								 SignInfo signInfo) {
-		  multiSign(new File(source),new File(dest),keywordLocationList,signInfo);
+			SignInfo signInfo) {
+		multiSign(new File(source), new File(dest), keywordLocationList, signInfo);
 
 	}
+
 	@SneakyThrows
-	public static void multiSign(File source, File dest, List<KeywordLocation> keywordLocationList,
-			SignInfo signInfo) {
+	public static void multiSign(File source, File dest, List<KeywordLocation> keywordLocationList, SignInfo signInfo) {
 		// No such provider: BC : 问题解决，加BC库支持 算法提供者
 		BouncyCastleProvider provider = new BouncyCastleProvider();
 		Security.addProvider(provider);
@@ -226,8 +225,8 @@ public class PdfUtil {
 						// TODO 原始文字宽度高度太小，此处使用用户填充的
 						float offsetX = signInfo.getOffsetX();
 						float offsetY = signInfo.getOffsetY();
-						rectangle.setX(rectangle.getX()+offsetX);
-						rectangle.setY(rectangle.getY()+offsetY);
+						rectangle.setX(rectangle.getX() + offsetX);
+						rectangle.setY(rectangle.getY() + offsetY);
 						rectangle.setWidth(signInfo.getWidth());
 						rectangle.setHeight(signInfo.getHeight());
 						signatureAppearance.setPageRect(rectangle);
@@ -408,21 +407,23 @@ public class PdfUtil {
 	public static List<KeywordLocation> extractKeywordLocation(String source, String keyword) {
 		return extractKeywordLocation(new FileInputStream(source), null, keyword);
 	}
+
 	@SneakyThrows
-	public static List<KeywordLocation> extractKeywordLocation(File source,
-															   String keyword) {
+	public static List<KeywordLocation> extractKeywordLocation(File source, String keyword) {
 		return extractKeywordLocation(new FileInputStream(source), null, keyword);
 	}
+
 	@SneakyThrows
 	public static List<KeywordLocation> extractKeywordLocation(ByteArrayInputStream source, Integer specifyPageNum,
-															   String keyword) {
+			String keyword) {
 		return extractKeywordLocation(source, specifyPageNum, keyword);
 	}
+
 	@SneakyThrows
-	public static List<KeywordLocation> extractKeywordLocation(File source, Integer specifyPageNum,
-															   String keyword) {
+	public static List<KeywordLocation> extractKeywordLocation(File source, Integer specifyPageNum, String keyword) {
 		return extractKeywordLocation(new FileInputStream(source), specifyPageNum, keyword);
 	}
+
 	/**
 	 * 提取关键字
 	 * @param source 源文件路径
@@ -431,7 +432,8 @@ public class PdfUtil {
 	 * @return
 	 */
 	@SneakyThrows
-	public static List<KeywordLocation> extractKeywordLocation(InputStream source, Integer specifyPageNum, String keyword) {
+	public static List<KeywordLocation> extractKeywordLocation(InputStream source, Integer specifyPageNum,
+			String keyword) {
 		List<KeywordLocation> allKeywords = new ArrayList<>();
 		try (PdfDocument pdfDoc = new PdfDocument(new PdfReader(source))) {
 			if (specifyPageNum != null) {
@@ -448,8 +450,6 @@ public class PdfUtil {
 		}
 		return allKeywords;
 	}
-
-
 
 	/**
 	 * 提取页面关键字位置

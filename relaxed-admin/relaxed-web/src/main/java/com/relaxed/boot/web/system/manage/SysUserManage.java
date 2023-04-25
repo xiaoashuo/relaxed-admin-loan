@@ -155,11 +155,11 @@ public class SysUserManage {
 	public FileMeta uploadAvatar(SysUserDetails sysUserDetails, MultipartFile file) {
 		Integer userId = sysUserDetails.getUserId();
 		String avatar = sysUserDetails.getAvatar();
-		FileUtils.delete(RelaxedConfig.getProfile(),avatar);
+		FileUtils.delete(RelaxedConfig.getProfile(), avatar);
 		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.USER_AVATAR_RELATIVE_PATH, file,
 				FileConfig.create().splitDate(false));
 		String relativeFilePath = fileMeta.getRelativeFilePath();
-		SysUser updateUser=new SysUser();
+		SysUser updateUser = new SysUser();
 		updateUser.setUserId(userId);
 		updateUser.setAvatar(relativeFilePath);
 		Assert.isTrue(sysUserService.updateById(updateUser), () -> {

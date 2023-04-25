@@ -17,28 +17,28 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:19
  */
 @Service
-public class BillItemFillerServiceImpl extends ExtendServiceImpl<BillItemFillerMapper, BillItemFiller> implements BillItemFillerService {
+public class BillItemFillerServiceImpl extends ExtendServiceImpl<BillItemFillerMapper, BillItemFiller>
+		implements BillItemFillerService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<BillItemFillerPageVO> 分页数据
-    */
-    @Override
-    public PageResult<BillItemFillerPageVO> queryPage(PageParam pageParam, BillItemFillerQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<BillItemFillerPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<BillItemFillerPageVO> queryPage(PageParam pageParam, BillItemFillerQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    @Override
-    public List<BillItemFillerPageVO> queryList(BillItemFillerQO billItemFillerQO) {
-        List<BillItemFiller> list = list(Wrappers.lambdaQuery(BillItemFiller.class)
-                .eq(BillItemFiller::getBillItemId, billItemFillerQO.getBillItemId()));
-        return BillItemFillerConverter.INSTANCE.poToPageVos(list);
-    }
+	@Override
+	public List<BillItemFillerPageVO> queryList(BillItemFillerQO billItemFillerQO) {
+		List<BillItemFiller> list = list(Wrappers.lambdaQuery(BillItemFiller.class).eq(BillItemFiller::getBillItemId,
+				billItemFillerQO.getBillItemId()));
+		return BillItemFillerConverter.INSTANCE.poToPageVos(list);
+	}
+
 }

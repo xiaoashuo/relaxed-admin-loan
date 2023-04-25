@@ -18,19 +18,20 @@ import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
  */
 public interface OrderBorrowMapper extends ExtendMapper<OrderBorrow> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<OrderBorrowPageVO> VO分页数据
-    */
-   default PageResult<OrderBorrowPageVO> queryPage(PageParam pageParam, OrderBorrowQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<OrderBorrowPageVO> VO分页数据
+	 */
+	default PageResult<OrderBorrowPageVO> queryPage(PageParam pageParam, OrderBorrowQO qo) {
 		IPage<OrderBorrow> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<OrderBorrow> wrapper = WrappersX.lambdaQueryX(OrderBorrow.class);
-		wrapper.eq(OrderBorrow::getOrderId,qo.getOrderId());
-		wrapper.eqIfPresent(OrderBorrow::getRelatedName,qo.getRelatedName());
+		wrapper.eq(OrderBorrow::getOrderId, qo.getOrderId());
+		wrapper.eqIfPresent(OrderBorrow::getRelatedName, qo.getRelatedName());
 		this.selectPage(page, wrapper);
 		IPage<OrderBorrowPageVO> voPage = page.convert(OrderBorrowConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
-   }
+	}
+
 }

@@ -16,13 +16,14 @@ import java.util.List;
  */
 public interface StampRecordService extends ExtendService<StampRecord> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;StampRecordPageVO&gt; 分页数据
-    */
-    PageResult<StampRecordPageVO> queryPage(PageParam pageParam, StampRecordQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;StampRecordPageVO&gt; 分页数据
+	 */
+	PageResult<StampRecordPageVO> queryPage(PageParam pageParam, StampRecordQO qo);
 
-    List<StampRecord> listByStatus(Integer status);
+	List<StampRecord> listByStatus(Integer status);
+
 }

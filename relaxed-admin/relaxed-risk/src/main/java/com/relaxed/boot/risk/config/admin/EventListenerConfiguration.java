@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.config.admin;
 
-
 import com.relaxed.boot.risk.core.event.listener.RiskRuleChangeListener;
 import com.relaxed.boot.risk.service.RiskRuleHistoryService;
 import org.springframework.context.annotation.Bean;

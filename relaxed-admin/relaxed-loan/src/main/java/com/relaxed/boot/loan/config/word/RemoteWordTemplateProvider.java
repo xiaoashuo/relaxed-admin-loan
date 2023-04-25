@@ -23,7 +23,7 @@ public class RemoteWordTemplateProvider implements WordTemplateProvider<String> 
 
 	@Override
 	public String get(String templateCode) {
-		String templatePath = RelaxedConfig.getProfile()+templateService.getByTemplateCode(templateCode);
+		String templatePath = RelaxedConfig.getProfile() + templateService.getByTemplateCode(templateCode);
 		return templatePath;
 	}
 

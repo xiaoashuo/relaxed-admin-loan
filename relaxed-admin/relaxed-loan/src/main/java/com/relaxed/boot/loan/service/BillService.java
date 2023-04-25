@@ -8,19 +8,18 @@ import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:31
  */
 public interface BillService extends ExtendService<Bill> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;BillPageVO&gt; 分页数据
-    */
-    PageResult<BillPageVO> queryPage(PageParam pageParam, BillQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;BillPageVO&gt; 分页数据
+	 */
+	PageResult<BillPageVO> queryPage(PageParam pageParam, BillQO qo);
 
-    Bill getByLoanId(Long loanId);
+	Bill getByLoanId(Long loanId);
+
 }

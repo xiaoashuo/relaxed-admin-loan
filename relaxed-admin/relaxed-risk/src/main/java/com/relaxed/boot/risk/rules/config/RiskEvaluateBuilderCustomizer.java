@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.rules.config;
 
-
 import com.relaxed.boot.risk.rules.RiskEvaluateChain;
 
 /**

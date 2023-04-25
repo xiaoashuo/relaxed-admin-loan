@@ -95,13 +95,15 @@ public class RiskFieldController {
 	 * @return com.relaxed.common.model.result.R<?>
 	 */
 	@GetMapping("/field/page")
-	public R<PageResult<RiskFieldVO>> fieldPage(PageParam pageParam,@Valid RiskFieldQO riskFieldQO) {
-		return R.ok(fieldManageService.fieldPage(pageParam,riskFieldQO));
+	public R<PageResult<RiskFieldVO>> fieldPage(PageParam pageParam, @Valid RiskFieldQO riskFieldQO) {
+		return R.ok(fieldManageService.fieldPage(pageParam, riskFieldQO));
 	}
+
 	@GetMapping("/field/list/{modelId}")
 	public R<List<SelectData<RiskFieldVO>>> fieldList(@PathVariable Long modelId) {
 		return R.ok(fieldManageService.fieldListByModelId(modelId));
 	}
+
 	/**
 	 * 新增数据
 	 * @param field {@link RiskField} 数据参数
@@ -144,12 +146,14 @@ public class RiskFieldController {
 	 */
 	@GetMapping("/pre/item/page")
 	public R<?> preItemPage(PageParam pageParam, @Valid RiskPreItemQO riskPreItemQO) {
-		return R.ok(fieldManageService.preFieldList(pageParam,riskPreItemQO));
+		return R.ok(fieldManageService.preFieldList(pageParam, riskPreItemQO));
 	}
+
 	@PutMapping("/pre/item/switch/status")
 	public R<?> preItemSwitchStatus(@RequestParam Long preItemId, @RequestParam Integer status) {
-		return R.ok(fieldManageService.preFieldSwitchStatus(preItemId,status));
+		return R.ok(fieldManageService.preFieldSwitchStatus(preItemId, status));
 	}
+
 	/**
 	 * 新增数据
 	 * @param preItem {@link RiskPreItem} 数据参数

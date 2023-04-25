@@ -48,6 +48,7 @@ public class RiskModelController {
 	public R<PageResult<RiskModelVO>> page(PageParam pageParam, RiskModelQO modelQO) {
 		return R.ok(riskModelManage.selectByPage(pageParam, modelQO));
 	}
+
 	/**
 	 * 查询执行模型
 	 * @param modelId {@link PageParam} 模型id
@@ -58,6 +59,7 @@ public class RiskModelController {
 	public R<RiskModelVO> page(@PathVariable Long modelId) {
 		return R.ok(riskModelManage.getByModelId(modelId));
 	}
+
 	/**
 	 * 新增数据
 	 * @param model {@link RiskModel} 数据参数
@@ -82,8 +84,8 @@ public class RiskModelController {
 
 	@PutMapping("/switch/status")
 	@Operation(summary = "切换模型启用状态", description = "切换模型启用状态")
-	public R<?> switchStatus(@RequestParam Long modelId,@RequestParam Integer status) {
-		return R.ok(riskModelManage.switchStatus(modelId,status));
+	public R<?> switchStatus(@RequestParam Long modelId, @RequestParam Integer status) {
+		return R.ok(riskModelManage.switchStatus(modelId, status));
 	}
 
 	/**

@@ -33,7 +33,7 @@ public class TemplateAreaServiceImpl extends ExtendServiceImpl<TemplateAreaMappe
 
 	@Override
 	public boolean removeByTemplateId(Integer templateId) {
-		return remove(WrappersX.lambdaQueryX(TemplateArea.class)
-				.eq(TemplateArea::getTemplateId, templateId));
+		return remove(WrappersX.lambdaQueryX(TemplateArea.class).eq(TemplateArea::getTemplateId, templateId));
 	}
+
 }

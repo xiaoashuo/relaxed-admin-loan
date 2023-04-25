@@ -48,14 +48,11 @@ public class RiskPreItemDTO implements Serializable {
 	@Schema(title = "目标字段", description = "目标字段")
 	private String destField;
 
-
-
 	/**
 	 * 目标标签 描述
 	 */
 	@Schema(title = "目标标签", description = "目标标签")
 	private String destLabel;
-
 
 	/**
 	 * 参数
@@ -89,6 +86,5 @@ public class RiskPreItemDTO implements Serializable {
 	 */
 	@Schema(title = "更新时间", description = "更新时间")
 	private LocalDateTime updatedTime;
-
 
 }

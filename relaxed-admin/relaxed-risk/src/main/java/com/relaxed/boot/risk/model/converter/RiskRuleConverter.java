@@ -4,7 +4,6 @@ import com.relaxed.boot.risk.model.dto.RiskRuleDTO;
 import com.relaxed.boot.risk.model.entity.RiskRule;
 import com.relaxed.boot.risk.model.vo.RiskRuleVO;
 
-
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

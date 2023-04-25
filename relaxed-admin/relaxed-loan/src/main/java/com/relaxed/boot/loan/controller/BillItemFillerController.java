@@ -28,74 +28,73 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:19
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan/bill-item-filler" )
+@RequestMapping("/loan/bill-item-filler")
 @Tag(name = "管理")
 public class BillItemFillerController {
 
-    private final  BillItemFillerService billItemFillerService;
+	private final BillItemFillerService billItemFillerService;
 
-    /**
-     * 分页查询
-     * @param pageParam 分页参数
-     * @param billItemFillerQO 查询对象
-     * @return R 通用返回体
-     */
-    @Operation(summary = "分页查询")
-    @GetMapping("/page" )
-    public R<PageResult<BillItemFillerPageVO>> getBillItemFillerPage(
-            PageParam pageParam, BillItemFillerQO billItemFillerQO) {
-        return R.ok(billItemFillerService.queryPage(pageParam, billItemFillerQO));
-    }
-    @Operation(summary = "列表查询")
-    @GetMapping("/list" )
-    public R<List<BillItemFillerPageVO>> getBillItemFillerList(BillItemFillerQO billItemFillerQO) {
-        return R.ok(billItemFillerService.queryList(billItemFillerQO));
-    }
-    /**
-     * 新增
-     * @param billItemFiller 
-     * @return R 通用返回体
-     */
-    @Operation(summary = "新增")
-    @CreateLog(msg = "新增" )
-    @PostMapping
-    public R<Void> save(@RequestBody BillItemFiller billItemFiller) {
-        return billItemFillerService.save(billItemFiller) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增失败");
-    }
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param billItemFillerQO 查询对象
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "分页查询")
+	@GetMapping("/page")
+	public R<PageResult<BillItemFillerPageVO>> getBillItemFillerPage(PageParam pageParam,
+			BillItemFillerQO billItemFillerQO) {
+		return R.ok(billItemFillerService.queryPage(pageParam, billItemFillerQO));
+	}
 
-    /**
-     * 修改
-     * @param billItemFiller 
-     * @return R 通用返回体
-     */
-    @Operation(summary = "修改")
-    @UpdateLog(msg = "修改" )
-    @PutMapping
-    public R<Void> updateById(@RequestBody BillItemFiller billItemFiller) {
-        return billItemFillerService.updateById(billItemFiller) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改失败");
-    }
+	@Operation(summary = "列表查询")
+	@GetMapping("/list")
+	public R<List<BillItemFillerPageVO>> getBillItemFillerList(BillItemFillerQO billItemFillerQO) {
+		return R.ok(billItemFillerService.queryList(billItemFillerQO));
+	}
 
-    /**
-     * 通过id删除
-     * @param itemFillerId id
-     * @return R 通用返回体
-     */
-    @Operation(summary = "通过id删除")
-    @DeleteLog(msg = "通过id删除" )
-    @DeleteMapping("/{itemFillerId}" )
-    public R<Void> removeById(@PathVariable("itemFillerId") Long itemFillerId) {
-        return billItemFillerService.removeById(itemFillerId) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除失败");
-    }
+	/**
+	 * 新增
+	 * @param billItemFiller
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "新增")
+	@CreateLog(msg = "新增")
+	@PostMapping
+	public R<Void> save(@RequestBody BillItemFiller billItemFiller) {
+		return billItemFillerService.save(billItemFiller) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增失败");
+	}
+
+	/**
+	 * 修改
+	 * @param billItemFiller
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "修改")
+	@UpdateLog(msg = "修改")
+	@PutMapping
+	public R<Void> updateById(@RequestBody BillItemFiller billItemFiller) {
+		return billItemFillerService.updateById(billItemFiller) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改失败");
+	}
+
+	/**
+	 * 通过id删除
+	 * @param itemFillerId id
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "通过id删除")
+	@DeleteLog(msg = "通过id删除")
+	@DeleteMapping("/{itemFillerId}")
+	public R<Void> removeById(@PathVariable("itemFillerId") Long itemFillerId) {
+		return billItemFillerService.removeById(itemFillerId) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除失败");
+	}
 
 }

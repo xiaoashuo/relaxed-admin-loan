@@ -8,14 +8,12 @@ import com.relaxed.common.model.domain.PageResult;
 import com.relaxed.extend.mybatis.plus.service.ExtendService;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:31
  */
 public interface TradeService extends ExtendService<Trade> {
 
+	PageResult<TradePageVO> queryRepaymentPage(PageParam pageParam, TradeQO tradeQO);
 
+	PageResult<TradePageVO> queryLoanPage(PageParam pageParam, TradeQO tradeQO);
 
-    PageResult<TradePageVO> queryRepaymentPage(PageParam pageParam, TradeQO tradeQO);
-    PageResult<TradePageVO> queryLoanPage(PageParam pageParam, TradeQO tradeQO);
 }

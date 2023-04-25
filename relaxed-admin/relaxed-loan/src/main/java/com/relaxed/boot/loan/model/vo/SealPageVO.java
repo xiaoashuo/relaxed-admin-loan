@@ -56,11 +56,13 @@ public class SealPageVO {
 	 */
 	@Schema(title = "图片描述", description = "图片描述")
 	private String sealRemark;
+
 	/**
 	 * 图片地址
 	 */
 	@Schema(title = "图片地址", description = "图片地址")
 	private String previewSealAddress;
+
 	/**
 	 * 图片地址
 	 */

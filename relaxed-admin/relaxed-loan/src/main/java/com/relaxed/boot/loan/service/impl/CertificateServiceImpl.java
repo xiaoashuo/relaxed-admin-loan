@@ -44,6 +44,7 @@ public class CertificateServiceImpl extends ExtendServiceImpl<CertificateMapper,
 		implements CertificateService {
 
 	private final ProjectTemplateService projectTemplateService;
+
 	/**
 	 * 根据QueryObeject查询分页数据
 	 * @param pageParam 分页参数
@@ -92,9 +93,9 @@ public class CertificateServiceImpl extends ExtendServiceImpl<CertificateMapper,
 
 			ByteArrayOutputStream byteArrayOutputStream = KeystoreUtil.generateKeyStoreV3(keystoreMeta);
 			ByteArrayMultipartFile file = new ByteArrayMultipartFile(byteArrayOutputStream.toByteArray(), filename);
-			FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.KEYSTORE_RELATIVE_PATH, file,
-					FileConfig.create().splitDate(false));
-			String address =  fileMeta.getRelativeFilePath();
+			FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.KEYSTORE_RELATIVE_PATH,
+					file, FileConfig.create().splitDate(false));
+			String address = fileMeta.getRelativeFilePath();
 			certificate.setCertificateFilename(filename);
 			certificate.setCertificateAddress(address);
 		}
@@ -105,13 +106,16 @@ public class CertificateServiceImpl extends ExtendServiceImpl<CertificateMapper,
 	@Override
 	public boolean removeCertificateById(Integer certificateId) {
 		Certificate certificate = getById(certificateId);
-		Assert.notNull(certificate,()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"证书文件不存在"));
+		Assert.notNull(certificate, () -> new BusinessException(SysResultCode.BAD_REQUEST.getCode(), "证书文件不存在"));
 		long relatedCount = projectTemplateService.countByKeystoreId(certificateId);
-		Assert.isTrue(relatedCount<=0,()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"证书存在关联使用,不允许删除."));
+		Assert.isTrue(relatedCount <= 0,
+				() -> new BusinessException(SysResultCode.BAD_REQUEST.getCode(), "证书存在关联使用,不允许删除."));
 		String certificateAddress = certificate.getCertificateAddress();
-		Assert.isTrue(StrUtil.isNotEmpty(certificateAddress),()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"证书地址不存在"));
+		Assert.isTrue(StrUtil.isNotEmpty(certificateAddress),
+				() -> new BusinessException(SysResultCode.BAD_REQUEST.getCode(), "证书地址不存在"));
 		boolean deleteSuccess = FileUtils.delete(RelaxedConfig.getProfile(), certificateAddress);
-		Assert.isTrue(deleteSuccess,()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"证书文件删除失败"));
+		Assert.isTrue(deleteSuccess, () -> new BusinessException(SysResultCode.BAD_REQUEST.getCode(), "证书文件删除失败"));
 		return removeById(certificateId);
 	}
+
 }

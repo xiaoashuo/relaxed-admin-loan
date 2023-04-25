@@ -18,17 +18,18 @@ import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
  */
 public interface AuditDetailMapper extends ExtendMapper<AuditDetail> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<AuditDetailPageVO> VO分页数据
-    */
-   default PageResult<AuditDetailPageVO> queryPage(PageParam pageParam, AuditDetailQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<AuditDetailPageVO> VO分页数据
+	 */
+	default PageResult<AuditDetailPageVO> queryPage(PageParam pageParam, AuditDetailQO qo) {
 		IPage<AuditDetail> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<AuditDetail> wrapper = WrappersX.lambdaQueryX(AuditDetail.class);
 		this.selectPage(page, wrapper);
 		IPage<AuditDetailPageVO> voPage = page.convert(AuditDetailConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
-   }
+	}
+
 }

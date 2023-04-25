@@ -59,7 +59,7 @@ public class RiskActivationController {
 	@PostMapping
 	@Operation(summary = "新增数据", description = "新增数据")
 	public R<RiskActivationDTO> save(@RequestBody RiskActivation activation) {
-		return  R.ok(riskActivationManage.add(activation));
+		return R.ok(riskActivationManage.add(activation));
 	}
 
 	/**
@@ -82,9 +82,10 @@ public class RiskActivationController {
 	 */
 	@PutMapping("/switch/status")
 	@Operation(summary = "切换状态", description = "更新数据")
-	public R<?> switchStatus(@RequestParam Long activationId,@RequestParam Integer status) {
-		return R.ok(riskActivationManage.switchActivationStatus(activationId,status)) ;
+	public R<?> switchStatus(@RequestParam Long activationId, @RequestParam Integer status) {
+		return R.ok(riskActivationManage.switchActivationStatus(activationId, status));
 	}
+
 	/**
 	 * 根据id删除数据
 	 * @param id {@code id} id

@@ -13,29 +13,34 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class StampEnum {
 
-    @RequiredArgsConstructor
-    @Getter
-    public enum Status{
-        WAIT_START(0,"待开始"),
+	@RequiredArgsConstructor
+	@Getter
+	public enum Status {
 
-        PROCESSING(1,"处理中"),
+		WAIT_START(0, "待开始"),
 
-        SUCCESS(2,"成功"),
-        FAIL(3,"异常"),
-        ;
-        private final Integer val;
-        private final String desc;
-    }
+		PROCESSING(1, "处理中"),
 
-    @RequiredArgsConstructor
-    @Getter
-    public enum SealWay{
+		SUCCESS(2, "成功"), FAIL(3, "异常"),;
 
-        TEMPLATE(1,"模板"),
+		private final Integer val;
 
-        KEYWORD(2,"关键字"),
-        ;
-        private final Integer val;
-        private final String desc;
-    }
+		private final String desc;
+
+	}
+
+	@RequiredArgsConstructor
+	@Getter
+	public enum SealWay {
+
+		TEMPLATE(1, "模板"),
+
+		KEYWORD(2, "关键字"),;
+
+		private final Integer val;
+
+		private final String desc;
+
+	}
+
 }

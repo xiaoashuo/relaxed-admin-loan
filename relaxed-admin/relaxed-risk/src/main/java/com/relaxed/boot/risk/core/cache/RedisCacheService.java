@@ -10,18 +10,20 @@ import com.relaxed.common.redis.RedisHelper;
  * @Version 1.0
  */
 public class RedisCacheService implements CacheService {
-    @Override
-    public String  get(String key) {
-        return RedisHelper.get(key);
-    }
 
-    @Override
-    public void put(String key, String obj, Long expireTime) {
-        RedisHelper.set(key,obj,expireTime);
-    }
+	@Override
+	public String get(String key) {
+		return RedisHelper.get(key);
+	}
 
-    @Override
-    public void del(String key) {
-        RedisHelper.del(key);
-    }
+	@Override
+	public void put(String key, String obj, Long expireTime) {
+		RedisHelper.set(key, obj, expireTime);
+	}
+
+	@Override
+	public void del(String key) {
+		RedisHelper.del(key);
+	}
+
 }

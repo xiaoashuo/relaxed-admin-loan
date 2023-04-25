@@ -47,82 +47,86 @@ import java.util.Map;
 @Slf4j
 public class StampManage {
 
-    private final ProjectTemplateService projectTemplateService;
+	private final ProjectTemplateService projectTemplateService;
 
-    private final TemplateService templateService;
-    private final OrderService orderService;
+	private final TemplateService templateService;
 
-    private final OrderCustomerService orderCustomerService;
+	private final OrderService orderService;
 
-    private final IWordTemplate wordTemplate;
-    private final OrderAnnexService orderAnnexService;
+	private final OrderCustomerService orderCustomerService;
 
-    private final StampRecordService stampRecordService;
-    public void generateRelatedFile(String partnerBizNo,FileTypeEnum fileTypeEnum) {
-        String subject=fileTypeEnum.getDesc();
-        log.info(LogFormatUtil.format(subject,"开始", LocalDateTime.now(),"订单号{}",partnerBizNo));
-        Order order = orderService.getByPartnerBizNo(partnerBizNo);
-        Long orderId = order.getOrderId();
-        OrderCustomer orderCustomer = orderCustomerService.getByOrderId(orderId);
-        ProjectTemplate projectTemplate=projectTemplateService.getByPidAndFileType(order.getProjectId(), Integer.valueOf(fileTypeEnum.getCode()));
-        Integer templateId = projectTemplate.getTemplateId();
-        Integer keystoreId = projectTemplate.getKeystoreId();
-        //模板
-        Template template = templateService.getById(templateId);
-        String templateName = template.getTemplateName();
-        String pdfFileName=templateName+".pdf";
-        String templatePath = RelaxedConfig.getProfile()+template.getTemplateUrl();;
-        //模板文件
-        File templateFile = new File(templatePath);
-        //原始数据
-        Map<String,Object> data=new HashMap<>();
-        data.put("contractNo",order.getPartnerContractNo());
-        data.put("username",orderCustomer.getRealName());
-        //1.渲染原始模板pdf
-        try {
-            FileInputStream templateFileStream = new FileInputStream(templateFile);
-            templateFileStream.mark(0);
-            ByteArrayOutputStream originPdf=new ByteArrayOutputStream();
-            wordTemplate.renderPdf(templateFileStream,originPdf,data);
-            ByteArrayMultipartFile uploadFile = new ByteArrayMultipartFile(originPdf.toByteArray(), pdfFileName);
-            FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.ANNEX_RELATIVE_PATH, uploadFile,
-                    FileConfig.create().splitDate(true)
-                            .fileNameConverter((originalFilename -> {
-                                String mainName = FileNameUtil.mainName(originalFilename);
-                                String extName = FileNameUtil.extName(originalFilename);
-                                return mainName + "_" + partnerBizNo + "." + extName;
-                            })));
-            String relativeFilePath = fileMeta.getRelativeFilePath();
-            String fileNo = IdUtil.getSnowflakeNextIdStr();
-            OrderAnnex orderAnnex = new OrderAnnex();
-            orderAnnex.setOrderId(orderId);
-            orderAnnex.setFileNo(fileNo);
-            orderAnnex.setFileName(fileTypeEnum.getDesc());
-            orderAnnex.setFileType(Integer.valueOf(fileTypeEnum.getCode()));
-            orderAnnex.setFileUrl(relativeFilePath);
-            orderAnnex.setRemark("");
-            orderAnnexService.save(orderAnnex);
+	private final IWordTemplate wordTemplate;
 
-            //插入一条待签章记录
-            StampRecord stampRecord = new StampRecord();
-            stampRecord.setProjectId(order.getProjectId());
-            stampRecord.setProductCode(order.getProductCode());
-            stampRecord.setTrustPlanCode(order.getTrustPlanCode());
-            stampRecord.setFileType(Integer.valueOf(fileTypeEnum.getCode()));
-            stampRecord.setContractName(fileTypeEnum.getDesc()+"原始文件.pdf");
-            stampRecord.setStatus(StampEnum.Status.WAIT_START.getVal());
-            stampRecord.setPartnerBusinessId(order.getPartnerBizNo());
-            stampRecord.setSignWay(0);
-            stampRecordService.save(stampRecord);
+	private final OrderAnnexService orderAnnexService;
 
+	private final StampRecordService stampRecordService;
 
+	public void generateRelatedFile(String partnerBizNo, FileTypeEnum fileTypeEnum) {
+		String subject = fileTypeEnum.getDesc();
+		log.info(LogFormatUtil.format(subject, "开始", LocalDateTime.now(), "订单号{}", partnerBizNo));
+		Order order = orderService.getByPartnerBizNo(partnerBizNo);
+		Long orderId = order.getOrderId();
+		OrderCustomer orderCustomer = orderCustomerService.getByOrderId(orderId);
+		ProjectTemplate projectTemplate = projectTemplateService.getByPidAndFileType(order.getProjectId(),
+				Integer.valueOf(fileTypeEnum.getCode()));
+		Integer templateId = projectTemplate.getTemplateId();
+		Integer keystoreId = projectTemplate.getKeystoreId();
+		// 模板
+		Template template = templateService.getById(templateId);
+		String templateName = template.getTemplateName();
+		String pdfFileName = templateName + ".pdf";
+		String templatePath = RelaxedConfig.getProfile() + template.getTemplateUrl();
+		;
+		// 模板文件
+		File templateFile = new File(templatePath);
+		// 原始数据
+		Map<String, Object> data = new HashMap<>();
+		data.put("contractNo", order.getPartnerContractNo());
+		data.put("username", orderCustomer.getRealName());
+		// 1.渲染原始模板pdf
+		try {
+			FileInputStream templateFileStream = new FileInputStream(templateFile);
+			templateFileStream.mark(0);
+			ByteArrayOutputStream originPdf = new ByteArrayOutputStream();
+			wordTemplate.renderPdf(templateFileStream, originPdf, data);
+			ByteArrayMultipartFile uploadFile = new ByteArrayMultipartFile(originPdf.toByteArray(), pdfFileName);
+			FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.ANNEX_RELATIVE_PATH,
+					uploadFile, FileConfig.create().splitDate(true).fileNameConverter((originalFilename -> {
+						String mainName = FileNameUtil.mainName(originalFilename);
+						String extName = FileNameUtil.extName(originalFilename);
+						return mainName + "_" + partnerBizNo + "." + extName;
+					})));
+			String relativeFilePath = fileMeta.getRelativeFilePath();
+			String fileNo = IdUtil.getSnowflakeNextIdStr();
+			OrderAnnex orderAnnex = new OrderAnnex();
+			orderAnnex.setOrderId(orderId);
+			orderAnnex.setFileNo(fileNo);
+			orderAnnex.setFileName(fileTypeEnum.getDesc());
+			orderAnnex.setFileType(Integer.valueOf(fileTypeEnum.getCode()));
+			orderAnnex.setFileUrl(relativeFilePath);
+			orderAnnex.setRemark("");
+			orderAnnexService.save(orderAnnex);
 
-        } catch (Exception e) {
-            log.info(LogFormatUtil.format(subject,"异常",LocalDateTime.now(),"订单号{}",partnerBizNo),e);
-            throw new RuntimeException(e);
-        }
-        log.info(LogFormatUtil.format(subject,"结束",LocalDateTime.now(),"订单号{}",partnerBizNo));
-        //2.渲染签章后pdf
+			// 插入一条待签章记录
+			StampRecord stampRecord = new StampRecord();
+			stampRecord.setProjectId(order.getProjectId());
+			stampRecord.setProductCode(order.getProductCode());
+			stampRecord.setTrustPlanCode(order.getTrustPlanCode());
+			stampRecord.setFileType(Integer.valueOf(fileTypeEnum.getCode()));
+			stampRecord.setContractName(fileTypeEnum.getDesc() + "原始文件.pdf");
+			stampRecord.setStatus(StampEnum.Status.WAIT_START.getVal());
+			stampRecord.setPartnerBusinessId(order.getPartnerBizNo());
+			stampRecord.setSignWay(0);
+			stampRecordService.save(stampRecord);
 
-    }
+		}
+		catch (Exception e) {
+			log.info(LogFormatUtil.format(subject, "异常", LocalDateTime.now(), "订单号{}", partnerBizNo), e);
+			throw new RuntimeException(e);
+		}
+		log.info(LogFormatUtil.format(subject, "结束", LocalDateTime.now(), "订单号{}", partnerBizNo));
+		// 2.渲染签章后pdf
+
+	}
+
 }

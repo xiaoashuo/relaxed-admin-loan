@@ -45,8 +45,6 @@ public class TemplatePageVO {
 	@Schema(title = "模板访问地址", description = "模板访问地址")
 	private String templateUrl;
 
-
-
 	/**
 	 * 数据文件(导入模板)存放路径(如有)
 	 */

@@ -18,19 +18,20 @@ import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
  */
 public interface BankCodeMapper extends ExtendMapper<BankCode> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<BankCodePageVO> VO分页数据
-    */
-   default PageResult<BankCodePageVO> queryPage(PageParam pageParam, BankCodeQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<BankCodePageVO> VO分页数据
+	 */
+	default PageResult<BankCodePageVO> queryPage(PageParam pageParam, BankCodeQO qo) {
 		IPage<BankCode> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<BankCode> wrapper = WrappersX.lambdaQueryX(BankCode.class);
-		wrapper.eqIfPresent(BankCode::getBankCode,qo.getBankCode());
-		wrapper.likeIfPresent(BankCode::getBankName,qo.getBankName());
+		wrapper.eqIfPresent(BankCode::getBankCode, qo.getBankCode());
+		wrapper.likeIfPresent(BankCode::getBankName, qo.getBankName());
 		this.selectPage(page, wrapper);
 		IPage<BankCodePageVO> voPage = page.convert(BankCodeConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
-   }
+	}
+
 }

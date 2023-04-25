@@ -31,5 +31,6 @@ public interface SealService extends ExtendService<Seal> {
 
 	List<SealPageVO> queryList();
 
-    boolean removeSealById(Integer sealId);
+	boolean removeSealById(Integer sealId);
+
 }

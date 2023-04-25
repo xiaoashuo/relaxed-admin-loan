@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.config.engine;
 
-
 import com.relaxed.boot.risk.core.cache.CacheService;
 import com.relaxed.boot.risk.core.distributor.EventDistributor;
 import com.relaxed.boot.risk.core.distributor.engine.SubscribeHolder;

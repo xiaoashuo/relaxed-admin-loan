@@ -1,6 +1,5 @@
 package com.relaxed.boot.loan.util;
 
-
 import sun.font.FontDesignMetrics;
 
 import javax.imageio.ImageIO;
@@ -166,11 +165,11 @@ public class GraphicsUtil {
 			g.dispose();
 			out = new FileOutputStream(jpgname); // 指定输出文件
 
-			ImageIO.write(bimage,"JPEG",out);
-//			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-//			JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bimage);
-//			param.setQuality(50f, true);
-//			encoder.encode(bimage, param); // 存盘
+			ImageIO.write(bimage, "JPEG", out);
+			// JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+			// JPEGEncodeParam param = encoder.getDefaultJPEGEncodeParam(bimage);
+			// param.setQuality(50f, true);
+			// encoder.encode(bimage, param); // 存盘
 			out.flush();
 			return true;
 		}

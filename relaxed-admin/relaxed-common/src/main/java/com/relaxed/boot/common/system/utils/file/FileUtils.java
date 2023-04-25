@@ -32,8 +32,6 @@ public class FileUtils {
 	 */
 	public static final long DEFAULT_MAX_SIZE = 50 * 1024 * 1024;
 
-
-
 	public static final String[] DEFAULT_ALLOWED_EXTENSION = {
 			// 图片
 			"bmp", "gif", "jpg", "jpeg", "png",
@@ -67,7 +65,8 @@ public class FileUtils {
 
 		assertAllowed(file, fileConfig);
 		// 转换后 文件名称
-		FileNameConverter fileNameConverter = Optional.ofNullable(fileConfig.getFileNameConverter()).orElse(FileUtils::extractFileName);
+		FileNameConverter fileNameConverter = Optional.ofNullable(fileConfig.getFileNameConverter())
+				.orElse(FileUtils::extractFileName);
 		String fileName = fileNameConverter.extractFileName(originalFilename);
 		boolean splitDate = fileConfig.isSplitDate();
 		String relativeFilePath;
@@ -82,11 +81,10 @@ public class FileUtils {
 		File desc = getAbsoluteFile(absolutePath, fileName);
 		file.transferTo(desc);
 		String fileId = IdUtil.getSnowflakeNextId() + "";
-		FileMeta fileMeta = new FileMeta().setOriginalFilename(originalFilename).setFilename(fileName).setFileId(fileId).setBasePath(basePath)
-				.setFilepath(relativeFilePath);
+		FileMeta fileMeta = new FileMeta().setOriginalFilename(originalFilename).setFilename(fileName).setFileId(fileId)
+				.setBasePath(basePath).setFilepath(relativeFilePath);
 		return fileMeta;
 	}
-
 
 	private File getAbsoluteFile(String dirPath, String fileName) {
 		File desc = new File(dirPath + File.separator + fileName);
@@ -99,13 +97,12 @@ public class FileUtils {
 		return desc;
 	}
 
-
 	/**
 	 * 编码文件名
 	 */
 	private String extractFileName(String originalFilename) {
 		String extName = FileNameUtil.getSuffix(originalFilename);
-		String filename =IdUtil.nanoId()+"."+extName;
+		String filename = IdUtil.nanoId() + "." + extName;
 		return filename;
 	}
 
@@ -115,19 +112,21 @@ public class FileUtils {
 	 * @return
 	 * @throws FileSizeLimitExceededException 如果超出最大大小
 	 */
-	private   void assertAllowed(MultipartFile file, FileConfig fileConfig)
-			throws FileSizeLimitExceededException {
+	private void assertAllowed(MultipartFile file, FileConfig fileConfig) throws FileSizeLimitExceededException {
 		long size = file.getSize();
-		Assert.isTrue(size <= fileConfig.getMaxSize(),()->new FileSizeLimitExceededException(SysResultCode.BAD_REQUEST.getCode(),fileConfig.getMaxSize() / 1024 / 1024));
+		Assert.isTrue(size <= fileConfig.getMaxSize(),
+				() -> new FileSizeLimitExceededException(SysResultCode.BAD_REQUEST.getCode(),
+						fileConfig.getMaxSize() / 1024 / 1024));
 		String fileName = file.getOriginalFilename();
 
 	}
 
-	public static File download(String basePath,String relativePath) {
+	public static File download(String basePath, String relativePath) {
 		return new File(basePath, relativePath);
 	}
 
-	public static boolean delete(String basePath,String relativePath){
-		return FileUtil.del(basePath+relativePath);
+	public static boolean delete(String basePath, String relativePath) {
+		return FileUtil.del(basePath + relativePath);
 	}
+
 }

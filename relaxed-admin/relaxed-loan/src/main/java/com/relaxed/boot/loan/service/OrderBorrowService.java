@@ -14,12 +14,12 @@ import com.relaxed.extend.mybatis.plus.service.ExtendService;
  */
 public interface OrderBorrowService extends ExtendService<OrderBorrow> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;OrderBorrowPageVO&gt; 分页数据
-    */
-    PageResult<OrderBorrowPageVO> queryPage(PageParam pageParam, OrderBorrowQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;OrderBorrowPageVO&gt; 分页数据
+	 */
+	PageResult<OrderBorrowPageVO> queryPage(PageParam pageParam, OrderBorrowQO qo);
 
 }

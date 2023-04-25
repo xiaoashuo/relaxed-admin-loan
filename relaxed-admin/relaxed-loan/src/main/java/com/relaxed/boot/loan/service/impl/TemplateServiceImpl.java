@@ -53,6 +53,7 @@ import java.util.stream.Collectors;
 public class TemplateServiceImpl extends ExtendServiceImpl<TemplateMapper, Template> implements TemplateService {
 
 	private final TemplateAreaService templateAreaService;
+
 	/**
 	 * 根据QueryObeject查询分页数据
 	 * @param pageParam 分页参数
@@ -87,11 +88,13 @@ public class TemplateServiceImpl extends ExtendServiceImpl<TemplateMapper, Templ
 	@Override
 	public boolean removeTemplate(Integer templateId) {
 		Template template = getById(templateId);
-		Assert.notNull(template,()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"模板文件不存在"));
+		Assert.notNull(template, () -> new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "模板文件不存在"));
 		String templateUrl = template.getTemplateUrl();
 		String datafilePath = template.getDatafilePath();
-		Assert.isTrue(templateAreaService.removeByTemplateId(templateId),()-> new BusinessException(SysResultCode.SERVER_ERROR.getCode(),"删除模板参数异常"));
+		Assert.isTrue(templateAreaService.removeByTemplateId(templateId),
+				() -> new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "删除模板参数异常"));
 		boolean success = removeById(templateId);
 		return success;
 	}
+
 }

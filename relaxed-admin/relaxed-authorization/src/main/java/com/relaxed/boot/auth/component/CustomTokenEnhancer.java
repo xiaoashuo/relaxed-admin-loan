@@ -64,7 +64,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 		sysUserInfo.setUsername(sysUserDetails.getUsername());
 		sysUserInfo.setNickname(sysUserDetails.getNickname());
 		sysUserInfo.setStatus(sysUserDetails.getStatus());
-		sysUserInfo.setAvatar(RelaxedConfig.getUrl()+sysUserDetails.getAvatar());
+		sysUserInfo.setAvatar(RelaxedConfig.getUrl() + sysUserDetails.getAvatar());
 		sysUserInfo.setEmail(sysUserDetails.getEmail());
 		sysUserInfo.setPhone(sysUserDetails.getPhone());
 		sysUserInfo.setCreatedTime(sysUserDetails.getCreatedTime());

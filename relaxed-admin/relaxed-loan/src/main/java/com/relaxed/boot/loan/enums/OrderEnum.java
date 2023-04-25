@@ -5,16 +5,17 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * DIN
+ *
  * @author Yakir
  */
-
 
 @Getter
 public class OrderEnum {
 
 	@RequiredArgsConstructor
 	@Getter
-	public enum OrderStatus{
+	public enum OrderStatus {
+
 		// 订单阶段（）
 		WAIT_IN(0, "待处理"),
 
@@ -24,12 +25,11 @@ public class OrderEnum {
 
 		CREDIT_DENY(12, "审批拒绝"),
 
-
 		CREDIT_SUCCESS(14, "已用信"),
 
 		ORDER_INVALID(16, "失效"),
 
-	;
+		;
 
 		private final Integer val;
 
@@ -45,6 +45,5 @@ public class OrderEnum {
 		}
 
 	}
-
 
 }

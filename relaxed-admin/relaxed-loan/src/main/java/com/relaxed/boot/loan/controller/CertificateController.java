@@ -75,8 +75,6 @@ public class CertificateController {
 				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增签章证书表失败");
 	}
 
-
-
 	/**
 	 * 通过id删除签章证书表
 	 * @param certificateId id

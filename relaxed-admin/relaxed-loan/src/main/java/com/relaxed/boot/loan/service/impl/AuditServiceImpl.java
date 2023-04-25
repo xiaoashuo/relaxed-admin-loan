@@ -19,20 +19,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuditServiceImpl extends ExtendServiceImpl<AuditMapper, Audit> implements AuditService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<AuditPageVO> 分页数据
-    */
-    @Override
-    public PageResult<AuditPageVO> queryPage(PageParam pageParam, AuditQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<AuditPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<AuditPageVO> queryPage(PageParam pageParam, AuditQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-    @Override
-    public Audit getByOrderId(Long orderId) {
-        return getOne(Wrappers.lambdaQuery(Audit.class)
-                .eq(Audit::getOrderId, orderId));
-    }
+	@Override
+	public Audit getByOrderId(Long orderId) {
+		return getOne(Wrappers.lambdaQuery(Audit.class).eq(Audit::getOrderId, orderId));
+	}
+
 }

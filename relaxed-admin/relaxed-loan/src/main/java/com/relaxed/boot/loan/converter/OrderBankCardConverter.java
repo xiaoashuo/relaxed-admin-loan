@@ -17,7 +17,7 @@ public interface OrderBankCardConverter {
 
 	/**
 	 * PO 转 PageVO
-	 * @param orderBankCard 
+	 * @param orderBankCard
 	 * @return OrderBankCardPageVO PageVO
 	 */
 	OrderBankCardPageVO poToPageVo(OrderBankCard orderBankCard);

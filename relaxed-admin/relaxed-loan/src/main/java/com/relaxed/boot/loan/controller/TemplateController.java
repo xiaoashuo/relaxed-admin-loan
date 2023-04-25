@@ -51,11 +51,10 @@ public class TemplateController {
 
 	private final TemplateManage templateManage;
 
-
 	@Operation(description = "下载excel接口",
-			 responses = {@ApiResponse(responseCode="200",content = {@Content(mediaType = "application/octet-stream",
-			 schema = @Schema(ref = "#/definitions/MultipartFile"))})}
-			)
+			responses = { @ApiResponse(responseCode = "200",
+					content = { @Content(mediaType = "application/octet-stream",
+							schema = @Schema(ref = "#/definitions/MultipartFile")) }) })
 	@GetMapping("test")
 	public DownloadModel test(HttpServletResponse response) {
 		File file = new File("D:\\other\\oss\\profile\\upload\\20221215\\d07c9994-3a48-4ec8-b01b-70dfa9e09fd2.pdf");
@@ -74,6 +73,7 @@ public class TemplateController {
 	public R<PageResult<TemplatePageVO>> getTemplatePage(PageParam pageParam, TemplateQO templateQO) {
 		return R.ok(templateService.queryPage(pageParam, templateQO));
 	}
+
 	/**
 	 * 模板下拉列表
 	 * @return R 通用返回体

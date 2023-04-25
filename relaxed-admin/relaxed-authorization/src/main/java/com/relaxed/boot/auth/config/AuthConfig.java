@@ -59,10 +59,10 @@ import java.util.stream.Collectors;
 public class AuthConfig {
 
 	@Value("${security.oauth2.extension.aesSecretKey:==Relaxed-Auth==}")
-	private  String  aesSecret;
+	private String aesSecret;
 
 	/**
-	 *忽略url，需要认证
+	 * 忽略url，需要认证
 	 * @param extendProperties 安全配置相关
 	 * @return FilterRegistrationBean<LoginPasswordDecoderFilter>
 	 */
@@ -88,13 +88,14 @@ public class AuthConfig {
 	 */
 	@Bean
 	public CustomDaoAuthenticationProvider daoAuthenticationProvider(PasswordEncoder passwordEncoder,
-																	 UserDetailsService userDetailsService){
+			UserDetailsService userDetailsService) {
 		CustomDaoAuthenticationProvider provider = new CustomDaoAuthenticationProvider();
 		provider.setUserDetailsService(userDetailsService);
 		provider.setPasswordEncoder(passwordEncoder);
 		provider.setSecretKey(aesSecret);
 		return provider;
 	}
+
 	/**
 	 * redis 令牌存储
 	 * @return

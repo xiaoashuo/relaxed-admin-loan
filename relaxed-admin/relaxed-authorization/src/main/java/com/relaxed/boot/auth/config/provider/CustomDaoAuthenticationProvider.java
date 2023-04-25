@@ -19,27 +19,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 public class CustomDaoAuthenticationProvider extends DaoAuthenticationProvider {
 
-    private  String secretKey;
-    @Override
-    protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-        if (authentication.getCredentials() == null) {
-            this.logger.debug("Failed to authenticate since no credentials provided");
-            throw new BadCredentialsException(this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
-        } else {
-            String presentedPassword = authentication.getCredentials().toString();
-            String realPassword = PasswordUtils.decodeAES(presentedPassword, secretKey);
-            if (!this.getPasswordEncoder().matches(realPassword, userDetails.getPassword())) {
-                this.logger.debug("Failed to authenticate since password does not match stored value");
-                throw new BadCredentialsException(this.messages.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
-            }
-        }
-    }
+	private String secretKey;
 
-    public String getSecretKey() {
-        return secretKey;
-    }
+	@Override
+	protected void additionalAuthenticationChecks(UserDetails userDetails,
+			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+		if (authentication.getCredentials() == null) {
+			this.logger.debug("Failed to authenticate since no credentials provided");
+			throw new BadCredentialsException(this.messages
+					.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+		}
+		else {
+			String presentedPassword = authentication.getCredentials().toString();
+			String realPassword = PasswordUtils.decodeAES(presentedPassword, secretKey);
+			if (!this.getPasswordEncoder().matches(realPassword, userDetails.getPassword())) {
+				this.logger.debug("Failed to authenticate since password does not match stored value");
+				throw new BadCredentialsException(this.messages
+						.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+			}
+		}
+	}
 
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
+	public String getSecretKey() {
+		return secretKey;
+	}
+
+	public void setSecretKey(String secretKey) {
+		this.secretKey = secretKey;
+	}
+
 }

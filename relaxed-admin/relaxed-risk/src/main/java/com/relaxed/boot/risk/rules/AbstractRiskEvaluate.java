@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.rules;
 
-
 import com.relaxed.boot.risk.rules.script.RuleScriptHandler;
 import com.relaxed.boot.risk.rules.script.ScriptResult;
 import lombok.extern.slf4j.Slf4j;

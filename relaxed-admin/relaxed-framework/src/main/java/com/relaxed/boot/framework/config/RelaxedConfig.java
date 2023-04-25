@@ -37,8 +37,8 @@ public class RelaxedConfig {
 		return getDomain(request);
 	}
 
-	public static String getRequestFullUrl(String relativePath){
-		return getUrl()+relativePath;
+	public static String getRequestFullUrl(String relativePath) {
+		return getUrl() + relativePath;
 	}
 
 	public static String getDomain(HttpServletRequest request) {

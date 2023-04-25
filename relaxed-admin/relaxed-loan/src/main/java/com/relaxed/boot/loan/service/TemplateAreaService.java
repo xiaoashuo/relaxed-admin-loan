@@ -23,4 +23,5 @@ public interface TemplateAreaService extends ExtendService<TemplateArea> {
 	PageResult<TemplateAreaPageVO> queryPage(PageParam pageParam, TemplateAreaQO qo);
 
 	boolean removeByTemplateId(Integer templateId);
+
 }

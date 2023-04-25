@@ -53,10 +53,9 @@ public class RiskRuleDTO implements Serializable {
 	 */
 	@Schema(title = "检验脚本", description = "检验脚本")
 	private String scripts;
+
 	@Schema(title = "规则脚本入口", description = "规则脚本入口")
 	private String ruleScriptEntry;
-
-
 
 	/**
 	 * 初始分数
@@ -75,8 +74,6 @@ public class RiskRuleDTO implements Serializable {
 	 */
 	@Schema(title = "运算符", description = "运算符")
 	private String operator;
-
-
 
 	/**
 	 * 比例
@@ -102,7 +99,6 @@ public class RiskRuleDTO implements Serializable {
 	@Schema(title = "", description = "")
 	private String ruleDefinition;
 
-
 	/**
 	 *
 	 */
@@ -114,6 +110,5 @@ public class RiskRuleDTO implements Serializable {
 	 */
 	@Schema(title = "更新时间", description = "更新时间")
 	private LocalDateTime updatedTime;
-
 
 }

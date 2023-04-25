@@ -1,7 +1,5 @@
 package com.relaxed.boot.risk.core.handler;
 
-
-
 import com.relaxed.boot.risk.enums.FieldValidResult;
 import com.relaxed.boot.risk.model.vo.RiskFieldVO;
 

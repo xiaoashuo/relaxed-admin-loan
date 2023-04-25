@@ -11,12 +11,15 @@ import lombok.Data;
  */
 @Data
 public class FileUploadReq {
-    /**
-     * 相对路径
-     */
-    private String relatedPath;
-    /**
-     * 是否切分日期目录
-     */
-    private boolean splitDate;
+
+	/**
+	 * 相对路径
+	 */
+	private String relatedPath;
+
+	/**
+	 * 是否切分日期目录
+	 */
+	private boolean splitDate;
+
 }

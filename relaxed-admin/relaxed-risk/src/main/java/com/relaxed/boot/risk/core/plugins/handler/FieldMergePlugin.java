@@ -6,7 +6,6 @@ import com.relaxed.boot.risk.core.plugins.PluginMeta;
 import com.relaxed.boot.risk.core.plugins.PluginService;
 import com.relaxed.boot.risk.model.vo.RiskPreItemVO;
 
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;

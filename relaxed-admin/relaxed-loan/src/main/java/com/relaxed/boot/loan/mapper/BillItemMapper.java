@@ -12,24 +12,23 @@ import com.relaxed.extend.mybatis.plus.mapper.ExtendMapper;
 import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:31
  */
 public interface BillItemMapper extends ExtendMapper<BillItem> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<BillItemPageVO> VO分页数据
-    */
-   default PageResult<BillItemPageVO> queryPage(PageParam pageParam, BillItemQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<BillItemPageVO> VO分页数据
+	 */
+	default PageResult<BillItemPageVO> queryPage(PageParam pageParam, BillItemQO qo) {
 		IPage<BillItem> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<BillItem> wrapper = WrappersX.lambdaQueryX(BillItem.class);
-		wrapper.eq(BillItem::getBillId,qo.getBillId());
+		wrapper.eq(BillItem::getBillId, qo.getBillId());
 		this.selectPage(page, wrapper);
 		IPage<BillItemPageVO> voPage = page.convert(BillItemConverter.INSTANCE::poToPageVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());
-   }
+	}
+
 }

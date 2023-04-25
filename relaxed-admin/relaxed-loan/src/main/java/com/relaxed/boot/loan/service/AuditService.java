@@ -14,13 +14,14 @@ import com.relaxed.extend.mybatis.plus.service.ExtendService;
  */
 public interface AuditService extends ExtendService<Audit> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;AuditPageVO&gt; 分页数据
-    */
-    PageResult<AuditPageVO> queryPage(PageParam pageParam, AuditQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;AuditPageVO&gt; 分页数据
+	 */
+	PageResult<AuditPageVO> queryPage(PageParam pageParam, AuditQO qo);
 
-    Audit getByOrderId(Long orderId);
+	Audit getByOrderId(Long orderId);
+
 }

@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 审核表
  *
@@ -32,62 +31,59 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan/audit" )
+@RequestMapping("/loan/audit")
 @Tag(name = "审核表管理")
 public class AuditController {
 
-    private final  AuditService auditService;
+	private final AuditService auditService;
 
-    /**
-     * 分页查询
-     * @param pageParam 分页参数
-     * @param auditQO 审核表查询对象
-     * @return R 通用返回体
-     */
-    @Operation(summary = "分页查询")
-    @GetMapping("/page" )
-    public R<PageResult<AuditPageVO>> getAuditPage(
-            PageParam pageParam, AuditQO auditQO) {
-        return R.ok(auditService.queryPage(pageParam, auditQO));
-    }
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param auditQO 审核表查询对象
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "分页查询")
+	@GetMapping("/page")
+	public R<PageResult<AuditPageVO>> getAuditPage(PageParam pageParam, AuditQO auditQO) {
+		return R.ok(auditService.queryPage(pageParam, auditQO));
+	}
 
-    /**
-     * 新增审核表
-     * @param audit 审核表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "新增审核表")
-    @CreateLog(msg = "新增审核表" )
-    @PostMapping
-    public R<Void> save(@RequestBody Audit audit) {
-        return auditService.save(audit) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增审核表失败");
-    }
+	/**
+	 * 新增审核表
+	 * @param audit 审核表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "新增审核表")
+	@CreateLog(msg = "新增审核表")
+	@PostMapping
+	public R<Void> save(@RequestBody Audit audit) {
+		return auditService.save(audit) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增审核表失败");
+	}
 
-    /**
-     * 修改审核表
-     * @param audit 审核表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "修改审核表")
-    @UpdateLog(msg = "修改审核表" )
-    @PutMapping
-    public R<Void> updateById(@RequestBody Audit audit) {
-        return auditService.updateById(audit) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改审核表失败");
-    }
+	/**
+	 * 修改审核表
+	 * @param audit 审核表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "修改审核表")
+	@UpdateLog(msg = "修改审核表")
+	@PutMapping
+	public R<Void> updateById(@RequestBody Audit audit) {
+		return auditService.updateById(audit) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改审核表失败");
+	}
 
-    /**
-     * 通过id删除审核表
-     * @param auditId id
-     * @return R 通用返回体
-     */
-    @Operation(summary = "通过id删除审核表")
-    @DeleteLog(msg = "通过id删除审核表" )
-    @DeleteMapping("/{auditId}" )
-    public R<Void> removeById(@PathVariable("auditId") Long auditId) {
-        return auditService.removeById(auditId) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除审核表失败");
-    }
+	/**
+	 * 通过id删除审核表
+	 * @param auditId id
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "通过id删除审核表")
+	@DeleteLog(msg = "通过id删除审核表")
+	@DeleteMapping("/{auditId}")
+	public R<Void> removeById(@PathVariable("auditId") Long auditId) {
+		return auditService.removeById(auditId) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除审核表失败");
+	}
 
 }

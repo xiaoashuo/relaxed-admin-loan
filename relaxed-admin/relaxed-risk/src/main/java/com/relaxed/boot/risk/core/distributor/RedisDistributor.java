@@ -1,7 +1,5 @@
 package com.relaxed.boot.risk.core.distributor;
 
-
-
 import com.relaxed.boot.risk.core.distributor.subscribe.SubscribeHandle;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

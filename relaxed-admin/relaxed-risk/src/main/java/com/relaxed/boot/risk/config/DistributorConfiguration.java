@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.config;
 
-
 import com.relaxed.boot.risk.core.distributor.EventDistributor;
 import com.relaxed.boot.risk.core.distributor.RedisDistributor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -30,7 +29,5 @@ public class DistributorConfiguration {
 	public EventDistributor eventDistributor(StringRedisTemplate stringRedisTemplate) {
 		return new RedisDistributor(stringRedisTemplate);
 	}
-
-
 
 }

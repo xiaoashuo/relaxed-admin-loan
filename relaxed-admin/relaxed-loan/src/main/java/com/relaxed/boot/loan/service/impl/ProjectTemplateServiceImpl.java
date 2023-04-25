@@ -31,67 +31,70 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class ProjectTemplateServiceImpl extends ExtendServiceImpl<ProjectTemplateMapper, ProjectTemplate> implements ProjectTemplateService {
+public class ProjectTemplateServiceImpl extends ExtendServiceImpl<ProjectTemplateMapper, ProjectTemplate>
+		implements ProjectTemplateService {
 
-    private final ProjectService projectService;
+	private final ProjectService projectService;
 
-    private final TemplateService templateService;
+	private final TemplateService templateService;
 
-    private final SysDictItemService sysDictItemService;
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<ProjectTemplatePageVO> 分页数据
-    */
-    @Override
-    public PageResult<ProjectTemplatePageVO> queryPage(PageParam pageParam, ProjectTemplateQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	private final SysDictItemService sysDictItemService;
 
-    @Override
-    public ProjectTemplateDTO detail(Integer projectTemplateId) {
-        ProjectTemplate projectTemplate = getById(projectTemplateId);
-        Integer fileType = projectTemplate.getFileType();
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<ProjectTemplatePageVO> 分页数据
+	 */
+	@Override
+	public PageResult<ProjectTemplatePageVO> queryPage(PageParam pageParam, ProjectTemplateQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
-        SysDictItem sysDictItem= sysDictItemService.getByDictKeyAndValue(SysDictKey.FILE_TYPE_KEY.getKey(),fileType);
-        Integer projectId = projectTemplate.getProjectId();
+	@Override
+	public ProjectTemplateDTO detail(Integer projectTemplateId) {
+		ProjectTemplate projectTemplate = getById(projectTemplateId);
+		Integer fileType = projectTemplate.getFileType();
 
-        Project project = projectService.getById(projectId);
-        Integer templateId = projectTemplate.getTemplateId();
-        Template template = templateService.getById(templateId);
+		SysDictItem sysDictItem = sysDictItemService.getByDictKeyAndValue(SysDictKey.FILE_TYPE_KEY.getKey(), fileType);
+		Integer projectId = projectTemplate.getProjectId();
 
-        ProjectTemplateDTO projectTemplateDTO = new ProjectTemplateDTO();
-        projectTemplateDTO.setProjectTemplateId(projectTemplate.getProjectTemplateId());
-        projectTemplateDTO.setProjectId(projectId);
-        projectTemplateDTO.setProjectName(project.getProjectName());
-        projectTemplateDTO.setTemplateId(templateId);
-        projectTemplateDTO.setTemplateName(template.getTemplateName());
-        projectTemplateDTO.setTemplateDesc(template.getRemark());
-        projectTemplateDTO.setFileType(fileType);
-        projectTemplateDTO.setFileName(sysDictItem.getName());
-        projectTemplateDTO.setSealId(projectTemplate.getSealId());
-        projectTemplateDTO.setKeystoreId(projectTemplate.getKeystoreId());
-        projectTemplateDTO.setSealWay(projectTemplate.getSealWay());
-        projectTemplateDTO.setSealLocation(projectTemplate.getSealLocation());
-        projectTemplateDTO.setSealKeyword(projectTemplate.getSealKeyword());
-        return projectTemplateDTO;
-    }
+		Project project = projectService.getById(projectId);
+		Integer templateId = projectTemplate.getTemplateId();
+		Template template = templateService.getById(templateId);
 
-    @Override
-    public boolean saveSignInfo(ProjectTemplateSignReqDTO projectTemplateSignReqDTO) {
-        ProjectTemplate projectTemplate = ProjectTemplateConverter.INSTANCE.reqDtoToPo(projectTemplateSignReqDTO);
-        return updateById(projectTemplate);
-    }
+		ProjectTemplateDTO projectTemplateDTO = new ProjectTemplateDTO();
+		projectTemplateDTO.setProjectTemplateId(projectTemplate.getProjectTemplateId());
+		projectTemplateDTO.setProjectId(projectId);
+		projectTemplateDTO.setProjectName(project.getProjectName());
+		projectTemplateDTO.setTemplateId(templateId);
+		projectTemplateDTO.setTemplateName(template.getTemplateName());
+		projectTemplateDTO.setTemplateDesc(template.getRemark());
+		projectTemplateDTO.setFileType(fileType);
+		projectTemplateDTO.setFileName(sysDictItem.getName());
+		projectTemplateDTO.setSealId(projectTemplate.getSealId());
+		projectTemplateDTO.setKeystoreId(projectTemplate.getKeystoreId());
+		projectTemplateDTO.setSealWay(projectTemplate.getSealWay());
+		projectTemplateDTO.setSealLocation(projectTemplate.getSealLocation());
+		projectTemplateDTO.setSealKeyword(projectTemplate.getSealKeyword());
+		return projectTemplateDTO;
+	}
 
-    @Override
-    public ProjectTemplate getByPidAndFileType(Integer projectId, Integer  fileType) {
-        return getOne(Wrappers.lambdaQuery(ProjectTemplate.class).eq(ProjectTemplate::getProjectId, projectId)
-                .eq(ProjectTemplate::getFileType,fileType));
-    }
+	@Override
+	public boolean saveSignInfo(ProjectTemplateSignReqDTO projectTemplateSignReqDTO) {
+		ProjectTemplate projectTemplate = ProjectTemplateConverter.INSTANCE.reqDtoToPo(projectTemplateSignReqDTO);
+		return updateById(projectTemplate);
+	}
 
-    @Override
-    public long countByKeystoreId(Integer keystoreId) {
-        return count(Wrappers.lambdaQuery(ProjectTemplate.class).eq(ProjectTemplate::getKeystoreId, keystoreId));
-    }
+	@Override
+	public ProjectTemplate getByPidAndFileType(Integer projectId, Integer fileType) {
+		return getOne(Wrappers.lambdaQuery(ProjectTemplate.class).eq(ProjectTemplate::getProjectId, projectId)
+				.eq(ProjectTemplate::getFileType, fileType));
+	}
+
+	@Override
+	public long countByKeystoreId(Integer keystoreId) {
+		return count(Wrappers.lambdaQuery(ProjectTemplate.class).eq(ProjectTemplate::getKeystoreId, keystoreId));
+	}
+
 }

@@ -55,7 +55,7 @@ public class SealManage {
 			throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "模板不存在");
 		});
 		// 模板路径
-		String templatePath = RelaxedConfig.getProfile()+template.getTemplateUrl();
+		String templatePath = RelaxedConfig.getProfile() + template.getTemplateUrl();
 		File templateWordFile = new File(templatePath);
 
 		try {
@@ -66,7 +66,7 @@ public class SealManage {
 			Seal seal = sealService.getById(sealId);
 
 			// 签章路径
-			String sealPath = RelaxedConfig.getProfile()+seal.getSealAddress();
+			String sealPath = RelaxedConfig.getProfile() + seal.getSealAddress();
 			String keyword = previewInfoDTO.getKeyword();
 
 			String fileName = IdUtil.simpleUUID() + ".pdf";
@@ -78,9 +78,9 @@ public class SealManage {
 			byte[] pdfContent = templatePdfFileByte.toByteArray();
 			ByteArrayInputStream pdfByteInputStream = new ByteArrayInputStream(pdfContent);
 
-			List<KeywordLocation> keywordLocations = PdfTemplate.extractKeywordLocation(pdfByteInputStream,  keyword);
+			List<KeywordLocation> keywordLocations = PdfTemplate.extractKeywordLocation(pdfByteInputStream, keyword);
 			pdfByteInputStream.reset();
-			ImageSignMeta signMeta=new ImageSignMeta();
+			ImageSignMeta signMeta = new ImageSignMeta();
 			signMeta.setImgPath(sealPath);
 			signMeta.setContentBefore(false);
 			signMeta.setOffsetX(0);
@@ -111,7 +111,7 @@ public class SealManage {
 			throw new BusinessException(SysResultCode.SERVER_ERROR.getCode(), "模板不存在");
 		});
 		// 模板路径
-		String templatePath = RelaxedConfig.getProfile()+template.getTemplateUrl();
+		String templatePath = RelaxedConfig.getProfile() + template.getTemplateUrl();
 		File templateWordFile = new File(templatePath);
 
 		try {
@@ -129,4 +129,5 @@ public class SealManage {
 		}
 
 	}
+
 }

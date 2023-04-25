@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 共同借款人
  *
@@ -35,64 +34,63 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan/order-borrow" )
+@RequestMapping("/loan/order-borrow")
 @Tag(name = "共同借款人管理")
 public class OrderBorrowController {
 
-    private final  OrderBorrowService orderBorrowService;
+	private final OrderBorrowService orderBorrowService;
 
-    private final OrderService orderService;
-    /**
-     * 分页查询
-     * @param pageParam 分页参数
-     * @param orderBorrowQO 共同借款人查询对象
-     * @return R 通用返回体
-     */
-    @Operation(summary = "分页查询")
-    @GetMapping("/page" )
-    public R<PageResult<OrderBorrowPageVO>> getOrderBorrowPage(
-            PageParam pageParam, OrderBorrowQO orderBorrowQO) {
-        return R.ok(orderBorrowService.queryPage(pageParam, orderBorrowQO));
-    }
+	private final OrderService orderService;
 
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param orderBorrowQO 共同借款人查询对象
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "分页查询")
+	@GetMapping("/page")
+	public R<PageResult<OrderBorrowPageVO>> getOrderBorrowPage(PageParam pageParam, OrderBorrowQO orderBorrowQO) {
+		return R.ok(orderBorrowService.queryPage(pageParam, orderBorrowQO));
+	}
 
-    /**
-     * 新增共同借款人
-     * @param orderBorrow 共同借款人
-     * @return R 通用返回体
-     */
-    @Operation(summary = "新增共同借款人")
-    @CreateLog(msg = "新增共同借款人" )
-    @PostMapping
-    public R<Void> save(@RequestBody OrderBorrow orderBorrow) {
-        return orderBorrowService.save(orderBorrow) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增共同借款人失败");
-    }
+	/**
+	 * 新增共同借款人
+	 * @param orderBorrow 共同借款人
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "新增共同借款人")
+	@CreateLog(msg = "新增共同借款人")
+	@PostMapping
+	public R<Void> save(@RequestBody OrderBorrow orderBorrow) {
+		return orderBorrowService.save(orderBorrow) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增共同借款人失败");
+	}
 
-    /**
-     * 修改共同借款人
-     * @param orderBorrow 共同借款人
-     * @return R 通用返回体
-     */
-    @Operation(summary = "修改共同借款人")
-    @UpdateLog(msg = "修改共同借款人" )
-    @PutMapping
-    public R<Void> updateById(@RequestBody OrderBorrow orderBorrow) {
-        return orderBorrowService.updateById(orderBorrow) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改共同借款人失败");
-    }
+	/**
+	 * 修改共同借款人
+	 * @param orderBorrow 共同借款人
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "修改共同借款人")
+	@UpdateLog(msg = "修改共同借款人")
+	@PutMapping
+	public R<Void> updateById(@RequestBody OrderBorrow orderBorrow) {
+		return orderBorrowService.updateById(orderBorrow) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改共同借款人失败");
+	}
 
-    /**
-     * 通过id删除共同借款人
-     * @param userId id
-     * @return R 通用返回体
-     */
-    @Operation(summary = "通过id删除共同借款人")
-    @DeleteLog(msg = "通过id删除共同借款人" )
-    @DeleteMapping("/{userId}" )
-    public R<Void> removeById(@PathVariable("userId") Long userId) {
-        return orderBorrowService.removeById(userId) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除共同借款人失败");
-    }
+	/**
+	 * 通过id删除共同借款人
+	 * @param userId id
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "通过id删除共同借款人")
+	@DeleteLog(msg = "通过id删除共同借款人")
+	@DeleteMapping("/{userId}")
+	public R<Void> removeById(@PathVariable("userId") Long userId) {
+		return orderBorrowService.removeById(userId) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除共同借款人失败");
+	}
 
 }

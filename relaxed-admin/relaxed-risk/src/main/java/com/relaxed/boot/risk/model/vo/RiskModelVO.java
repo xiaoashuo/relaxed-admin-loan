@@ -66,8 +66,6 @@ public class RiskModelVO implements Serializable {
 	@Schema(title = "", description = "")
 	private Integer fieldValidate;
 
-
-
 	/**
 	 * 状态
 	 */

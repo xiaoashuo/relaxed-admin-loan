@@ -37,23 +37,17 @@ import java.util.concurrent.TimeUnit;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class RiskAnalysisEngine  {
+public class RiskAnalysisEngine {
 
 	private final RiskModelManage riskModelManage;
 
 	private final RiskFieldManage riskFieldManage;
 
-
-
-
 	private final RiskEvaluateChain riskEvaluateChain;
-
-
 
 	private final RiskReportHandler riskReportHandler;
 
 	private final RiskEvalAsyncDistributor riskEvalAsyncDistributor;
-
 
 	public R evaluateRisk(String modelGuid, String reqId, Map jsonInfo) {
 		RiskModelVO modelVO = riskModelManage.getByGuid(modelGuid);
@@ -78,32 +72,32 @@ public class RiskAnalysisEngine  {
 			// 2.预处理字段提取
 			Map<String, Object> prepare = riskFieldManage.prepare(modelVO.getId(), jsonInfo);
 			// 3.保存model event
-//			modelEventManageService.save(modelVO, JSONUtil.toJsonStr(jsonInfo), JSONUtil.toJsonStr(prepare),
-//					EngineProperties.getDuplicate());
+			// modelEventManageService.save(modelVO, JSONUtil.toJsonStr(jsonInfo),
+			// JSONUtil.toJsonStr(prepare),
+			// EngineProperties.getDuplicate());
 			// 4.执行分析
 			EvaluateContext evaluateContext = new EvaluateContext();
 			evaluateContext.setReqId(reqId);
 			evaluateContext.setModelVo(modelVO);
 			evaluateContext.setEventJson(jsonInfo);
 			evaluateContext.setPreItemMap(prepare);
-			boolean result ;
+			boolean result;
 			try {
 				result = riskEvaluateChain.eval(evaluateContext, evaluateReport);
-			} catch (Exception e) {
-				return R.failed(RiskCode.RISK_EVAL_NOT_PASSED).setMessage(e.getMessage())
-						.setData(evaluateReport);
+			}
+			catch (Exception e) {
+				return R.failed(RiskCode.RISK_EVAL_NOT_PASSED).setMessage(e.getMessage()).setData(evaluateReport);
 			}
 			if (!result) {
-				return R.failed(RiskCode.RISK_EVAL_NOT_PASSED).setMessage("风控分析不通过")
-						.setData(evaluateReport);
+				return R.failed(RiskCode.RISK_EVAL_NOT_PASSED).setMessage("风控分析不通过").setData(evaluateReport);
 			}
 			// 5.for elastic analysis
-			Long eventTimeMillis =Long.parseLong((String) jsonInfo.get(modelVO.getReferenceDate()));
+			Long eventTimeMillis = Long.parseLong((String) jsonInfo.get(modelVO.getReferenceDate()));
 			String timeStr = DateUtil.format(new Date(eventTimeMillis), "yyyy-MM-dd'T'HH:mm:ssZ");
 			prepare.put("risk_ref_datetime", timeStr);
 		}
 		catch (Exception e) {
-			log.error(LogFormatUtil.format("风控审核","异常",LocalDateTime.now(),"模型id{}",modelGuid),e);
+			log.error(LogFormatUtil.format("风控审核", "异常", LocalDateTime.now(), "模型id{}", modelGuid), e);
 			throw new RiskEngineException("数据处理异常", e);
 		}
 		// 6. 缓存分析结果
@@ -114,13 +108,11 @@ public class RiskAnalysisEngine  {
 		return R.ok(evaluateReport);
 	}
 
-
 	public R evaluateRiskAsync(String modelGuid, String reqId, Map jsonInfo) {
 		riskEvalAsyncDistributor.distribute(modelGuid, reqId, jsonInfo);
 		// 直接返回受理成功 实际执行子任务去执行评估
 		return R.ok();
 	}
-
 
 	public R evaluateReport(String modelGuid, String reqId) {
 		String key = buildReportCacheKey(modelGuid, reqId);

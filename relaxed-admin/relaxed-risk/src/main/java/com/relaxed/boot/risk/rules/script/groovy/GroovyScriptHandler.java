@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.rules.script.groovy;
 
-
 import cn.hutool.crypto.digest.MD5;
 import com.relaxed.boot.risk.rules.script.RuleScriptHandler;
 import groovy.lang.GroovyClassLoader;

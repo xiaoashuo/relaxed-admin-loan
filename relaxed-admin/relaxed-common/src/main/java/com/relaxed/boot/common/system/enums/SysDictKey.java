@@ -14,8 +14,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum SysDictKey {
 
-	FILE_TYPE_KEY("file_type"),
-	;
+	FILE_TYPE_KEY("file_type"),;
 
 	private final String key;
 

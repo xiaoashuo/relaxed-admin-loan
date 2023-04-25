@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.rules.executor;
 
-
 import com.relaxed.boot.risk.enums.RiskActivationEnum;
 import com.relaxed.boot.risk.enums.RiskEnum;
 import com.relaxed.boot.risk.enums.RiskRuleEnum;
@@ -47,7 +46,6 @@ public class ActivationRiskEvaluate extends AbstractRiskEvaluate {
 	private final RiskRuleManage riskRuleManage;
 
 	private final RiskScoreHandler riskScoreHandler;
-
 
 	@Override
 	public String getName() {

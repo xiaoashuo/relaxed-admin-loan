@@ -17,15 +17,16 @@ import java.util.List;
  */
 public interface LoanService extends ExtendService<Loan> {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult&lt;LoanPageVO&gt; 分页数据
-    */
-    PageResult<LoanPageVO> queryPage(PageParam pageParam, LoanQO qo);
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult&lt;LoanPageVO&gt; 分页数据
+	 */
+	PageResult<LoanPageVO> queryPage(PageParam pageParam, LoanQO qo);
 
-    LoanDetailVO getLoanDetail(Long loanId);
+	LoanDetailVO getLoanDetail(Long loanId);
 
-    List<Loan> listByStatus(Integer status);
+	List<Loan> listByStatus(Integer status);
+
 }

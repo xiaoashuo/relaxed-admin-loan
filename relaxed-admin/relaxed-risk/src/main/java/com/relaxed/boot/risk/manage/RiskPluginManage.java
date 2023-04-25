@@ -28,14 +28,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class RiskPluginManage  {
+public class RiskPluginManage {
 
 	private final RiskPluginService pluginService;
 
-
 	public List<SelectData> listEnabledPlugins() {
-		List<RiskPlugin> list = pluginService.list(
-				Wrappers.lambdaQuery(RiskPlugin.class).eq(RiskPlugin::getStatus, RiskPluginEnum.StatusEnum.ENABLE.getStatus()));
+		List<RiskPlugin> list = pluginService.list(Wrappers.lambdaQuery(RiskPlugin.class).eq(RiskPlugin::getStatus,
+				RiskPluginEnum.StatusEnum.ENABLE.getStatus()));
 		return list.stream().map(riskPlugin -> {
 			SelectData selectData = new SelectData();
 			selectData.setLabel(riskPlugin.getPluginDesc());
@@ -45,21 +44,17 @@ public class RiskPluginManage  {
 		}).collect(Collectors.toList());
 	}
 
-
 	public PageResult<RiskPluginVO> selectByPage(PageParam pageParam, RiskPluginQO pluginQO) {
 		return pluginService.selectByPage(pageParam, pluginQO);
 	}
-
 
 	public boolean add(RiskPlugin plugin) {
 		return pluginService.save(plugin);
 	}
 
-
 	public boolean edit(RiskPlugin plugin) {
 		return pluginService.updateById(plugin);
 	}
-
 
 	public boolean del(Long id) {
 		return pluginService.removeById(id);

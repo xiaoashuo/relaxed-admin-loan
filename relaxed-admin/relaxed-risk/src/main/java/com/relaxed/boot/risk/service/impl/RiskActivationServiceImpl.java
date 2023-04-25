@@ -39,9 +39,8 @@ public class RiskActivationServiceImpl extends ExtendServiceImpl<RiskActivationM
 	public PageResult<RiskActivationVO> selectByPage(PageParam pageParam, RiskActivationQO activationQO) {
 		IPage<RiskActivation> page = PageUtil.prodPage(pageParam);
 		LambdaQueryWrapperX<RiskActivation> wrapper = WrappersX.lambdaQueryX(RiskActivation.class);
-		 wrapper
-				.eq(ObjectUtil.isNotNull(activationQO.getId()), RiskActivation::getId, activationQO.getId());
-		wrapper.eqIfPresent(RiskActivation::getLabel,activationQO.getLabel());
+		wrapper.eq(ObjectUtil.isNotNull(activationQO.getId()), RiskActivation::getId, activationQO.getId());
+		wrapper.eqIfPresent(RiskActivation::getLabel, activationQO.getLabel());
 		wrapper.orderByDesc(RiskActivation::getId);
 		this.baseMapper.selectPage(page, wrapper);
 		IPage<RiskActivationVO> voPage = page.convert(RiskActivationConverter.INSTANCE::poToVo);

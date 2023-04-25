@@ -47,7 +47,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class RiskFieldManage  {
+public class RiskFieldManage {
 
 	private final RiskFieldService fieldService;
 
@@ -59,9 +59,8 @@ public class RiskFieldManage  {
 
 	private final FieldValidateHandler fieldValidateHandler;
 
-
 	public PageResult<RiskFieldVO> fieldPage(PageParam pageParam, RiskFieldQO riskFieldQO) {
-		return fieldService.selectByPage(pageParam,riskFieldQO);
+		return fieldService.selectByPage(pageParam, riskFieldQO);
 	}
 
 	public boolean fieldAdd(RiskField field) {
@@ -78,7 +77,6 @@ public class RiskFieldManage  {
 		return false;
 	}
 
-
 	public boolean fieldEdit(RiskField field) {
 		RiskField sqlField = fieldService.getById(field.getId());
 		Assert.notNull(sqlField, "field can not exists.");
@@ -89,7 +87,6 @@ public class RiskFieldManage  {
 		}
 		return false;
 	}
-
 
 	public boolean fieldDel(Long id) {
 		RiskField field = fieldService.getById(id);
@@ -109,11 +106,9 @@ public class RiskFieldManage  {
 		return false;
 	}
 
-
 	public List<RiskPreItemVO> preItemListByModelId(Long modelId) {
 		return preItemService.listByModelId(modelId);
 	}
-
 
 	public boolean preItemFieldAdd(RiskPreItem preItem) {
 		RiskPreItem sqlPreItem = preItemService.getOne(preItem.getModelId(), preItem.getDestField());
@@ -128,7 +123,6 @@ public class RiskFieldManage  {
 		return false;
 	}
 
-
 	public boolean preItemFieldEdit(RiskPreItem preItem) {
 		RiskPreItem sqlPreItem = preItemService.getById(preItem.getId());
 		Assert.notNull(sqlPreItem, "pre item can not be null.");
@@ -139,7 +133,6 @@ public class RiskFieldManage  {
 		}
 		return false;
 	}
-
 
 	public boolean preItemFieldDel(Long modelId, Long id) {
 		RiskPreItem preItem = preItemService.getOne(modelId, id);
@@ -159,7 +152,7 @@ public class RiskFieldManage  {
 	 * @return
 	 */
 	public Map<String, String> validate(Long modelId, Map data) {
-		//TODO 此处可以做缓存
+		// TODO 此处可以做缓存
 		List<RiskFieldVO> fieldVos = fieldService.listByModelId(modelId);
 		Map<String, String> result = new HashMap<>(8);
 		for (RiskFieldVO fieldVo : fieldVos) {
@@ -195,9 +188,8 @@ public class RiskFieldManage  {
 		return result;
 	}
 
-
-	public PageResult<RiskPreItemVO> preFieldList(PageParam pageParam,RiskPreItemQO riskPreItemQO) {
-		return preItemService.selectByPage(pageParam,riskPreItemQO);
+	public PageResult<RiskPreItemVO> preFieldList(PageParam pageParam, RiskPreItemQO riskPreItemQO) {
+		return preItemService.selectByPage(pageParam, riskPreItemQO);
 	}
 
 	public List<SelectData<RiskFieldVO>> fieldListByModelId(Long modelId) {
@@ -217,4 +209,5 @@ public class RiskFieldManage  {
 		riskPreItem.setStatus(status);
 		return preItemService.updateById(riskPreItem);
 	}
+
 }

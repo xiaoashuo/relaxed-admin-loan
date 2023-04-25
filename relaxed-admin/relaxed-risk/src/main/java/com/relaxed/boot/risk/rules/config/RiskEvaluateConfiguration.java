@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.rules.config;
 
-
 import com.relaxed.boot.risk.rules.RiskEvaluate;
 import com.relaxed.boot.risk.rules.RiskEvaluateChain;
 import com.relaxed.boot.risk.rules.extractor.FieldExtractor;
@@ -37,7 +36,7 @@ public class RiskEvaluateConfiguration {
 	@Bean
 	@ConditionalOnMissingBean
 	public RiskEvaluateChain riskEvaluateChain(ObjectProvider<RiskEvaluateBuilderCustomizer> customizerList,
-											   ObjectProvider<RiskEvaluate> riskEvaluates) {
+			ObjectProvider<RiskEvaluate> riskEvaluates) {
 		RiskEvaluateChain.Builder riskEvaluateChainBuilder = RiskEvaluateChain.builder();
 		// load user defined
 		customizerList.orderedStream().forEach(
@@ -58,7 +57,6 @@ public class RiskEvaluateConfiguration {
 	public RuleScriptHandler ruleScriptHandler() {
 		return new GroovyScriptHandler();
 	}
-
 
 	/**
 	 * 字段提取器
@@ -84,7 +82,5 @@ public class RiskEvaluateConfiguration {
 	public RiskScoreHandler riskScoreHandler(FieldExtractor fieldExtractor) {
 		return new DefaultRiskScoreHandle(fieldExtractor);
 	}
-
-
 
 }

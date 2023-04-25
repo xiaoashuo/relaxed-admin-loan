@@ -45,18 +45,21 @@ public class RiskEvaluateChain {
 
 		String reqId = evaluateContext.getReqId();
 		evaluateReport.setStartTime(LocalDateTime.now());
-		log.info(LogFormatUtil.format("风控评估","开始",LocalDateTime.now(),"请求id{}",reqId));
+		log.info(LogFormatUtil.format("风控评估", "开始", LocalDateTime.now(), "请求id{}", reqId));
 		boolean result;
 		try {
 			result = doEval(evaluateContext, evaluateReport);
-		}catch (Exception e){
-			log.error(LogFormatUtil.format("风控评估","异常",LocalDateTime.now(),"请求id{},执行参数{}",reqId,evaluateContext),e);
+		}
+		catch (Exception e) {
+			log.error(LogFormatUtil.format("风控评估", "异常", LocalDateTime.now(), "请求id{},执行参数{}", reqId, evaluateContext),
+					e);
 			throw e;
 		}
 		finally {
 			evaluateReport.setEndTime(LocalDateTime.now());
 		}
-		log.info(LogFormatUtil.format("风控评估","结束",LocalDateTime.now(),"请求id{},执行参数{},执行结果{}",reqId,evaluateContext,evaluateReport));
+		log.info(LogFormatUtil.format("风控评估", "结束", LocalDateTime.now(), "请求id{},执行参数{},执行结果{}", reqId, evaluateContext,
+				evaluateReport));
 		return result;
 
 	}
@@ -75,11 +78,12 @@ public class RiskEvaluateChain {
 			RiskEvaluate riskEvaluate = this.riskEvaluates.get(i);
 			String name = riskEvaluate.getName();
 			long start = System.currentTimeMillis();
-			log.info(LogFormatUtil.format("风控评估","阶段"+i+"开始",LocalDateTime.now(),"请求id{},阶段名称{}",reqId,name));
+			log.info(LogFormatUtil.format("风控评估", "阶段" + i + "开始", LocalDateTime.now(), "请求id{},阶段名称{}", reqId, name));
 			boolean result = riskEvaluate.doEval(evaluateContext, evaluateReport);
 			long end = System.currentTimeMillis();
 			long time = end - start;
-			log.info(LogFormatUtil.format("风控评估","阶段"+i+"结束",LocalDateTime.now(),"请求id{},阶段名称{},耗时{} ms",reqId,name,time));
+			log.info(LogFormatUtil.format("风控评估", "阶段" + i + "结束", LocalDateTime.now(), "请求id{},阶段名称{},耗时{} ms", reqId,
+					name, time));
 			evaluateReport.putPhaseTime(name, time);
 			if (!result) {
 				return false;

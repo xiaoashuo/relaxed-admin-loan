@@ -27,7 +27,8 @@ import org.springframework.stereotype.Service;
  */
 @RequiredArgsConstructor
 @Service
-public class RiskPluginServiceImpl extends ExtendServiceImpl<RiskPluginMapper, RiskPlugin> implements RiskPluginService {
+public class RiskPluginServiceImpl extends ExtendServiceImpl<RiskPluginMapper, RiskPlugin>
+		implements RiskPluginService {
 
 	@Override
 	public PageResult<RiskPluginVO> selectByPage(PageParam pageParam, RiskPluginQO pluginQO) {

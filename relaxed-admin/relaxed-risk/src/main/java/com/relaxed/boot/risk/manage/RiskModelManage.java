@@ -28,17 +28,15 @@ import org.springframework.util.Assert;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class RiskModelManage  {
+public class RiskModelManage {
 
 	private final RiskModelService modelService;
 
 	private final EventDistributor eventDistributor;
 
-
 	public PageResult<RiskModelVO> selectByPage(PageParam pageParam, RiskModelQO modelQO) {
 		return modelService.selectByPage(pageParam, modelQO);
 	}
-
 
 	public boolean add(RiskModel RiskModel) {
 		String modelName = RiskModel.getModelName();
@@ -55,17 +53,16 @@ public class RiskModelManage  {
 		return false;
 	}
 
-
 	public boolean edit(RiskModel RiskModel) {
 		return false;
 	}
-
 
 	public boolean del(Long id) {
 		RiskModel RiskModel = modelService.getById(id);
 		Assert.notNull(RiskModel, "RiskModel not exists.");
 		// 模型为模板 则不允许删除
-	//	Assert.state(!ModelEnums.TemplateEnum.isTemplate(RiskModel.getTemplate()), "RiskModel is template,not allowed del.");
+		// Assert.state(!ModelEnums.TemplateEnum.isTemplate(RiskModel.getTemplate()),
+		// "RiskModel is template,not allowed del.");
 		if (modelService.removeById(id)) {
 			eventDistributor.distribute(SubscribeEnum.PUB_SUB_MODEL_CHANNEL.getChannel(),
 					JSONUtil.toJsonStr(RiskModelConverter.INSTANCE.poToVo(RiskModel)));
@@ -89,4 +86,5 @@ public class RiskModelManage  {
 		riskModel.setStatus(status);
 		return modelService.updateById(riskModel);
 	}
+
 }

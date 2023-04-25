@@ -79,7 +79,6 @@ public class RiskRule extends Model<RiskRule> {
 	@Schema(title = "运算符", description = "运算符")
 	private String operator;
 
-
 	/**
 	 * 比例
 	 */
@@ -103,8 +102,6 @@ public class RiskRule extends Model<RiskRule> {
 	 */
 	@Schema(title = "", description = "")
 	private String ruleDefinition;
-
-
 
 	/**
 	 * 创建时间

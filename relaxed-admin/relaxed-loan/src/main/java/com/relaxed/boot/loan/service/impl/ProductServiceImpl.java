@@ -48,7 +48,7 @@ public class ProductServiceImpl extends ExtendServiceImpl<ProductMapper, Product
 
 	@Override
 	public Product getByProductCode(Integer productCode) {
-		return getOne(Wrappers.lambdaQuery(Product.class )
-				.eq(Product::getProductCode,productCode));
+		return getOne(Wrappers.lambdaQuery(Product.class).eq(Product::getProductCode, productCode));
 	}
+
 }

@@ -1,6 +1,5 @@
 package com.relaxed.boot.loan.enums;
 
-
 /**
  * 文件类型
  * @author Yakir
@@ -41,7 +40,6 @@ public enum FileTypeEnum {
 	A53("53", "结清证明"),
 
 	A5301("5301", "结清证明源文件"),
-
 
 	A29("54", "还款计划表"), A30("55", "国有土地使用证"), A31("56", "上家资料及下家资料"),
 

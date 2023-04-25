@@ -72,14 +72,11 @@ public class RiskModel implements Serializable {
 	@Schema(title = "", description = "")
 	private Integer fieldValidate;
 
-
-
 	/**
 	 * 状态
 	 */
 	@Schema(title = "状态", description = "状态")
 	private Integer status;
-
 
 	/**
 	 *

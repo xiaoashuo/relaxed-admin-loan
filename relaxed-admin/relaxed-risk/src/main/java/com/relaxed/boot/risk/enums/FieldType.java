@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum FieldType {
 
-
 	/**
 	 * 字符串
 	 */
@@ -33,8 +32,6 @@ public enum FieldType {
 	DOUBLE(4, "浮点数", Double.class),
 
 	;
-
-
 
 	private final Integer key;
 

@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 /**
  * 借款合同表
  *
@@ -36,73 +35,74 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/loan" )
+@RequestMapping("/loan")
 @Tag(name = "借款合同表管理")
 public class LoanController {
 
-    private final  LoanService loanService;
+	private final LoanService loanService;
 
-    private final LoanManage loanManage;
-    /**
-     * 分页查询
-     * @param pageParam 分页参数
-     * @param loanQO 借款合同表查询对象
-     * @return R 通用返回体
-     */
-    @Operation(summary = "分页查询")
-    @GetMapping("/page" )
-    public R<PageResult<LoanPageVO>> getLoanPage(
-            PageParam pageParam, LoanQO loanQO) {
-        return R.ok(loanService.queryPage(pageParam, loanQO));
-    }
-    @Operation(summary = "借据详情")
-    @GetMapping("/detail" )
-    public R<LoanDetailVO> getOrderDetail(@RequestParam Long loanId) {
-        return R.ok(loanService.getLoanDetail(loanId));
-    }
-    @Operation(summary = "订单结清申请")
-    @PostMapping("/repay" )
-    public R<Void> repayLoan(@RequestParam Long loanId) {
-        loanManage.repayLoan(loanId);
-        return R.ok();
-    }
-    /**
-     * 新增借款合同表
-     * @param loan 借款合同表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "新增借款合同表")
-    @CreateLog(msg = "新增借款合同表" )
-    @PostMapping
-    public R<Void> save(@RequestBody Loan loan) {
-        return loanService.save(loan) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增借款合同表失败");
-    }
+	private final LoanManage loanManage;
 
-    /**
-     * 修改借款合同表
-     * @param loan 借款合同表
-     * @return R 通用返回体
-     */
-    @Operation(summary = "修改借款合同表")
-    @UpdateLog(msg = "修改借款合同表" )
-    @PutMapping
-    public R<Void> updateById(@RequestBody Loan loan) {
-        return loanService.updateById(loan) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改借款合同表失败");
-    }
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param loanQO 借款合同表查询对象
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "分页查询")
+	@GetMapping("/page")
+	public R<PageResult<LoanPageVO>> getLoanPage(PageParam pageParam, LoanQO loanQO) {
+		return R.ok(loanService.queryPage(pageParam, loanQO));
+	}
 
-    /**
-     * 通过id删除借款合同表
-     * @param loanId id
-     * @return R 通用返回体
-     */
-    @Operation(summary = "通过id删除借款合同表")
-    @DeleteLog(msg = "通过id删除借款合同表" )
-    @DeleteMapping("/{loanId}" )
-    public R<Void> removeById(@PathVariable("loanId") Long loanId) {
-        return loanService.removeById(loanId) ?
-                R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除借款合同表失败");
-    }
+	@Operation(summary = "借据详情")
+	@GetMapping("/detail")
+	public R<LoanDetailVO> getOrderDetail(@RequestParam Long loanId) {
+		return R.ok(loanService.getLoanDetail(loanId));
+	}
+
+	@Operation(summary = "订单结清申请")
+	@PostMapping("/repay")
+	public R<Void> repayLoan(@RequestParam Long loanId) {
+		loanManage.repayLoan(loanId);
+		return R.ok();
+	}
+
+	/**
+	 * 新增借款合同表
+	 * @param loan 借款合同表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "新增借款合同表")
+	@CreateLog(msg = "新增借款合同表")
+	@PostMapping
+	public R<Void> save(@RequestBody Loan loan) {
+		return loanService.save(loan) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "新增借款合同表失败");
+	}
+
+	/**
+	 * 修改借款合同表
+	 * @param loan 借款合同表
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "修改借款合同表")
+	@UpdateLog(msg = "修改借款合同表")
+	@PutMapping
+	public R<Void> updateById(@RequestBody Loan loan) {
+		return loanService.updateById(loan) ? R.ok() : R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "修改借款合同表失败");
+	}
+
+	/**
+	 * 通过id删除借款合同表
+	 * @param loanId id
+	 * @return R 通用返回体
+	 */
+	@Operation(summary = "通过id删除借款合同表")
+	@DeleteLog(msg = "通过id删除借款合同表")
+	@DeleteMapping("/{loanId}")
+	public R<Void> removeById(@PathVariable("loanId") Long loanId) {
+		return loanService.removeById(loanId) ? R.ok()
+				: R.failed(BaseResultCode.UPDATE_DATABASE_ERROR, "通过id删除借款合同表失败");
+	}
 
 }

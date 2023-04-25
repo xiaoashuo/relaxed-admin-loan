@@ -19,28 +19,27 @@ import com.relaxed.extend.mybatis.plus.toolkit.WrappersX;
 import org.apache.ibatis.annotations.Param;
 
 /**
- * 
- *
  * @author yakir 2023-01-10 10:32:31
  */
 public interface OrderMapper extends ExtendMapper<Order> {
 
-    /**
-    * 分页查询
-    * @param pageParam 分页参数
-    * @param qo 查询参数
-    * @return PageResult<OrderPageVO> VO分页数据
-    */
-   default PageResult<OrderPageVO> queryPage(PageParam pageParam, OrderQO qo){
+	/**
+	 * 分页查询
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数
+	 * @return PageResult<OrderPageVO> VO分页数据
+	 */
+	default PageResult<OrderPageVO> queryPage(PageParam pageParam, OrderQO qo) {
 		IPage<OrderPageVO> page = this.prodPage(pageParam);
 		LambdaAliasQueryWrapperX<Order> wrapper = WrappersX.lambdaAliasQueryX(Order.class);
-		wrapper.eqIfPresent(Order::getPartnerBizNo,qo.getPartnerBizNo());
-		if (MapUtil.isEmpty(pageParam.getSort())){
+		wrapper.eqIfPresent(Order::getPartnerBizNo, qo.getPartnerBizNo());
+		if (MapUtil.isEmpty(pageParam.getSort())) {
 			wrapper.orderByDesc(Order::getCreatedTime);
 		}
 		this.selectByPage(page, wrapper);
 		return new PageResult<>(page.getRecords(), page.getTotal());
-   }
-	IPage<OrderPageVO> selectByPage(IPage<OrderPageVO> page,
-											  @Param(Constants.WRAPPER) Wrapper<Order> queryWrapper);
+	}
+
+	IPage<OrderPageVO> selectByPage(IPage<OrderPageVO> page, @Param(Constants.WRAPPER) Wrapper<Order> queryWrapper);
+
 }

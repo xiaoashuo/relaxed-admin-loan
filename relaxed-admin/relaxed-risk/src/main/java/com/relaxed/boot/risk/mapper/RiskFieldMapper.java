@@ -37,8 +37,8 @@ public interface RiskFieldMapper extends ExtendMapper<RiskField> {
 	 * @return com.relaxed.common.risk.model.entity.Field
 	 */
 	default RiskField selectOne(Long modelId, String fieldName) {
-		return this.selectOne(
-				Wrappers.lambdaQuery(RiskField.class).eq(RiskField::getModelId, modelId).eq(RiskField::getFieldName, fieldName));
+		return this.selectOne(Wrappers.lambdaQuery(RiskField.class).eq(RiskField::getModelId, modelId)
+				.eq(RiskField::getFieldName, fieldName));
 	}
 
 }

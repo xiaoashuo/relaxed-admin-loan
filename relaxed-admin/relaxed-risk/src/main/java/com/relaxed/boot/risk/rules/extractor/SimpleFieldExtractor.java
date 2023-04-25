@@ -5,7 +5,6 @@ import com.relaxed.boot.risk.enums.FieldType;
 import com.relaxed.boot.risk.rules.EvaluateContext;
 import com.relaxed.boot.risk.rules.EvaluateReport;
 
-
 import java.util.Map;
 
 /**
@@ -41,8 +40,9 @@ public class SimpleFieldExtractor implements FieldExtractor {
 		Map eventJson = evaluateContext.getEventJson();
 
 		Map<String, Object> preItemMap = evaluateContext.getPreItemMap();
-//		// 抽象特征
-//		Map<String, ?> abstractionMAP = evaluateReport.getEvaluateData().get(AbstractionRiskEvaluate.ABSTRACTIONS);
+		// // 抽象特征
+		// Map<String, ?> abstractionMAP =
+		// evaluateReport.getEvaluateData().get(AbstractionRiskEvaluate.ABSTRACTIONS);
 
 		return extractorFieldValue(fieldName, eventJson, preItemMap);
 	}

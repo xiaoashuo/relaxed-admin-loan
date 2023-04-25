@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.lovecyy</groupId>
         <artifactId>relaxed</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.2.1</version>
         <relativePath/>
     </parent>
 

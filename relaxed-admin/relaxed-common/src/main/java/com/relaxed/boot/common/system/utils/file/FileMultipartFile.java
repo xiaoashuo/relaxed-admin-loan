@@ -21,64 +21,68 @@ import java.nio.file.Files;
 
 public class FileMultipartFile implements MultipartFile {
 
-    private final String name;
-    private final String originalFilename;
+	private final String name;
 
-    private final String contentType;
+	private final String originalFilename;
 
-    private final File file;
-    public FileMultipartFile(String name,  File file) {
+	private final String contentType;
 
-        this(name,file.getName(),new MimetypesFileTypeMap().getContentType(file),file);
-    }
-    public FileMultipartFile(String name, String contentType, File file) {
-        this(name,file.getName(),contentType,file);
-    }
+	private final File file;
 
-    public FileMultipartFile(String name, String originalFilename, String contentType, File file) {
-        this.name = name;
-        this.originalFilename = originalFilename;
-        this.contentType = contentType;
-        this.file = file;
-    }
+	public FileMultipartFile(String name, File file) {
 
-    @Override
-    public String getName() {
-        return this.name;
-    }
+		this(name, file.getName(), new MimetypesFileTypeMap().getContentType(file), file);
+	}
 
-    @Override
-    public String getOriginalFilename() {
-        return this.originalFilename;
-    }
+	public FileMultipartFile(String name, String contentType, File file) {
+		this(name, file.getName(), contentType, file);
+	}
 
-    @Override
-    public String getContentType() {
-        return contentType;
-    }
+	public FileMultipartFile(String name, String originalFilename, String contentType, File file) {
+		this.name = name;
+		this.originalFilename = originalFilename;
+		this.contentType = contentType;
+		this.file = file;
+	}
 
-    @Override
-    public boolean isEmpty() {
-        return file.exists()&&file.isFile()&&file.length()==0;
-    }
+	@Override
+	public String getName() {
+		return this.name;
+	}
 
-    @Override
-    public long getSize() {
-        return file.length();
-    }
+	@Override
+	public String getOriginalFilename() {
+		return this.originalFilename;
+	}
 
-    @Override
-    public byte[] getBytes() throws IOException {
-        return FileCopyUtils.copyToByteArray(this.file);
-    }
+	@Override
+	public String getContentType() {
+		return contentType;
+	}
 
-    @Override
-    public InputStream getInputStream() throws IOException {
-        return Files.newInputStream(this.file.toPath());
-    }
+	@Override
+	public boolean isEmpty() {
+		return file.exists() && file.isFile() && file.length() == 0;
+	}
 
-    @Override
-    public void transferTo(File dest) throws IOException, IllegalStateException {
-       FileCopyUtils.copy(this.getInputStream(), Files.newOutputStream(dest.toPath()));
-    }
+	@Override
+	public long getSize() {
+		return file.length();
+	}
+
+	@Override
+	public byte[] getBytes() throws IOException {
+		return FileCopyUtils.copyToByteArray(this.file);
+	}
+
+	@Override
+	public InputStream getInputStream() throws IOException {
+		return Files.newInputStream(this.file.toPath());
+	}
+
+	@Override
+	public void transferTo(File dest) throws IOException, IllegalStateException {
+		FileCopyUtils.copy(this.getInputStream(), Files.newOutputStream(dest.toPath()));
+	}
+
 }

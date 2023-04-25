@@ -15,7 +15,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
 
-	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		/** 本地文件上传路径 */

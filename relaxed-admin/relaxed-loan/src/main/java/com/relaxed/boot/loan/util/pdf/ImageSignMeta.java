@@ -15,24 +15,26 @@ import java.util.List;
 @Data
 public class ImageSignMeta {
 
-    /**
-     * 图片地址
-     */
-    private String imgPath;
+	/**
+	 * 图片地址
+	 */
+	private String imgPath;
 
-    /**
-     * 是否在内容上 添加内容 默认为false
-     */
-    private boolean contentBefore = false;
+	/**
+	 * 是否在内容上 添加内容 默认为false
+	 */
+	private boolean contentBefore = false;
 
-    /**
-     * X轴偏移量
-     */
-    private float offsetX;
-    /**
-     * Y轴偏移量
-     */
-    private float offsetY;
+	/**
+	 * X轴偏移量
+	 */
+	private float offsetX;
 
-    private List<KeywordLocation> keywordLocationList;
+	/**
+	 * Y轴偏移量
+	 */
+	private float offsetY;
+
+	private List<KeywordLocation> keywordLocationList;
+
 }

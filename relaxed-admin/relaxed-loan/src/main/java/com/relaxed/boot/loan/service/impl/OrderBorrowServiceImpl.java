@@ -17,17 +17,18 @@ import org.springframework.stereotype.Service;
  * @author yakir 2023-01-10 10:32:19
  */
 @Service
-public class OrderBorrowServiceImpl extends ExtendServiceImpl<OrderBorrowMapper, OrderBorrow> implements OrderBorrowService {
+public class OrderBorrowServiceImpl extends ExtendServiceImpl<OrderBorrowMapper, OrderBorrow>
+		implements OrderBorrowService {
 
-    /**
-    *  根据QueryObeject查询分页数据
-    * @param pageParam 分页参数
-    * @param qo 查询参数对象
-    * @return PageResult<OrderBorrowPageVO> 分页数据
-    */
-    @Override
-    public PageResult<OrderBorrowPageVO> queryPage(PageParam pageParam, OrderBorrowQO qo) {
-        return baseMapper.queryPage(pageParam, qo);
-    }
+	/**
+	 * 根据QueryObeject查询分页数据
+	 * @param pageParam 分页参数
+	 * @param qo 查询参数对象
+	 * @return PageResult<OrderBorrowPageVO> 分页数据
+	 */
+	@Override
+	public PageResult<OrderBorrowPageVO> queryPage(PageParam pageParam, OrderBorrowQO qo) {
+		return baseMapper.queryPage(pageParam, qo);
+	}
 
 }

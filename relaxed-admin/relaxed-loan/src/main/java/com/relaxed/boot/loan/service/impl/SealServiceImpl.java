@@ -53,7 +53,8 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 	@Override
 	public PageResult<SealPageVO> queryPage(PageParam pageParam, SealQO qo) {
 		PageResult<SealPageVO> sealPageVOPageResult = baseMapper.queryPage(pageParam, qo);
-		sealPageVOPageResult.getRecords().forEach(seal -> seal.setPreviewSealAddress(RelaxedConfig.getRequestFullUrl(seal.getSealAddress())));
+		sealPageVOPageResult.getRecords()
+				.forEach(seal -> seal.setPreviewSealAddress(RelaxedConfig.getRequestFullUrl(seal.getSealAddress())));
 		return sealPageVOPageResult;
 	}
 
@@ -99,9 +100,9 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 						.titleFont(SealFont.builder().text("Relaxed发布").size(16).space(8.0).margin(54).build()).build()
 						.drawToOutStream(outputStream);
 				ByteArrayMultipartFile file = new ByteArrayMultipartFile(outputStream.toByteArray(), filename);
-				FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.SEAL_RELATIVE_PATH, file,
-						FileConfig.create().splitDate(false));
-				String address =  fileMeta.getRelativeFilePath();
+				FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), LoanUploadPath.SEAL_RELATIVE_PATH,
+						file, FileConfig.create().splitDate(false));
+				String address = fileMeta.getRelativeFilePath();
 				seal.setSealFilename(filename);
 				seal.setSealAddress(address);
 
@@ -112,7 +113,6 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 
 		}
 
-
 		boolean result = save(seal);
 		return result;
 	}
@@ -120,11 +120,13 @@ public class SealServiceImpl extends ExtendServiceImpl<SealMapper, Seal> impleme
 	@Override
 	public boolean removeSealById(Integer sealId) {
 		Seal seal = getById(sealId);
-		Assert.notNull(seal,()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"签章图片不存在"));
+		Assert.notNull(seal, () -> new BusinessException(SysResultCode.BAD_REQUEST.getCode(), "签章图片不存在"));
 		String sealAddress = seal.getSealAddress();
-		Assert.isTrue(StrUtil.isNotEmpty(sealAddress),()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"签章图片地址不存在"));
+		Assert.isTrue(StrUtil.isNotEmpty(sealAddress),
+				() -> new BusinessException(SysResultCode.BAD_REQUEST.getCode(), "签章图片地址不存在"));
 		boolean deleteSuccess = FileUtils.delete(RelaxedConfig.getProfile(), sealAddress);
-		Assert.isTrue(deleteSuccess,()-> new BusinessException(SysResultCode.BAD_REQUEST.getCode(),"签章图片删除失败"));
+		Assert.isTrue(deleteSuccess, () -> new BusinessException(SysResultCode.BAD_REQUEST.getCode(), "签章图片删除失败"));
 		return removeById(sealId);
 	}
+
 }

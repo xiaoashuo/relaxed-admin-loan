@@ -16,7 +16,7 @@ public interface CacheService {
 	 * @param key
 	 * @return T
 	 */
-	String  get(String key);
+	String get(String key);
 
 	/**
 	 * 放入缓存
@@ -26,11 +26,11 @@ public interface CacheService {
 	 * @param obj
 	 * @return boolean
 	 */
-	default   void put(String key, String obj) {
+	default void put(String key, String obj) {
 		put(key, obj, null);
 	};
 
-	 void put(String key, String obj, Long expireTime);
+	void put(String key, String obj, Long expireTime);
 
 	/**
 	 * 根据key删除

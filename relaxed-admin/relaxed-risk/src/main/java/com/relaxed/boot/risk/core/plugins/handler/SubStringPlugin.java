@@ -34,7 +34,7 @@ public class SubStringPlugin implements PluginService {
 		String[] args = preItemVO.getArgs().split(",");
 
 		Object value = jsonInfo.get(sourceField);
-		if (value==null){
+		if (value == null) {
 			return "";
 		}
 		String field = value.toString();

@@ -71,6 +71,7 @@ public class RiskActivationDTO implements Serializable {
 	 */
 	@Schema(title = "状态", description = "状态")
 	private Integer status;
+
 	@Schema(title = "创建时间", description = "创建时间")
 	private LocalDateTime createdTime;
 

@@ -54,14 +54,9 @@ public class LoanEnum {
 	@Getter
 	public static enum LoanStatus {
 
-		GIVING_MONEY(0, 20, "待放款"),
-		GIVE_MONEY_FAIL(22, 22, "放款失败"),
+		GIVING_MONEY(0, 20, "待放款"), GIVE_MONEY_FAIL(22, 22, "放款失败"),
 
-		REPAYMENTING(1, 21, "正常"),
-		CLEAR(2, 30, "结清"),
-
-
-
+		REPAYMENTING(1, 21, "正常"), CLEAR(2, 30, "结清"),
 
 		;
 

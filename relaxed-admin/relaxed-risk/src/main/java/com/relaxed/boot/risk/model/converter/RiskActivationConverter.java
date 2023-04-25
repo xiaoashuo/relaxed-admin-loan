@@ -1,6 +1,5 @@
 package com.relaxed.boot.risk.model.converter;
 
-
 import com.relaxed.boot.risk.model.dto.RiskActivationDTO;
 import com.relaxed.boot.risk.model.entity.RiskActivation;
 import com.relaxed.boot.risk.model.vo.RiskActivationVO;
@@ -36,6 +35,7 @@ public interface RiskActivationConverter {
 	 * @return {@link RiskActivation}
 	 */
 	RiskActivation dtoToPo(RiskActivationDTO activationDTO);
+
 	/**
 	 * po -> dto
 	 * @date 2023/2/15 14:38
@@ -43,13 +43,12 @@ public interface RiskActivationConverter {
 	 * @return com.relaxed.boot.risk.model.dto.RiskActivationDTO
 	 */
 	RiskActivationDTO poToDto(RiskActivation activation);
+
 	/**
 	 * po -> vos
 	 * @param activationProperties {@link List<RiskActivation>}
 	 * @return {@link List<RiskActivationVO>}
 	 */
 	List<RiskActivationVO> poToVOs(List<RiskActivation> activationProperties);
-
-
 
 }

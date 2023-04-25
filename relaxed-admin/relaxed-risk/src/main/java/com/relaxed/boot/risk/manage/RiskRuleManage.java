@@ -45,7 +45,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class RiskRuleManage  {
+public class RiskRuleManage {
 
 	private final RiskRuleService ruleService;
 
@@ -57,15 +57,11 @@ public class RiskRuleManage  {
 
 	private final RiskPreItemService preItemService;
 
-	private final  RuleScriptHandler ruleScriptHandler;
-
-
-
+	private final RuleScriptHandler ruleScriptHandler;
 
 	public PageResult<RiskRuleVO> selectByPage(PageParam pageParam, RiskRuleQO ruleQO) {
 		return ruleService.selectByPage(pageParam, ruleQO);
 	}
-
 
 	public boolean add(RiskRule rule) {
 		String ruleName = rule.getName();
@@ -74,8 +70,8 @@ public class RiskRuleManage  {
 		rule.setStatus(RiskModelEnum.StatusEnum.INIT.getStatus());
 		rule.setRuleScriptEntry("check");
 		if (ruleService.save(rule)) {
-			if(StringUtils.isEmpty(ruleName)){
-				rule.setName("rule_"+rule.getId());
+			if (StringUtils.isEmpty(ruleName)) {
+				rule.setName("rule_" + rule.getId());
 				ruleService.updateById(rule);
 			}
 			SpringUtils.getContext().publishEvent(new RiskRuleChangeEvent(convertToRuleHistory(rule)));
@@ -102,7 +98,6 @@ public class RiskRuleManage  {
 		return ruleHistory;
 	}
 
-
 	public boolean edit(RiskRule rule) {
 		RiskRule sqlRule = ruleService.getById(rule.getId());
 		Assert.notNull(sqlRule, "rule  can not exists.");
@@ -118,7 +113,6 @@ public class RiskRuleManage  {
 		return false;
 	}
 
-
 	public boolean del(Long id) {
 		RiskRule rule = ruleService.getById(id);
 		Assert.notNull(rule, "rule  can not exists.");
@@ -130,11 +124,9 @@ public class RiskRuleManage  {
 		return false;
 	}
 
-
 	public List<RiskRuleVO> listByActivationId(Long activationId) {
 		return ruleService.listByActivationId(activationId);
 	}
-
 
 	public List<DataColumn> selectColumns(Long modelId) {
 		List<DataColumn> dataColumns = new ArrayList<>();
@@ -164,21 +156,22 @@ public class RiskRuleManage  {
 		}
 		dataColumns.add(parentPreItemDataColumn);
 		// 3. 特征字段提取
-//		DataColumn abstractionDataColumn = new DataColumn(DataColumnType.ABSTRACTIONS.getDesc(),
-//				DataColumnType.ABSTRACTIONS.getName());
-//		List<AbstractionVO> abstractionVOS = abstractionService.listByModelId(modelId);
-//		if (CollectionUtil.isNotEmpty(abstractionVOS)) {
-//			List<DataColumn> preItemChildren = new ArrayList<>();
-//			abstractionVOS.forEach(abstractionVO -> {
-//				DataColumn dataColumn = new DataColumn();
-//				dataColumn.setLabel(abstractionVO.getLabel());
-//				dataColumn.setValue(abstractionVO.getName());
-//				dataColumn.setType(FieldType.DOUBLE.name());
-//				preItemChildren.add(dataColumn);
-//			});
-//			abstractionDataColumn.setChildren(preItemChildren);
-//		}
-//		dataColumns.add(abstractionDataColumn);
+		// DataColumn abstractionDataColumn = new
+		// DataColumn(DataColumnType.ABSTRACTIONS.getDesc(),
+		// DataColumnType.ABSTRACTIONS.getName());
+		// List<AbstractionVO> abstractionVOS = abstractionService.listByModelId(modelId);
+		// if (CollectionUtil.isNotEmpty(abstractionVOS)) {
+		// List<DataColumn> preItemChildren = new ArrayList<>();
+		// abstractionVOS.forEach(abstractionVO -> {
+		// DataColumn dataColumn = new DataColumn();
+		// dataColumn.setLabel(abstractionVO.getLabel());
+		// dataColumn.setValue(abstractionVO.getName());
+		// dataColumn.setType(FieldType.DOUBLE.name());
+		// preItemChildren.add(dataColumn);
+		// });
+		// abstractionDataColumn.setChildren(preItemChildren);
+		// }
+		// dataColumns.add(abstractionDataColumn);
 		return dataColumns;
 	}
 
@@ -189,14 +182,14 @@ public class RiskRuleManage  {
 	public List<SelectData<?>> getAllFieldList(Long modelId) {
 		List<RiskFieldVO> riskFieldVOS = fieldService.listByModelId(modelId);
 		List<RiskPreItemVO> riskPreItemVOS = preItemService.listByModelId(modelId);
-		List<SelectData<?>> selectDataList=new ArrayList<>();
+		List<SelectData<?>> selectDataList = new ArrayList<>();
 		for (RiskFieldVO riskFieldVO : riskFieldVOS) {
 			String fieldName = riskFieldVO.getFieldName();
 			String label = riskFieldVO.getLabel();
 			SelectData selectData = new SelectData();
 			selectData.setLabel(label);
 			selectData.setValue(fieldName);
-			//字段
+			// 字段
 			selectData.setType("1");
 			selectDataList.add(selectData);
 		}
@@ -206,7 +199,7 @@ public class RiskRuleManage  {
 			SelectData selectData = new SelectData();
 			selectData.setLabel(destLabel);
 			selectData.setValue(destField);
-			//预处理字段
+			// 预处理字段
 			selectData.setType("2");
 			selectDataList.add(selectData);
 		}
@@ -218,4 +211,5 @@ public class RiskRuleManage  {
 		riskRule.setStatus(status);
 		return ruleService.updateById(riskRule);
 	}
+
 }

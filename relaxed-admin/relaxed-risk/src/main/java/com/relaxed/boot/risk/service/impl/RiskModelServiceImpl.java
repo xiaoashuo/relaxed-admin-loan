@@ -45,11 +45,9 @@ public class RiskModelServiceImpl extends ExtendServiceImpl<RiskModelMapper, Ris
 	public PageResult<RiskModelVO> selectByPage(PageParam pageParam, RiskModelQO modelQO) {
 		IPage<RiskModel> page = PageUtil.prodPage(pageParam);
 		LambdaQueryWrapperX<RiskModel> wrapper = WrappersX.lambdaQueryX(RiskModel.class);
-		 wrapper.eq(ObjectUtil.isNotNull(modelQO.getId()),
-				RiskModel::getId, modelQO.getId())
-				 .eqIfPresent(RiskModel::getModelName,modelQO.getModelName())
-				 .eqIfPresent(RiskModel::getGuid,modelQO.getGuid())
-				 .orderByDesc(RiskModel::getId);
+		wrapper.eq(ObjectUtil.isNotNull(modelQO.getId()), RiskModel::getId, modelQO.getId())
+				.eqIfPresent(RiskModel::getModelName, modelQO.getModelName())
+				.eqIfPresent(RiskModel::getGuid, modelQO.getGuid()).orderByDesc(RiskModel::getId);
 		this.baseMapper.selectPage(page, wrapper);
 		IPage<RiskModelVO> voPage = page.convert(RiskModelConverter.INSTANCE::poToVo);
 		return new PageResult<>(voPage.getRecords(), voPage.getTotal());

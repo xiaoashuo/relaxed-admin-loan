@@ -10,8 +10,9 @@ import lombok.Data;
  * @author yakir 2023-01-10 10:13:02
  */
 @Data
-@Schema(title = "银行编码表")  
-public class BankCodeQO  {
+@Schema(title = "银行编码表")
+public class BankCodeQO {
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -19,6 +20,7 @@ public class BankCodeQO  {
 	 */
 	@Schema(title = "主键id", description = "主键id")
 	private Integer bankCodeId;
+
 	/**
 	 * 银行编码
 	 */

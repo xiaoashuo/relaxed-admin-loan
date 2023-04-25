@@ -26,8 +26,10 @@ public class ProjectPageVO {
 	 */
 	@Schema(title = "信托项目主键（t_config_partner）", description = "信托项目主键（t_config_partner）")
 	private Integer partnerId;
+
 	@Schema(title = "合作方别名", description = "合作方别名")
 	private String partnerAlias;
+
 	/**
 	 * 信托产品主键（t_config_product）
 	 */
@@ -36,7 +38,6 @@ public class ProjectPageVO {
 
 	@Schema(title = "信托产品名称", description = "信托产品名称")
 	private String productName;
-
 
 	/**
 	 * 信托计划主键（t_config_trust_plan）

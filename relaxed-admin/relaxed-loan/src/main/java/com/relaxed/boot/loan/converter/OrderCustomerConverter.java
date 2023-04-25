@@ -17,7 +17,7 @@ public interface OrderCustomerConverter {
 
 	/**
 	 * PO 转 PageVO
-	 * @param orderCustomer 
+	 * @param orderCustomer
 	 * @return OrderCustomerPageVO PageVO
 	 */
 	OrderCustomerPageVO poToPageVo(OrderCustomer orderCustomer);

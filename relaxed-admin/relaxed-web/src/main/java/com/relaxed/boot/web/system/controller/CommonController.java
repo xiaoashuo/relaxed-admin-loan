@@ -36,7 +36,7 @@ public class CommonController {
 
 	@PostMapping("/file/upload")
 	public R<?> uploadFile(MultipartFile file, FileUploadReq fileUploadReq) {
-		String relatedPath= Optional.ofNullable(fileUploadReq.getRelatedPath()).orElse("profile/upload");
+		String relatedPath = Optional.ofNullable(fileUploadReq.getRelatedPath()).orElse("profile/upload");
 		// 上传文件路径
 		FileMeta fileMeta = FileUtils.upload(RelaxedConfig.getProfile(), relatedPath, file,
 				FileConfig.create().splitDate(fileUploadReq.isSplitDate()));
