@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>com.lovecyy</groupId>
+        <groupId>com.test</groupId>
         <artifactId>relaxed-admin</artifactId>
-        <version>${revision}</version>
+        <version>${reversion}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>relaxed-web</artifactId>
@@ -48,11 +48,11 @@
 
 
         <dependency>
-            <groupId>com.lovecyy</groupId>
+            <groupId>com.test</groupId>
             <artifactId>relaxed-framework</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lovecyy</groupId>
+            <groupId>com.test</groupId>
             <artifactId>relaxed-authorization</artifactId>
         </dependency>
         <dependency>
@@ -60,14 +60,12 @@
             <artifactId>relaxed-admin-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lovecyy</groupId>
+            <groupId>com.test</groupId>
             <artifactId>relaxed-loan</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
-            <groupId>com.lovecyy</groupId>
+            <groupId>com.test</groupId>
             <artifactId>relaxed-risk</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>

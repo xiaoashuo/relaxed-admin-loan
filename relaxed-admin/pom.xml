@@ -7,18 +7,18 @@
     <parent>
         <groupId>com.lovecyy</groupId>
         <artifactId>relaxed</artifactId>
-        <version>1.2.1</version>
+        <version>1.0.0-SNAPSHOT</version>
         <relativePath/>
     </parent>
 
-    <groupId>com.lovecyy</groupId>
+    <groupId>com.test</groupId>
     <artifactId>relaxed-admin</artifactId>
-    <version>${revision}</version>
+    <version>${reversion}</version>
 
     <packaging>pom</packaging>
     <modelVersion>4.0.0</modelVersion>
     <properties>
-        <revision>1.0.0</revision>
+        <reversion>1.0.0</reversion>
         <!-- 跳过测试 -->
         <skipTests>true</skipTests>
         <spring.cloud-version>2021.0.3</spring.cloud-version>
@@ -45,24 +45,34 @@
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>com.lovecyy</groupId>
+                <groupId>com.test</groupId>
                 <artifactId>relaxed-common</artifactId>
-                <version>${revision}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
-                <groupId>com.lovecyy</groupId>
+                <groupId>com.test</groupId>
                 <artifactId>relaxed-framework</artifactId>
-                <version>${revision}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
-                <groupId>com.lovecyy</groupId>
+                <groupId>com.test</groupId>
                 <artifactId>relaxed-biz</artifactId>
-                <version>${revision}</version>
+                <version>${reversion}</version>
             </dependency>
             <dependency>
-                <groupId>com.lovecyy</groupId>
+                <groupId>com.test</groupId>
+                <artifactId>relaxed-loan</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.test</groupId>
+                <artifactId>relaxed-risk</artifactId>
+                <version>${reversion}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.test</groupId>
                 <artifactId>relaxed-authorization</artifactId>
-                <version>${revision}</version>
+                <version>${reversion}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -80,10 +90,11 @@
             <id>national-trust</id>
             <url>http://49.234.128.78/nexus/content/groups/public/</url>
             <releases>
-                <enabled>true</enabled>
+                <enabled>false</enabled>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
             </snapshots>
         </repository>
 
@@ -105,6 +116,7 @@
             </releases>
             <snapshots>
                 <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>

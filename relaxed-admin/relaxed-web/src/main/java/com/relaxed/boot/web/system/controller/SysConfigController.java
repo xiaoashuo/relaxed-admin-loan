@@ -1,5 +1,6 @@
 package com.relaxed.boot.web.system.controller;
 
+
 import com.relaxed.boot.biz.system.service.SysConfigService;
 import com.relaxed.boot.common.system.model.entity.SysConfig;
 import com.relaxed.boot.common.system.model.qo.SysConfigQO;
