@@ -63,21 +63,22 @@ public class PdfTest {
 	public static final String IMG = "D:\\other\\100000\\itext\\keystore\\seal.png";// 印章图片路径
 
 	public static void main(String[] args) throws Exception {
-		String sourceFile = "D:\\tools\\100000\\2.pdf";
+		String sourceFile = "D:\\social\\wechat\\document\\WeChat Files\\wxid_xu8f66gfsyag21\\FileStorage\\File\\2023-05\\200309tq5_01074001175723831 (1)(1).pdf";
 		String targetFile = "D:\\tools\\100000\\1602192493997211648.pdf";
 		String targeatFile = "D:\\tools\\100000\\16021924939972116481111.pdf";
-		PdfDocument pdfDoc1 = new PdfDocument(new PdfReader(sourceFile));
-		PdfDocument pdfDoc2 = new PdfDocument(new PdfReader(targetFile));
-		CompareTool compareTool = new CompareTool();
-		String report = compareTool.compareByContent(sourceFile, targetFile, targeatFile);
-		pdfDoc1.close();
-		pdfDoc2.close();
+//		PdfDocument pdfDoc1 = new PdfDocument(new PdfReader(sourceFile));
+//		PdfDocument pdfDoc2 = new PdfDocument(new PdfReader(targetFile));
+//		CompareTool compareTool = new CompareTool();
+//		String report = compareTool.compareByContent(sourceFile, targetFile, targeatFile);
+//		pdfDoc1.close();
+//		pdfDoc2.close();
 		// // 通过指定pdf文件名，指定关键字，和指定的pdf文件的待处理页数做参数
 		// // getKeyWordsLocation(sourceFile, targetFile,"国民信托有限公司", 14);
 		// // generateSealImage("D:\\other\\100000\\seal.png");
 		//
-		// List<KeywordLocation> wordsLocation1 = getKeyWordsLocation1(sourceFile,
-		// "国民信托有限公司");
+		 List<KeywordLocation> wordsLocation1 = getKeyWordsLocation1(sourceFile,
+		 "guominzhang");
+		System.out.println(wordsLocation1);
 		// PreviewSignInfo previewSignInfo = new PreviewSignInfo();
 		// previewSignInfo.setImgPath("D:\\other\\100000\\itext\\image\\test.png");
 		// previewSignInfo.setContentBefore(true);
