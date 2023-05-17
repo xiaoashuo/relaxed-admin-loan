@@ -4,9 +4,11 @@ import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.lang.Assert;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
 import com.relaxed.boot.common.system.exception.FileNameLengthLimitExceededException;
 import com.relaxed.boot.common.system.exception.FileSizeLimitExceededException;
+import com.relaxed.boot.common.system.exception.InvalidExtensionException;
 import com.relaxed.common.model.result.SysResultCode;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -26,23 +28,6 @@ import java.util.Optional;
  */
 @UtilityClass
 public class FileUtils {
-
-	/**
-	 * 默认大小 50M
-	 */
-	public static final long DEFAULT_MAX_SIZE = 50 * 1024 * 1024;
-
-	public static final String[] DEFAULT_ALLOWED_EXTENSION = {
-			// 图片
-			"bmp", "gif", "jpg", "jpeg", "png",
-			// word excel powerpoint
-			"doc", "docx", "xls", "xlsx", "ppt", "pptx", "html", "htm", "txt",
-			// 压缩文件
-			"rar", "zip", "gz", "bz2",
-			// 视频格式
-			"mp4", "avi", "rmvb",
-			// pdf
-			"pdf" };
 
 	/**
 	 * 上传文件
@@ -113,11 +98,19 @@ public class FileUtils {
 	 * @throws FileSizeLimitExceededException 如果超出最大大小
 	 */
 	private void assertAllowed(MultipartFile file, FileConfig fileConfig) throws FileSizeLimitExceededException {
+		//文件大小效验
 		long size = file.getSize();
 		Assert.isTrue(size <= fileConfig.getMaxSize(),
 				() -> new FileSizeLimitExceededException(SysResultCode.BAD_REQUEST.getCode(),
 						fileConfig.getMaxSize() / 1024 / 1024));
 		String fileName = file.getOriginalFilename();
+		//扩展名效验
+		String extension = FileUtil.getSuffix(fileName);
+		String[] allowedExtension = fileConfig.getAllowedExtension();
+		Assert.isTrue(ArrayUtil.contains(allowedExtension,extension),
+				() -> new InvalidExtensionException(SysResultCode.BAD_REQUEST.getCode(),
+						extension));
+
 
 	}
 

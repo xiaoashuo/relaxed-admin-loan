@@ -45,7 +45,7 @@ public class FileConfig {
 	private boolean splitDate = false;
 
 	/**
-	 *
+	 *  文件名称转换器
 	 */
 	private FileNameConverter fileNameConverter;
 
