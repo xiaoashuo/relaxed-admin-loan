@@ -49,6 +49,7 @@ public interface SysUserMapper extends ExtendMapper<SysUser> {
 			wrapper.geIfPresent(SysUser::getCreatedTime, params.get("beginCreatedTime"));
 			wrapper.leIfPresent(SysUser::getCreatedTime, params.get("endCreatedTime"));
 		}
+		wrapper.orderByDesc(SysUser::getUserId);
 
 		this.selectPage(page, wrapper);
 		IPage<SysUserPageVO> voPage = page.convert(SysUserConverter.INSTANCE::poToPageVo);
