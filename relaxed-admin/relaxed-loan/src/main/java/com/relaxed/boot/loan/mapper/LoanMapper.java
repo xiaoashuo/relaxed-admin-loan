@@ -29,6 +29,7 @@ public interface LoanMapper extends ExtendMapper<Loan> {
 	default PageResult<LoanPageVO> queryPage(PageParam pageParam, LoanQO qo) {
 		IPage<Loan> page = this.prodPage(pageParam);
 		LambdaQueryWrapperX<Loan> wrapper = WrappersX.lambdaQueryX(Loan.class);
+		wrapper.eqIfPresent(Loan::getPartnerBizNo,qo.getPartnerBizNo());
 		if (MapUtil.isEmpty(pageParam.getSort())) {
 			wrapper.orderByDesc(Loan::getCreatedTime);
 		}

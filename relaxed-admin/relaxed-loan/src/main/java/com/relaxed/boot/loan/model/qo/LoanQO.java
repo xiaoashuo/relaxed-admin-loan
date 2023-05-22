@@ -20,5 +20,6 @@ public class LoanQO {
 	 */
 	@Schema(title = "借款编号", description = "借款编号")
 	private Long loanId;
-
+	@Schema(title = "订单编号", description = "订单编号")
+	private String partnerBizNo;
 }

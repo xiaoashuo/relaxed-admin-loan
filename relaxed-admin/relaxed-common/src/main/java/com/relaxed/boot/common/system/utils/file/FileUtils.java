@@ -105,11 +105,11 @@ public class FileUtils {
 						fileConfig.getMaxSize() / 1024 / 1024));
 		String fileName = file.getOriginalFilename();
 		//扩展名效验
-		String extension = FileUtil.getSuffix(fileName);
-		String[] allowedExtension = fileConfig.getAllowedExtension();
-		Assert.isTrue(ArrayUtil.contains(allowedExtension,extension),
-				() -> new InvalidExtensionException(SysResultCode.BAD_REQUEST.getCode(),
-						extension));
+//		String extension = FileUtil.getSuffix(fileName);
+//		String[] allowedExtension = fileConfig.getAllowedExtension();
+//		Assert.isTrue(ArrayUtil.contains(allowedExtension,extension),
+//				() -> new InvalidExtensionException(SysResultCode.BAD_REQUEST.getCode(),
+//						extension));
 
 
 	}
