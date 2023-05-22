@@ -21,28 +21,28 @@ USE `relaxed_loan`;
 DROP TABLE IF EXISTS `log_access`;
 
 CREATE TABLE `log_access` (
-  `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `trace_id` char(24) DEFAULT NULL COMMENT '追踪ID',
-  `user_id` bigint(16) DEFAULT NULL COMMENT '用户ID',
-  `username` varchar(255) DEFAULT NULL COMMENT '用户名',
-  `ip` varchar(64) DEFAULT NULL COMMENT '访问IP地址',
-  `user_agent` varchar(1000) DEFAULT NULL COMMENT '用户代理',
-  `uri` varchar(255) DEFAULT NULL COMMENT '请求URI',
-  `matching_pattern` varchar(255) DEFAULT NULL COMMENT '请求映射路径',
-  `method` varchar(10) DEFAULT NULL COMMENT '操作方式',
-  `req_params` text COMMENT '请求参数',
-  `req_body` text COMMENT '请求body',
-  `http_status` int(5) DEFAULT NULL COMMENT '响应状态码',
-  `result` text COMMENT '响应信息',
-  `error_msg` text COMMENT '错误消息',
-  `time` bigint(64) DEFAULT NULL COMMENT '执行时长',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `user_id` (`user_id`) USING BTREE,
-  KEY `user_name` (`username`) USING BTREE,
-  KEY `uri` (`uri`) USING BTREE,
-  KEY `httpStatus` (`http_status`) USING BTREE,
-  KEY `create_time` (`created_time`) USING BTREE
+                              `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                              `trace_id` char(24) DEFAULT NULL COMMENT '追踪ID',
+                              `user_id` bigint(16) DEFAULT NULL COMMENT '用户ID',
+                              `username` varchar(255) DEFAULT NULL COMMENT '用户名',
+                              `ip` varchar(64) DEFAULT NULL COMMENT '访问IP地址',
+                              `user_agent` varchar(1000) DEFAULT NULL COMMENT '用户代理',
+                              `uri` varchar(255) DEFAULT NULL COMMENT '请求URI',
+                              `matching_pattern` varchar(255) DEFAULT NULL COMMENT '请求映射路径',
+                              `method` varchar(10) DEFAULT NULL COMMENT '操作方式',
+                              `req_params` text COMMENT '请求参数',
+                              `req_body` text COMMENT '请求body',
+                              `http_status` int(5) DEFAULT NULL COMMENT '响应状态码',
+                              `result` text COMMENT '响应信息',
+                              `error_msg` text COMMENT '错误消息',
+                              `time` bigint(64) DEFAULT NULL COMMENT '执行时长',
+                              `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              PRIMARY KEY (`id`) USING BTREE,
+                              KEY `user_id` (`user_id`) USING BTREE,
+                              KEY `user_name` (`username`) USING BTREE,
+                              KEY `uri` (`uri`) USING BTREE,
+                              KEY `httpStatus` (`http_status`) USING BTREE,
+                              KEY `create_time` (`created_time`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='访问日志';
 
 /*Data for the table `log_access` */
@@ -52,22 +52,22 @@ CREATE TABLE `log_access` (
 DROP TABLE IF EXISTS `log_login`;
 
 CREATE TABLE `log_login` (
-  `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `trace_id` char(24) DEFAULT NULL COMMENT '追踪ID',
-  `username` varchar(64) DEFAULT NULL COMMENT '用户名',
-  `ip` varchar(64) DEFAULT NULL COMMENT '登陆IP',
-  `os` varchar(50) DEFAULT NULL COMMENT '操作系统',
-  `status` tinyint(1) NOT NULL COMMENT '状态',
-  `event_type` tinyint(1) DEFAULT NULL COMMENT '事件类型，1：登录 2：登出',
-  `msg` varchar(255) DEFAULT NULL COMMENT '操作信息',
-  `location` varchar(50) DEFAULT NULL COMMENT '登陆地点',
-  `browser` varchar(50) DEFAULT NULL COMMENT '浏览器',
-  `login_time` datetime DEFAULT NULL COMMENT '登录/登出时间',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `username` (`username`) USING BTREE,
-  KEY `status` (`status`) USING BTREE,
-  KEY `created_time` (`created_time`)
+                             `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                             `trace_id` char(24) DEFAULT NULL COMMENT '追踪ID',
+                             `username` varchar(64) DEFAULT NULL COMMENT '用户名',
+                             `ip` varchar(64) DEFAULT NULL COMMENT '登陆IP',
+                             `os` varchar(50) DEFAULT NULL COMMENT '操作系统',
+                             `status` tinyint(1) NOT NULL COMMENT '状态',
+                             `event_type` tinyint(1) DEFAULT NULL COMMENT '事件类型，1：登录 2：登出',
+                             `msg` varchar(255) DEFAULT NULL COMMENT '操作信息',
+                             `location` varchar(50) DEFAULT NULL COMMENT '登陆地点',
+                             `browser` varchar(50) DEFAULT NULL COMMENT '浏览器',
+                             `login_time` datetime DEFAULT NULL COMMENT '登录/登出时间',
+                             `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                             PRIMARY KEY (`id`) USING BTREE,
+                             KEY `username` (`username`) USING BTREE,
+                             KEY `status` (`status`) USING BTREE,
+                             KEY `created_time` (`created_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='登陆日志';
 
 /*Data for the table `log_login` */
@@ -77,25 +77,25 @@ CREATE TABLE `log_login` (
 DROP TABLE IF EXISTS `log_operation`;
 
 CREATE TABLE `log_operation` (
-  `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `trace_id` char(24) DEFAULT NULL COMMENT '追踪ID',
-  `msg` varchar(255) DEFAULT NULL COMMENT '日志消息',
-  `ip` varchar(64) DEFAULT NULL COMMENT '访问IP地址',
-  `user_agent` varchar(1000) DEFAULT NULL COMMENT '用户代理',
-  `uri` varchar(255) DEFAULT NULL COMMENT '请求URI',
-  `method` varchar(10) DEFAULT NULL COMMENT '请求方式',
-  `params` text COMMENT '操作提交的数据',
-  `result` text COMMENT '操作结果',
-  `status` tinyint(1) NOT NULL COMMENT '操作状态',
-  `type` tinyint(1) DEFAULT NULL COMMENT '操作类型',
-  `time` bigint(64) DEFAULT NULL COMMENT '执行时长',
-  `operator` varchar(64) DEFAULT NULL COMMENT '创建者',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `operator` (`operator`) USING BTREE,
-  KEY `uri` (`uri`) USING BTREE,
-  KEY `status` (`status`) USING BTREE,
-  KEY `create_time` (`created_time`) USING BTREE
+                                 `id` bigint(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                                 `trace_id` char(24) DEFAULT NULL COMMENT '追踪ID',
+                                 `msg` varchar(255) DEFAULT NULL COMMENT '日志消息',
+                                 `ip` varchar(64) DEFAULT NULL COMMENT '访问IP地址',
+                                 `user_agent` varchar(1000) DEFAULT NULL COMMENT '用户代理',
+                                 `uri` varchar(255) DEFAULT NULL COMMENT '请求URI',
+                                 `method` varchar(10) DEFAULT NULL COMMENT '请求方式',
+                                 `params` text COMMENT '操作提交的数据',
+                                 `result` text COMMENT '操作结果',
+                                 `status` tinyint(1) NOT NULL COMMENT '操作状态',
+                                 `type` tinyint(1) DEFAULT NULL COMMENT '操作类型',
+                                 `time` bigint(64) DEFAULT NULL COMMENT '执行时长',
+                                 `operator` varchar(64) DEFAULT NULL COMMENT '创建者',
+                                 `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 KEY `operator` (`operator`) USING BTREE,
+                                 KEY `uri` (`uri`) USING BTREE,
+                                 KEY `status` (`status`) USING BTREE,
+                                 KEY `create_time` (`created_time`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='操作日志';
 
 /*Data for the table `log_operation` */
@@ -105,18 +105,18 @@ CREATE TABLE `log_operation` (
 DROP TABLE IF EXISTS `oauth_client_details`;
 
 CREATE TABLE `oauth_client_details` (
-  `client_id` varchar(255) NOT NULL COMMENT '客户端标识',
-  `resource_ids` varchar(255) DEFAULT NULL COMMENT '接入资源列表',
-  `client_secret` varchar(255) DEFAULT NULL COMMENT '客户端秘钥',
-  `scope` varchar(255) DEFAULT NULL,
-  `authorized_grant_types` varchar(255) DEFAULT NULL,
-  `web_server_redirect_uri` varchar(255) DEFAULT NULL,
-  `authorities` varchar(255) DEFAULT NULL,
-  `access_token_validity` int(11) DEFAULT NULL,
-  `refresh_token_validity` int(11) DEFAULT NULL,
-  `additional_information` longtext,
-  `autoapprove` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`client_id`) USING BTREE
+                                        `client_id` varchar(255) NOT NULL COMMENT '客户端标识',
+                                        `resource_ids` varchar(255) DEFAULT NULL COMMENT '接入资源列表',
+                                        `client_secret` varchar(255) DEFAULT NULL COMMENT '客户端秘钥',
+                                        `scope` varchar(255) DEFAULT NULL,
+                                        `authorized_grant_types` varchar(255) DEFAULT NULL,
+                                        `web_server_redirect_uri` varchar(255) DEFAULT NULL,
+                                        `authorities` varchar(255) DEFAULT NULL,
+                                        `access_token_validity` int(11) DEFAULT NULL,
+                                        `refresh_token_validity` int(11) DEFAULT NULL,
+                                        `additional_information` longtext,
+                                        `autoapprove` varchar(255) DEFAULT NULL,
+                                        PRIMARY KEY (`client_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='接入客户端信息';
 
 /*Data for the table `oauth_client_details` */
@@ -128,41 +128,41 @@ insert  into `oauth_client_details`(`client_id`,`resource_ids`,`client_secret`,`
 DROP TABLE IF EXISTS `risk_activation`;
 
 CREATE TABLE `risk_activation` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `activation_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '名称',
-  `label` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `model_id` bigint(11) NOT NULL COMMENT 'model id',
-  `comment` varchar(128) COLLATE utf8_unicode_ci NOT NULL COMMENT '注释',
-  `bottom` int(11) NOT NULL DEFAULT '0' COMMENT '底部阀值',
-  `median` int(11) NOT NULL DEFAULT '0' COMMENT '中间阀值',
-  `high` int(11) NOT NULL DEFAULT '0' COMMENT '顶部阀值',
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
-  `rule_order` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+                                   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                   `activation_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '名称',
+                                   `label` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+                                   `model_id` bigint(11) NOT NULL COMMENT 'model id',
+                                   `comment` varchar(128) COLLATE utf8_unicode_ci NOT NULL COMMENT '注释',
+                                   `bottom` int(11) NOT NULL DEFAULT '0' COMMENT '底部阀值',
+                                   `median` int(11) NOT NULL DEFAULT '0' COMMENT '中间阀值',
+                                   `high` int(11) NOT NULL DEFAULT '0' COMMENT '顶部阀值',
+                                   `status` int(11) NOT NULL DEFAULT '1' COMMENT '状态',
+                                   `rule_order` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+                                   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `risk_activation` */
 
-insert  into `risk_activation`(`id`,`activation_name`,`label`,`model_id`,`comment`,`bottom`,`median`,`high`,`status`,`rule_order`,`created_time`,`updated_time`) values (6,'login_rule','登录策略',8,'登录策略',0,50,100,1,NULL,'2023-03-07 17:27:32','2023-03-07 17:27:32');
+insert  into `risk_activation`(`id`,`activation_name`,`label`,`model_id`,`comment`,`bottom`,`median`,`high`,`status`,`rule_order`,`created_time`,`updated_time`) values (6,'login_rule','登录策略',8,'登录策略',0,0,0,1,NULL,'2023-03-07 17:27:32','2023-03-07 17:27:32');
 
 /*Table structure for table `risk_field` */
 
 DROP TABLE IF EXISTS `risk_field`;
 
 CREATE TABLE `risk_field` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `model_id` bigint(20) NOT NULL COMMENT 'MODEL ID',
-  `field_name` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '事件信息中的包含的字段',
-  `label` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `field_type` varchar(16) COLLATE utf8_unicode_ci NOT NULL COMMENT '字段类型',
-  `validate_type` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '校验类型',
-  `validate_args` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '校验参数',
-  `indexed` tinyint(1) DEFAULT '0' COMMENT '1 标识索引字段',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+                              `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                              `model_id` bigint(20) NOT NULL COMMENT 'MODEL ID',
+                              `field_name` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '事件信息中的包含的字段',
+                              `label` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+                              `field_type` varchar(16) COLLATE utf8_unicode_ci NOT NULL COMMENT '字段类型',
+                              `validate_type` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '校验类型',
+                              `validate_args` varchar(15) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '校验参数',
+                              `indexed` tinyint(1) DEFAULT '0' COMMENT '1 标识索引字段',
+                              `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                              PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `risk_field` */
@@ -174,37 +174,37 @@ insert  into `risk_field`(`id`,`model_id`,`field_name`,`label`,`field_type`,`val
 DROP TABLE IF EXISTS `risk_model`;
 
 CREATE TABLE `risk_model` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `guid` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `model_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '模型名称',
-  `label` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `entity_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '事件中标识实体的主键',
-  `entry_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '事件主键',
-  `reference_date` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '事件时间',
-  `field_validate` tinyint(1) NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL COMMENT '状态',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+                              `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                              `guid` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+                              `model_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '模型名称',
+                              `label` varchar(32) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+                              `entity_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '事件中标识实体的主键',
+                              `entry_name` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '事件主键',
+                              `reference_date` varchar(30) COLLATE utf8_unicode_ci NOT NULL COMMENT '事件时间',
+                              `field_validate` tinyint(1) NOT NULL DEFAULT '0',
+                              `status` int(11) NOT NULL COMMENT '状态',
+                              `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                              PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `risk_model` */
 
-insert  into `risk_model`(`id`,`guid`,`model_name`,`label`,`entity_name`,`entry_name`,`reference_date`,`field_validate`,`status`,`created_time`,`updated_time`) values (8,'D8A0B53B276E4071AF73145212DDE940','login_template','用户登录','user_id','event_id','created_time',0,1,'2023-03-07 17:11:51','2023-03-07 17:11:51');
+insert  into `risk_model`(`id`,`guid`,`model_name`,`label`,`entity_name`,`entry_name`,`reference_date`,`field_validate`,`status`,`created_time`,`updated_time`) values (8,'D8A0B53B276E4071AF73145212DDE940','login_template','用户登录','user_id','event_id','created_time',1,1,'2023-03-07 17:11:51','2023-03-14 14:17:40');
 
 /*Table structure for table `risk_plugin` */
 
 DROP TABLE IF EXISTS `risk_plugin`;
 
 CREATE TABLE `risk_plugin` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `plugin_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '插件名称',
-  `plugin_desc` varchar(64) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '插件描述',
-  `plugin_meta` varchar(64) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '插件元数据',
-  `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+                               `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `plugin_name` varchar(50) COLLATE utf8_unicode_ci NOT NULL COMMENT '插件名称',
+                               `plugin_desc` varchar(64) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '插件描述',
+                               `plugin_meta` varchar(64) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '插件元数据',
+                               `status` int(11) NOT NULL DEFAULT '0' COMMENT '状态',
+                               `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                               `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+                               PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `risk_plugin` */
@@ -216,20 +216,20 @@ insert  into `risk_plugin`(`id`,`plugin_name`,`plugin_desc`,`plugin_meta`,`statu
 DROP TABLE IF EXISTS `risk_pre_item`;
 
 CREATE TABLE `risk_pre_item` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `model_id` bigint(20) NOT NULL COMMENT '模型ID',
-  `source_field` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '来源字段',
-  `source_label` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '来源标签',
-  `dest_field` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '目标字段',
-  `dest_label` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '目标标签',
-  `args` varchar(250) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '参数',
-  `plugin` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '转换插件',
-  `config_json` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '响应字段配置信息',
-  `req_type` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '请求方式',
-  `status` int(11) DEFAULT '1',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`)
+                                 `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                 `model_id` bigint(20) NOT NULL COMMENT '模型ID',
+                                 `source_field` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '来源字段',
+                                 `source_label` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '来源标签',
+                                 `dest_field` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '目标字段',
+                                 `dest_label` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '目标标签',
+                                 `args` varchar(250) COLLATE utf8_unicode_ci DEFAULT '' COMMENT '参数',
+                                 `plugin` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '转换插件',
+                                 `config_json` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '响应字段配置信息',
+                                 `req_type` varchar(16) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '请求方式',
+                                 `status` int(11) DEFAULT '1',
+                                 `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                                 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `risk_pre_item` */
@@ -241,69 +241,71 @@ insert  into `risk_pre_item`(`id`,`model_id`,`source_field`,`source_label`,`dest
 DROP TABLE IF EXISTS `risk_rule`;
 
 CREATE TABLE `risk_rule` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `model_id` bigint(20) NOT NULL COMMENT '模型id',
-  `activation_id` bigint(20) NOT NULL COMMENT '激活id',
-  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
-  `label` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '规则名称',
-  `scripts` text COLLATE utf8_unicode_ci NOT NULL COMMENT '检验脚本',
-  `rule_script_entry` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT '规则脚本入口',
-  `init_score` int(11) NOT NULL DEFAULT '0' COMMENT '初始分数',
-  `base_num` int(11) NOT NULL DEFAULT '0' COMMENT '基数',
-  `operator` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '运算符',
-  `rate` int(11) NOT NULL DEFAULT '100' COMMENT '比例',
-  `max` int(11) NOT NULL DEFAULT '0' COMMENT '最大得分值',
-  `status` int(11) DEFAULT '1' COMMENT '状态',
-  `rule_definition` varchar(2048) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+                             `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                             `model_id` bigint(20) NOT NULL COMMENT '模型id',
+                             `activation_id` bigint(20) NOT NULL COMMENT '激活id',
+                             `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+                             `label` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '规则名称',
+                             `scripts` text COLLATE utf8_unicode_ci NOT NULL COMMENT '检验脚本',
+                             `rule_script_entry` varchar(100) COLLATE utf8_unicode_ci NOT NULL COMMENT '规则脚本入口',
+                             `init_score` int(11) NOT NULL DEFAULT '0' COMMENT '初始分数',
+                             `base_num` int(11) NOT NULL DEFAULT '0' COMMENT '基数',
+                             `operator` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '运算符',
+                             `rate` int(11) NOT NULL DEFAULT '100' COMMENT '比例',
+                             `max` int(11) NOT NULL DEFAULT '0' COMMENT '最大得分值',
+                             `status` int(11) DEFAULT '1' COMMENT '状态',
+                             `rule_definition` varchar(2048) COLLATE utf8_unicode_ci DEFAULT NULL,
+                             `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                             `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `risk_rule` */
 
-insert  into `risk_rule`(`id`,`model_id`,`activation_id`,`name`,`label`,`scripts`,`rule_script_entry`,`init_score`,`base_num`,`operator`,`rate`,`max`,`status`,`rule_definition`,`created_time`,`updated_time`) values (11,8,6,'rule_11','手机号不能为空','\n      class ActivationCheckScript {\n          public boolean check(def context, def report) {\n             if (context.eventJson.mobile_no)\n               return true;\n             else\n               return false;\n          }\n       }\n      ','check',10,1,'ADD',1,10,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-07 17:29:51','2023-03-07 17:29:51'),(12,8,6,'rule_12','用户id不能为空','\n      class ActivationCheckScript {\n          public boolean check(def context, def report) {\n             if (context.eventJson.user_id)\n               return true;\n             else\n               return false;\n          }\n       }\n      ','check',10,1,'ADD',1,10,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.user_id\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-07 17:31:11','2023-03-07 17:31:11'),(13,8,6,'rule_13','用户id在指定范围','\n      class ActivationCheckScript {\n          public boolean check(def context, def report) {\n             if (\'1,2,3\'.split(\",\").toList().containsAll(context.eventJson.user_id.split(\",\").toList()))\n               return true;\n             else\n               return false;\n          }\n       }\n      ','check',10,1,'ADD',1,10,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.user_id\",\"operate\":\"⊆\",\"value\":\"1,2,3\"}],\"children\":[]}','2023-03-07 18:25:00','2023-03-07 18:25:00');
+insert  into `risk_rule`(`id`,`model_id`,`activation_id`,`name`,`label`,`scripts`,`rule_script_entry`,`init_score`,`base_num`,`operator`,`rate`,`max`,`status`,`rule_definition`,`created_time`,`updated_time`) values (11,8,6,'rule_11','手机号不能为空','\n      class ActivationCheckScript {\n          public boolean check(def context, def report) {\n             if (context.eventJson.mobile_no)\n               return true;\n             else\n               return false;\n          }\n       }\n      ','check',10,1,'MIN',1,10,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-07 17:29:51','2023-03-07 17:29:51'),(12,8,6,'rule_12','用户id不能为空','\n      class ActivationCheckScript {\n          public boolean check(def context, def report) {\n             if (context.eventJson.user_id)\n               return true;\n             else\n               return false;\n          }\n       }\n      ','check',10,1,'ADD',1,10,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.user_id\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-07 17:31:11','2023-03-07 17:31:11'),(13,8,6,'rule_13','用户id在指定范围','\n      class ActivationCheckScript {\n          public boolean check(def context, def report) {\n             if (\'1,2,3\'.split(\",\").toList().containsAll(context.eventJson.user_id.split(\",\").toList())  && (  context.eventJson.mobile_no == 18668389786 ) )\n               return true;\n             else\n               return false;\n          }\n       }\n      ','check',10,1,'ADD',1,10,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.user_id\",\"operate\":\"⊆\",\"value\":\"1,2,3\"}],\"children\":[{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"==\",\"value\":\"18668389786\"}],\"children\":[]}]}','2023-03-07 18:25:00','2023-03-07 18:25:00');
 
 /*Table structure for table `risk_rule_history` */
 
 DROP TABLE IF EXISTS `risk_rule_history`;
 
 CREATE TABLE `risk_rule_history` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `rule_id` bigint(20) NOT NULL COMMENT '模型id',
-  `merchant_code` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
-  `label` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '规则名称',
-  `init_score` int(11) NOT NULL DEFAULT '0' COMMENT '初始分数',
-  `base_num` int(11) NOT NULL DEFAULT '0' COMMENT '基数',
-  `operator` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '运算符',
-  `abstraction_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL COMMENT '抽象名称',
-  `rate` int(11) NOT NULL DEFAULT '100' COMMENT '比例',
-  `rule_definition` varchar(2048) COLLATE utf8_unicode_ci NOT NULL,
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+                                     `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                     `rule_id` bigint(20) NOT NULL COMMENT '模型id',
+                                     `merchant_code` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
+                                     `label` varchar(64) COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '规则名称',
+                                     `init_score` int(11) NOT NULL DEFAULT '0' COMMENT '初始分数',
+                                     `base_num` int(11) NOT NULL DEFAULT '0' COMMENT '基数',
+                                     `operator` varchar(32) COLLATE utf8_unicode_ci NOT NULL COMMENT '运算符',
+                                     `abstraction_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '抽象名称',
+                                     `rate` int(11) NOT NULL DEFAULT '100' COMMENT '比例',
+                                     `rule_definition` varchar(2048) COLLATE utf8_unicode_ci NOT NULL,
+                                     `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                     `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+                                     PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Data for the table `risk_rule_history` */
+
+insert  into `risk_rule_history`(`id`,`rule_id`,`merchant_code`,`label`,`init_score`,`base_num`,`operator`,`abstraction_name`,`rate`,`rule_definition`,`created_time`,`updated_time`) values (1,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:05:39','2023-03-08 17:05:39'),(2,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:09:30','2023-03-08 17:09:30'),(3,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:10:12','2023-03-08 17:10:12'),(4,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:14:23','2023-03-08 17:14:23'),(5,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:20:47','2023-03-08 17:20:47'),(6,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:21:19','2023-03-08 17:21:19'),(7,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:23:42','2023-03-08 17:23:42'),(8,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:24:07','2023-03-08 17:24:07'),(9,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:25:08','2023-03-08 17:25:08'),(10,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:25:29','2023-03-08 17:25:29'),(11,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:25:42','2023-03-08 17:25:42'),(12,11,'system','手机号不能为空',10,1,'MIN',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"NOT_NULL\",\"value\":\"\"}],\"children\":[]}','2023-03-08 17:55:24','2023-03-08 17:55:24'),(13,13,'system','用户id在指定范围',10,1,'ADD',NULL,1,'{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.user_id\",\"operate\":\"⊆\",\"value\":\"1,2,3\"}],\"children\":[{\"relation\":\"and\",\"conditions\":[{\"name\":\"context.eventJson.mobile_no\",\"operate\":\"==\",\"value\":\"18668389786\"}],\"children\":[]}]}','2023-03-21 09:18:23','2023-03-21 09:18:23');
 
 /*Table structure for table `sys_config` */
 
 DROP TABLE IF EXISTS `sys_config`;
 
 CREATE TABLE `sys_config` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL COMMENT '配置名称',
-  `conf_key` varchar(50) DEFAULT NULL COMMENT '配置键',
-  `conf_value` varchar(500) DEFAULT NULL COMMENT '配置值',
-  `category` varchar(255) DEFAULT NULL COMMENT '分类',
-  `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uk_conf_key_deleted` (`conf_key`,`deleted`) USING BTREE
+                              `id` int(11) NOT NULL AUTO_INCREMENT,
+                              `name` varchar(50) DEFAULT NULL COMMENT '配置名称',
+                              `conf_key` varchar(50) DEFAULT NULL COMMENT '配置键',
+                              `conf_value` varchar(500) DEFAULT NULL COMMENT '配置值',
+                              `category` varchar(255) DEFAULT NULL COMMENT '分类',
+                              `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
+                              `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                              `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                              `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                              `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                              PRIMARY KEY (`id`) USING BTREE,
+                              UNIQUE KEY `uk_conf_key_deleted` (`conf_key`,`deleted`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='基础配置';
 
 /*Data for the table `sys_config` */
@@ -315,19 +317,19 @@ insert  into `sys_config`(`id`,`name`,`conf_key`,`conf_value`,`category`,`remark
 DROP TABLE IF EXISTS `sys_dict`;
 
 CREATE TABLE `sys_dict` (
-  `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
-  `code` varchar(50) DEFAULT NULL COMMENT '标识',
-  `title` varchar(100) DEFAULT NULL COMMENT '名称',
-  `value_type` tinyint(1) DEFAULT '0' COMMENT '值类型,1:Number 2:String 3:Boolean',
-  `hash_code` varchar(32) NOT NULL COMMENT 'hash值，当字典项被修改时变更',
-  `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uk_code_deleted` (`code`,`deleted`) USING BTREE
+                            `id` int(64) NOT NULL AUTO_INCREMENT COMMENT '编号',
+                            `code` varchar(50) DEFAULT NULL COMMENT '标识',
+                            `title` varchar(100) DEFAULT NULL COMMENT '名称',
+                            `value_type` tinyint(1) DEFAULT '0' COMMENT '值类型,1:Number 2:String 3:Boolean',
+                            `hash_code` varchar(32) NOT NULL COMMENT 'hash值，当字典项被修改时变更',
+                            `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
+                            `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                            `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                            `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                            `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                            PRIMARY KEY (`id`) USING BTREE,
+                            UNIQUE KEY `uk_code_deleted` (`code`,`deleted`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='字典表';
 
 /*Data for the table `sys_dict` */
@@ -339,22 +341,22 @@ insert  into `sys_dict`(`id`,`code`,`title`,`value_type`,`hash_code`,`remarks`,`
 DROP TABLE IF EXISTS `sys_dict_item`;
 
 CREATE TABLE `sys_dict_item` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `dict_code` varchar(50) NOT NULL COMMENT '字典Code',
-  `value` varchar(100) NOT NULL COMMENT '数据值',
-  `name` varchar(100) NOT NULL COMMENT '标签',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1：启用 0：禁用',
-  `attributes` json DEFAULT NULL COMMENT '附加属性',
-  `sort` int(10) NOT NULL DEFAULT '0' COMMENT '排序（升序）',
-  `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uqx_value_dict_code` (`value`,`dict_code`,`deleted`) USING BTREE,
-  KEY `idx_dict_code` (`dict_code`) USING BTREE
+                                 `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                 `dict_code` varchar(50) NOT NULL COMMENT '字典Code',
+                                 `value` varchar(100) NOT NULL COMMENT '数据值',
+                                 `name` varchar(100) NOT NULL COMMENT '标签',
+                                 `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 1：启用 0：禁用',
+                                 `attributes` json DEFAULT NULL COMMENT '附加属性',
+                                 `sort` int(10) NOT NULL DEFAULT '0' COMMENT '排序（升序）',
+                                 `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
+                                 `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                                 `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                                 `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                                 `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 UNIQUE KEY `uqx_value_dict_code` (`value`,`dict_code`,`deleted`) USING BTREE,
+                                 KEY `idx_dict_code` (`dict_code`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=2529 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='字典项';
 
 /*Data for the table `sys_dict_item` */
@@ -366,27 +368,27 @@ insert  into `sys_dict_item`(`id`,`dict_code`,`value`,`name`,`status`,`attribute
 DROP TABLE IF EXISTS `sys_menu`;
 
 CREATE TABLE `sys_menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
-  `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID',
-  `title` varchar(100) DEFAULT NULL COMMENT '菜单名称',
-  `icon` varchar(32) DEFAULT NULL COMMENT '菜单图标',
-  `permission` varchar(32) DEFAULT NULL COMMENT '授权标识',
-  `path` varchar(128) DEFAULT NULL COMMENT '路由地址',
-  `target_type` tinyint(1) DEFAULT '1' COMMENT '打开方式 (1组件 2内链 3外链)',
-  `uri` varchar(128) DEFAULT '' COMMENT '定位标识 (打开方式为组件时其值为组件相对路径，其他为URL地址)',
-  `sort` int(11) DEFAULT '1' COMMENT '显示排序',
-  `keep_alive` tinyint(1) DEFAULT '0' COMMENT '组件缓存：0-开启，1-关闭',
-  `hidden` tinyint(1) DEFAULT '0' COMMENT '隐藏菜单:  0-否，1-是',
-  `type` tinyint(1) DEFAULT '0' COMMENT '菜单类型 （0目录，1菜单，2按钮）',
-  `always_show` tinyint(1) DEFAULT '0' COMMENT '目录下菜单数小于1,是否合并 1合并 0不合并',
-  `active_menu` varchar(30) DEFAULT NULL COMMENT '高亮菜单',
-  `remarks` varchar(256) DEFAULT NULL COMMENT '备注信息',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE
+                            `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
+                            `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID',
+                            `title` varchar(100) DEFAULT NULL COMMENT '菜单名称',
+                            `icon` varchar(32) DEFAULT NULL COMMENT '菜单图标',
+                            `permission` varchar(32) DEFAULT NULL COMMENT '授权标识',
+                            `path` varchar(128) DEFAULT NULL COMMENT '路由地址',
+                            `target_type` tinyint(1) DEFAULT '1' COMMENT '打开方式 (1组件 2内链 3外链)',
+                            `uri` varchar(128) DEFAULT '' COMMENT '定位标识 (打开方式为组件时其值为组件相对路径，其他为URL地址)',
+                            `sort` int(11) DEFAULT '1' COMMENT '显示排序',
+                            `keep_alive` tinyint(1) DEFAULT '0' COMMENT '组件缓存：0-开启，1-关闭',
+                            `hidden` tinyint(1) DEFAULT '0' COMMENT '隐藏菜单:  0-否，1-是',
+                            `type` tinyint(1) DEFAULT '0' COMMENT '菜单类型 （0目录，1菜单，2按钮）',
+                            `always_show` tinyint(1) DEFAULT '0' COMMENT '目录下菜单数小于1,是否合并 1合并 0不合并',
+                            `active_menu` varchar(30) DEFAULT NULL COMMENT '高亮菜单',
+                            `remarks` varchar(256) DEFAULT NULL COMMENT '备注信息',
+                            `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                            `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                            `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                            `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                            PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=222223 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='菜单权限 编号规则目录-菜单-按钮 eg: 10-01-01=100101';
 
 /*Data for the table `sys_menu` */
@@ -398,26 +400,26 @@ insert  into `sys_menu`(`id`,`parent_id`,`title`,`icon`,`permission`,`path`,`tar
 DROP TABLE IF EXISTS `sys_menu_copy1`;
 
 CREATE TABLE `sys_menu_copy1` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
-  `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID',
-  `title` varchar(100) DEFAULT NULL COMMENT '菜单名称',
-  `icon` varchar(32) DEFAULT NULL COMMENT '菜单图标',
-  `permission` varchar(32) DEFAULT NULL COMMENT '授权标识',
-  `path` varchar(128) DEFAULT NULL COMMENT '路由地址',
-  `target_type` tinyint(1) DEFAULT '1' COMMENT '打开方式 (1组件 2内链 3外链)',
-  `uri` varchar(128) DEFAULT '' COMMENT '定位标识 (打开方式为组件时其值为组件相对路径，其他为URL地址)',
-  `sort` int(11) DEFAULT '1' COMMENT '显示排序',
-  `keep_alive` tinyint(1) DEFAULT '0' COMMENT '组件缓存：0-开启，1-关闭',
-  `hidden` tinyint(1) DEFAULT '0' COMMENT '隐藏菜单:  0-否，1-是',
-  `type` tinyint(1) DEFAULT '0' COMMENT '菜单类型 （0目录，1菜单，2按钮）',
-  `always_show` tinyint(1) DEFAULT '0' COMMENT '目录下菜单数小于1,是否合并 1合并 0不合并',
-  `remarks` varchar(256) DEFAULT NULL COMMENT '备注信息',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
+                                  `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '父级ID',
+                                  `title` varchar(100) DEFAULT NULL COMMENT '菜单名称',
+                                  `icon` varchar(32) DEFAULT NULL COMMENT '菜单图标',
+                                  `permission` varchar(32) DEFAULT NULL COMMENT '授权标识',
+                                  `path` varchar(128) DEFAULT NULL COMMENT '路由地址',
+                                  `target_type` tinyint(1) DEFAULT '1' COMMENT '打开方式 (1组件 2内链 3外链)',
+                                  `uri` varchar(128) DEFAULT '' COMMENT '定位标识 (打开方式为组件时其值为组件相对路径，其他为URL地址)',
+                                  `sort` int(11) DEFAULT '1' COMMENT '显示排序',
+                                  `keep_alive` tinyint(1) DEFAULT '0' COMMENT '组件缓存：0-开启，1-关闭',
+                                  `hidden` tinyint(1) DEFAULT '0' COMMENT '隐藏菜单:  0-否，1-是',
+                                  `type` tinyint(1) DEFAULT '0' COMMENT '菜单类型 （0目录，1菜单，2按钮）',
+                                  `always_show` tinyint(1) DEFAULT '0' COMMENT '目录下菜单数小于1,是否合并 1合并 0不合并',
+                                  `remarks` varchar(256) DEFAULT NULL COMMENT '备注信息',
+                                  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                                  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                                  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                                  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=140301 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='菜单权限 编号规则目录-菜单-按钮 eg: 10-01-01=100101';
 
 /*Data for the table `sys_menu_copy1` */
@@ -429,19 +431,19 @@ insert  into `sys_menu_copy1`(`id`,`parent_id`,`title`,`icon`,`permission`,`path
 DROP TABLE IF EXISTS `sys_organization`;
 
 CREATE TABLE `sys_organization` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
-  `name` varchar(50) DEFAULT NULL COMMENT '组织名称',
-  `parent_id` int(11) DEFAULT '0' COMMENT '父级ID',
-  `hierarchy` varchar(512) DEFAULT NULL COMMENT '层级信息，从根节点到当前节点的最短路径，使用-分割节点ID',
-  `depth` int(1) DEFAULT NULL COMMENT '当前节点深度',
-  `sort` int(1) DEFAULT '1' COMMENT '排序字段，由小到大',
-  `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建者',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改者',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+                                    `name` varchar(50) DEFAULT NULL COMMENT '组织名称',
+                                    `parent_id` int(11) DEFAULT '0' COMMENT '父级ID',
+                                    `hierarchy` varchar(512) DEFAULT NULL COMMENT '层级信息，从根节点到当前节点的最短路径，使用-分割节点ID',
+                                    `depth` int(1) DEFAULT NULL COMMENT '当前节点深度',
+                                    `sort` int(1) DEFAULT '1' COMMENT '排序字段，由小到大',
+                                    `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
+                                    `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                                    `create_by` int(11) DEFAULT NULL COMMENT '创建者',
+                                    `update_by` int(11) DEFAULT NULL COMMENT '修改者',
+                                    `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                    `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='组织架构';
 
 /*Data for the table `sys_organization` */
@@ -453,20 +455,20 @@ insert  into `sys_organization`(`id`,`name`,`parent_id`,`hierarchy`,`depth`,`sor
 DROP TABLE IF EXISTS `sys_role`;
 
 CREATE TABLE `sys_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) DEFAULT NULL,
-  `code` varchar(64) DEFAULT NULL,
-  `type` tinyint(1) DEFAULT '2' COMMENT '角色类型，1：系统角色 2：业务角色',
-  `scope_type` tinyint(1) DEFAULT '1' COMMENT '数据范围类型',
-  `scope_resources` varchar(255) DEFAULT NULL COMMENT '数据范围资源，当数据范围类型为自定义时使用',
-  `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `uk_code_deleted` (`code`,`deleted`) USING BTREE
+                            `id` int(11) NOT NULL AUTO_INCREMENT,
+                            `name` varchar(64) DEFAULT NULL,
+                            `code` varchar(64) DEFAULT NULL,
+                            `type` tinyint(1) DEFAULT '2' COMMENT '角色类型，1：系统角色 2：业务角色',
+                            `scope_type` tinyint(1) DEFAULT '1' COMMENT '数据范围类型',
+                            `scope_resources` varchar(255) DEFAULT NULL COMMENT '数据范围资源，当数据范围类型为自定义时使用',
+                            `remarks` varchar(256) DEFAULT NULL COMMENT '备注',
+                            `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                            `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                            `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                            `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                            PRIMARY KEY (`id`) USING BTREE,
+                            UNIQUE KEY `uk_code_deleted` (`code`,`deleted`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统角色';
 
 /*Data for the table `sys_role` */
@@ -478,11 +480,11 @@ insert  into `sys_role`(`id`,`name`,`code`,`type`,`scope_type`,`scope_resources`
 DROP TABLE IF EXISTS `sys_role_menu`;
 
 CREATE TABLE `sys_role_menu` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `role_code` varchar(64) NOT NULL COMMENT 'role code',
-  `menu_id` int(11) NOT NULL COMMENT '菜单ID',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `role_code` (`role_code`,`menu_id`) USING BTREE
+                                 `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                 `role_code` varchar(64) NOT NULL COMMENT 'role code',
+                                 `menu_id` int(11) NOT NULL COMMENT '菜单ID',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 UNIQUE KEY `role_code` (`role_code`,`menu_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=826 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='角色菜单表';
 
 /*Data for the table `sys_role_menu` */
@@ -494,101 +496,98 @@ insert  into `sys_role_menu`(`id`,`role_code`,`menu_id`) values (88,'qqqq',11000
 DROP TABLE IF EXISTS `sys_user`;
 
 CREATE TABLE `sys_user` (
-  `user_id` int(2) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `username` varchar(100) DEFAULT NULL COMMENT '登录账号',
-  `nickname` varchar(100) DEFAULT NULL COMMENT '显示名称',
-  `password` varchar(255) DEFAULT NULL COMMENT '密码',
-  `salt` varchar(45) DEFAULT NULL COMMENT 'md5密码盐',
-  `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
-  `sex` tinyint(1) DEFAULT '0' COMMENT '性别(0-默认未知,1-男,2-女)',
-  `email` varchar(45) DEFAULT NULL COMMENT '电子邮件',
-  `phone` varchar(45) DEFAULT NULL COMMENT '电话',
-  `status` tinyint(1) DEFAULT NULL COMMENT '状态(1-正常,0-冻结)',
-  `type` tinyint(1) DEFAULT NULL COMMENT '账户类型',
-  `organization_id` int(11) DEFAULT NULL COMMENT '所属组织ID',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`user_id`) USING BTREE,
-  UNIQUE KEY `uk_username_deleted` (`username`,`deleted`) USING BTREE,
-  KEY `idx_status` (`status`) USING BTREE,
-  KEY `idx_organizaiton_id` (`organization_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统用户';
+                            `user_id` int(2) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                            `username` varchar(100) DEFAULT NULL COMMENT '登录账号',
+                            `nickname` varchar(100) DEFAULT NULL COMMENT '显示名称',
+                            `password` varchar(255) DEFAULT NULL COMMENT '密码',
+                            `salt` varchar(45) DEFAULT NULL COMMENT 'md5密码盐',
+                            `avatar` varchar(255) DEFAULT NULL COMMENT '头像',
+                            `sex` tinyint(1) DEFAULT '0' COMMENT '性别(0-默认未知,1-男,2-女)',
+                            `email` varchar(45) DEFAULT NULL COMMENT '电子邮件',
+                            `phone` varchar(45) DEFAULT NULL COMMENT '电话',
+                            `status` tinyint(1) DEFAULT NULL COMMENT '状态(1-正常,0-冻结)',
+                            `type` tinyint(1) DEFAULT NULL COMMENT '账户类型',
+                            `organization_id` int(11) DEFAULT NULL COMMENT '所属组织ID',
+                            `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                            `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                            `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                            `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                            `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                            PRIMARY KEY (`user_id`) USING BTREE,
+                            UNIQUE KEY `uk_username_deleted` (`username`,`deleted`) USING BTREE,
+                            KEY `idx_status` (`status`) USING BTREE,
+                            KEY `idx_organizaiton_id` (`organization_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='系统用户';
 
 /*Data for the table `sys_user` */
 
-insert  into `sys_user`(`user_id`,`username`,`nickname`,`password`,`salt`,`avatar`,`sex`,`email`,`phone`,`status`,`type`,`organization_id`,`deleted`,`create_by`,`update_by`,`created_time`,`updated_time`) values (1,'admin','Yakir','{bcrypt}$2a$10$2PUA/hFdMXRS1D2dDj6hLOVU.NCD6PFoHXMX7jd6i8g8dVDqvE9lm',NULL,'/profile/user/avatar/ZSrb765qDTk6gbOkTKZM7.jpg',1,'yakirsmall@foxmail.com','18768328782',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2023-03-07 14:32:21'),(3,'admin1','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-08-01 18:33:52'),(4,'admin2111','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',0,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-08-19 10:47:18'),(5,'admin3','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',0,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-08-18 14:17:29'),(6,'admin4','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-11-25 15:08:01'),(7,'admin5','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-11-25 15:08:25'),(8,'admin6','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,7,0,NULL,22,'2999-09-20 17:13:24','2022-11-25 15:17:40'),(9,'admin7','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-08-01 18:33:52'),(10,'admin8','超管12858','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'yakir8@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-09-15 10:20:36'),(13,'zhangsan','张三','{bcrypt}$2a$10$V2Bxh9PeMeruuS/iQVORZ.VMRy5C8.s7Cpf.WviT7bT1cAZndHSf.',NULL,'http://192.168.18.107:9401/profile/upload/20221210/d9202672-c6a2-4647-a8ea-1c6177f34639.png',0,'1412844668@qq.com','18668389786',1,NULL,6,0,NULL,NULL,'2022-11-27 15:45:21','2022-12-10 12:13:39'),(14,'lisiaa','里斯','{bcrypt}$2a$10$AKkhtxsr5VCup7Ae37pLfO2k46ksEcDjdhZyjwkSNa5ZZ2VxenfK2',NULL,'http://192.168.18.107:9401/profile/upload/20221127/6c7829c7-9ce9-43c7-80ad-e34fd71ef36b.jpg',0,'1412@qq.com','18768328789',1,NULL,7,0,NULL,NULL,'2022-11-27 16:31:14','2022-11-27 16:31:14'),(15,'maliua','马六','{bcrypt}$2a$10$QB27Y/QImxT0TuvCNJ.ooOcFuyraAfT8lYLTfnrN58MQpfiR24ARm',NULL,'http://192.168.18.107:9401/profile/upload/20221127/7e2e89f4-3e4a-4284-bffe-87b2f638049f.jpg',0,'123@qq.com','13535353535',1,NULL,6,0,NULL,NULL,'2022-11-27 17:07:31','2022-11-27 17:08:48'),(16,'wangergou','王二狗','{bcrypt}$2a$10$BEzsfv6WZSKJaNZZEilA2ecaKazBBcDqYYsT6XtxT7ngQNs57KzJe',NULL,'http://192.168.18.107:9401/profile/upload/20221127/bb3723d4-1a1c-4a83-a1c2-2046ed1157cb.jpg',0,'123@qq.com','16464646464',1,NULL,6,0,NULL,NULL,'2022-11-27 17:11:13','2022-11-27 17:11:13'),(17,'xielulu','解璐璐','{bcrypt}$2a$10$p1dXJDCED3xsjSN1YIGlc.WffYwZp5aRGg9i5tALVoLo6q1yDuLnu',NULL,'http://192.168.18.107:9401/profile/upload/20221210/88c52dea-74f7-4cc5-9df4-6c5cf1209fef.jpg',0,'13131@qq.com','15656565656',1,NULL,6,0,NULL,NULL,'2022-12-10 21:23:46','2022-12-10 21:23:46'),(18,'44','44','{bcrypt}$2a$10$ZFq6T4XlGfb0thjN5T.8b.CZJwxLD95tgpVZxGdixLTrLt9UqcsGm',NULL,'http://localhost:9401/profile/upload/20230112/46fe7ccd-4064-4211-895b-75b479033567.jpg',0,'44','4444',1,NULL,10,0,NULL,NULL,'2023-01-12 14:30:18','2023-01-12 14:30:18');
+insert  into `sys_user`(`user_id`,`username`,`nickname`,`password`,`salt`,`avatar`,`sex`,`email`,`phone`,`status`,`type`,`organization_id`,`deleted`,`create_by`,`update_by`,`created_time`,`updated_time`) values (1,'admin','Yakir','{bcrypt}$2a$10$2PUA/hFdMXRS1D2dDj6hLOVU.NCD6PFoHXMX7jd6i8g8dVDqvE9lm',NULL,'/profile/user/avatar/ZSrb765qDTk6gbOkTKZM7.jpg',1,'yakirsmall@foxmail.com','18768328782',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2023-03-07 14:32:21'),(3,'admin1','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-08-01 18:33:52'),(4,'admin2111','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',0,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-08-19 10:47:18'),(5,'admin3','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',0,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-08-18 14:17:29'),(6,'admin4','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-11-25 15:08:01'),(7,'admin5','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-11-25 15:08:25'),(8,'admin6','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,7,0,NULL,22,'2999-09-20 17:13:24','2022-11-25 15:17:40'),(9,'admin7','超管','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'chengbohua@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-08-01 18:33:52'),(10,'admin8','超管12858','$2a$10$OGOyFpYjOsPmhh9MTyTRB.Gksb6dys0RqkRJi0Uh1NW361bMhXvh2',NULL,'https://pic.quanjing.com/22/2u/QJ6640824187.jpg@!794wsy',1,'yakir8@foxmail.com','15800000000',1,1,6,0,NULL,22,'2999-09-20 17:13:24','2022-09-15 10:20:36'),(13,'zhangsan','张三','{bcrypt}$2a$10$V2Bxh9PeMeruuS/iQVORZ.VMRy5C8.s7Cpf.WviT7bT1cAZndHSf.',NULL,'http://192.168.18.107:9401/profile/upload/20221210/d9202672-c6a2-4647-a8ea-1c6177f34639.png',0,'1412844668@qq.com','18668389786',1,NULL,6,0,NULL,NULL,'2022-11-27 15:45:21','2022-12-10 12:13:39'),(14,'lisiaa','里斯','{bcrypt}$2a$10$AKkhtxsr5VCup7Ae37pLfO2k46ksEcDjdhZyjwkSNa5ZZ2VxenfK2',NULL,'http://192.168.18.107:9401/profile/upload/20221127/6c7829c7-9ce9-43c7-80ad-e34fd71ef36b.jpg',0,'1412@qq.com','18768328789',1,NULL,7,0,NULL,NULL,'2022-11-27 16:31:14','2022-11-27 16:31:14'),(15,'maliua','马六','{bcrypt}$2a$10$QB27Y/QImxT0TuvCNJ.ooOcFuyraAfT8lYLTfnrN58MQpfiR24ARm',NULL,'http://192.168.18.107:9401/profile/upload/20221127/7e2e89f4-3e4a-4284-bffe-87b2f638049f.jpg',0,'123@qq.com','13535353535',1,NULL,6,0,NULL,NULL,'2022-11-27 17:07:31','2022-11-27 17:08:48'),(16,'wangergou','王二狗','{bcrypt}$2a$10$BEzsfv6WZSKJaNZZEilA2ecaKazBBcDqYYsT6XtxT7ngQNs57KzJe',NULL,'http://192.168.18.107:9401/profile/upload/20221127/bb3723d4-1a1c-4a83-a1c2-2046ed1157cb.jpg',0,'123@qq.com','16464646464',1,NULL,6,0,NULL,NULL,'2022-11-27 17:11:13','2022-11-27 17:11:13'),(17,'xielulu','解璐璐','{bcrypt}$2a$10$p1dXJDCED3xsjSN1YIGlc.WffYwZp5aRGg9i5tALVoLo6q1yDuLnu',NULL,'http://192.168.18.107:9401/profile/upload/20221210/88c52dea-74f7-4cc5-9df4-6c5cf1209fef.jpg',0,'13131@qq.com','15656565656',1,NULL,6,0,NULL,NULL,'2022-12-10 21:23:46','2022-12-10 21:23:46'),(18,'44','44','{bcrypt}$2a$10$ZFq6T4XlGfb0thjN5T.8b.CZJwxLD95tgpVZxGdixLTrLt9UqcsGm',NULL,'http://localhost:9401/profile/upload/20230112/46fe7ccd-4064-4211-895b-75b479033567.jpg',0,'44','4444',1,NULL,10,0,NULL,NULL,'2023-01-12 14:30:18','2023-01-12 14:30:18'),(19,'18668389786','test','{bcrypt}$2a$10$ViRz9PEE9JxwWH6hZDTbIOwLIyMDDYUHgNHqB2L22MLmHM.J4zMkW',NULL,'http://192.168.1.39:9401/profile/upload/20230511/CmTa3O0zFOh2_qk3guCiX.jpg',0,'142444@qq.com','18668389786',1,NULL,0,0,NULL,NULL,'2023-05-11 16:33:15','2023-05-11 16:33:15');
 
 /*Table structure for table `sys_user_role` */
 
 DROP TABLE IF EXISTS `sys_user_role`;
 
 CREATE TABLE `sys_user_role` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL COMMENT '用户ID',
-  `role_code` varchar(64) NOT NULL COMMENT 'role code',
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE KEY `role_code` (`role_code`,`user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户角色表';
+                                 `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                 `user_id` int(11) NOT NULL COMMENT '用户ID',
+                                 `role_code` varchar(64) NOT NULL COMMENT 'role code',
+                                 PRIMARY KEY (`id`) USING BTREE,
+                                 UNIQUE KEY `role_code` (`role_code`,`user_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='用户角色表';
 
 /*Data for the table `sys_user_role` */
 
-insert  into `sys_user_role`(`id`,`user_id`,`role_code`) values (10,3,'ROLE_ADMIN'),(30,4,'ROLE_ADMIN'),(36,6,'ROLE_ADMIN'),(42,7,'ROLE_ADMIN'),(44,8,'ROLE_ADMIN'),(45,10,'ROLE_ADMIN'),(47,14,'ROLE_ADMIN'),(48,15,'ROLE_ADMIN'),(49,16,'ROLE_ADMIN'),(59,18,'ROLE_ADMIN'),(21,38,'ROLE_ADMIN'),(29,4,'ROLE_SALES_EXECUTIVE'),(14,5,'ROLE_SALES_EXECUTIVE'),(35,6,'ROLE_SALES_EXECUTIVE'),(43,7,'ROLE_SALES_EXECUTIVE'),(28,4,'ROLE_TEST'),(13,5,'ROLE_TEST'),(34,6,'ROLE_TEST'),(56,13,'ROLE_TEST'),(57,17,'ROLE_TEST'),(58,18,'ROLE_TEST'),(22,38,'ROLE_TEST');
+insert  into `sys_user_role`(`id`,`user_id`,`role_code`) values (10,3,'ROLE_ADMIN'),(30,4,'ROLE_ADMIN'),(36,6,'ROLE_ADMIN'),(42,7,'ROLE_ADMIN'),(44,8,'ROLE_ADMIN'),(45,10,'ROLE_ADMIN'),(47,14,'ROLE_ADMIN'),(48,15,'ROLE_ADMIN'),(49,16,'ROLE_ADMIN'),(59,18,'ROLE_ADMIN'),(60,19,'ROLE_ADMIN'),(21,38,'ROLE_ADMIN'),(29,4,'ROLE_SALES_EXECUTIVE'),(14,5,'ROLE_SALES_EXECUTIVE'),(35,6,'ROLE_SALES_EXECUTIVE'),(43,7,'ROLE_SALES_EXECUTIVE'),(28,4,'ROLE_TEST'),(13,5,'ROLE_TEST'),(34,6,'ROLE_TEST'),(56,13,'ROLE_TEST'),(57,17,'ROLE_TEST'),(58,18,'ROLE_TEST'),(22,38,'ROLE_TEST');
 
 /*Table structure for table `t_audit` */
 
 DROP TABLE IF EXISTS `t_audit`;
 
 CREATE TABLE `t_audit` (
-  `audit_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `credit_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '授信编号，关联t_credit表',
-  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单编号，关联t_order表',
-  `product_code` varchar(10) NOT NULL DEFAULT '' COMMENT '产品代号',
-  `product_name` varchar(100) NOT NULL DEFAULT '' COMMENT '产品名称',
-  `strategy_code` varchar(30) NOT NULL DEFAULT '' COMMENT '风控策略码',
-  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '客户姓名',
-  `id_no` varchar(18) NOT NULL DEFAULT '' COMMENT '身份证号码',
-  `bank_card_no` varchar(20) NOT NULL DEFAULT '' COMMENT '银行卡号',
-  `mobile_no` varchar(11) NOT NULL DEFAULT '' COMMENT '手机号',
-  `ext_param_json_str` mediumtext COMMENT '其余的额外参数',
-  `audit_status` varchar(1) NOT NULL DEFAULT 'P' COMMENT '系统审核：审批标记\r\nY:通过\r\nN:拒绝\r\nP:审核中\r\nE:系统内部异常',
-  `audit_status_people` varchar(1) NOT NULL DEFAULT 'P' COMMENT '人工审核：审批标记\r\nY:通过\r\nN:拒绝\r\nP:审核中\r\nE:系统内部异常',
-  `reason_code` varchar(50) NOT NULL DEFAULT '' COMMENT '拒绝原因码仅拒绝时返回，可多个以“,”分隔',
-  `reason_desc` varchar(100) NOT NULL DEFAULT '' COMMENT '拒绝原因描述 仅拒绝时返回',
-  `res_time` datetime DEFAULT NULL COMMENT '响应时间',
-  `result_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '风控审核出结果的时间',
-  `people_result_time` datetime DEFAULT NULL COMMENT '人工审核出结果时间',
-  `approval_mark` varchar(20) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '黑名单标记 B类、C类、逗号分隔',
-  `bh_credit_rpt_id` varchar(50) NOT NULL DEFAULT '' COMMENT '百行征信报告id(如果风控规则有的话)',
-  `br_speclist_rpt_id` varchar(50) NOT NULL DEFAULT '' COMMENT '百融特殊名单报告id(如果风控规则有的话)',
-  `br_intention_rpt_id` varchar(50) NOT NULL DEFAULT '' COMMENT '百融借贷意向报告id(如果风控规则有的话)',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`audit_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='审核表';
+                           `audit_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+                           `credit_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '授信编号，关联t_credit表',
+                           `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单编号，关联t_order表',
+                           `product_code` varchar(10) NOT NULL DEFAULT '' COMMENT '产品代号',
+                           `product_name` varchar(100) NOT NULL DEFAULT '' COMMENT '产品名称',
+                           `strategy_code` varchar(30) NOT NULL DEFAULT '' COMMENT '风控策略码',
+                           `name` varchar(20) NOT NULL DEFAULT '' COMMENT '客户姓名',
+                           `id_no` varchar(18) NOT NULL DEFAULT '' COMMENT '身份证号码',
+                           `bank_card_no` varchar(20) NOT NULL DEFAULT '' COMMENT '银行卡号',
+                           `mobile_no` varchar(11) NOT NULL DEFAULT '' COMMENT '手机号',
+                           `ext_param_json_str` mediumtext COMMENT '其余的额外参数',
+                           `audit_status` varchar(1) NOT NULL DEFAULT 'P' COMMENT '系统审核：审批标记\r\nY:通过\r\nN:拒绝\r\nP:审核中\r\nE:系统内部异常',
+                           `audit_status_people` varchar(1) NOT NULL DEFAULT 'P' COMMENT '人工审核：审批标记\r\nY:通过\r\nN:拒绝\r\nP:审核中\r\nE:系统内部异常',
+                           `reason_code` varchar(50) NOT NULL DEFAULT '' COMMENT '拒绝原因码仅拒绝时返回，可多个以“,”分隔',
+                           `reason_desc` varchar(100) NOT NULL DEFAULT '' COMMENT '拒绝原因描述 仅拒绝时返回',
+                           `res_time` datetime DEFAULT NULL COMMENT '响应时间',
+                           `result_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '风控审核出结果的时间',
+                           `people_result_time` datetime DEFAULT NULL COMMENT '人工审核出结果时间',
+                           `approval_mark` varchar(20) CHARACTER SET utf8mb4 NOT NULL DEFAULT '' COMMENT '黑名单标记 B类、C类、逗号分隔',
+                           `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                           PRIMARY KEY (`audit_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='审核表';
 
 /*Data for the table `t_audit` */
 
-insert  into `t_audit`(`audit_id`,`credit_id`,`order_id`,`product_code`,`product_name`,`strategy_code`,`name`,`id_no`,`bank_card_no`,`mobile_no`,`ext_param_json_str`,`audit_status`,`audit_status_people`,`reason_code`,`reason_desc`,`res_time`,`result_time`,`people_result_time`,`approval_mark`,`bh_credit_rpt_id`,`br_speclist_rpt_id`,`br_intention_rpt_id`,`created_time`,`updated_time`) values (28,0,28,'40580001','安居客','4058000102','赵菡家','110101199003075832','','17760775947',NULL,'Y','P','','','2023-03-08 13:33:53','2023-03-08 13:33:53',NULL,'','','','','2023-03-08 13:33:53','2023-03-08 13:33:53');
+insert  into `t_audit`(`audit_id`,`credit_id`,`order_id`,`product_code`,`product_name`,`strategy_code`,`name`,`id_no`,`bank_card_no`,`mobile_no`,`ext_param_json_str`,`audit_status`,`audit_status_people`,`reason_code`,`reason_desc`,`res_time`,`result_time`,`people_result_time`,`approval_mark`,`created_time`,`updated_time`) values (28,0,28,'40580001','安居客','4058000102','赵菡家','110101199003075832','','17760775947',NULL,'Y','P','','','2023-03-08 13:33:53','2023-03-08 13:33:53',NULL,'','2023-03-08 13:33:53','2023-03-08 13:33:53'),(29,0,30,'40580001','安居客','4058000102','赵菡家','110101199003075832','','17760775947',NULL,'N','P','20003','mobile_no-字段为空,created_time-字段为空,event_id-字段为空,user_id-字段为空','2023-03-16 14:16:34','2023-03-16 14:16:34',NULL,'','2023-03-16 14:16:34','2023-03-16 14:16:34');
 
 /*Table structure for table `t_audit_detail` */
 
 DROP TABLE IF EXISTS `t_audit_detail`;
 
 CREATE TABLE `t_audit_detail` (
-  `audit_detail_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单编号，关联t_order表',
-  `audit_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '审核编号，关联t_audit表',
-  `reason_code` varchar(50) NOT NULL DEFAULT '' COMMENT '拒绝原因码仅拒绝时返回，可多个以“,”分隔',
-  `reason_desc` varchar(100) NOT NULL DEFAULT '' COMMENT '拒绝原因描述 仅拒绝时返回',
-  `audit_type` int(1) NOT NULL DEFAULT '0' COMMENT '0 ： 系统审核。1 人工审核',
-  `audit_status` varchar(2) DEFAULT NULL COMMENT '审批标记\r\nY:通过\r\nN:拒绝\r\nP:审核中\r\nE:系统内部异常',
-  `res_time` datetime DEFAULT NULL COMMENT '响应时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`audit_detail_id`) USING BTREE
+                                  `audit_detail_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单编号，关联t_order表',
+                                  `audit_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '审核编号，关联t_audit表',
+                                  `reason_code` varchar(50) NOT NULL DEFAULT '' COMMENT '拒绝原因码仅拒绝时返回，可多个以“,”分隔',
+                                  `reason_desc` varchar(100) NOT NULL DEFAULT '' COMMENT '拒绝原因描述 仅拒绝时返回',
+                                  `audit_type` int(1) NOT NULL DEFAULT '0' COMMENT '0 ： 系统审核。1 人工审核',
+                                  `audit_status` varchar(2) DEFAULT NULL COMMENT '审批标记\r\nY:通过\r\nN:拒绝\r\nP:审核中\r\nE:系统内部异常',
+                                  `res_time` datetime DEFAULT NULL COMMENT '响应时间',
+                                  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                  PRIMARY KEY (`audit_detail_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='审核拒绝原因表';
 
 /*Data for the table `t_audit_detail` */
@@ -598,14 +597,14 @@ CREATE TABLE `t_audit_detail` (
 DROP TABLE IF EXISTS `t_bank_code`;
 
 CREATE TABLE `t_bank_code` (
-  `bank_code_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `bank_code` varchar(10) NOT NULL COMMENT '银行编码',
-  `bank_name` varchar(100) NOT NULL COMMENT '银行名称',
-  `remark` varchar(100) DEFAULT NULL COMMENT '描述',
-  `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
-  PRIMARY KEY (`bank_code_id`),
-  UNIQUE KEY `idx_bank_code` (`bank_code`)
+                               `bank_code_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                               `bank_code` varchar(10) NOT NULL COMMENT '银行编码',
+                               `bank_name` varchar(100) NOT NULL COMMENT '银行名称',
+                               `remark` varchar(100) DEFAULT NULL COMMENT '描述',
+                               `created_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                               `updated_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+                               PRIMARY KEY (`bank_code_id`),
+                               UNIQUE KEY `idx_bank_code` (`bank_code`)
 ) ENGINE=InnoDB AUTO_INCREMENT=512 DEFAULT CHARSET=utf8 COMMENT='银行编码表';
 
 /*Data for the table `t_bank_code` */
@@ -617,72 +616,72 @@ insert  into `t_bank_code`(`bank_code_id`,`bank_code`,`bank_name`,`remark`,`crea
 DROP TABLE IF EXISTS `t_bill`;
 
 CREATE TABLE `t_bill` (
-  `bill_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '账单编号',
-  `loan_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '借款编号,用于关联t_loan表',
-  `partner_bill_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方账单编号',
-  `term_no` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '账单期号',
-  `start_date` datetime DEFAULT NULL COMMENT '开始日期',
-  `end_date` datetime DEFAULT NULL COMMENT '结束日期',
-  `due_date` datetime DEFAULT NULL COMMENT '最后还款日（含宽限期）',
-  `clear_date` datetime DEFAULT NULL COMMENT '结清日期',
-  `bill_type` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '账单类型1：正常账单 2：提前清贷账单 3：降贷账单  4：回购账单99：债转账单',
-  `term_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '本期状态1:正常 2:逾期 5:已结清',
-  `bill_receivable_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '本期应收金额',
-  `bill_receipts_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '本期实收金额（含减免金额）',
-  `bill_mitigate_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '本期减免金额',
-  `latest_sync_time` datetime DEFAULT NULL COMMENT '最后同步时间',
-  `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`bill_id`,`term_no`) USING BTREE,
-  KEY `idx_loan_id` (`loan_id`) USING BTREE COMMENT 'idx_loan_id索引'
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+                          `bill_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '账单编号',
+                          `loan_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '借款编号,用于关联t_loan表',
+                          `partner_bill_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方账单编号',
+                          `term_no` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '账单期号',
+                          `start_date` datetime DEFAULT NULL COMMENT '开始日期',
+                          `end_date` datetime DEFAULT NULL COMMENT '结束日期',
+                          `due_date` datetime DEFAULT NULL COMMENT '最后还款日（含宽限期）',
+                          `clear_date` datetime DEFAULT NULL COMMENT '结清日期',
+                          `bill_type` tinyint(4) unsigned NOT NULL DEFAULT '1' COMMENT '账单类型1：正常账单 2：提前清贷账单 3：降贷账单  4：回购账单99：债转账单',
+                          `term_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '本期状态1:正常 2:逾期 5:已结清',
+                          `bill_receivable_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '本期应收金额',
+                          `bill_receipts_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '本期实收金额（含减免金额）',
+                          `bill_mitigate_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '本期减免金额',
+                          `latest_sync_time` datetime DEFAULT NULL COMMENT '最后同步时间',
+                          `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                          `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                          `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                          PRIMARY KEY (`bill_id`,`term_no`) USING BTREE,
+                          KEY `idx_loan_id` (`loan_id`) USING BTREE COMMENT 'idx_loan_id索引'
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `t_bill` */
 
-insert  into `t_bill`(`bill_id`,`loan_id`,`partner_bill_no`,`term_no`,`start_date`,`end_date`,`due_date`,`clear_date`,`bill_type`,`term_status`,`bill_receivable_amt`,`bill_receipts_amt`,`bill_mitigate_amt`,`latest_sync_time`,`valid`,`created_time`,`updated_time`) values (27,31,'',1,'2023-03-08 13:34:26','2023-03-09 13:34:26','2023-03-09 13:34:26',NULL,1,1,'10000.00','0.00','0.00','2023-03-08 13:35:25',1,'2023-03-08 13:35:25','2023-03-08 13:35:25');
+insert  into `t_bill`(`bill_id`,`loan_id`,`partner_bill_no`,`term_no`,`start_date`,`end_date`,`due_date`,`clear_date`,`bill_type`,`term_status`,`bill_receivable_amt`,`bill_receipts_amt`,`bill_mitigate_amt`,`latest_sync_time`,`valid`,`created_time`,`updated_time`) values (27,31,'',1,'2023-03-08 13:34:26','2023-03-09 13:34:26','2023-03-09 13:34:26',NULL,1,1,'10000.00','0.00','0.00','2023-03-08 13:35:25',1,'2023-03-08 13:35:25','2023-03-08 13:35:25'),(28,32,'',1,'2023-03-16 14:17:29','2023-03-17 14:17:29','2023-03-17 14:17:29',NULL,1,1,'10000.00','0.00','0.00','2023-03-16 14:18:26',1,'2023-03-16 14:18:26','2023-03-16 14:18:26');
 
 /*Table structure for table `t_bill_item` */
 
 DROP TABLE IF EXISTS `t_bill_item`;
 
 CREATE TABLE `t_bill_item` (
-  `bill_item_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '账单科目表',
-  `loan_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '借款编号,用于关联t_loan表',
-  `bill_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '账单编号,用于关联t_bill表',
-  `item_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '科目类型（1: 本金 11: 利息 21: 罚息）',
-  `receivable_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '应收金额',
-  `receipts_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '实收金额',
-  `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `latest_sync_time` datetime DEFAULT NULL COMMENT '最后同步时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`bill_item_id`) USING BTREE,
-  KEY `idx_bill_id` (`bill_id`) USING BTREE COMMENT 'idx_bill_id索引'
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+                               `bill_item_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '账单科目表',
+                               `loan_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '借款编号,用于关联t_loan表',
+                               `bill_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '账单编号,用于关联t_bill表',
+                               `item_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '科目类型（1: 本金 11: 利息 21: 罚息）',
+                               `receivable_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '应收金额',
+                               `receipts_amt` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '实收金额',
+                               `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                               `latest_sync_time` datetime DEFAULT NULL COMMENT '最后同步时间',
+                               `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                               `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                               PRIMARY KEY (`bill_item_id`) USING BTREE,
+                               KEY `idx_bill_id` (`bill_id`) USING BTREE COMMENT 'idx_bill_id索引'
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `t_bill_item` */
 
-insert  into `t_bill_item`(`bill_item_id`,`loan_id`,`bill_id`,`item_type`,`receivable_amt`,`receipts_amt`,`valid`,`latest_sync_time`,`created_time`,`updated_time`) values (79,31,27,1,'10000.00','0.00',1,'2023-03-08 13:35:26','2023-03-08 13:35:26','2023-03-08 13:35:26'),(80,31,27,11,'0.00','0.00',1,'2023-03-08 13:35:26','2023-03-08 13:35:26','2023-03-08 13:35:26'),(81,31,27,21,'0.00','0.00',1,'2023-03-08 13:35:26','2023-03-08 13:35:26','2023-03-08 13:35:26');
+insert  into `t_bill_item`(`bill_item_id`,`loan_id`,`bill_id`,`item_type`,`receivable_amt`,`receipts_amt`,`valid`,`latest_sync_time`,`created_time`,`updated_time`) values (79,31,27,1,'10000.00','0.00',1,'2023-03-08 13:35:26','2023-03-08 13:35:26','2023-03-08 13:35:26'),(80,31,27,11,'0.00','0.00',1,'2023-03-08 13:35:26','2023-03-08 13:35:26','2023-03-08 13:35:26'),(81,31,27,21,'0.00','0.00',1,'2023-03-08 13:35:26','2023-03-08 13:35:26','2023-03-08 13:35:26'),(82,32,28,1,'10000.00','0.00',1,'2023-03-16 14:18:26','2023-03-16 14:18:26','2023-03-16 14:18:26'),(83,32,28,11,'0.00','0.00',1,'2023-03-16 14:18:26','2023-03-16 14:18:26','2023-03-16 14:18:26'),(84,32,28,21,'0.00','0.00',1,'2023-03-16 14:18:26','2023-03-16 14:18:26','2023-03-16 14:18:26');
 
 /*Table structure for table `t_bill_item_filler` */
 
 DROP TABLE IF EXISTS `t_bill_item_filler`;
 
 CREATE TABLE `t_bill_item_filler` (
-  `item_filler_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '填充项编号',
-  `loan_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '借款编号,用于关联t_loan表',
-  `bill_id` bigint(20) NOT NULL COMMENT '账单id,用于关联t_bill表',
-  `bill_item_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '账单科目id,用于关联t_bill_item表',
-  `filler_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '填充类型：2- 减免 11- 实收',
-  `filler_amount` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT '填充金额（应收增加为正、应收减少为负、实收增加为正、实收减少为负）',
-  `filler_target` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '填充目标：1- 应收2- 实收',
-  `trade_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '交易编号，关联t_trade表',
-  `remark` varchar(100) NOT NULL DEFAULT '' COMMENT '说明',
-  `partner_filler_time` datetime DEFAULT NULL COMMENT '账单填充时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`item_filler_id`) USING BTREE
+                                      `item_filler_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '填充项编号',
+                                      `loan_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '借款编号,用于关联t_loan表',
+                                      `bill_id` bigint(20) NOT NULL COMMENT '账单id,用于关联t_bill表',
+                                      `bill_item_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '账单科目id,用于关联t_bill_item表',
+                                      `filler_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '填充类型：2- 减免 11- 实收',
+                                      `filler_amount` decimal(12,2) NOT NULL DEFAULT '0.00' COMMENT '填充金额（应收增加为正、应收减少为负、实收增加为正、实收减少为负）',
+                                      `filler_target` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '填充目标：1- 应收2- 实收',
+                                      `trade_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '交易编号，关联t_trade表',
+                                      `remark` varchar(100) NOT NULL DEFAULT '' COMMENT '说明',
+                                      `partner_filler_time` datetime DEFAULT NULL COMMENT '账单填充时间',
+                                      `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                      `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                      PRIMARY KEY (`item_filler_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `t_bill_item_filler` */
@@ -692,24 +691,24 @@ CREATE TABLE `t_bill_item_filler` (
 DROP TABLE IF EXISTS `t_certificate`;
 
 CREATE TABLE `t_certificate` (
-  `certificate_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '签章证书主键id',
-  `certificate_alias` varchar(50) NOT NULL DEFAULT '' COMMENT '证书别名',
-  `subject_type` int(10) NOT NULL COMMENT '主体类型 1个人 2公司',
-  `certificate_subject` varchar(50) NOT NULL DEFAULT '' COMMENT '个人及个人名称,公司及名称',
-  `authorize_type` int(2) DEFAULT NULL COMMENT '证书生成方式1系统生成2自定义',
-  `certificate_no` varchar(50) NOT NULL COMMENT '主体证件号 个人 身份证号 公司 则营业执照编码',
-  `keystore_type` int(10) DEFAULT NULL COMMENT '密钥库类型1.jks2.pkcs12',
-  `certificate_pwd` varchar(50) NOT NULL DEFAULT '' COMMENT '证书密码',
-  `certificate_remark` varchar(255) NOT NULL DEFAULT '' COMMENT '证书描述',
-  `certificate_filename` varchar(255) DEFAULT NULL COMMENT '证书原始文件名',
-  `certificate_address` varchar(255) DEFAULT NULL COMMENT '证书地址',
-  `validity_time` int(10) DEFAULT '24' COMMENT '有效期单位为小时',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`certificate_id`) USING BTREE
+                                 `certificate_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '签章证书主键id',
+                                 `certificate_alias` varchar(50) NOT NULL DEFAULT '' COMMENT '证书别名',
+                                 `subject_type` int(10) NOT NULL COMMENT '主体类型 1个人 2公司',
+                                 `certificate_subject` varchar(50) NOT NULL DEFAULT '' COMMENT '个人及个人名称,公司及名称',
+                                 `authorize_type` int(2) DEFAULT NULL COMMENT '证书生成方式1系统生成2自定义',
+                                 `certificate_no` varchar(50) NOT NULL COMMENT '主体证件号 个人 身份证号 公司 则营业执照编码',
+                                 `keystore_type` int(10) DEFAULT NULL COMMENT '密钥库类型1.jks2.pkcs12',
+                                 `certificate_pwd` varchar(50) NOT NULL DEFAULT '' COMMENT '证书密码',
+                                 `certificate_remark` varchar(255) NOT NULL DEFAULT '' COMMENT '证书描述',
+                                 `certificate_filename` varchar(255) DEFAULT NULL COMMENT '证书原始文件名',
+                                 `certificate_address` varchar(255) DEFAULT NULL COMMENT '证书地址',
+                                 `validity_time` int(10) DEFAULT '24' COMMENT '有效期单位为小时',
+                                 `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                                 `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                                 `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                                 `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                 PRIMARY KEY (`certificate_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='签章证书表';
 
 /*Data for the table `t_certificate` */
@@ -721,184 +720,184 @@ insert  into `t_certificate`(`certificate_id`,`certificate_alias`,`subject_type`
 DROP TABLE IF EXISTS `t_loan`;
 
 CREATE TABLE `t_loan` (
-  `loan_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '借款编号',
-  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单编号,关联t_order表',
-  `loan_biz_no` varchar(50) NOT NULL DEFAULT '' COMMENT '借款编号(云融提供)',
-  `partner_biz_no` varchar(100) NOT NULL DEFAULT '' COMMENT '合作方业务号',
-  `partner_loan_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方借款编号',
-  `contract_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合同号',
-  `product_code` varchar(20) NOT NULL DEFAULT '' COMMENT '产品代号',
-  `product_name` varchar(50) NOT NULL DEFAULT '' COMMENT '产品名称',
-  `trust_plan_code` varchar(20) NOT NULL DEFAULT '' COMMENT '信托计划代号',
-  `trust_plan_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托计划名称',
-  `real_name` varchar(50) NOT NULL DEFAULT '' COMMENT '客户姓名',
-  `certificate_type` varchar(10) NOT NULL DEFAULT '10' COMMENT '证件类型，枚举值：1-户口簿2-护照5-港澳居民来往内地通行证6-台湾同胞来往内地通行证8-外国人居留证9-警官证A-香港身份证B-澳门身份证C-台湾身份证X-其他证件10-居民身份证及其他以公民身份证号码为标识的证件20-军人身份证件',
-  `certificate_no` varchar(20) NOT NULL DEFAULT '' COMMENT '证件号码',
-  `apply_date` datetime DEFAULT NULL COMMENT '贷款申请日期',
-  `loan_date` datetime DEFAULT NULL COMMENT '放款时间',
-  `start_date` datetime DEFAULT NULL COMMENT '贷款确认日期（起息日）',
-  `end_date` datetime DEFAULT NULL COMMENT '贷款到期日期',
-  `clear_date` datetime DEFAULT NULL COMMENT '结清日期',
-  `trade_id` bigint(50) unsigned NOT NULL DEFAULT '0' COMMENT '放款交易编号',
-  `loan_amt` decimal(16,4) NOT NULL DEFAULT '0.0000' COMMENT '放款金额',
-  `currency` varchar(50) NOT NULL DEFAULT '0' COMMENT '币种（0:RMB）',
-  `repayment_way` int(20) unsigned NOT NULL DEFAULT '0' COMMENT '还款方式（0:等额本息 1:等额本金 2:先息后本 3:月息季本 4:X+Y,X期先息后本，Y期等额本金 5:一次性还本付息）',
-  `period_unit` varchar(4) NOT NULL DEFAULT '1' COMMENT '期数单位，0:天，1:月',
-  `total_terms` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '总期数',
-  `irr_rate` decimal(10,6) unsigned DEFAULT NULL COMMENT 'irr年利率',
-  `current_term` smallint(5) NOT NULL DEFAULT '0' COMMENT '当前期数',
-  `merchant_dis_amt` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '商户帖息金额',
-  `grace_days` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '宽限期天数',
-  `interest_rate_unit` int(8) NOT NULL DEFAULT '0' COMMENT '利率单位（1:日利率 30:月利率 365:年利率）',
-  `interest_rate` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '利率',
-  `penalty_rate_unit` varchar(8) NOT NULL DEFAULT '0' COMMENT '利率单位（1:日利率 30:月利率 365:年利率）',
-  `penalty_rate` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '罚息利率',
-  `loan_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '借款状态(20:待放款21:放款成功/还款中22:放款失败30:已结清40:回购中 99:转出)',
-  `overdue_flag` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '逾期标记（0:未逾期 1:已逾期）',
-  `principal_receivable` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '应还本金',
-  `principal_receipts` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '已还本金',
-  `interest_receivable` decimal(16,4) NOT NULL DEFAULT '0.0000' COMMENT '应还利息',
-  `interest_receipts` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '已还利息',
-  `penalty_receivable` decimal(16,4) NOT NULL DEFAULT '0.0000' COMMENT '应还罚息',
-  `penalty_receipts` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '已还罚息',
-  `receivable_amt` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '应还总金',
-  `receipts_amt` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '已还总金',
-  `latest_sync_time` datetime DEFAULT NULL COMMENT '最后同步时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `nb_contract_id` varchar(50) DEFAULT NULL COMMENT '宁波银行放款入参借款合同编号',
-  PRIMARY KEY (`loan_id`) USING BTREE,
-  KEY `idx_partner_biz_no` (`partner_biz_no`) USING BTREE COMMENT 'partnerBizNo索引',
-  KEY `idx_order_id` (`order_id`) USING BTREE COMMENT 'idx_order_id索引'
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='借款合同表';
+                          `loan_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '借款编号',
+                          `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单编号,关联t_order表',
+                          `loan_biz_no` varchar(50) NOT NULL DEFAULT '' COMMENT '借款编号(云融提供)',
+                          `partner_biz_no` varchar(100) NOT NULL DEFAULT '' COMMENT '合作方业务号',
+                          `partner_loan_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方借款编号',
+                          `contract_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合同号',
+                          `product_code` varchar(20) NOT NULL DEFAULT '' COMMENT '产品代号',
+                          `product_name` varchar(50) NOT NULL DEFAULT '' COMMENT '产品名称',
+                          `trust_plan_code` varchar(20) NOT NULL DEFAULT '' COMMENT '信托计划代号',
+                          `trust_plan_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托计划名称',
+                          `real_name` varchar(50) NOT NULL DEFAULT '' COMMENT '客户姓名',
+                          `certificate_type` varchar(10) NOT NULL DEFAULT '10' COMMENT '证件类型，枚举值：1-户口簿2-护照5-港澳居民来往内地通行证6-台湾同胞来往内地通行证8-外国人居留证9-警官证A-香港身份证B-澳门身份证C-台湾身份证X-其他证件10-居民身份证及其他以公民身份证号码为标识的证件20-军人身份证件',
+                          `certificate_no` varchar(20) NOT NULL DEFAULT '' COMMENT '证件号码',
+                          `apply_date` datetime DEFAULT NULL COMMENT '贷款申请日期',
+                          `loan_date` datetime DEFAULT NULL COMMENT '放款时间',
+                          `start_date` datetime DEFAULT NULL COMMENT '贷款确认日期（起息日）',
+                          `end_date` datetime DEFAULT NULL COMMENT '贷款到期日期',
+                          `clear_date` datetime DEFAULT NULL COMMENT '结清日期',
+                          `trade_id` bigint(50) unsigned NOT NULL DEFAULT '0' COMMENT '放款交易编号',
+                          `loan_amt` decimal(16,4) NOT NULL DEFAULT '0.0000' COMMENT '放款金额',
+                          `currency` varchar(50) NOT NULL DEFAULT '0' COMMENT '币种（0:RMB）',
+                          `repayment_way` int(20) unsigned NOT NULL DEFAULT '0' COMMENT '还款方式（0:等额本息 1:等额本金 2:先息后本 3:月息季本 4:X+Y,X期先息后本，Y期等额本金 5:一次性还本付息）',
+                          `period_unit` varchar(4) NOT NULL DEFAULT '1' COMMENT '期数单位，0:天，1:月',
+                          `total_terms` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT '总期数',
+                          `irr_rate` decimal(10,6) unsigned DEFAULT NULL COMMENT 'irr年利率',
+                          `current_term` smallint(5) NOT NULL DEFAULT '0' COMMENT '当前期数',
+                          `merchant_dis_amt` decimal(10,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '商户帖息金额',
+                          `grace_days` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '宽限期天数',
+                          `interest_rate_unit` int(8) NOT NULL DEFAULT '0' COMMENT '利率单位（1:日利率 30:月利率 365:年利率）',
+                          `interest_rate` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '利率',
+                          `penalty_rate_unit` varchar(8) NOT NULL DEFAULT '0' COMMENT '利率单位（1:日利率 30:月利率 365:年利率）',
+                          `penalty_rate` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '罚息利率',
+                          `loan_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '借款状态(20:待放款21:放款成功/还款中22:放款失败30:已结清40:回购中 99:转出)',
+                          `overdue_flag` tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '逾期标记（0:未逾期 1:已逾期）',
+                          `principal_receivable` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '应还本金',
+                          `principal_receipts` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '已还本金',
+                          `interest_receivable` decimal(16,4) NOT NULL DEFAULT '0.0000' COMMENT '应还利息',
+                          `interest_receipts` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '已还利息',
+                          `penalty_receivable` decimal(16,4) NOT NULL DEFAULT '0.0000' COMMENT '应还罚息',
+                          `penalty_receipts` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '已还罚息',
+                          `receivable_amt` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '应还总金',
+                          `receipts_amt` decimal(16,4) unsigned NOT NULL DEFAULT '0.0000' COMMENT '已还总金',
+                          `latest_sync_time` datetime DEFAULT NULL COMMENT '最后同步时间',
+                          `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                          `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                          `nb_contract_id` varchar(50) DEFAULT NULL COMMENT '宁波银行放款入参借款合同编号',
+                          PRIMARY KEY (`loan_id`) USING BTREE,
+                          KEY `idx_partner_biz_no` (`partner_biz_no`) USING BTREE COMMENT 'partnerBizNo索引',
+                          KEY `idx_order_id` (`order_id`) USING BTREE COMMENT 'idx_order_id索引'
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='借款合同表';
 
 /*Data for the table `t_loan` */
 
-insert  into `t_loan`(`loan_id`,`order_id`,`loan_biz_no`,`partner_biz_no`,`partner_loan_no`,`contract_no`,`product_code`,`product_name`,`trust_plan_code`,`trust_plan_name`,`real_name`,`certificate_type`,`certificate_no`,`apply_date`,`loan_date`,`start_date`,`end_date`,`clear_date`,`trade_id`,`loan_amt`,`currency`,`repayment_way`,`period_unit`,`total_terms`,`irr_rate`,`current_term`,`merchant_dis_amt`,`grace_days`,`interest_rate_unit`,`interest_rate`,`penalty_rate_unit`,`penalty_rate`,`loan_status`,`overdue_flag`,`principal_receivable`,`principal_receipts`,`interest_receivable`,`interest_receipts`,`penalty_receivable`,`penalty_receipts`,`receivable_amt`,`receipts_amt`,`latest_sync_time`,`created_time`,`updated_time`,`nb_contract_id`) values (31,28,'','1633339628362473472','1633339628362473472','999987915244','40580001','安居客','405801','天机58-1','赵菡家','10','110101199003075832','2023-03-08 13:31:28','2023-03-08 13:34:26','2023-03-08 13:34:26','2023-03-09 13:34:26',NULL,34,'10000.0000','0',116104,'1',1,NULL,1,'0.0000',0,0,'0.000200','0','0.000100',21,0,'10000.0000','0.0000','0.0000','0.0000','0.0000','0.0000','10000.0000','0.0000','2023-03-08 13:35:26','2023-03-08 13:34:26','2023-03-08 13:35:26',NULL);
+insert  into `t_loan`(`loan_id`,`order_id`,`loan_biz_no`,`partner_biz_no`,`partner_loan_no`,`contract_no`,`product_code`,`product_name`,`trust_plan_code`,`trust_plan_name`,`real_name`,`certificate_type`,`certificate_no`,`apply_date`,`loan_date`,`start_date`,`end_date`,`clear_date`,`trade_id`,`loan_amt`,`currency`,`repayment_way`,`period_unit`,`total_terms`,`irr_rate`,`current_term`,`merchant_dis_amt`,`grace_days`,`interest_rate_unit`,`interest_rate`,`penalty_rate_unit`,`penalty_rate`,`loan_status`,`overdue_flag`,`principal_receivable`,`principal_receipts`,`interest_receivable`,`interest_receipts`,`penalty_receivable`,`penalty_receipts`,`receivable_amt`,`receipts_amt`,`latest_sync_time`,`created_time`,`updated_time`,`nb_contract_id`) values (31,28,'','1633339628362473472','1633339628362473472','999987915244','40580001','安居客','405801','天机58-1','赵菡家','10','110101199003075832','2023-03-08 13:31:28','2023-03-08 13:34:26','2023-03-08 13:34:26','2023-03-09 13:34:26',NULL,34,'10000.0000','0',116104,'1',1,NULL,1,'0.0000',0,0,'0.000200','0','0.000100',21,0,'10000.0000','0.0000','0.0000','0.0000','0.0000','0.0000','10000.0000','0.0000','2023-03-08 13:35:26','2023-03-08 13:34:26','2023-03-08 13:35:26',NULL),(32,30,'','1636249895031386112','1636249895031386112','999987915244','40580001','安居客','405801','天机58-1','赵菡家','10','110101199003075832','2023-03-16 14:15:50','2023-03-16 14:17:29','2023-03-16 14:17:29','2023-03-17 14:17:29',NULL,35,'10000.0000','0',116104,'1',1,NULL,1,'0.0000',0,0,'0.000200','0','0.000100',21,0,'10000.0000','0.0000','0.0000','0.0000','0.0000','0.0000','10000.0000','0.0000','2023-03-16 14:18:26','2023-03-16 14:17:29','2023-03-16 14:18:26',NULL);
 
 /*Table structure for table `t_order` */
 
 DROP TABLE IF EXISTS `t_order`;
 
 CREATE TABLE `t_order` (
-  `order_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `credit_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '授信编号，关联t_credit表',
-  `partner_biz_no` varchar(100) NOT NULL DEFAULT '' COMMENT '合作方业务号',
-  `apply_batch_no` varchar(50) NOT NULL DEFAULT '' COMMENT '批次号',
-  `region_code` varchar(100) NOT NULL DEFAULT '' COMMENT '地区代码',
-  `region_name` varchar(100) NOT NULL DEFAULT '' COMMENT '地区名称',
-  `apply_amount` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '申请金额（单位:元）',
-  `apply_passed_amount` decimal(10,2) unsigned DEFAULT NULL COMMENT '申请通过金额（单位：元）',
-  `repayment_way` int(20) unsigned NOT NULL DEFAULT '0' COMMENT '还款方式（\r\n0:等额本息 \r\n1:等额本金 \r\n2:先息后本 \r\n3:月息季本 \r\n4:X+Y,X期先息后本，Y期等额本金 \r\n5:一次性还本付息\r\n）',
-  `order_stage` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '订单阶段（\r\n0:待处理\r\n1:已进件\r\n2:待签约\r\n5:系统拒绝\r\n6:待进件\r\n10:待审批\r\n11:已审批\r\n12:审批拒绝\r\n20:待放款\r\n21:已放款\\还款中\r\n22:放款失败\r\n30:已结清\r\n40:回购中\r\n99:债权置换\r\n）',
-  `refuse_reason` varchar(255) NOT NULL DEFAULT '' COMMENT '拒绝理由',
-  `period_unit` varchar(4) NOT NULL DEFAULT '1' COMMENT '期数单位：\r\nhttp://49.234.128.78/showdoc/web/#/27?page_id=1176',
-  `loan_period` int(4) unsigned NOT NULL DEFAULT '0' COMMENT '借款期限',
-  `loan_period_passed` int(4) DEFAULT NULL COMMENT '申请通过借款期限',
-  `interest_rate_unit` int(4) NOT NULL DEFAULT '0' COMMENT '利率单位（1:日利率 30:月利率 365:年利率）',
-  `interest_rate` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '利率',
-  `interest_rate_unit_passed` varchar(4) NOT NULL DEFAULT '0' COMMENT '审核通过利率单位（1:日利率 30:月利率 365:年利率）',
-  `penalty_interest_rate` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '罚息利率',
-  `interest_rate_passed` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '审核通过利率',
-  `loan_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '贷款类型（1:流动资金贷款 2:固定资产贷款 3:境外筹资转贷 4:买方信贷 5:出口卖方信贷 6:项目融资 7:其他贷款）',
-  `credit_loan_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '征信贷款种类（\r\n 10- 短期贷款\r\n  11- 短期流动资金贷款\r\n  19- 短期其他贷款\r\n  20- 中期贷款\r\n  21- 中期流动资金贷款\r\n  22- 中期基建贷款\r\n  23- 中期技改贷款\r\n  29- 中期其他贷款\r\n  30- 长期贷款\r\n  31- 长期基建贷款\r\n  32- 长期技改贷款\r\n  39- 长期其他贷款）',
-  `invest_industry` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '投向行业（\r\n112201-基础产业\r\n 112202-房地产 \r\n112204-金融机构 \r\n112205-工商企业 \r\n112209-其他）',
-  `loan_purpose` int(10) NOT NULL DEFAULT '99' COMMENT '贷款用途，枚举值：\n\r\n1-无场景贷款\r\n2-教育\r\n3-医美\r\n4-租房\r\n5-数码\r\n6-买车\r\n7-装修\r\n8-旅游\r\n9-农业生产\r\n10-企业经营\r\n11-综合用款\r\n12-商城购物\r\n13-日常消费\r\n99-未知',
-  `repayment_source` int(10) NOT NULL DEFAULT '0' COMMENT '还款来源（116101 经营性现金流\r\n116102 房地产项目销售收入\r\n116103 信托资产转让或出售变现\r\n116104 土地出让收入\r\n116105 专项费用返还\r\n116106 专项税收返还\r\n116107 BOT或类似收入\r\n116108 财政兜底\r\n116109 其他）',
-  `industry_detail` varchar(50) NOT NULL DEFAULT '' COMMENT '行业明细（V0100:个人贷款）',
-  `invest_type` varchar(50) NOT NULL DEFAULT '' COMMENT '投入分类（V0100:个人贷款）',
-  `business_detail` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '业务种类明细（ 11:个人住房贷款 12:个人商用房(包括商住两用)贷款 13:个人住房公积金贷款 \r\n 21:个人汽车消费贷款 31:个人助学贷款 41:个人经营性贷款 51:农户贷款 \r\n 71 准贷记卡 81 贷记卡 91 个人消费贷款 99 其他）',
-  `guarantee_way` varchar(50) NOT NULL DEFAULT '' COMMENT '担保方式（A:质押贷款 B:抵押贷款 B01 房地产抵押贷款 B99 其他抵押贷款 C:保证贷款 \r\nC01 联保贷款 C99:其他保证贷款 D:信用/免担保贷款 E:组合担保 Z:其他）',
-  `partner_contract_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方合同号',
-  `receive_card_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '收款卡编号',
-  `repayment_card_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '还款卡信息',
-  `partner_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '信托项目编号t_config_partner表',
-  `partner_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托项目名称',
-  `trust_plan_code` int(10) NOT NULL DEFAULT '0' COMMENT '信托计划编号t_config_trust_plan表',
-  `trust_plan_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托计划名称',
-  `product_code` int(10) NOT NULL DEFAULT '0' COMMENT '信托产品编号t_config_product表',
-  `product_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托产品名称',
-  `project_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '子产品编号,关联t_config_project表',
-  `partner_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方编号',
-  `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  `grace_days` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '宽限期天数',
-  PRIMARY KEY (`order_id`) USING BTREE,
-  UNIQUE KEY `idx_partner_biz_no` (`partner_biz_no`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+                           `order_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+                           `credit_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '授信编号，关联t_credit表',
+                           `partner_biz_no` varchar(100) NOT NULL DEFAULT '' COMMENT '合作方业务号',
+                           `apply_batch_no` varchar(50) NOT NULL DEFAULT '' COMMENT '批次号',
+                           `region_code` varchar(100) NOT NULL DEFAULT '' COMMENT '地区代码',
+                           `region_name` varchar(100) NOT NULL DEFAULT '' COMMENT '地区名称',
+                           `apply_amount` decimal(10,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '申请金额（单位:元）',
+                           `apply_passed_amount` decimal(10,2) unsigned DEFAULT NULL COMMENT '申请通过金额（单位：元）',
+                           `repayment_way` int(20) unsigned NOT NULL DEFAULT '0' COMMENT '还款方式（\r\n0:等额本息 \r\n1:等额本金 \r\n2:先息后本 \r\n3:月息季本 \r\n4:X+Y,X期先息后本，Y期等额本金 \r\n5:一次性还本付息\r\n）',
+                           `order_stage` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '订单阶段（\r\n0:待处理\r\n1:已进件\r\n2:待签约\r\n5:系统拒绝\r\n6:待进件\r\n10:待审批\r\n11:已审批\r\n12:审批拒绝\r\n20:待放款\r\n21:已放款\\还款中\r\n22:放款失败\r\n30:已结清\r\n40:回购中\r\n99:债权置换\r\n）',
+                           `refuse_reason` varchar(255) NOT NULL DEFAULT '' COMMENT '拒绝理由',
+                           `period_unit` varchar(4) NOT NULL DEFAULT '1' COMMENT '期数单位：\r\nhttp://49.234.128.78/showdoc/web/#/27?page_id=1176',
+                           `loan_period` int(4) unsigned NOT NULL DEFAULT '0' COMMENT '借款期限',
+                           `loan_period_passed` int(4) DEFAULT NULL COMMENT '申请通过借款期限',
+                           `interest_rate_unit` int(4) NOT NULL DEFAULT '0' COMMENT '利率单位（1:日利率 30:月利率 365:年利率）',
+                           `interest_rate` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '利率',
+                           `interest_rate_unit_passed` varchar(4) NOT NULL DEFAULT '0' COMMENT '审核通过利率单位（1:日利率 30:月利率 365:年利率）',
+                           `penalty_interest_rate` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '罚息利率',
+                           `interest_rate_passed` decimal(10,6) unsigned NOT NULL DEFAULT '0.000000' COMMENT '审核通过利率',
+                           `loan_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '贷款类型（1:流动资金贷款 2:固定资产贷款 3:境外筹资转贷 4:买方信贷 5:出口卖方信贷 6:项目融资 7:其他贷款）',
+                           `credit_loan_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '征信贷款种类（\r\n 10- 短期贷款\r\n  11- 短期流动资金贷款\r\n  19- 短期其他贷款\r\n  20- 中期贷款\r\n  21- 中期流动资金贷款\r\n  22- 中期基建贷款\r\n  23- 中期技改贷款\r\n  29- 中期其他贷款\r\n  30- 长期贷款\r\n  31- 长期基建贷款\r\n  32- 长期技改贷款\r\n  39- 长期其他贷款）',
+                           `invest_industry` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '投向行业（\r\n112201-基础产业\r\n 112202-房地产 \r\n112204-金融机构 \r\n112205-工商企业 \r\n112209-其他）',
+                           `loan_purpose` int(10) NOT NULL DEFAULT '99' COMMENT '贷款用途，枚举值：\n\r\n1-无场景贷款\r\n2-教育\r\n3-医美\r\n4-租房\r\n5-数码\r\n6-买车\r\n7-装修\r\n8-旅游\r\n9-农业生产\r\n10-企业经营\r\n11-综合用款\r\n12-商城购物\r\n13-日常消费\r\n99-未知',
+                           `repayment_source` int(10) NOT NULL DEFAULT '0' COMMENT '还款来源（116101 经营性现金流\r\n116102 房地产项目销售收入\r\n116103 信托资产转让或出售变现\r\n116104 土地出让收入\r\n116105 专项费用返还\r\n116106 专项税收返还\r\n116107 BOT或类似收入\r\n116108 财政兜底\r\n116109 其他）',
+                           `industry_detail` varchar(50) NOT NULL DEFAULT '' COMMENT '行业明细（V0100:个人贷款）',
+                           `invest_type` varchar(50) NOT NULL DEFAULT '' COMMENT '投入分类（V0100:个人贷款）',
+                           `business_detail` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '业务种类明细（ 11:个人住房贷款 12:个人商用房(包括商住两用)贷款 13:个人住房公积金贷款 \r\n 21:个人汽车消费贷款 31:个人助学贷款 41:个人经营性贷款 51:农户贷款 \r\n 71 准贷记卡 81 贷记卡 91 个人消费贷款 99 其他）',
+                           `guarantee_way` varchar(50) NOT NULL DEFAULT '' COMMENT '担保方式（A:质押贷款 B:抵押贷款 B01 房地产抵押贷款 B99 其他抵押贷款 C:保证贷款 \r\nC01 联保贷款 C99:其他保证贷款 D:信用/免担保贷款 E:组合担保 Z:其他）',
+                           `partner_contract_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方合同号',
+                           `receive_card_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '收款卡编号',
+                           `repayment_card_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '还款卡信息',
+                           `partner_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '信托项目编号t_config_partner表',
+                           `partner_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托项目名称',
+                           `trust_plan_code` int(10) NOT NULL DEFAULT '0' COMMENT '信托计划编号t_config_trust_plan表',
+                           `trust_plan_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托计划名称',
+                           `product_code` int(10) NOT NULL DEFAULT '0' COMMENT '信托产品编号t_config_product表',
+                           `product_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托产品名称',
+                           `project_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '子产品编号,关联t_config_project表',
+                           `partner_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方编号',
+                           `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                           `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                           `grace_days` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '宽限期天数',
+                           PRIMARY KEY (`order_id`) USING BTREE,
+                           UNIQUE KEY `idx_partner_biz_no` (`partner_biz_no`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `t_order` */
 
-insert  into `t_order`(`order_id`,`credit_id`,`partner_biz_no`,`apply_batch_no`,`region_code`,`region_name`,`apply_amount`,`apply_passed_amount`,`repayment_way`,`order_stage`,`refuse_reason`,`period_unit`,`loan_period`,`loan_period_passed`,`interest_rate_unit`,`interest_rate`,`interest_rate_unit_passed`,`penalty_interest_rate`,`interest_rate_passed`,`loan_type`,`credit_loan_type`,`invest_industry`,`loan_purpose`,`repayment_source`,`industry_detail`,`invest_type`,`business_detail`,`guarantee_way`,`partner_contract_no`,`receive_card_id`,`repayment_card_id`,`partner_id`,`partner_name`,`trust_plan_code`,`trust_plan_name`,`product_code`,`product_name`,`project_id`,`partner_no`,`valid`,`created_time`,`updated_time`,`grace_days`) values (28,0,'1633339628362473472','','','','10000.00','10000.00',116104,14,'','1',1,1,0,'0.000200','0','0.000100','0.000200',4,0,112205,1,116105,'','31',31,'B99','999987915244',28,0,2,'anjuke',405801,'天机58-1',40580001,'安居客',2,'',1,'2023-03-08 13:31:28','2023-03-08 13:31:28',0);
+insert  into `t_order`(`order_id`,`credit_id`,`partner_biz_no`,`apply_batch_no`,`region_code`,`region_name`,`apply_amount`,`apply_passed_amount`,`repayment_way`,`order_stage`,`refuse_reason`,`period_unit`,`loan_period`,`loan_period_passed`,`interest_rate_unit`,`interest_rate`,`interest_rate_unit_passed`,`penalty_interest_rate`,`interest_rate_passed`,`loan_type`,`credit_loan_type`,`invest_industry`,`loan_purpose`,`repayment_source`,`industry_detail`,`invest_type`,`business_detail`,`guarantee_way`,`partner_contract_no`,`receive_card_id`,`repayment_card_id`,`partner_id`,`partner_name`,`trust_plan_code`,`trust_plan_name`,`product_code`,`product_name`,`project_id`,`partner_no`,`valid`,`created_time`,`updated_time`,`grace_days`) values (28,0,'1633339628362473472','','','','10000.00','10000.00',116104,14,'','1',1,1,0,'0.000200','0','0.000100','0.000200',4,0,112205,1,116105,'','31',31,'B99','999987915244',28,0,2,'anjuke',405801,'天机58-1',40580001,'安居客',2,'',1,'2023-03-08 13:31:28','2023-03-08 13:31:28',0),(29,0,'1633367632505569280','','','','10000.00',NULL,116104,0,'','1',1,NULL,0,'0.000200','0','0.000100','0.000000',4,0,112205,1,116105,'','31',31,'B99','999987915244',0,0,2,'anjuke',405801,'天机58-1',40580001,'安居客',2,'',1,'2023-03-08 15:22:45','2023-03-08 15:22:45',0),(30,0,'1636249895031386112','','','','10000.00',NULL,116104,12,'','1',1,NULL,0,'0.000200','0','0.000100','0.000000',4,0,112205,1,116105,'','31',31,'B99','999987915244',30,0,2,'anjuke',405801,'天机58-1',40580001,'安居客',2,'',1,'2023-03-16 14:15:50','2023-03-16 14:15:50',0),(31,0,'1637986382513000448','','','','10000.00',NULL,116104,0,'','1',1,NULL,0,'0.000200','0','0.000100','0.000000',4,0,112205,1,116105,'','31',31,'B99','999987915244',0,0,2,'anjuke',405801,'天机58-1',40580001,'安居客',2,'',1,'2023-03-21 09:16:01','2023-03-21 09:16:01',0),(32,0,'1656580513208303616','','','','10000.00',NULL,116104,0,'','1',1,NULL,0,'0.000200','0','0.000100','0.000000',4,0,112205,1,116105,'','31',31,'B99','999987915244',0,0,2,'anjuke',405801,'天机58-1',40580001,'安居客',2,'',1,'2023-05-11 16:42:27','2023-05-11 16:42:27',0);
 
 /*Table structure for table `t_order_annex` */
 
 DROP TABLE IF EXISTS `t_order_annex`;
 
 CREATE TABLE `t_order_annex` (
-  `file_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '文件主键',
-  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单编号,关联t_order表',
-  `file_no` varchar(50) NOT NULL DEFAULT '' COMMENT '文件流水号',
-  `file_name` varchar(200) NOT NULL DEFAULT '' COMMENT '文件名',
-  `file_type` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '文件类型',
-  `file_url` varchar(255) NOT NULL DEFAULT '' COMMENT '文件网址',
-  `remark` varchar(200) NOT NULL DEFAULT '' COMMENT '备注',
-  `upload_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间',
-  `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`file_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+                                 `file_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '文件主键',
+                                 `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单编号,关联t_order表',
+                                 `file_no` varchar(50) NOT NULL DEFAULT '' COMMENT '文件流水号',
+                                 `file_name` varchar(200) NOT NULL DEFAULT '' COMMENT '文件名',
+                                 `file_type` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '文件类型',
+                                 `file_url` varchar(255) NOT NULL DEFAULT '' COMMENT '文件网址',
+                                 `remark` varchar(200) NOT NULL DEFAULT '' COMMENT '备注',
+                                 `upload_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '上传时间',
+                                 `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                                 `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                 `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                 PRIMARY KEY (`file_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `t_order_annex` */
 
-insert  into `t_order_annex`(`file_id`,`order_id`,`file_no`,`file_name`,`file_type`,`file_url`,`remark`,`upload_time`,`valid`,`created_time`,`updated_time`) values (95,28,'1633340657493680128','借款协议',9,'/profile/annex/20230308/借款协议_1633339628362473472.pdf','','2023-03-08 13:35:33',1,'2023-03-08 13:35:33','2023-03-08 13:35:33'),(96,28,'1633340679115317248','3NmfqIdY6BXsnRZoRpWuj.pdf',44,'/profile/annex/20230308/3NmfqIdY6BXsnRZoRpWuj.pdf','','2023-03-08 13:35:38',1,'2023-03-08 13:35:39','2023-03-08 13:35:39');
+insert  into `t_order_annex`(`file_id`,`order_id`,`file_no`,`file_name`,`file_type`,`file_url`,`remark`,`upload_time`,`valid`,`created_time`,`updated_time`) values (95,28,'1633340657493680128','借款协议',9,'/profile/annex/20230308/借款协议_1633339628362473472.pdf','','2023-03-08 13:35:33',1,'2023-03-08 13:35:33','2023-03-08 13:35:33'),(96,28,'1633340679115317248','3NmfqIdY6BXsnRZoRpWuj.pdf',44,'/profile/annex/20230308/3NmfqIdY6BXsnRZoRpWuj.pdf','','2023-03-08 13:35:38',1,'2023-03-08 13:35:39','2023-03-08 13:35:39'),(97,30,'1636250568343007233','借款协议',9,'/profile/annex/20230316/借款协议_1636249895031386112.pdf','','2023-03-16 14:18:29',1,'2023-03-16 14:18:30','2023-03-16 14:18:30'),(98,30,'1636250572818329600','xAbIYjnMLgD3Au25_guKl.pdf',44,'/profile/annex/20230316/xAbIYjnMLgD3Au25_guKl.pdf','','2023-03-16 14:18:30',1,'2023-03-16 14:18:31','2023-03-16 14:18:31');
 
 /*Table structure for table `t_order_bank_card` */
 
 DROP TABLE IF EXISTS `t_order_bank_card`;
 
 CREATE TABLE `t_order_bank_card` (
-  `bank_card_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '银行卡主键',
-  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单号,关联t_order表',
-  `account_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '账户类型（0-对公 1-对私 2-第三方支付）',
-  `account_name` varchar(20) NOT NULL DEFAULT '' COMMENT '户名',
-  `account_no` varchar(50) NOT NULL DEFAULT '' COMMENT '户号',
-  `bank_code` varchar(10) NOT NULL DEFAULT '' COMMENT '银行代号',
-  `bank_name` varchar(50) NOT NULL DEFAULT '' COMMENT '银行名称',
-  `open_bank_name` varchar(50) NOT NULL DEFAULT '' COMMENT '开户行',
-  `open_bank_union_bank` varchar(50) DEFAULT '' COMMENT '开户行（分支行）联行号',
-  `reserve_mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '预留手机号',
-  `card_purpose` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '银行卡用途1:收款 2:还款 3:认证',
-  `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `auth_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '认证状态0:未认证1:已认证',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`bank_card_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+                                     `bank_card_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '银行卡主键',
+                                     `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单号,关联t_order表',
+                                     `account_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '账户类型（0-对公 1-对私 2-第三方支付）',
+                                     `account_name` varchar(20) NOT NULL DEFAULT '' COMMENT '户名',
+                                     `account_no` varchar(50) NOT NULL DEFAULT '' COMMENT '户号',
+                                     `bank_code` varchar(10) NOT NULL DEFAULT '' COMMENT '银行代号',
+                                     `bank_name` varchar(50) NOT NULL DEFAULT '' COMMENT '银行名称',
+                                     `open_bank_name` varchar(50) NOT NULL DEFAULT '' COMMENT '开户行',
+                                     `open_bank_union_bank` varchar(50) DEFAULT '' COMMENT '开户行（分支行）联行号',
+                                     `reserve_mobile` varchar(20) NOT NULL DEFAULT '' COMMENT '预留手机号',
+                                     `card_purpose` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '银行卡用途1:收款 2:还款 3:认证',
+                                     `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                                     `auth_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '认证状态0:未认证1:已认证',
+                                     `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                     `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                     PRIMARY KEY (`bank_card_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `t_order_bank_card` */
 
-insert  into `t_order_bank_card`(`bank_card_id`,`order_id`,`account_type`,`account_name`,`account_no`,`bank_code`,`bank_name`,`open_bank_name`,`open_bank_union_bank`,`reserve_mobile`,`card_purpose`,`valid`,`auth_status`,`created_time`,`updated_time`) values (28,28,0,'赵菡家','6216606570046360182','C10102','中国工商银行','','','18668389786',1,1,0,'2023-03-08 13:33:30','2023-03-08 13:33:30'),(29,28,0,'李眠','6212260212345678905','C10103','中国农业银行','','','18668389789',2,1,0,'2023-03-08 13:33:50','2023-03-08 13:33:50');
+insert  into `t_order_bank_card`(`bank_card_id`,`order_id`,`account_type`,`account_name`,`account_no`,`bank_code`,`bank_name`,`open_bank_name`,`open_bank_union_bank`,`reserve_mobile`,`card_purpose`,`valid`,`auth_status`,`created_time`,`updated_time`) values (28,28,0,'赵菡家','6216606570046360182','C10102','中国工商银行','','','18668389786',1,1,0,'2023-03-08 13:33:30','2023-03-08 13:33:30'),(29,28,0,'李眠','6212260212345678905','C10103','中国农业银行','','','18668389789',2,1,0,'2023-03-08 13:33:50','2023-03-08 13:33:50'),(30,30,0,'赵菡家','6216606570046360182','A10001','中国人民银行','','','18668389786',1,1,0,'2023-03-16 14:16:15','2023-03-16 14:16:15'),(31,30,0,'冯克','5525992961928614','A10001','中国人民银行','','','15010695268',2,1,0,'2023-03-16 14:16:32','2023-03-16 14:16:32');
 
 /*Table structure for table `t_order_borrow` */
 
 DROP TABLE IF EXISTS `t_order_borrow`;
 
 CREATE TABLE `t_order_borrow` (
-  `user_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '关联人主键',
-  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单号',
-  `related_name` varchar(50) NOT NULL DEFAULT '' COMMENT '关联人姓名',
-  `certificate_no` varchar(20) NOT NULL DEFAULT '' COMMENT '联系人证件号码',
-  `mobile_no` varchar(20) NOT NULL DEFAULT '' COMMENT '联系人电话\r\n',
-  `address` varchar(100) NOT NULL DEFAULT '' COMMENT '地址\r\n',
-  `e_mail` varchar(30) DEFAULT '' COMMENT '用户电子邮箱',
-  `guarantor_flag` varchar(2) NOT NULL DEFAULT '2' COMMENT '是否担保人1是2否',
-  `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`user_id`) USING BTREE
+                                  `user_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '关联人主键',
+                                  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单号',
+                                  `related_name` varchar(50) NOT NULL DEFAULT '' COMMENT '关联人姓名',
+                                  `certificate_no` varchar(20) NOT NULL DEFAULT '' COMMENT '联系人证件号码',
+                                  `mobile_no` varchar(20) NOT NULL DEFAULT '' COMMENT '联系人电话\r\n',
+                                  `address` varchar(100) NOT NULL DEFAULT '' COMMENT '地址\r\n',
+                                  `e_mail` varchar(30) DEFAULT '' COMMENT '用户电子邮箱',
+                                  `guarantor_flag` varchar(2) NOT NULL DEFAULT '2' COMMENT '是否担保人1是2否',
+                                  `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                                  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+                                  PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='共同借款人';
 
 /*Data for the table `t_order_borrow` */
@@ -908,82 +907,82 @@ CREATE TABLE `t_order_borrow` (
 DROP TABLE IF EXISTS `t_order_customer`;
 
 CREATE TABLE `t_order_customer` (
-  `customer_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '客户编号，关联t_customer表',
-  `partner_customer_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方客户编号',
-  `credit_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '授信编号，关联t_credit表',
-  `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单号，关联t_order表',
-  `org_user_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方客户编号',
-  `real_name` varchar(50) NOT NULL DEFAULT '' COMMENT '客户姓名',
-  `certificate_type` varchar(10) NOT NULL DEFAULT '10' COMMENT '证件类型',
-  `certificate_no` varchar(20) NOT NULL DEFAULT '' COMMENT '证件号码',
-  `custom_type` varchar(4) NOT NULL DEFAULT '99' COMMENT '客户类型，1-在校学生2-在职人员3-自雇人员4-其他人士99-人群未知',
-  `gender` int(4) NOT NULL DEFAULT '9' COMMENT '性别，枚举值：\n0-未知的性别1-男性2-女性9-未说明的性别',
-  `age` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '年龄',
-  `birth_date` date DEFAULT NULL COMMENT '出生日期',
-  `nationality` varchar(3) NOT NULL DEFAULT 'CHN' COMMENT '国籍，3位字符拉丁字母，参照 GB/T2659-2000',
-  `mobile_no` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号码',
-  `education_code` tinyint(4) unsigned NOT NULL DEFAULT '99' COMMENT '最高学历',
-  `degree_code` tinyint(4) unsigned NOT NULL DEFAULT '9' COMMENT '最高学位',
-  `residence_region` varchar(10) DEFAULT '' COMMENT '现居住地行政区划，用6位数字型代码表示，参照GB/T2260-2007',
-  `residence_address` varchar(100) NOT NULL DEFAULT '' COMMENT '现居住地址',
-  `residence_code` varchar(50) NOT NULL COMMENT '现居住地址省市区编码',
-  `residence_post_code` varchar(50) DEFAULT '999999' COMMENT '现居住地址邮政编码',
-  `residence_status` varchar(10) NOT NULL DEFAULT '9' COMMENT '居住状况',
-  `home_phone` varchar(50) DEFAULT '' COMMENT '住宅电话',
-  `permanent_address` varchar(60) DEFAULT '' COMMENT '户籍地址',
-  `permanent_region` varchar(10) DEFAULT '' COMMENT '户籍所在地行政区划，用6位数字型代码表示，参照GB/T2260-2007',
-  `native_place` varchar(50) DEFAULT '' COMMENT '籍贯',
-  `marital_status` varchar(10) NOT NULL DEFAULT '99' COMMENT '婚姻状况，枚举值：\n10-未婚20-已婚21-初婚22-再婚23-复婚30-丧偶40-离婚90-未说明的婚姻状况91-单身99-未知',
-  `e_mail` varchar(30) DEFAULT '' COMMENT '用户电子邮箱',
-  `employment_status` int(50) NOT NULL DEFAULT '99' COMMENT '就业状态，\n11-国家公务员\n13-专业技术人员\n17-职员\n21-企业管理人员\n24-工人\n27-农民\n31-学生\n37-现役军人\n51-自由职业者\n54-个体经营者\n70-无业人员\n80-退（离）休人员\n90-其他\n91-在职\n99-未知',
-  `profession_code` varchar(10) NOT NULL DEFAULT 'Z' COMMENT '职业\n0-国家机关、党群组织、企业、事业单位负责人\n1-专业技术人员\n3-办事人员和有关人员\n4-商业、服务业人员\n5-农、林、牧、渔、水利业生产人员\n6-生产、运输设备操作人员及有关人员\nX-军人\nY-不便分类的其他从业人员\nZ-未知',
-  `job_duties` varchar(50) NOT NULL DEFAULT '9' COMMENT '职务\n1:高级领导（行政级别局级及局级以上领导或大公司高级管理人员）\n2:中级领导（行政级别局级以下领导或大公司中级管理人员）\n3:一般员工\n9:未知',
-  `positional_titles` varchar(10) NOT NULL DEFAULT '9' COMMENT '职称\n0:无\n1:高级\n2:中级\n3:初级\n9:未知',
-  `company_name` varchar(60) NOT NULL DEFAULT '暂缺' COMMENT '现单位名称',
-  `company_kind` varchar(10) NOT NULL DEFAULT '9' COMMENT '现单位所属行业，枚举值：\nA-农、林、牧、渔业B-采矿业C-制造业D-电力、热力、燃气及水生产和供应业\r\nE-建筑业F-批发和零售业G-交通运输、仓储和邮储业H-住宿和餐饮业I-信息传输、 软件和信息技术服务J-金融业K-房地产业L-租赁和商务服务业M-科学研究和技术服务业N-水利、环境和公共设施管理业O-居民服务、修理和其他服务业P-教育Q-卫生和社会工作R-文化、体育和娱乐业S-公共管理、社会保障和社会组织T-国际组织9-未知',
-  `company_trade` varchar(2) NOT NULL DEFAULT '99' COMMENT '现单位性质，枚举值：\n10-机关、事业单位20-国有企业30-外资企业40-个体、私营企业50-其他（包括三资企业、民营企业、民间团体等）99-未知',
-  `company_address` varchar(100) DEFAULT '' COMMENT '现单位地址',
-  `company_region` varchar(10) DEFAULT '' COMMENT '现单位行政区划，用6位数字型代码表示，参照GB/T2260-2007',
-  `company_post_code` varchar(6) DEFAULT '999999' COMMENT '现单位地址邮政编码（无法填报时，统一填999999）',
-  `company_phone` varchar(20) DEFAULT '' COMMENT '现单位固定电话',
-  `salary_account` varchar(40) DEFAULT '' COMMENT '现单位工资账号',
-  `account_open_bank` varchar(14) DEFAULT '' COMMENT '单位工资账号开户银行代码',
-  `mailing_address` varchar(100) NOT NULL DEFAULT '暂缺' COMMENT '通讯地址',
-  `mailing_code` varchar(50) DEFAULT NULL COMMENT '通讯地址省市区编码',
-  `mailing_post_code` varchar(6) NOT NULL DEFAULT '999999' COMMENT '通讯地址邮政编码',
-  `mailing_region` varchar(10) DEFAULT '' COMMENT '通讯地址行政区划，用6位数字型代码表示，参照GB/T2260-2007',
-  `full_mailing_address` varchar(200) NOT NULL DEFAULT '' COMMENT '完整通讯地址',
-  `job_years` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '现单位工作年限',
-  `annual_income` int(20) NOT NULL DEFAULT '0' COMMENT '年收入',
-  `certificate_validity_date` date NOT NULL COMMENT '证件有效期起始日期',
-  `certificate_expiry_date` date NOT NULL COMMENT '证件有效期起始日期',
-  `certificate_issuer` varchar(10) DEFAULT NULL COMMENT '证件签发机关名称',
-  `certificate_issuer_region` varchar(10) DEFAULT NULL COMMENT '证件签发机关所在地行政区划',
-  `exists_link` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否关联关系（1是 0否）',
-  `link_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '关联类型（exists_link为1时必填。关联类型：1信托投资公司的股东、2信托投资公司股东的关联企业，如股东的子公司、3信托投资公司自有资金投资的企业、4信托投资公司自有资金投资的企业的关联企业，如投资的企业的子公司、5信托投资公司以托管或信托等其他方式控制的企业、6信托投资公司的董事、监事、经理、7信托投资公司的董事、监事、经理投资持股5%以上或者担任高级管理人员的公司、企业或其他经济组织、8其他关联）',
-  `link_invest_money` int(10) unsigned DEFAULT '0' COMMENT '投资入股信托公司金额（LINK_TYPE为1，2，3时股东投资入股信托公司金额。默认传0）',
-  `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`customer_id`) USING BTREE,
-  KEY `idx_order_id` (`order_id`) USING BTREE COMMENT 'idx_order_id索引'
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+                                    `customer_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '客户编号，关联t_customer表',
+                                    `partner_customer_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方客户编号',
+                                    `credit_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '授信编号，关联t_credit表',
+                                    `order_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '订单号，关联t_order表',
+                                    `org_user_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方客户编号',
+                                    `real_name` varchar(50) NOT NULL DEFAULT '' COMMENT '客户姓名',
+                                    `certificate_type` varchar(10) NOT NULL DEFAULT '10' COMMENT '证件类型',
+                                    `certificate_no` varchar(20) NOT NULL DEFAULT '' COMMENT '证件号码',
+                                    `custom_type` varchar(4) NOT NULL DEFAULT '99' COMMENT '客户类型，1-在校学生2-在职人员3-自雇人员4-其他人士99-人群未知',
+                                    `gender` int(4) NOT NULL DEFAULT '9' COMMENT '性别，枚举值：\n0-未知的性别1-男性2-女性9-未说明的性别',
+                                    `age` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '年龄',
+                                    `birth_date` date DEFAULT NULL COMMENT '出生日期',
+                                    `nationality` varchar(3) NOT NULL DEFAULT 'CHN' COMMENT '国籍，3位字符拉丁字母，参照 GB/T2659-2000',
+                                    `mobile_no` varchar(20) NOT NULL DEFAULT '' COMMENT '手机号码',
+                                    `education_code` tinyint(4) unsigned NOT NULL DEFAULT '99' COMMENT '最高学历',
+                                    `degree_code` tinyint(4) unsigned NOT NULL DEFAULT '9' COMMENT '最高学位',
+                                    `residence_region` varchar(10) DEFAULT '' COMMENT '现居住地行政区划，用6位数字型代码表示，参照GB/T2260-2007',
+                                    `residence_address` varchar(100) NOT NULL DEFAULT '' COMMENT '现居住地址',
+                                    `residence_code` varchar(50) NOT NULL COMMENT '现居住地址省市区编码',
+                                    `residence_post_code` varchar(50) DEFAULT '999999' COMMENT '现居住地址邮政编码',
+                                    `residence_status` varchar(10) NOT NULL DEFAULT '9' COMMENT '居住状况',
+                                    `home_phone` varchar(50) DEFAULT '' COMMENT '住宅电话',
+                                    `permanent_address` varchar(60) DEFAULT '' COMMENT '户籍地址',
+                                    `permanent_region` varchar(10) DEFAULT '' COMMENT '户籍所在地行政区划，用6位数字型代码表示，参照GB/T2260-2007',
+                                    `native_place` varchar(50) DEFAULT '' COMMENT '籍贯',
+                                    `marital_status` varchar(10) NOT NULL DEFAULT '99' COMMENT '婚姻状况，枚举值：\n10-未婚20-已婚21-初婚22-再婚23-复婚30-丧偶40-离婚90-未说明的婚姻状况91-单身99-未知',
+                                    `e_mail` varchar(30) DEFAULT '' COMMENT '用户电子邮箱',
+                                    `employment_status` int(50) NOT NULL DEFAULT '99' COMMENT '就业状态，\n11-国家公务员\n13-专业技术人员\n17-职员\n21-企业管理人员\n24-工人\n27-农民\n31-学生\n37-现役军人\n51-自由职业者\n54-个体经营者\n70-无业人员\n80-退（离）休人员\n90-其他\n91-在职\n99-未知',
+                                    `profession_code` varchar(10) NOT NULL DEFAULT 'Z' COMMENT '职业\n0-国家机关、党群组织、企业、事业单位负责人\n1-专业技术人员\n3-办事人员和有关人员\n4-商业、服务业人员\n5-农、林、牧、渔、水利业生产人员\n6-生产、运输设备操作人员及有关人员\nX-军人\nY-不便分类的其他从业人员\nZ-未知',
+                                    `job_duties` varchar(50) NOT NULL DEFAULT '9' COMMENT '职务\n1:高级领导（行政级别局级及局级以上领导或大公司高级管理人员）\n2:中级领导（行政级别局级以下领导或大公司中级管理人员）\n3:一般员工\n9:未知',
+                                    `positional_titles` varchar(10) NOT NULL DEFAULT '9' COMMENT '职称\n0:无\n1:高级\n2:中级\n3:初级\n9:未知',
+                                    `company_name` varchar(60) NOT NULL DEFAULT '暂缺' COMMENT '现单位名称',
+                                    `company_kind` varchar(10) NOT NULL DEFAULT '9' COMMENT '现单位所属行业，枚举值：\nA-农、林、牧、渔业B-采矿业C-制造业D-电力、热力、燃气及水生产和供应业\r\nE-建筑业F-批发和零售业G-交通运输、仓储和邮储业H-住宿和餐饮业I-信息传输、 软件和信息技术服务J-金融业K-房地产业L-租赁和商务服务业M-科学研究和技术服务业N-水利、环境和公共设施管理业O-居民服务、修理和其他服务业P-教育Q-卫生和社会工作R-文化、体育和娱乐业S-公共管理、社会保障和社会组织T-国际组织9-未知',
+                                    `company_trade` varchar(2) NOT NULL DEFAULT '99' COMMENT '现单位性质，枚举值：\n10-机关、事业单位20-国有企业30-外资企业40-个体、私营企业50-其他（包括三资企业、民营企业、民间团体等）99-未知',
+                                    `company_address` varchar(100) DEFAULT '' COMMENT '现单位地址',
+                                    `company_region` varchar(10) DEFAULT '' COMMENT '现单位行政区划，用6位数字型代码表示，参照GB/T2260-2007',
+                                    `company_post_code` varchar(6) DEFAULT '999999' COMMENT '现单位地址邮政编码（无法填报时，统一填999999）',
+                                    `company_phone` varchar(20) DEFAULT '' COMMENT '现单位固定电话',
+                                    `salary_account` varchar(40) DEFAULT '' COMMENT '现单位工资账号',
+                                    `account_open_bank` varchar(14) DEFAULT '' COMMENT '单位工资账号开户银行代码',
+                                    `mailing_address` varchar(100) NOT NULL DEFAULT '暂缺' COMMENT '通讯地址',
+                                    `mailing_code` varchar(50) DEFAULT NULL COMMENT '通讯地址省市区编码',
+                                    `mailing_post_code` varchar(6) NOT NULL DEFAULT '999999' COMMENT '通讯地址邮政编码',
+                                    `mailing_region` varchar(10) DEFAULT '' COMMENT '通讯地址行政区划，用6位数字型代码表示，参照GB/T2260-2007',
+                                    `full_mailing_address` varchar(200) NOT NULL DEFAULT '' COMMENT '完整通讯地址',
+                                    `job_years` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '现单位工作年限',
+                                    `annual_income` int(20) NOT NULL DEFAULT '0' COMMENT '年收入',
+                                    `certificate_validity_date` date NOT NULL COMMENT '证件有效期起始日期',
+                                    `certificate_expiry_date` date NOT NULL COMMENT '证件有效期起始日期',
+                                    `certificate_issuer` varchar(10) DEFAULT NULL COMMENT '证件签发机关名称',
+                                    `certificate_issuer_region` varchar(10) DEFAULT NULL COMMENT '证件签发机关所在地行政区划',
+                                    `exists_link` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否关联关系（1是 0否）',
+                                    `link_type` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '关联类型（exists_link为1时必填。关联类型：1信托投资公司的股东、2信托投资公司股东的关联企业，如股东的子公司、3信托投资公司自有资金投资的企业、4信托投资公司自有资金投资的企业的关联企业，如投资的企业的子公司、5信托投资公司以托管或信托等其他方式控制的企业、6信托投资公司的董事、监事、经理、7信托投资公司的董事、监事、经理投资持股5%以上或者担任高级管理人员的公司、企业或其他经济组织、8其他关联）',
+                                    `link_invest_money` int(10) unsigned DEFAULT '0' COMMENT '投资入股信托公司金额（LINK_TYPE为1，2，3时股东投资入股信托公司金额。默认传0）',
+                                    `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                                    `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                    `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                    PRIMARY KEY (`customer_id`) USING BTREE,
+                                    KEY `idx_order_id` (`order_id`) USING BTREE COMMENT 'idx_order_id索引'
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `t_order_customer` */
 
-insert  into `t_order_customer`(`customer_id`,`partner_customer_no`,`credit_id`,`order_id`,`org_user_no`,`real_name`,`certificate_type`,`certificate_no`,`custom_type`,`gender`,`age`,`birth_date`,`nationality`,`mobile_no`,`education_code`,`degree_code`,`residence_region`,`residence_address`,`residence_code`,`residence_post_code`,`residence_status`,`home_phone`,`permanent_address`,`permanent_region`,`native_place`,`marital_status`,`e_mail`,`employment_status`,`profession_code`,`job_duties`,`positional_titles`,`company_name`,`company_kind`,`company_trade`,`company_address`,`company_region`,`company_post_code`,`company_phone`,`salary_account`,`account_open_bank`,`mailing_address`,`mailing_code`,`mailing_post_code`,`mailing_region`,`full_mailing_address`,`job_years`,`annual_income`,`certificate_validity_date`,`certificate_expiry_date`,`certificate_issuer`,`certificate_issuer_region`,`exists_link`,`link_type`,`link_invest_money`,`valid`,`created_time`,`updated_time`) values (28,'',0,28,'','赵菡家','8','110101199003075832','3',1,18,'2023-01-03','CHN','17760775947',99,9,'','11','110000,110100,110101','999999','9','','','','','99','',24,'6','9','9','1','9','99','','','999999','','','','11','110000,110100,110101','999999','','',1,3,'2023-01-05','2023-01-03',NULL,NULL,0,0,0,1,'2023-03-08 13:31:28','2023-03-08 13:31:28');
+insert  into `t_order_customer`(`customer_id`,`partner_customer_no`,`credit_id`,`order_id`,`org_user_no`,`real_name`,`certificate_type`,`certificate_no`,`custom_type`,`gender`,`age`,`birth_date`,`nationality`,`mobile_no`,`education_code`,`degree_code`,`residence_region`,`residence_address`,`residence_code`,`residence_post_code`,`residence_status`,`home_phone`,`permanent_address`,`permanent_region`,`native_place`,`marital_status`,`e_mail`,`employment_status`,`profession_code`,`job_duties`,`positional_titles`,`company_name`,`company_kind`,`company_trade`,`company_address`,`company_region`,`company_post_code`,`company_phone`,`salary_account`,`account_open_bank`,`mailing_address`,`mailing_code`,`mailing_post_code`,`mailing_region`,`full_mailing_address`,`job_years`,`annual_income`,`certificate_validity_date`,`certificate_expiry_date`,`certificate_issuer`,`certificate_issuer_region`,`exists_link`,`link_type`,`link_invest_money`,`valid`,`created_time`,`updated_time`) values (28,'',0,28,'','赵菡家','8','110101199003075832','3',1,18,'2023-01-03','CHN','17760775947',99,9,'','11','110000,110100,110101','999999','9','','','','','99','',24,'6','9','9','1','9','99','','','999999','','','','11','110000,110100,110101','999999','','',1,3,'2023-01-05','2023-01-03',NULL,NULL,0,0,0,1,'2023-03-08 13:31:28','2023-03-08 13:31:28'),(29,'',0,29,'','赵菡家','8','110101199003075832','3',1,18,'2023-01-03','CHN','17760775947',99,9,'','11','110000,110100,110101','999999','9','','','','','99','',24,'6','9','9','1','9','99','','','999999','','','','11','110000,110100,110101','999999','','',1,3,'2023-01-05','2023-01-03',NULL,NULL,0,0,0,1,'2023-03-08 15:22:45','2023-03-08 15:22:45'),(30,'',0,30,'','赵菡家','8','110101199003075832','3',1,18,'2023-01-03','CHN','17760775947',99,9,'','11','110000,110100,110101','999999','9','','','','','99','',24,'6','9','9','1','9','99','','','999999','','','','11','110000,110100,110101','999999','','',1,3,'2023-01-05','2023-01-03',NULL,NULL,0,0,0,1,'2023-03-16 14:15:50','2023-03-16 14:15:50'),(31,'',0,31,'','赵菡家','8','110101199003075832','3',1,18,'2023-01-03','CHN','17760775947',99,9,'','11','110000,110100,110101','999999','9','','','','','99','',24,'6','9','9','1','9','99','','','999999','','','','11','110000,110100,110101','999999','','',1,3,'2023-01-05','2023-01-03',NULL,NULL,0,0,0,1,'2023-03-21 09:16:01','2023-03-21 09:16:01'),(32,'',0,32,'','赵菡家','8','110101199003075832','3',1,18,'2023-01-03','CHN','17760775947',99,9,'','11','110000,110100,110101','999999','9','','','','','99','',24,'6','9','9','1','9','99','','','999999','','','','11','110000,110100,110101','999999','','',1,3,'2023-01-05','2023-01-03',NULL,NULL,0,0,0,1,'2023-05-11 16:42:27','2023-05-11 16:42:27');
 
 /*Table structure for table `t_partner` */
 
 DROP TABLE IF EXISTS `t_partner`;
 
 CREATE TABLE `t_partner` (
-  `partner_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `partner_alias` varchar(30) NOT NULL DEFAULT '' COMMENT '合作方别名',
-  `deleted` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`partner_id`) USING BTREE
+                             `partner_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+                             `partner_alias` varchar(30) NOT NULL DEFAULT '' COMMENT '合作方别名',
+                             `deleted` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
+                             `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                             `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                             PRIMARY KEY (`partner_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='合作方';
 
 /*Data for the table `t_partner` */
@@ -995,14 +994,14 @@ insert  into `t_partner`(`partner_id`,`partner_alias`,`deleted`,`created_time`,`
 DROP TABLE IF EXISTS `t_product`;
 
 CREATE TABLE `t_product` (
-  `product_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `product_name` varchar(50) NOT NULL COMMENT '信托产品名称',
-  `product_code` varchar(50) NOT NULL COMMENT '信托产品code',
-  `product_desc` varchar(100) DEFAULT '' COMMENT '信托产品注释',
-  `deleted` tinyint(2) DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`product_id`)
+                             `product_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                             `product_name` varchar(50) NOT NULL COMMENT '信托产品名称',
+                             `product_code` varchar(50) NOT NULL COMMENT '信托产品code',
+                             `product_desc` varchar(100) DEFAULT '' COMMENT '信托产品注释',
+                             `deleted` tinyint(2) DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
+                             `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                             `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                             PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='信托产品表';
 
 /*Data for the table `t_product` */
@@ -1014,16 +1013,16 @@ insert  into `t_product`(`product_id`,`product_name`,`product_code`,`product_des
 DROP TABLE IF EXISTS `t_project`;
 
 CREATE TABLE `t_project` (
-  `project_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `partner_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '信托项目主键（t_config_partner）',
-  `product_id` int(10) NOT NULL COMMENT '信托产品主键（t_config_product）',
-  `trust_plan_id` int(10) NOT NULL COMMENT '信托计划主键（t_config_trust_plan）',
-  `project_code` varchar(50) NOT NULL COMMENT '合作项目代号',
-  `project_name` varchar(200) NOT NULL DEFAULT '' COMMENT '合作项目名称',
-  `deleted` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`project_id`) USING BTREE
+                             `project_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+                             `partner_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '信托项目主键（t_config_partner）',
+                             `product_id` int(10) NOT NULL COMMENT '信托产品主键（t_config_product）',
+                             `trust_plan_id` int(10) NOT NULL COMMENT '信托计划主键（t_config_trust_plan）',
+                             `project_code` varchar(50) NOT NULL COMMENT '合作项目代号',
+                             `project_name` varchar(200) NOT NULL DEFAULT '' COMMENT '合作项目名称',
+                             `deleted` tinyint(2) unsigned NOT NULL DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
+                             `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                             `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+                             PRIMARY KEY (`project_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='产品配置表';
 
 /*Data for the table `t_project` */
@@ -1035,40 +1034,40 @@ insert  into `t_project`(`project_id`,`partner_id`,`product_id`,`trust_plan_id`,
 DROP TABLE IF EXISTS `t_project_template`;
 
 CREATE TABLE `t_project_template` (
-  `project_template_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `project_id` int(10) NOT NULL COMMENT '项目id',
-  `file_type` int(50) NOT NULL COMMENT '文件类型',
-  `dest_file_type` int(10) DEFAULT NULL COMMENT '目标文件类型',
-  `template_id` int(10) NOT NULL COMMENT '模板id',
-  `seal_id` int(10) DEFAULT NULL COMMENT '签章id',
-  `keystore_id` int(10) DEFAULT NULL COMMENT '证书id',
-  `seal_way` int(3) DEFAULT NULL COMMENT '签章类型 1模板2关键字',
-  `seal_location` text COMMENT '签章坐标[{pageNum:1,locations:[{left:0,top:0,width:100,height:100}}]]',
-  `seal_keyword` varchar(50) DEFAULT NULL COMMENT '关键字',
-  `deleted` tinyint(2) unsigned DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`project_template_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='项目模板配置表';
+                                      `project_template_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                      `project_id` int(10) NOT NULL COMMENT '项目id',
+                                      `file_type` int(50) NOT NULL COMMENT '文件类型',
+                                      `dest_file_type` int(10) DEFAULT NULL COMMENT '目标文件类型',
+                                      `template_id` int(10) NOT NULL COMMENT '模板id',
+                                      `seal_id` int(10) DEFAULT NULL COMMENT '签章id',
+                                      `keystore_id` int(10) DEFAULT NULL COMMENT '证书id',
+                                      `seal_way` int(3) DEFAULT NULL COMMENT '签章类型 1模板2关键字',
+                                      `seal_location` text COMMENT '签章坐标[{pageNum:1,locations:[{left:0,top:0,width:100,height:100}}]]',
+                                      `seal_keyword` varchar(50) DEFAULT NULL COMMENT '关键字',
+                                      `deleted` tinyint(2) unsigned DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
+                                      `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                      `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                      PRIMARY KEY (`project_template_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='项目模板配置表';
 
 /*Data for the table `t_project_template` */
 
-insert  into `t_project_template`(`project_template_id`,`project_id`,`file_type`,`dest_file_type`,`template_id`,`seal_id`,`keystore_id`,`seal_way`,`seal_location`,`seal_keyword`,`deleted`,`created_time`,`updated_time`) values (3,2,9,44,3,2,2,2,NULL,'贷款合同',0,'2023-03-07 14:34:26','2023-03-07 14:34:58');
+insert  into `t_project_template`(`project_template_id`,`project_id`,`file_type`,`dest_file_type`,`template_id`,`seal_id`,`keystore_id`,`seal_way`,`seal_location`,`seal_keyword`,`deleted`,`created_time`,`updated_time`) values (3,2,9,44,3,2,2,1,'{\"1\":{\"0\":{\"width\":200,\"height\":200,\"top\":148,\"left\":259,\"angle\":0,\"scaleX\":0.75,\"scaleY\":0.75,\"pageNum\":1,\"url\":\"http://192.168.1.39:9401/profile/seal/_hekht0ec3Zoai-vJXpSm.png\",\"index\":0,\"uid\":1684220335251},\"1\":{\"width\":200,\"height\":200,\"top\":357,\"left\":58,\"angle\":0,\"scaleX\":0.75,\"scaleY\":0.75,\"pageNum\":1,\"url\":\"http://192.168.1.39:9401/profile/seal/_hekht0ec3Zoai-vJXpSm.png\",\"index\":0,\"uid\":1684220336010}},\"2\":{\"0\":{\"width\":200,\"height\":200,\"top\":109,\"left\":179,\"angle\":0,\"scaleX\":0.75,\"scaleY\":0.75,\"pageNum\":2,\"url\":\"http://192.168.1.39:9401/profile/seal/_hekht0ec3Zoai-vJXpSm.png\",\"index\":0,\"uid\":1684220265109}}}','贷款合同',0,'2023-03-07 14:34:26','2023-05-16 14:58:58'),(4,2,9,5,3,NULL,NULL,NULL,NULL,NULL,0,'2023-05-09 18:39:55','2023-05-09 18:39:55');
 
 /*Table structure for table `t_province` */
 
 DROP TABLE IF EXISTS `t_province`;
 
 CREATE TABLE `t_province` (
-  `province_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `region_code` varchar(6) NOT NULL COMMENT '区域code',
-  `region_name` varchar(30) NOT NULL COMMENT '区域名称',
-  `region_level` int(10) NOT NULL COMMENT '区域级别',
-  `parent_code` varchar(10) NOT NULL COMMENT '父级区域',
-  `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否有效（0:无效 1:有效）',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`province_id`) USING BTREE
+                              `province_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+                              `region_code` varchar(6) NOT NULL COMMENT '区域code',
+                              `region_name` varchar(30) NOT NULL COMMENT '区域名称',
+                              `region_level` int(10) NOT NULL COMMENT '区域级别',
+                              `parent_code` varchar(10) NOT NULL COMMENT '父级区域',
+                              `valid` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '是否有效（0:无效 1:有效）',
+                              `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                              PRIMARY KEY (`province_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3511 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='省市区码表';
 
 /*Data for the table `t_province` */
@@ -1080,20 +1079,20 @@ insert  into `t_province`(`province_id`,`region_code`,`region_name`,`region_leve
 DROP TABLE IF EXISTS `t_seal`;
 
 CREATE TABLE `t_seal` (
-  `seal_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '签章图片主键id',
-  `seal_code` varchar(50) NOT NULL DEFAULT '' COMMENT '图片编号',
-  `seal_subject` varchar(50) NOT NULL DEFAULT '' COMMENT '个人及个人名称,公司及名称',
-  `seal_source` int(10) DEFAULT NULL COMMENT '1系统2自定义',
-  `seal_picture_type` int(10) DEFAULT NULL COMMENT '签章图片类型',
-  `seal_remark` varchar(255) DEFAULT '' COMMENT '图片描述',
-  `seal_filename` varchar(255) DEFAULT NULL COMMENT '图片文件名称',
-  `seal_address` varchar(255) DEFAULT '' COMMENT '图片地址',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`seal_id`) USING BTREE
+                          `seal_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '签章图片主键id',
+                          `seal_code` varchar(50) NOT NULL DEFAULT '' COMMENT '图片编号',
+                          `seal_subject` varchar(50) NOT NULL DEFAULT '' COMMENT '个人及个人名称,公司及名称',
+                          `seal_source` int(10) DEFAULT NULL COMMENT '1系统2自定义',
+                          `seal_picture_type` int(10) DEFAULT NULL COMMENT '签章图片类型',
+                          `seal_remark` varchar(255) DEFAULT '' COMMENT '图片描述',
+                          `seal_filename` varchar(255) DEFAULT NULL COMMENT '图片文件名称',
+                          `seal_address` varchar(255) DEFAULT '' COMMENT '图片地址',
+                          `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                          `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                          `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                          `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                          `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                          PRIMARY KEY (`seal_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='签章图片表';
 
 /*Data for the table `t_seal` */
@@ -1105,46 +1104,46 @@ insert  into `t_seal`(`seal_id`,`seal_code`,`seal_subject`,`seal_source`,`seal_p
 DROP TABLE IF EXISTS `t_stamp_record`;
 
 CREATE TABLE `t_stamp_record` (
-  `stamp_record_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '签章记录id',
-  `project_id` int(20) NOT NULL COMMENT '合作方编号',
-  `product_code` int(20) NOT NULL COMMENT '产品编号',
-  `trust_plan_code` int(20) DEFAULT NULL COMMENT '信托计划编号',
-  `file_type` int(11) NOT NULL COMMENT '盖章文件类型',
-  `contract_name` varchar(50) DEFAULT NULL COMMENT '合同名称',
-  `status` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '状态0待开始1处理中2成功3异常',
-  `partner_business_id` varchar(200) DEFAULT NULL COMMENT '合作的业务id,尽可能要求合作方唯一',
-  `sign_way` int(11) DEFAULT NULL COMMENT '签署方式  1.模板2.关键字',
-  `remark` varchar(1000) DEFAULT NULL COMMENT '失败原因',
-  `ext_json` text COMMENT '扩展字段',
-  `valid` tinyint(4) NOT NULL DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`stamp_record_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=859 DEFAULT CHARSET=utf8 COMMENT='签章记录';
+                                  `stamp_record_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '签章记录id',
+                                  `project_id` int(20) NOT NULL COMMENT '合作方编号',
+                                  `product_code` int(20) NOT NULL COMMENT '产品编号',
+                                  `trust_plan_code` int(20) DEFAULT NULL COMMENT '信托计划编号',
+                                  `file_type` int(11) NOT NULL COMMENT '盖章文件类型',
+                                  `contract_name` varchar(50) DEFAULT NULL COMMENT '合同名称',
+                                  `status` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '状态0待开始1处理中2成功3异常',
+                                  `partner_business_id` varchar(200) DEFAULT NULL COMMENT '合作的业务id,尽可能要求合作方唯一',
+                                  `sign_way` int(11) DEFAULT NULL COMMENT '签署方式  1.模板2.关键字',
+                                  `remark` varchar(1000) DEFAULT NULL COMMENT '失败原因',
+                                  `ext_json` text COMMENT '扩展字段',
+                                  `valid` tinyint(4) NOT NULL DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                                  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                  PRIMARY KEY (`stamp_record_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=860 DEFAULT CHARSET=utf8 COMMENT='签章记录';
 
 /*Data for the table `t_stamp_record` */
 
-insert  into `t_stamp_record`(`stamp_record_id`,`project_id`,`product_code`,`trust_plan_code`,`file_type`,`contract_name`,`status`,`partner_business_id`,`sign_way`,`remark`,`ext_json`,`valid`,`created_time`,`updated_time`) values (858,2,40580001,405801,9,'借款协议原始文件.pdf',2,'1633339628362473472',0,NULL,NULL,0,'2023-03-08 13:35:33','2023-03-08 13:35:33');
+insert  into `t_stamp_record`(`stamp_record_id`,`project_id`,`product_code`,`trust_plan_code`,`file_type`,`contract_name`,`status`,`partner_business_id`,`sign_way`,`remark`,`ext_json`,`valid`,`created_time`,`updated_time`) values (858,2,40580001,405801,9,'借款协议原始文件.pdf',2,'1633339628362473472',0,NULL,NULL,0,'2023-03-08 13:35:33','2023-03-08 13:35:33'),(859,2,40580001,405801,9,'借款协议原始文件.pdf',2,'1636249895031386112',0,NULL,NULL,0,'2023-03-16 14:18:30','2023-03-16 14:18:30');
 
 /*Table structure for table `t_template` */
 
 DROP TABLE IF EXISTS `t_template`;
 
 CREATE TABLE `t_template` (
-  `template_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '模板主键id',
-  `template_code` varchar(50) NOT NULL DEFAULT '' COMMENT '模板代号',
-  `template_name` varchar(50) NOT NULL DEFAULT '' COMMENT '模板名称',
-  `template_url` varchar(100) DEFAULT NULL COMMENT '模板地址',
-  `template_filename` varchar(50) DEFAULT NULL COMMENT '模板文件名称',
-  `dataFile_path` varchar(255) NOT NULL DEFAULT '' COMMENT '数据文件(导入模板)存放路径(如有)',
-  `file_type` int(10) NOT NULL COMMENT '文件类型1.服务信托2.财富端确认书',
-  `remark` varchar(40) NOT NULL DEFAULT '' COMMENT '模板描述',
-  `create_by` int(11) DEFAULT NULL COMMENT '创建人',
-  `update_by` int(11) DEFAULT NULL COMMENT '修改人',
-  `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`template_id`) USING BTREE
+                              `template_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '模板主键id',
+                              `template_code` varchar(50) NOT NULL DEFAULT '' COMMENT '模板代号',
+                              `template_name` varchar(50) NOT NULL DEFAULT '' COMMENT '模板名称',
+                              `template_url` varchar(100) DEFAULT NULL COMMENT '模板地址',
+                              `template_filename` varchar(50) DEFAULT NULL COMMENT '模板文件名称',
+                              `dataFile_path` varchar(255) NOT NULL DEFAULT '' COMMENT '数据文件(导入模板)存放路径(如有)',
+                              `file_type` int(10) NOT NULL COMMENT '文件类型1.服务信托2.财富端确认书',
+                              `remark` varchar(40) NOT NULL DEFAULT '' COMMENT '模板描述',
+                              `create_by` int(11) DEFAULT NULL COMMENT '创建人',
+                              `update_by` int(11) DEFAULT NULL COMMENT '修改人',
+                              `deleted` bigint(20) DEFAULT '0' COMMENT '逻辑删除标识，未删除为 0，已删除为删除时间',
+                              `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                              `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                              PRIMARY KEY (`template_id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='模板文件配置表';
 
 /*Data for the table `t_template` */
@@ -1156,14 +1155,14 @@ insert  into `t_template`(`template_id`,`template_code`,`template_name`,`templat
 DROP TABLE IF EXISTS `t_template_area`;
 
 CREATE TABLE `t_template_area` (
-  `area_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '模板参数主键',
-  `template_id` int(10) NOT NULL COMMENT '文件模板编号',
-  `text_area` varchar(40) NOT NULL DEFAULT '' COMMENT '文本域',
-  `tag_name` varchar(40) NOT NULL DEFAULT '' COMMENT '节点名称',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`area_id`) USING BTREE,
-  UNIQUE KEY `idx_uqi_key` (`area_id`,`tag_name`,`text_area`) USING BTREE COMMENT '唯一索引'
+                                   `area_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '模板参数主键',
+                                   `template_id` int(10) NOT NULL COMMENT '文件模板编号',
+                                   `text_area` varchar(40) NOT NULL DEFAULT '' COMMENT '文本域',
+                                   `tag_name` varchar(40) NOT NULL DEFAULT '' COMMENT '节点名称',
+                                   `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                   `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                   PRIMARY KEY (`area_id`) USING BTREE,
+                                   UNIQUE KEY `idx_uqi_key` (`area_id`,`tag_name`,`text_area`) USING BTREE COMMENT '唯一索引'
 ) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='模板文件文本域表';
 
 /*Data for the table `t_template_area` */
@@ -1175,53 +1174,53 @@ insert  into `t_template_area`(`area_id`,`template_id`,`text_area`,`tag_name`,`c
 DROP TABLE IF EXISTS `t_trade`;
 
 CREATE TABLE `t_trade` (
-  `trade_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '交易编号',
-  `order_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单主键 t_order',
-  `partner_biz_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方编号',
-  `trade_no` varchar(100) NOT NULL DEFAULT '' COMMENT '交易流水号',
-  `repay_type` int(20) NOT NULL DEFAULT '0' COMMENT '还款方式(各项目不同)：\r\n1客户还款\r\n2-机构垫付（单期代偿）\r\n3-机构回购（整笔借据全部回购）',
-  `trade_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '交易状态：\r\n0- 交易创建 \r\n1- 等待付款 \r\n2-支付成功 \r\n4-支付失败',
-  `trade_amount` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '交易金额',
-  `trade_account_bank` varchar(50) NOT NULL DEFAULT '' COMMENT '交易银行名称',
-  `trade_account` varchar(50) NOT NULL DEFAULT '' COMMENT '交易账号',
-  `trade_account_type` varchar(20) NOT NULL DEFAULT '' COMMENT '账户类型',
-  `trade_account_name` varchar(20) NOT NULL DEFAULT '' COMMENT '账户姓名 ',
-  `trade_account_id` varchar(50) NOT NULL DEFAULT '' COMMENT '帐户身份证号 ',
-  `pay_channel` varchar(30) NOT NULL DEFAULT '' COMMENT '支付渠道，例如：通联',
-  `pay_platform_id` varchar(20) NOT NULL DEFAULT '' COMMENT '放款通道 （核心库t-config-platform配置id）',
-  `pay_platform_merchant_id` varchar(50) NOT NULL DEFAULT '' COMMENT '商户id',
-  `pay_platform_user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
-  `pay_platform_business_code` varchar(50) NOT NULL DEFAULT '' COMMENT '业务code',
-  `trade_time` datetime DEFAULT NULL COMMENT '交易时间',
-  `loan_purpose` tinyint(4) NOT NULL COMMENT '交易用途(1:放款  2:收款)',
-  `fail_reason` varchar(100) DEFAULT '' COMMENT '交易备注',
-  `trade_remark` varchar(140) NOT NULL DEFAULT '',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`trade_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+                           `trade_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '交易编号',
+                           `order_id` bigint(20) NOT NULL DEFAULT '0' COMMENT '订单主键 t_order',
+                           `partner_biz_no` varchar(50) NOT NULL DEFAULT '' COMMENT '合作方编号',
+                           `trade_no` varchar(100) NOT NULL DEFAULT '' COMMENT '交易流水号',
+                           `repay_type` int(20) NOT NULL DEFAULT '0' COMMENT '还款方式(各项目不同)：\r\n1客户还款\r\n2-机构垫付（单期代偿）\r\n3-机构回购（整笔借据全部回购）',
+                           `trade_status` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '交易状态：\r\n0- 交易创建 \r\n1- 等待付款 \r\n2-支付成功 \r\n4-支付失败',
+                           `trade_amount` decimal(12,2) unsigned NOT NULL DEFAULT '0.00' COMMENT '交易金额',
+                           `trade_account_bank` varchar(50) NOT NULL DEFAULT '' COMMENT '交易银行名称',
+                           `trade_account` varchar(50) NOT NULL DEFAULT '' COMMENT '交易账号',
+                           `trade_account_type` varchar(20) NOT NULL DEFAULT '' COMMENT '账户类型',
+                           `trade_account_name` varchar(20) NOT NULL DEFAULT '' COMMENT '账户姓名 ',
+                           `trade_account_id` varchar(50) NOT NULL DEFAULT '' COMMENT '帐户身份证号 ',
+                           `pay_channel` varchar(30) NOT NULL DEFAULT '' COMMENT '支付渠道，例如：通联',
+                           `pay_platform_id` varchar(20) NOT NULL DEFAULT '' COMMENT '放款通道 （核心库t-config-platform配置id）',
+                           `pay_platform_merchant_id` varchar(50) NOT NULL DEFAULT '' COMMENT '商户id',
+                           `pay_platform_user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名',
+                           `pay_platform_business_code` varchar(50) NOT NULL DEFAULT '' COMMENT '业务code',
+                           `trade_time` datetime DEFAULT NULL COMMENT '交易时间',
+                           `loan_purpose` tinyint(4) NOT NULL COMMENT '交易用途(1:放款  2:收款)',
+                           `fail_reason` varchar(100) DEFAULT '' COMMENT '交易备注',
+                           `trade_remark` varchar(140) NOT NULL DEFAULT '',
+                           `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                           PRIMARY KEY (`trade_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `t_trade` */
 
-insert  into `t_trade`(`trade_id`,`order_id`,`partner_biz_no`,`trade_no`,`repay_type`,`trade_status`,`trade_amount`,`trade_account_bank`,`trade_account`,`trade_account_type`,`trade_account_name`,`trade_account_id`,`pay_channel`,`pay_platform_id`,`pay_platform_merchant_id`,`pay_platform_user_name`,`pay_platform_business_code`,`trade_time`,`loan_purpose`,`fail_reason`,`trade_remark`,`created_time`,`updated_time`) values (34,28,'1633339628362473472','trade:1633340372708827136',116104,2,'10000.00','中国工商银行','6216606570046360182','0','赵菡家','','99','99','99','99','99','2023-03-08 13:35:25',1,'','','2023-03-08 13:34:26','2023-03-08 13:35:25');
+insert  into `t_trade`(`trade_id`,`order_id`,`partner_biz_no`,`trade_no`,`repay_type`,`trade_status`,`trade_amount`,`trade_account_bank`,`trade_account`,`trade_account_type`,`trade_account_name`,`trade_account_id`,`pay_channel`,`pay_platform_id`,`pay_platform_merchant_id`,`pay_platform_user_name`,`pay_platform_business_code`,`trade_time`,`loan_purpose`,`fail_reason`,`trade_remark`,`created_time`,`updated_time`) values (34,28,'1633339628362473472','trade:1633340372708827136',116104,2,'10000.00','中国工商银行','6216606570046360182','0','赵菡家','','99','99','99','99','99','2023-03-08 13:35:25',1,'','','2023-03-08 13:34:26','2023-03-08 13:35:25'),(35,30,'1636249895031386112','trade:1636250313417404416',116104,2,'10000.00','中国人民银行','6216606570046360182','0','赵菡家','','99','99','99','99','99','2023-03-16 14:18:26',1,'','','2023-03-16 14:17:29','2023-03-16 14:18:26');
 
 /*Table structure for table `t_trust_plan` */
 
 DROP TABLE IF EXISTS `t_trust_plan`;
 
 CREATE TABLE `t_trust_plan` (
-  `trust_plan_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `trust_plan_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托计划名称',
-  `trust_plan_no` varchar(50) NOT NULL DEFAULT '' COMMENT '信托计划编号',
-  `established_time` datetime DEFAULT NULL COMMENT '信托计划成立日期',
-  `expire_time` datetime DEFAULT NULL COMMENT '信托计划到期日期',
-  `repay_time` datetime DEFAULT NULL COMMENT '信托计划摊还期开始日期',
-  `earning_rate` varchar(50) DEFAULT '0.00' COMMENT '信托计划预期收益率',
-  `fund_pool` varchar(50) NOT NULL DEFAULT '0.00' COMMENT '信托计划初始规模',
-  `deleted` tinyint(2) unsigned DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
-  `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-  PRIMARY KEY (`trust_plan_id`)
+                                `trust_plan_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                `trust_plan_name` varchar(50) NOT NULL DEFAULT '' COMMENT '信托计划名称',
+                                `trust_plan_no` varchar(50) NOT NULL DEFAULT '' COMMENT '信托计划编号',
+                                `established_time` datetime DEFAULT NULL COMMENT '信托计划成立日期',
+                                `expire_time` datetime DEFAULT NULL COMMENT '信托计划到期日期',
+                                `repay_time` datetime DEFAULT NULL COMMENT '信托计划摊还期开始日期',
+                                `earning_rate` varchar(50) DEFAULT '0.00' COMMENT '信托计划预期收益率',
+                                `fund_pool` varchar(50) NOT NULL DEFAULT '0.00' COMMENT '信托计划初始规模',
+                                `deleted` tinyint(2) unsigned DEFAULT '0' COMMENT '是否有效(0:未删除 1 或时间戳为已删除)',
+                                `created_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                `updated_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                PRIMARY KEY (`trust_plan_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='信托计划配置表';
 
 /*Data for the table `t_trust_plan` */
